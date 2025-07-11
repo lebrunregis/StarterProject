@@ -281,6 +281,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "dev.yarnspinner.unity": {
+      "version": "https://github.com/YarnSpinnerTool/YarnSpinner-Unity.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "be66087b210b47b29b49f8d71bb80426b8fae810"
+    },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",
       "depth": 0,
