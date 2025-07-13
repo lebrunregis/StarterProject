@@ -16,16 +16,16 @@ namespace PrimeTweenDemo
         [SerializeField] private bool logAllocations;
         [SerializeField] private bool logFiltered;
         [SerializeField] private bool logIgnored;
-        [SerializeField] private List<string> filterAllocations = new List<string>();
-        [SerializeField] private List<string> ignoreAllocations = new List<string>();
+        [SerializeField] private List<string> filterAllocations = new();
+        [SerializeField] private List<string> ignoreAllocations = new();
 #pragma warning restore 0414
 #if UNITY_EDITOR && UNITY_2019_1_OR_NEWER
         public int? gcAllocTotal { get; private set; }
-        private readonly Stack<int> stack = new Stack<int>();
-        private readonly List<int> childrenBuffer = new List<int>();
-        private readonly List<int> fullIdPathBuffer = new List<int>();
-        private readonly List<int[]> ignoredPaths = new List<int[]>();
-        private readonly List<int[]> filteredPaths = new List<int[]>();
+        private readonly Stack<int> stack = new();
+        private readonly List<int> childrenBuffer = new();
+        private readonly List<int> fullIdPathBuffer = new();
+        private readonly List<int[]> ignoredPaths = new();
+        private readonly List<int[]> filteredPaths = new();
         private int lastProcessedFrame = -1;
 
         private void Awake()

@@ -12,9 +12,9 @@ namespace UnityEngine.GUID
             public bool shouldLoad;
         }
 
-        public List<SceneInfo> scenes = new List<SceneInfo>();
+        public List<SceneInfo> scenes = new();
 
-        void Update()
+        private void Update()
         {
             foreach (var info in scenes)
             {
@@ -37,9 +37,9 @@ namespace UnityEngine.GUID
         {
             // this code is a great example of how NOT to write Unity code
 
-            Vector2 padding = new Vector2(5.0f, 5.0f);
-            Vector2 buttonSize = new Vector2(150.0f, 50.0f);
-            Rect buttonPosition = new Rect(padding, buttonSize);
+            Vector2 padding = new(5.0f, 5.0f);
+            Vector2 buttonSize = new(150.0f, 50.0f);
+            Rect buttonPosition = new(padding, buttonSize);
 
             for (int i = 0; i < scenes.Count; ++i)
             {

@@ -4,16 +4,16 @@ namespace UnityEngine.GUID
 {
     public class TestCrossScene : MonoBehaviour
     {
-        public GuidReference crossSceneReference = new GuidReference();
+        public GuidReference crossSceneReference = new();
         private Renderer cachedRenderer;
 
-        void Awake()
+        private void Awake()
         {
             // set up a callback when the target is destroyed so we can remove references to the destroyed object
             crossSceneReference.OnGuidRemoved += ClearCache;
         }
 
-        void Update()
+        private void Update()
         {
             // simple example looking for our reference and spinning both if we get one.
             // due to caching, this only causes a dictionary lookup the first time we call it, so you can comfortably poll. 
@@ -36,12 +36,12 @@ namespace UnityEngine.GUID
             //TestPerformance();
         }
 
-        void ClearCache()
+        private void ClearCache()
         {
             cachedRenderer = null;
         }
 
-        void TestPerformance()
+        private void TestPerformance()
         {
             GameObject derefTest = null;
 
