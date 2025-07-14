@@ -24,9 +24,9 @@ public class SaveTest : MonoBehaviour
     {
         Fact<bool> bite = new(true);
         Fact<string> nom = new("John");
-        GameManager.booleans.CreateFact(0, bite);
-        GameManager.strings.CreateFact(0, nom);
-        string json = JsonUtility.ToJson(GameManager.booleans);
+        GameFactsStorage.booleans.CreateFact(0, bite);
+        GameFactsStorage.strings.CreateFact(0, nom);
+        string json = JsonUtility.ToJson(GameFactsStorage.booleans);
     }
 
     private void OnDisable()
