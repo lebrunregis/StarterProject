@@ -11,7 +11,7 @@
 
         private static Settings s_Instance;
 
-        internal static Settings instance
+        internal static Settings Instance
         {
             get
             {
@@ -26,22 +26,22 @@
 
         public static void Save()
         {
-            instance.Save();
+            Instance.Save();
         }
 
-        public static T Get<T>(string key, SettingsScope scope = SettingsScope.Project, T fallback = default(T))
+        public static T Get<T>(string key, SettingsScope scope = SettingsScope.Project, T fallback = default)
         {
-            return instance.Get<T>(key, scope, fallback);
+            return Instance.Get<T>(key, scope, fallback);
         }
 
         public static void Set<T>(string key, T value, SettingsScope scope = SettingsScope.Project)
         {
-            instance.Set<T>(key, value, scope);
+            Instance.Set<T>(key, value, scope);
         }
 
         public static bool ContainsKey<T>(string key, SettingsScope scope = SettingsScope.Project)
         {
-            return instance.ContainsKey<T>(key, scope);
+            return Instance.ContainsKey<T>(key, scope);
         }
     }
 }

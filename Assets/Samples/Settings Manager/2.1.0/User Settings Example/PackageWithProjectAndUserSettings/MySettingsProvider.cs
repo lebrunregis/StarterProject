@@ -15,7 +15,7 @@
         private static SettingsProvider CreateSettingsProvider()
         {
             var provider = new UserSettingsProvider(k_PreferencesPath,
-                MySettingsManager.instance,
+                MySettingsManager.Instance,
                 new[] { typeof(MySettingsProvider).Assembly });
 
             return provider;
