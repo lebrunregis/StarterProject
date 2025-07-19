@@ -37,7 +37,7 @@ public partial struct ThirdPersonCharacterPhysicsUpdateSystem : ISystem
         _context.OnSystemUpdate(ref state);
         _baseContext.OnSystemUpdate(ref state, SystemAPI.Time, SystemAPI.GetSingleton<PhysicsWorldSingleton>());
 
-        ThirdPersonCharacterPhysicsUpdateJob job = new ThirdPersonCharacterPhysicsUpdateJob
+        ThirdPersonCharacterPhysicsUpdateJob job = new()
         {
             Context = _context,
             BaseContext = _baseContext,
@@ -102,7 +102,7 @@ public partial struct ThirdPersonCharacterVariableUpdateSystem : ISystem
         _context.OnSystemUpdate(ref state);
         _baseContext.OnSystemUpdate(ref state, SystemAPI.Time, SystemAPI.GetSingleton<PhysicsWorldSingleton>());
 
-        ThirdPersonCharacterVariableUpdateJob job = new ThirdPersonCharacterVariableUpdateJob
+        ThirdPersonCharacterVariableUpdateJob job = new()
         {
             Context = _context,
             BaseContext = _baseContext,

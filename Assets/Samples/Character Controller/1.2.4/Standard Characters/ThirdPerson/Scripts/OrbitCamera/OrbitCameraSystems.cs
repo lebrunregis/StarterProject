@@ -23,7 +23,7 @@ public partial struct OrbitCameraSimulationSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        OrbitCameraSimulationJob job = new OrbitCameraSimulationJob
+        OrbitCameraSimulationJob job = new()
         {
             DeltaTime = SystemAPI.Time.DeltaTime,
             LocalTransformLookup = SystemAPI.GetComponentLookup<LocalTransform>(false),
@@ -117,7 +117,7 @@ public partial struct OrbitCameraLateUpdateSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        OrbitCameraLateUpdateJob job = new OrbitCameraLateUpdateJob
+        OrbitCameraLateUpdateJob job = new()
         {
             DeltaTime = SystemAPI.Time.DeltaTime,
             PhysicsWorld = SystemAPI.GetSingleton<PhysicsWorldSingleton>().PhysicsWorld,
@@ -170,7 +170,7 @@ public partial struct OrbitCameraLateUpdateSystem : ISystem
                 {
                     float obstructionCheckDistance = orbitCamera.SmoothedTargetDistance;
 
-                    CameraObstructionHitsCollector collector = new CameraObstructionHitsCollector(cameraControl.FollowedCharacterEntity, ignoredEntitiesBuffer, cameraForward);
+                    CameraObstructionHitsCollector collector = new(cameraControl.FollowedCharacterEntity, ignoredEntitiesBuffer, cameraForward);
                     PhysicsWorld.SphereCastCustom(
                         targetPosition,
                         orbitCamera.ObstructionRadius,

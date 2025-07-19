@@ -22,25 +22,25 @@ namespace UnityEditor.SettingsManagement.Examples
         // [UserSetting] attribute registers this setting with the UserSettingsProvider so that it can be automatically
         // shown in the UI.
         [UserSetting("General Settings", "Days Without Incident")]
-        private static MySetting<int> s_NumberOfDaysWithoutIncident = new MySetting<int>("general.daysWithoutIncident", 0, SettingsScope.User);
+        private static readonly MySetting<int> s_NumberOfDaysWithoutIncident = new("general.daysWithoutIncident", 0, SettingsScope.User);
 
         [UserSetting("General Settings", "Favorite Color")]
-        private static MySetting<Color> s_FavoriteColor = new MySetting<Color>("general.favoriteColor", Color.magenta);
+        private static readonly MySetting<Color> s_FavoriteColor = new("general.favoriteColor", Color.magenta);
 
         [UserSetting("General Settings", "Vector2 Field")]
-        private static MySetting<Vector2> s_Vector2Value = new MySetting<Vector2>("general.vector2Value", new Vector2(2f, 4f));
+        private static readonly MySetting<Vector2> s_Vector2Value = new("general.vector2Value", new Vector2(2f, 4f));
 
         [UserSetting("General Settings", "Editor Flags")]
-        private static MySetting<StaticEditorFlags> s_EditorFlags = new MySetting<StaticEditorFlags>("general.editorFlags", StaticEditorFlags.BatchingStatic);
+        private static readonly MySetting<StaticEditorFlags> s_EditorFlags = new("general.editorFlags", StaticEditorFlags.BatchingStatic);
 #pragma warning restore 414
 
         // [UserSetting] with no arguments simply registers the key with UserSettingsProvider so that it can be included
         // in debug views and reset with the options gizmo. Usually this is used in conjunction with [UserSettingsBlock].
         [UserSetting]
-        private static MySetting<FooClass> s_Foo = new MySetting<FooClass>("general.foo", new FooClass(), SettingsScope.Project);
+        private static readonly MySetting<FooClass> s_Foo = new("general.foo", new FooClass(), SettingsScope.Project);
 
         [UserSetting]
-        private static MySetting<int> s_NumberWithSlider = new MySetting<int>("general.conditionalValue", 5, SettingsScope.Project);
+        private static readonly MySetting<int> s_NumberWithSlider = new("general.conditionalValue", 5, SettingsScope.Project);
 
         // A UserSettingBlock is a callback invoked from the UserSettingsProvider. It allows you to draw more complicated
         // UI elements without the need to create a new SettingsProvider. Parameters are "category" and "search keywords."

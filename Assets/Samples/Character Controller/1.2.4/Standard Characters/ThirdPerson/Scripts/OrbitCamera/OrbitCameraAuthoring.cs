@@ -26,7 +26,7 @@ public class OrbitCameraAuthoring : MonoBehaviour
     public bool PreventFixedUpdateJitter = true;
 
     [Header("Misc")]
-    public List<GameObject> IgnoredEntities = new List<GameObject>();
+    public List<GameObject> IgnoredEntities = new();
 
     public class Baker : Baker<OrbitCameraAuthoring>
     {

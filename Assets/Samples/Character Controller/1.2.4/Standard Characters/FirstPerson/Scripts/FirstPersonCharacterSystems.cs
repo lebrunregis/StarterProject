@@ -38,7 +38,7 @@ public partial struct FirstPersonCharacterPhysicsUpdateSystem : ISystem
         _context.OnSystemUpdate(ref state);
         _baseContext.OnSystemUpdate(ref state, SystemAPI.Time, SystemAPI.GetSingleton<PhysicsWorldSingleton>());
 
-        FirstPersonCharacterPhysicsUpdateJob job = new FirstPersonCharacterPhysicsUpdateJob
+        FirstPersonCharacterPhysicsUpdateJob job = new()
         {
             Context = _context,
             BaseContext = _baseContext,
@@ -104,14 +104,14 @@ public partial struct FirstPersonCharacterVariableUpdateSystem : ISystem
         _context.OnSystemUpdate(ref state);
         _baseContext.OnSystemUpdate(ref state, SystemAPI.Time, SystemAPI.GetSingleton<PhysicsWorldSingleton>());
 
-        FirstPersonCharacterVariableUpdateJob variableUpdateJob = new FirstPersonCharacterVariableUpdateJob
+        FirstPersonCharacterVariableUpdateJob variableUpdateJob = new()
         {
             Context = _context,
             BaseContext = _baseContext,
         };
         variableUpdateJob.ScheduleParallel();
 
-        FirstPersonCharacterViewJob viewJob = new FirstPersonCharacterViewJob
+        FirstPersonCharacterViewJob viewJob = new()
         {
             FirstPersonCharacterLookup = SystemAPI.GetComponentLookup<FirstPersonCharacterComponent>(true),
         };
