@@ -163,9 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13e7ee4b2105d3e4da46165e20ac0625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isVerbose: 0
-  saveCategories: 0
-  userCategories: 0
+  isVerbose: 1
+  saveCategories: -1
+  userCategories: -1
 --- !u!1 &267163039
 GameObject:
   m_ObjectHideFlags: 0
