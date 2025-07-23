@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 39354112}
   - component: {fileID: 39354113}
   m_Layer: 0
-  m_Name: SaveTest
+  m_Name: SaveSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,8 +164,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isVerbose: 1
-  saveCategories: -1
-  userCategories: -1
+  saveCategories: 1
+  userCategories: 172
+  gameCategories: 2
+  saveOnClose: 0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
