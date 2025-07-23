@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 267163041}
   - component: {fileID: 267163040}
   - component: {fileID: 267163045}
+  - component: {fileID: 267163046}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -199,13 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab3f033c1e329b6438f132feec4b0f38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isVerbose: 1
-  textureSizeExponent: 10
-  textureDepth: 0
-  msaaSamplesExponent: 0
-  format: 7
-  readWrite: 0
-  filterMode: 0
+  extendsIslandOffset: 1
 --- !u!65 &267163041
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -308,7 +303,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isVerbose: 1
-  texturePaint: {fileID: 0}
+  texturePaint: {fileID: 4800000, guid: 2d346aafad80db74183b6716a5f2e839, type: 3}
+  extendIslands: {fileID: 4800000, guid: 347d25487775a264ea9e87733e877010, type: 3}
+--- !u!114 &267163046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 267163039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d60676e069497d84fbc606981ad1be1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 330585545}
+  mouseSingleClick: 0
+  paintColor: {r: 0, g: 0, b: 0, a: 0}
+  radius: 1
+  strength: 1
+  hardness: 1
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
