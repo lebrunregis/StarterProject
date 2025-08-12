@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1af1481ef4a63a147aa03f1f1a30fdf1
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273372
+  packageName: Settings & Options Menu Creator - URP & HDRP Settings Addon
+  packageVersion: 1.2.0
+  assetPath: Packages/com.citrion.settings-menu-creator.srp/Content/ScriptableObjects/SettingsCollections/Presets/Preset_SettingsCollection_SRP_MotionBlur.asset
+  uploadId: 758148

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b886b3f1e292d3940a46b39c2e878c08
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196648
+  packageName: Low Poly Terrain - Polaris 2021
+  packageVersion: 2021.1.22
+  assetPath: Assets/Polaris - Low Poly Ecosystem/Polaris - Low Poly Terrain Engine/Runtime/Shaders/Internal/TextureTool/DistributionMapGenerator.shader
+  uploadId: 773677

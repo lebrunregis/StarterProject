@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 22149d56e584c274ab9bcf4d08b35989
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196648
+  packageName: Low Poly Terrain - Polaris 2021
+  packageVersion: 2021.1.22
+  assetPath: Assets/Polaris - Low Poly Ecosystem/Polaris - Low Poly Terrain Engine/Runtime/Shaders/Internal/SplineTool/PathPainterSplat.shader
+  uploadId: 773677

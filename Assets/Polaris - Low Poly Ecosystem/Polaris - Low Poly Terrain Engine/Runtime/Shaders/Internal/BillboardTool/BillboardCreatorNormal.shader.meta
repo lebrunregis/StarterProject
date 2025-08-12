@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: aab4669755f1ded46b8f65f5577fdd9b
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196648
+  packageName: Low Poly Terrain - Polaris 2021
+  packageVersion: 2021.1.22
+  assetPath: Assets/Polaris - Low Poly Ecosystem/Polaris - Low Poly Terrain Engine/Runtime/Shaders/Internal/BillboardTool/BillboardCreatorNormal.shader
+  uploadId: 773677

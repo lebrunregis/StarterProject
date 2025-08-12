@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 36498da77a2c00540b0cf4547b5400a3
+ComputeShaderImporter:
+  externalObjects: {}
+  currentAPIMask: 4
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196648
+  packageName: Low Poly Terrain - Polaris 2021
+  packageVersion: 2021.1.22
+  assetPath: Assets/Polaris - Low Poly Ecosystem/Polaris - Low Poly Terrain Engine/Runtime/Shaders/Internal/ErosionTool/InitErosion.compute
+  uploadId: 773677

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 45f7d1aa5e9d58743aec839bd3751783
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196648
+  packageName: Low Poly Terrain - Polaris 2021
+  packageVersion: 2021.1.22
+  assetPath: Assets/Polaris - Low Poly Ecosystem/Polaris - Low Poly Terrain Engine/Editor/Shaders/Sample4Splats4Normals.asset
+  uploadId: 773677

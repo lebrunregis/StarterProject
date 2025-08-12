@@ -1,0 +1,423 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ae6bbc263dffee45a6068e3f02a825b, type: 3}
+  m_Name: Preset_SettingsCollection_SRP_Fog
+  m_EditorClassIdentifier: 
+  identifier: 
+  settings:
+  - applyImmediately: 1
+    identifier: 90e8f2fe-35e7-4c65-8d63-c84f2d44fcbc
+    expanded: 0
+    overrideIdentifierWhenCopied: 1
+    setting:
+      rid: 1917780718353121344
+    inputElementProviderSettings:
+      rid: 1917780718353121345
+  - applyImmediately: 1
+    identifier: 71744736-aa75-4398-81fa-2100e7f72175
+    expanded: 0
+    overrideIdentifierWhenCopied: 1
+    setting:
+      rid: 1917780718353121348
+    inputElementProviderSettings:
+      rid: 1917780718353121349
+  - applyImmediately: 1
+    identifier: bed2eda9-9b29-4587-b4c3-645798b6502e
+    expanded: 0
+    overrideIdentifierWhenCopied: 1
+    setting:
+      rid: 1917780718353121352
+    inputElementProviderSettings:
+      rid: 1917780718353121353
+  - applyImmediately: 1
+    identifier: 966718f2-cf4f-4329-9f2f-4e7590155759
+    expanded: 0
+    overrideIdentifierWhenCopied: 1
+    setting:
+      rid: 1917780718353121356
+    inputElementProviderSettings:
+      rid: 1917780718353121357
+  - applyImmediately: 1
+    identifier: 0bd54366-955a-4934-8d96-12ea29afdc28
+    expanded: 0
+    overrideIdentifierWhenCopied: 1
+    setting:
+      rid: 1917780718353121360
+    inputElementProviderSettings:
+      rid: 1917780718353121361
+  - applyImmediately: 1
+    identifier: 42a6199f-51bf-4f62-b737-131dee928f8b
+    expanded: 0
+    overrideIdentifierWhenCopied: 1
+    setting:
+      rid: 1917780718353121364
+    inputElementProviderSettings:
+      rid: 1917780718353121365
+  - applyImmediately: 1
+    identifier: aee9f611-93db-4aa5-aad6-12e826b9e252
+    expanded: 0
+    overrideIdentifierWhenCopied: 1
+    setting:
+      rid: 1917780718353121368
+    inputElementProviderSettings:
+      rid: 1917780718353121369
+  - applyImmediately: 1
+    identifier: cef69bdd-b7cf-474d-aa29-66b78d397dbd
+    expanded: 0
+    overrideIdentifierWhenCopied: 1
+    setting:
+      rid: 1917780718353121372
+    inputElementProviderSettings:
+      rid: 1917780718353121373
+  - applyImmediately: 1
+    identifier: bd05309f-703e-47c3-98f9-f31030d4564c
+    expanded: 0
+    overrideIdentifierWhenCopied: 1
+    setting:
+      rid: 1917780718353121376
+    inputElementProviderSettings:
+      rid: 1917780718353121377
+  - applyImmediately: 1
+    identifier: ffd440b5-bcbe-4e3d-96c0-53ee034625e8
+    expanded: 0
+    overrideIdentifierWhenCopied: 1
+    setting:
+      rid: 1917780718353121380
+    inputElementProviderSettings:
+      rid: 1917780718353121381
+  settingsSaver: {fileID: 0}
+  inputTemplatesUIToolkit: {fileID: 0}
+  inputTemplatesUGUI: {fileID: 0}
+  audioMixer: {fileID: 0}
+  volumeProfile: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 1917780718353121344
+      type: {class: Setting_Fog_Active, ns: CitrioN.SettingsMenuCreator.SRP, asm: CitrioN.SettingsMenuCreator.SRP}
+      data:
+        options:
+        - key: True
+          value: True
+        - key: False
+          value: False
+        defaultValue: 1
+        volumeProfileOverride: {fileID: 0}
+    - rid: 1917780718353121345
+      type: {class: InputElementProviderSettings, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data:
+        customLabel: 
+        parentIdentifier: settings-parent
+        addSpacer: 1
+        spacerElementClass: setting-spacer
+        inputElementProvider_UIToolkit:
+          rid: 1917780718353121346
+        inputElementProvider_UGUI:
+          rid: 1917780718353121347
+    - rid: 1917780718353121346
+      type: {class: InputElementProvider_UIT_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121347
+      type: {class: InputElementProvider_UGUI_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121348
+      type: {class: Setting_Fog_Enable, ns: CitrioN.SettingsMenuCreator.SRP, asm: CitrioN.SettingsMenuCreator.SRP}
+      data:
+        options:
+        - key: True
+          value: True
+        - key: False
+          value: False
+        defaultValue: 1
+        volumeProfileOverride: {fileID: 0}
+    - rid: 1917780718353121349
+      type: {class: InputElementProviderSettings, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data:
+        customLabel: 
+        parentIdentifier: settings-parent
+        addSpacer: 1
+        spacerElementClass: setting-spacer
+        inputElementProvider_UIToolkit:
+          rid: 1917780718353121350
+        inputElementProvider_UGUI:
+          rid: 1917780718353121351
+    - rid: 1917780718353121350
+      type: {class: InputElementProvider_UIT_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121351
+      type: {class: InputElementProvider_UGUI_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121352
+      type: {class: Setting_Fog_BaseHeight, ns: CitrioN.SettingsMenuCreator.SRP, asm: CitrioN.SettingsMenuCreator.SRP}
+      data:
+        options:
+        - key: MIN_RANGE
+          value: 0
+        - key: MAX_RANGE
+          value: 1000
+        - key: STEP_SIZE
+          value: 1
+        defaultValue: 0
+        volumeProfileOverride: {fileID: 0}
+    - rid: 1917780718353121353
+      type: {class: InputElementProviderSettings, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data:
+        customLabel: 
+        parentIdentifier: settings-parent
+        addSpacer: 1
+        spacerElementClass: setting-spacer
+        inputElementProvider_UIToolkit:
+          rid: 1917780718353121354
+        inputElementProvider_UGUI:
+          rid: 1917780718353121355
+    - rid: 1917780718353121354
+      type: {class: InputElementProvider_UIT_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121355
+      type: {class: InputElementProvider_UGUI_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121356
+      type: {class: Setting_Fog_MaximumHeight, ns: CitrioN.SettingsMenuCreator.SRP,
+        asm: CitrioN.SettingsMenuCreator.SRP}
+      data:
+        options:
+        - key: MIN_RANGE
+          value: 0
+        - key: MAX_RANGE
+          value: 5000
+        - key: STEP_SIZE
+          value: 10
+        defaultValue: 50
+        volumeProfileOverride: {fileID: 0}
+    - rid: 1917780718353121357
+      type: {class: InputElementProviderSettings, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data:
+        customLabel: 
+        parentIdentifier: settings-parent
+        addSpacer: 1
+        spacerElementClass: setting-spacer
+        inputElementProvider_UIToolkit:
+          rid: 1917780718353121358
+        inputElementProvider_UGUI:
+          rid: 1917780718353121359
+    - rid: 1917780718353121358
+      type: {class: InputElementProvider_UIT_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121359
+      type: {class: InputElementProvider_UGUI_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121360
+      type: {class: Setting_Fog_MaxFogDistance, ns: CitrioN.SettingsMenuCreator.SRP,
+        asm: CitrioN.SettingsMenuCreator.SRP}
+      data:
+        options:
+        - key: MIN_RANGE
+          value: 0
+        - key: MAX_RANGE
+          value: 10000
+        - key: STEP_SIZE
+          value: 50
+        defaultValue: 5000
+        volumeProfileOverride: {fileID: 0}
+    - rid: 1917780718353121361
+      type: {class: InputElementProviderSettings, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data:
+        customLabel: 
+        parentIdentifier: settings-parent
+        addSpacer: 1
+        spacerElementClass: setting-spacer
+        inputElementProvider_UIToolkit:
+          rid: 1917780718353121362
+        inputElementProvider_UGUI:
+          rid: 1917780718353121363
+    - rid: 1917780718353121362
+      type: {class: InputElementProvider_UIT_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121363
+      type: {class: InputElementProvider_UGUI_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121364
+      type: {class: Setting_Fog_ColorMode, ns: CitrioN.SettingsMenuCreator.SRP, asm: CitrioN.SettingsMenuCreator.SRP}
+      data:
+        options:
+        - key: ConstantColor
+          value: Constant Color
+        - key: SkyColor
+          value: Sky Color
+        defaultValue: 1
+        volumeProfileOverride: {fileID: 0}
+    - rid: 1917780718353121365
+      type: {class: InputElementProviderSettings, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data:
+        customLabel: 
+        parentIdentifier: settings-parent
+        addSpacer: 1
+        spacerElementClass: setting-spacer
+        inputElementProvider_UIToolkit:
+          rid: 1917780718353121366
+        inputElementProvider_UGUI:
+          rid: 1917780718353121367
+    - rid: 1917780718353121366
+      type: {class: InputElementProvider_UIT_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121367
+      type: {class: InputElementProvider_UGUI_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121368
+      type: {class: Setting_Fog_EnableVolumetricFog, ns: CitrioN.SettingsMenuCreator.SRP,
+        asm: CitrioN.SettingsMenuCreator.SRP}
+      data:
+        options:
+        - key: True
+          value: True
+        - key: False
+          value: False
+        defaultValue: 0
+        volumeProfileOverride: {fileID: 0}
+    - rid: 1917780718353121369
+      type: {class: InputElementProviderSettings, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data:
+        customLabel: 
+        parentIdentifier: settings-parent
+        addSpacer: 1
+        spacerElementClass: setting-spacer
+        inputElementProvider_UIToolkit:
+          rid: 1917780718353121370
+        inputElementProvider_UGUI:
+          rid: 1917780718353121371
+    - rid: 1917780718353121370
+      type: {class: InputElementProvider_UIT_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121371
+      type: {class: InputElementProvider_UGUI_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121372
+      type: {class: Setting_Fog_GlobalLightProbeDimmer, ns: CitrioN.SettingsMenuCreator.SRP,
+        asm: CitrioN.SettingsMenuCreator.SRP}
+      data:
+        options:
+        - key: MIN_RANGE
+          value: 0
+        - key: MAX_RANGE
+          value: 1
+        - key: STEP_SIZE
+          value: 0.01
+        defaultValue: 1
+        volumeProfileOverride: {fileID: 0}
+    - rid: 1917780718353121373
+      type: {class: InputElementProviderSettings, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data:
+        customLabel: 
+        parentIdentifier: settings-parent
+        addSpacer: 1
+        spacerElementClass: setting-spacer
+        inputElementProvider_UIToolkit:
+          rid: 1917780718353121374
+        inputElementProvider_UGUI:
+          rid: 1917780718353121375
+    - rid: 1917780718353121374
+      type: {class: InputElementProvider_UIT_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121375
+      type: {class: InputElementProvider_UGUI_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121376
+      type: {class: Setting_Fog_DenoisingMode, ns: CitrioN.SettingsMenuCreator.SRP,
+        asm: CitrioN.SettingsMenuCreator.SRP}
+      data:
+        options:
+        - key: None
+          value: None
+        - key: Reprojection
+          value: Reprojection
+        - key: Gaussian
+          value: Gaussian
+        - key: Both
+          value: Both
+        defaultValue: 2
+        volumeProfileOverride: {fileID: 0}
+    - rid: 1917780718353121377
+      type: {class: InputElementProviderSettings, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data:
+        customLabel: 
+        parentIdentifier: settings-parent
+        addSpacer: 1
+        spacerElementClass: setting-spacer
+        inputElementProvider_UIToolkit:
+          rid: 1917780718353121378
+        inputElementProvider_UGUI:
+          rid: 1917780718353121379
+    - rid: 1917780718353121378
+      type: {class: InputElementProvider_UIT_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121379
+      type: {class: InputElementProvider_UGUI_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121380
+      type: {class: Setting_Fog_Quality, ns: CitrioN.SettingsMenuCreator.SRP, asm: CitrioN.SettingsMenuCreator.SRP}
+      data:
+        options:
+        - key: Low
+          value: Low
+        - key: Medium
+          value: Medium
+        - key: High
+          value: High
+        defaultValue: 1
+        volumeProfileOverride: {fileID: 0}
+    - rid: 1917780718353121381
+      type: {class: InputElementProviderSettings, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data:
+        customLabel: 
+        parentIdentifier: settings-parent
+        addSpacer: 1
+        spacerElementClass: setting-spacer
+        inputElementProvider_UIToolkit:
+          rid: 1917780718353121382
+        inputElementProvider_UGUI:
+          rid: 1917780718353121383
+    - rid: 1917780718353121382
+      type: {class: InputElementProvider_UIT_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121383
+      type: {class: InputElementProvider_UGUI_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 

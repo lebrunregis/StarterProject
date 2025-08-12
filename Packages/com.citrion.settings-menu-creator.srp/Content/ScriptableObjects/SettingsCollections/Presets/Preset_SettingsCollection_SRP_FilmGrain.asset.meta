@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2ccf0c68fc644dd4e82f3a6824dd6185
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273372
+  packageName: Settings & Options Menu Creator - URP & HDRP Settings Addon
+  packageVersion: 1.2.0
+  assetPath: Packages/com.citrion.settings-menu-creator.srp/Content/ScriptableObjects/SettingsCollections/Presets/Preset_SettingsCollection_SRP_FilmGrain.asset
+  uploadId: 758148

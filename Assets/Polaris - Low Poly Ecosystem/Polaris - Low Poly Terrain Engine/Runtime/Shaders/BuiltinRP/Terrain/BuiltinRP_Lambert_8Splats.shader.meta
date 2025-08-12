@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6274885df2685194ba437d1fb7c6c369
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196648
+  packageName: Low Poly Terrain - Polaris 2021
+  packageVersion: 2021.1.22
+  assetPath: Assets/Polaris - Low Poly Ecosystem/Polaris - Low Poly Terrain Engine/Runtime/Shaders/BuiltinRP/Terrain/BuiltinRP_Lambert_8Splats.shader
+  uploadId: 773677

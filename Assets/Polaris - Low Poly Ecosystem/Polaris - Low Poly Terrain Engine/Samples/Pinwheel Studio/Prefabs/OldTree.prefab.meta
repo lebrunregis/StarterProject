@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 6e3c35af30a28104ab1ec170195dc650
+timeCreated: 1525856043
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196648
+  packageName: Low Poly Terrain - Polaris 2021
+  packageVersion: 2021.1.22
+  assetPath: Assets/Polaris - Low Poly Ecosystem/Polaris - Low Poly Terrain Engine/Samples/Pinwheel
+    Studio/Prefabs/OldTree.prefab
+  uploadId: 773677

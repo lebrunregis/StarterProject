@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 18a16ddac90f756418e1834cbd13ff74
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196648
+  packageName: Low Poly Terrain - Polaris 2021
+  packageVersion: 2021.1.22
+  assetPath: Assets/Polaris - Low Poly Ecosystem/Polaris - Low Poly Terrain Engine/Editor/Scripts/Extensions/ExtensionPlaceholders/CreateExtensionWizardPlaceholder.cs
+  uploadId: 773677

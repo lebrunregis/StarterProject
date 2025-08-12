@@ -1,0 +1,104 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ae6bbc263dffee45a6068e3f02a825b, type: 3}
+  m_Name: Preset_SettingsCollection_SRP_SplitToning
+  m_EditorClassIdentifier: 
+  identifier: 
+  settings:
+  - applyImmediately: 1
+    identifier: ac582407-e912-4a69-bdc3-0b29183ee070
+    expanded: 0
+    overrideIdentifierWhenCopied: 1
+    setting:
+      rid: 1917780718353121464
+    inputElementProviderSettings:
+      rid: 1917780718353121465
+  - applyImmediately: 1
+    identifier: 1aeeba33-f8f4-474f-a45b-91a295f9a812
+    expanded: 0
+    overrideIdentifierWhenCopied: 1
+    setting:
+      rid: 1917780718353121468
+    inputElementProviderSettings:
+      rid: 1917780718353121469
+  settingsSaver: {fileID: 0}
+  inputTemplatesUIToolkit: {fileID: 0}
+  inputTemplatesUGUI: {fileID: 0}
+  audioMixer: {fileID: 0}
+  volumeProfile: {fileID: 0}
+  references:
+    version: 2
+    RefIds:
+    - rid: 1917780718353121464
+      type: {class: Setting_SplitToning_Active, ns: CitrioN.SettingsMenuCreator.SRP,
+        asm: CitrioN.SettingsMenuCreator.SRP}
+      data:
+        options:
+        - key: True
+          value: True
+        - key: False
+          value: False
+        defaultValue: 1
+        volumeProfileOverride: {fileID: 0}
+    - rid: 1917780718353121465
+      type: {class: InputElementProviderSettings, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data:
+        customLabel: 
+        parentIdentifier: settings-parent
+        addSpacer: 1
+        spacerElementClass: setting-spacer
+        inputElementProvider_UIToolkit:
+          rid: 1917780718353121466
+        inputElementProvider_UGUI:
+          rid: 1917780718353121467
+    - rid: 1917780718353121466
+      type: {class: InputElementProvider_UIT_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121467
+      type: {class: InputElementProvider_UGUI_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121468
+      type: {class: Setting_SplitToning_Balance, ns: CitrioN.SettingsMenuCreator.SRP,
+        asm: CitrioN.SettingsMenuCreator.SRP}
+      data:
+        options:
+        - key: MIN_RANGE
+          value: -100
+        - key: MAX_RANGE
+          value: 100
+        - key: STEP_SIZE
+          value: 1
+        defaultValue: 0
+        volumeProfileOverride: {fileID: 0}
+    - rid: 1917780718353121469
+      type: {class: InputElementProviderSettings, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data:
+        customLabel: 
+        parentIdentifier: settings-parent
+        addSpacer: 1
+        spacerElementClass: setting-spacer
+        inputElementProvider_UIToolkit:
+          rid: 1917780718353121470
+        inputElementProvider_UGUI:
+          rid: 1917780718353121471
+    - rid: 1917780718353121470
+      type: {class: InputElementProvider_UIT_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 
+    - rid: 1917780718353121471
+      type: {class: InputElementProvider_UGUI_None, ns: CitrioN.SettingsMenuCreator,
+        asm: CitrioN.SettingsMenuCreator}
+      data: 

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 000f20cc202b1d449bb31bd160ebd2ad
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196648
+  packageName: Low Poly Terrain - Polaris 2021
+  packageVersion: 2021.1.22
+  assetPath: Assets/Polaris - Low Poly Ecosystem/Polaris - Low Poly Terrain Engine/Editor/Resources/MicroSplatIntegrationSettings.asset
+  uploadId: 773677

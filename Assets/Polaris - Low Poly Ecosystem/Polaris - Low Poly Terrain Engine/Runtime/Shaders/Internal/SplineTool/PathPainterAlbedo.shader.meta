@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 0ec1444c50490d84f8183a42b0e01b6b
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196648
+  packageName: Low Poly Terrain - Polaris 2021
+  packageVersion: 2021.1.22
+  assetPath: Assets/Polaris - Low Poly Ecosystem/Polaris - Low Poly Terrain Engine/Runtime/Shaders/Internal/SplineTool/PathPainterAlbedo.shader
+  uploadId: 773677

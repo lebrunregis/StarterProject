@@ -1,5 +1,91 @@
 {
   "dependencies": {
+    "com.citrion.common": {
+      "version": "file:com.citrion.common",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.editorcoroutines": "1.0.0",
+        "com.unity.nuget.newtonsoft-json": "3.2.1"
+      }
+    },
+    "com.citrion.settings-menu-creator": {
+      "version": "file:com.citrion.settings-menu-creator",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.textmeshpro": "3.0.6",
+        "com.citrion.common": "1.3.3",
+        "com.citrion.ui": "1.0.4",
+        "com.citrion.ui.panels": "1.0.6",
+        "com.citrion.ui.images": "1.0.1",
+        "com.citrion.ui.components": "1.1.2",
+        "com.citrion.styleprofile": "1.1.4"
+      }
+    },
+    "com.citrion.settings-menu-creator.input": {
+      "version": "file:com.citrion.settings-menu-creator.input",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.inputsystem": "1.7.0"
+      }
+    },
+    "com.citrion.settings-menu-creator.pro": {
+      "version": "file:com.citrion.settings-menu-creator.pro",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.citrion.settings-menu-creator.srp": {
+      "version": "file:com.citrion.settings-menu-creator.srp",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.citrion.styleprofile": {
+      "version": "file:com.citrion.styleprofile",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.textmeshpro": "3.0.6",
+        "com.citrion.common": "1.3.3"
+      }
+    },
+    "com.citrion.ui": {
+      "version": "file:com.citrion.ui",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.citrion.common": "1.3.3",
+        "com.unity.textmeshpro": "3.0.6"
+      }
+    },
+    "com.citrion.ui.components": {
+      "version": "file:com.citrion.ui.components",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.textmeshpro": "3.0.6",
+        "com.citrion.common": "1.3.3",
+        "com.citrion.ui": "1.0.4",
+        "com.citrion.ui.images": "1.0.1"
+      }
+    },
+    "com.citrion.ui.images": {
+      "version": "file:com.citrion.ui.images",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.citrion.ui.panels": {
+      "version": "file:com.citrion.ui.panels",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.citrion.common": "1.3.3"
+      }
+    },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
       "depth": 0,
@@ -35,6 +121,15 @@
       "source": "git",
       "dependencies": {},
       "hash": "37eb192e70a45ee3e77b75303babcb279426b165"
+    },
+    "com.staggartcreations.splinemesher": {
+      "version": "file:com.staggartcreations.splinemesher",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.splines": "2.8.1",
+        "com.unity.mathematics": "1.2.6"
+      }
     },
     "com.unity.2d.animation": {
       "version": "10.1.4",
@@ -213,6 +308,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.editorcoroutines": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.entities": {
       "version": "1.3.2",
       "depth": 1,
@@ -299,7 +401,7 @@
     },
     "com.unity.mathematics": {
       "version": "1.3.2",
-      "depth": 1,
+      "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -441,11 +543,12 @@
       }
     },
     "com.unity.splines": {
-      "version": "2.7.2",
+      "version": "2.8.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.mathematics": "1.2.1",
+        "com.unity.modules.imgui": "1.0.0",
         "com.unity.settings-manager": "1.0.3"
       },
       "url": "https://packages.unity.com"
@@ -470,6 +573,14 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "com.unity.textmeshpro": {
+      "version": "3.0.6",
+      "depth": 1,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.ugui": "2.0.0"
+      }
     },
     "com.unity.timeline": {
       "version": "1.8.8",

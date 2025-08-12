@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-Assets-Shared
   m_GUID: c85c7c2fc7e611242bb0020c4754dbb1
   m_SerializeEntries:
+  - m_GUID: 2083f592d586c564c8fd1b13911c067e
+    m_Address: Assets/CitrioN/SMC/Integrations/Unity Localization/Demo/Localization
+      Data/Tables/SettingsMenu Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fec0f2348f9e3e44b959f3ec1d861b0d
     m_Address: Assets/_/Toolbox/Localization/Runtime/En-Fr Shared Data.asset
     m_ReadOnly: 1

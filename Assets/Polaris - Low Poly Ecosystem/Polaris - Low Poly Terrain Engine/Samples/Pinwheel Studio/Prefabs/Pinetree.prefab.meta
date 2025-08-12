@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 4c32851254257ed4a9191912835abbbb
+timeCreated: 1532061155
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: -1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196648
+  packageName: Low Poly Terrain - Polaris 2021
+  packageVersion: 2021.1.22
+  assetPath: Assets/Polaris - Low Poly Ecosystem/Polaris - Low Poly Terrain Engine/Samples/Pinwheel
+    Studio/Prefabs/Pinetree.prefab
+  uploadId: 773677

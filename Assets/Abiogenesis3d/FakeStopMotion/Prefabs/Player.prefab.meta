@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 64f76efc1ea96634ea3468eac61e3fbd
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277627
+  packageName: Fake Stop Motion
+  packageVersion: 1.0.0
+  assetPath: Assets/Abiogenesis3d/FakeStopMotion/Prefabs/Player.prefab
+  uploadId: 655799

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 74a7d46f70095904b821c944fad28aa5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273372
+  packageName: Settings & Options Menu Creator - URP & HDRP Settings Addon
+  packageVersion: 1.2.0
+  assetPath: Packages/com.citrion.settings-menu-creator.srp/Content/ScriptableObjects/SettingsCollections/Presets/Preset_SettingsCollection_SRP_MicroShadows.asset
+  uploadId: 758148

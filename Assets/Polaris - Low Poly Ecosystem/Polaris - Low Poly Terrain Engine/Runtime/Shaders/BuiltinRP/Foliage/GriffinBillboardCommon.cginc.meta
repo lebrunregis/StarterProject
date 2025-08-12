@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 95f404c2840f23b49bca7fd2b1bae724
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures: []
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196648
+  packageName: Low Poly Terrain - Polaris 2021
+  packageVersion: 2021.1.22
+  assetPath: Assets/Polaris - Low Poly Ecosystem/Polaris - Low Poly Terrain Engine/Runtime/Shaders/BuiltinRP/Foliage/GriffinBillboardCommon.cginc
+  uploadId: 773677

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 90d3fc5b17ac84a4ba2c5c0489415330
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277627
+  packageName: Fake Stop Motion
+  packageVersion: 1.0.0
+  assetPath: Assets/Abiogenesis3d/FakeStopMotion/FakeStopMotion.asmdef
+  uploadId: 655799

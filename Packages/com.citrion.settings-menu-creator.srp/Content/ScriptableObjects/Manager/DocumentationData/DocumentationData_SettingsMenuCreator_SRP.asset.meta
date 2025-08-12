@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8183498c1339b124e8469f8bbef4ac15
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273372
+  packageName: Settings & Options Menu Creator - URP & HDRP Settings Addon
+  packageVersion: 1.2.0
+  assetPath: Packages/com.citrion.settings-menu-creator.srp/Content/ScriptableObjects/Manager/DocumentationData/DocumentationData_SettingsMenuCreator_SRP.asset
+  uploadId: 758148

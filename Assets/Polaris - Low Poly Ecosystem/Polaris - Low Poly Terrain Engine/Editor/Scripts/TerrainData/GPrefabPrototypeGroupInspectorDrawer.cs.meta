@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: be6f505e3231e7145929a3c0aa150871
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196648
+  packageName: Low Poly Terrain - Polaris 2021
+  packageVersion: 2021.1.22
+  assetPath: Assets/Polaris - Low Poly Ecosystem/Polaris - Low Poly Terrain Engine/Editor/Scripts/TerrainData/GPrefabPrototypeGroupInspectorDrawer.cs
+  uploadId: 773677

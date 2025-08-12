@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 5ab8e05c1057e3741a0e293b1d73cfdc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 277627
+  packageName: Fake Stop Motion
+  packageVersion: 1.0.0
+  assetPath: Assets/Abiogenesis3d/FakeStopMotion/Scripts/FakeStopMotion.cs
+  uploadId: 655799

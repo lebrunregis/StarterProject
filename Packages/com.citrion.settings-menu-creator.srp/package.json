@@ -1,0 +1,28 @@
+{
+  "name": "com.citrion.settings-menu-creator.srp",
+  "version": "1.2.0",
+  "displayName": "CitrioN - Settings Menu Creator - SRP",
+  "unity": "2021.3",
+  "keywords": [
+    "settings",
+    "options",
+    "ui",
+    "gui",
+    "ugui",
+    "uielements",
+    "uitoolkit",
+    "menu",
+    "interface",
+    "automatic",
+    "generate",
+    "srp",
+    "urp",
+    "hdrp",
+    "universal",
+    "high definition"
+  ],
+  "author": {
+    "name": "CitrioN"
+  },
+  "description": "Adds URP & HDRP exclusive settings to the setting menu creator asset."
+}

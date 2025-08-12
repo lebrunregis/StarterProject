@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: f40c5a51715bcbb4883d604ce7986ad6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273372
+  packageName: Settings & Options Menu Creator - URP & HDRP Settings Addon
+  packageVersion: 1.2.0
+  assetPath: Packages/com.citrion.settings-menu-creator.srp/Scripts/Runtime/Settings/Settings_Tonemapping.cs
+  uploadId: 758148

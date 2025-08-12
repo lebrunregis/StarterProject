@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 788e7457b5a2a41458085c66ed85a99c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 273372
+  packageName: Settings & Options Menu Creator - URP & HDRP Settings Addon
+  packageVersion: 1.2.0
+  assetPath: Packages/com.citrion.settings-menu-creator.srp/Scripts/Runtime/Settings/Settings_FilmGrain.cs
+  uploadId: 758148

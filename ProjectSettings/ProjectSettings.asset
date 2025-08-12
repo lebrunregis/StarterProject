@@ -816,7 +816,8 @@ PlayerSettings:
   webGLWebAssemblyBigInt: 0
   webGLCloseOnQuit: 0
   webWasm2023: 0
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Standalone: MOREMOUNTAINS_NICEVIBRATIONS_INSTALLED;ADDRESSABLES_ENABLED;AMPLIFY_SHADER_EDITOR;GRIFFIN_ASE;GRIFFIN_EDITOR_COROUTINES;GRIFFIN;GRIFFIN_2021
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:

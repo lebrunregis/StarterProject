@@ -1,0 +1,22 @@
+{
+    "name": "FakeStopMotion",
+    "rootNamespace": "Abiogenesis3d",
+    "references": [
+        "GUID:d920ee83a19e68446acaa5e0482e0ee6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.render-pipelines.universal",
+            "expression": "",
+            "define": "UNITY_PIPELINE_URP"
+        }
+    ],
+    "noEngineReferences": false
+}

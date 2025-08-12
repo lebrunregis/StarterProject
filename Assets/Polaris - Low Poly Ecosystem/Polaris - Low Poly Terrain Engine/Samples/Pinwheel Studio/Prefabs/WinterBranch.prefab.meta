@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 74996c3da7ad92f428bb0e1f1f2da3df
+timeCreated: 1526359717
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 196648
+  packageName: Low Poly Terrain - Polaris 2021
+  packageVersion: 2021.1.22
+  assetPath: Assets/Polaris - Low Poly Ecosystem/Polaris - Low Poly Terrain Engine/Samples/Pinwheel
+    Studio/Prefabs/WinterBranch.prefab
+  uploadId: 773677
