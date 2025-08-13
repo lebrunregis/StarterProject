@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: f2915a1f782f6e64b97bb50c5d9ba841
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/SceneSelector/Editor/Scripts/CachedScene.cs
+  uploadId: 511094

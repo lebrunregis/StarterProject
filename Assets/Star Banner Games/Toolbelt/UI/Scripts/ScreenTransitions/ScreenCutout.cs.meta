@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 87090f77f4f8d414ebae5134a07def16
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/UI/Scripts/ScreenTransitions/ScreenCutout.cs
+  uploadId: 511094

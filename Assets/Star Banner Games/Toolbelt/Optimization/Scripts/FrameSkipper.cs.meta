@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 7173ac1892037034b8dec497360b9b53
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/Optimization/Scripts/FrameSkipper.cs
+  uploadId: 511094

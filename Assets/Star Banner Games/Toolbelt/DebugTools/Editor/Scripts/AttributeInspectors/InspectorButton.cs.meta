@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 2f6db7b88918e9c42a1e2c02908f18cd
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/DebugTools/Editor/Scripts/AttributeInspectors/InspectorButton.cs
+  uploadId: 511094

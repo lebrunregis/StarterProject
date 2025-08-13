@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 71ddb5e0857c6ec4cb3ca1be2189cdba
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/DebugTools/Scripts/Gizmos/BoxGizmo.cs
+  uploadId: 511094

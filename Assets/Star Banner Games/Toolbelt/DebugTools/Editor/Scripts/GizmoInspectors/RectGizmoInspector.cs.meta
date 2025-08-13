@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 66e68c1e5a3930a43a06c3f88d78f395
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/DebugTools/Editor/Scripts/GizmoInspectors/RectGizmoInspector.cs
+  uploadId: 511094

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 829e99760f673724e947cee1dc208310
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/DebugTools/Scripts/Attributes/ButtonAttribute.cs
+  uploadId: 511094

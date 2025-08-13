@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b4d3aeb85e921fd43a6a82880863dd76
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/Core/Editor/Resources/Trigger2D.prefab
+  uploadId: 511094

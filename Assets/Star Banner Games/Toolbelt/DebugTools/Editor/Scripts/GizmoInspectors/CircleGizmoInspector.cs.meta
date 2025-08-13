@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 445442c7936353f45ac9afb174351c1f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/DebugTools/Editor/Scripts/GizmoInspectors/CircleGizmoInspector.cs
+  uploadId: 511094

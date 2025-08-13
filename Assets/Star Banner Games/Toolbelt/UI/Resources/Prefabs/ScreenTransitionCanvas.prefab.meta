@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 390dcbedddf94a041bc47cc84ba03c1e
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/UI/Resources/Prefabs/ScreenTransitionCanvas.prefab
+  uploadId: 511094

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 3f86fa74a3134b84483e7c69af2ac7e5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/DebugTools/Scripts/Gizmos/LineGizmo.cs
+  uploadId: 511094

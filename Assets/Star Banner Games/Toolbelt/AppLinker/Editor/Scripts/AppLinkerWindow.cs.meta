@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: bcf334c3cef42744c8149bb26cd238fb
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/AppLinker/Editor/Scripts/AppLinkerWindow.cs
+  uploadId: 511094

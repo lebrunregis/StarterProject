@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: eb53d1ccba1ba0b4f87855b5e2426677
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/AppLinker/Editor/Data/AppLinks.json
+  uploadId: 511094

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: b31d33998a6e70e488a5a15939e44dea
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/DebugTools/Editor/Scripts/GizmoInspectors/GizmoDisplayInspector.cs
+  uploadId: 511094

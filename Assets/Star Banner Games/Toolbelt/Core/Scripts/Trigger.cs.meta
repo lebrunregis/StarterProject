@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 5154cc2c3218f9245a64b7c3fbc7c985
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/Core/Scripts/Trigger.cs
+  uploadId: 511094

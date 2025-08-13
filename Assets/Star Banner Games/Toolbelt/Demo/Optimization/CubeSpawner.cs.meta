@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 32db572c2b534be4b897e366bf3a6cf6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/Demo/Optimization/CubeSpawner.cs
+  uploadId: 511094

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 1c65eb7f57f9d11499e35998078f0d64
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/SceneSelector/Editor/Scripts/SceneSelectorEditorWindow.cs
+  uploadId: 511094

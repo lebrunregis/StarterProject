@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: a226b4173e407cd40b1481f31ed0c860
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 224289
+  packageName: Toolbelt
+  packageVersion: 1.0.1
+  assetPath: Assets/Star Banner Games/Toolbelt/Core/Editor/Scripts/Trigger2DInspector.cs
+  uploadId: 511094
