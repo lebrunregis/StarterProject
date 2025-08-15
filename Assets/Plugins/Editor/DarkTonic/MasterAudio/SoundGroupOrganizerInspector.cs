@@ -13,7 +13,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
         private SoundGroupOrganizer _organizer;
         private List<DynamicSoundGroup> _groups;
         private bool _isDirty;
-        AudioSource previewer;
+        private AudioSource previewer;
 
         // ReSharper disable once FunctionComplexityOverflow
         public override void OnInspectorGUI()
@@ -78,7 +78,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
             // ReSharper disable once LoopCanBeConvertedToQuery
             foreach (var t in dgscs)
             {
-                var dsgc = (DynamicSoundGroupCreator)t;
+                var dsgc = t;
                 sources.Add(dsgc.gameObject);
             }
 
@@ -848,13 +848,15 @@ namespace DarkTonic.MasterAudio.EditorScripts
                     var groupToDelete = filteredGroups[indexToDelete.Value];
                     var wasDestroyed = false;
 
-                    if (PrefabUtility.IsPartOfPrefabInstance(_organizer)) {
+                    if (PrefabUtility.IsPartOfPrefabInstance(_organizer))
+                    {
                         var prefabPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(_organizer);
                         GameObject prefabRoot = PrefabUtility.LoadPrefabContents(prefabPath);
 
                         var deadTrans = prefabRoot.transform.Find(groupToDelete.name);
 
-                        if (deadTrans != null) {
+                        if (deadTrans != null)
+                        {
                             // Destroy child objects or components on rootGO
                             DestroyImmediate(deadTrans.gameObject); // can't undo
                             wasDestroyed = true;
@@ -862,9 +864,10 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
                         PrefabUtility.SaveAsPrefabAsset(prefabRoot, prefabPath);
                         PrefabUtility.UnloadPrefabContents(prefabRoot);
-                    } 
-                
-                    if (!wasDestroyed) {
+                    }
+
+                    if (!wasDestroyed)
+                    {
                         // delete variation from Hierarchy
                         AudioUndoHelper.DestroyForUndo(groupToDelete.gameObject);
                     }
@@ -1653,7 +1656,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
                 DTGUIHelper.ShowAlert("You already have a Group named '" + groupName + "'. \n\nPlease rename this Group when finished to be unique.");
             }
 
-            var spawnedGroup = (GameObject)Instantiate(_organizer.dynGroupTemplate, _organizer.transform.position, Quaternion.identity);
+            var spawnedGroup = Instantiate(_organizer.dynGroupTemplate, _organizer.transform.position, Quaternion.identity);
             spawnedGroup.name = groupName;
 
             AudioUndoHelper.CreateObjectForUndo(spawnedGroup, "create Dynamic Group");
@@ -1686,7 +1689,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
                 DTGUIHelper.ShowAlert("You already have a variation for this Group named '" + clipName + "'. \n\nPlease rename these variations when finished to be unique, or you may not be able to play them by name if you have a need to.");
             }
 
-            var spawnedVar = (GameObject)Instantiate(_organizer.dynVariationTemplate, _organizer.transform.position, Quaternion.identity);
+            var spawnedVar = Instantiate(_organizer.dynVariationTemplate, _organizer.transform.position, Quaternion.identity);
             spawnedVar.name = clipName;
 
             spawnedVar.transform.parent = aGroup;
@@ -1711,9 +1714,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                     dynamicVar.useLocalization = useLocalization;
                     break;
 #if ADDRESSABLES_ENABLED
-            case MasterAudio.AudioLocation.Addressable:
-                dynamicVar.audioClipAddressable = AddressableEditorHelper.CreateAssetReferenceFromObject(aClip);
-                break;
+                case MasterAudio.AudioLocation.Addressable:
+                    dynamicVar.audioClipAddressable = AddressableEditorHelper.CreateAssetReferenceFromObject(aClip);
+                    break;
 #endif
             }
         }
@@ -1800,9 +1803,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                     }
                     break;
 #if ADDRESSABLES_ENABLED
-            case MasterAudio.AudioLocation.Addressable: 
-                DTGUIHelper.PreviewAddressable(rndVar.audioClipAddressable, previewer, calcVolume);
-                break;
+                case MasterAudio.AudioLocation.Addressable:
+                    DTGUIHelper.PreviewAddressable(rndVar.audioClipAddressable, previewer, calcVolume);
+                    break;
 #endif
             }
         }
@@ -1947,7 +1950,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
         private GameObject CreateBlankGroup(string grpName)
         {
-            var spawnedGroup = (GameObject)Instantiate(_organizer.dynGroupTemplate, _organizer.transform.position, Quaternion.identity);
+            var spawnedGroup = Instantiate(_organizer.dynGroupTemplate, _organizer.transform.position, Quaternion.identity);
             spawnedGroup.name = grpName;
 
             AudioUndoHelper.CreateObjectForUndo(spawnedGroup, "import Organizer Group(s)");
@@ -1965,7 +1968,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
             {
                 var aVariation = aGroup.transform.GetChild(i).GetComponent<SoundGroupVariation>();
 
-                var newVariation = (GameObject)Instantiate(_organizer.dynVariationTemplate.gameObject, groupTrans.position, Quaternion.identity);
+                var newVariation = Instantiate(_organizer.dynVariationTemplate.gameObject, groupTrans.position, Quaternion.identity);
                 newVariation.transform.parent = groupTrans;
 
                 var variation = newVariation.GetComponent<DynamicGroupVariation>();
@@ -1995,9 +1998,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                         variation.useLocalization = aVariation.useLocalization;
                         break;
 #if ADDRESSABLES_ENABLED
-                case MasterAudio.AudioLocation.Addressable:
-                    variation.audioClipAddressable = aVariation.audioClipAddressable;
-                    break;
+                    case MasterAudio.AudioLocation.Addressable:
+                        variation.audioClipAddressable = aVariation.audioClipAddressable;
+                        break;
 #endif
                 }
 
@@ -2131,7 +2134,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
             groupScript.ignoreListenerPause = aGroup.ignoreListenerPause;
             groupScript.alwaysHighestPriority = aGroup.alwaysHighestPriority;
 #if ADDRESSABLES_ENABLED
-        groupScript.addressableUnusedSecondsLifespan = aGroup.addressableUnusedSecondsLifespan;
+            groupScript.addressableUnusedSecondsLifespan = aGroup.addressableUnusedSecondsLifespan;
 #endif
 
             var dyn = aGroup.GetComponentInParent<DynamicSoundGroupCreator>();
@@ -2155,11 +2158,11 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
             var groupTrans = newGroup.transform;
 
-            for(var i = 0; i < aGroup.transform.childCount; i++)
+            for (var i = 0; i < aGroup.transform.childCount; i++)
             {
                 var aVariation = aGroup.transform.GetChild(i).GetComponent<SoundGroupVariation>();
 
-                var newVariation = (GameObject)Instantiate(_organizer.dynVariationTemplate.gameObject, groupTrans.position, Quaternion.identity);
+                var newVariation = Instantiate(_organizer.dynVariationTemplate.gameObject, groupTrans.position, Quaternion.identity);
                 newVariation.transform.parent = groupTrans;
 
                 var variation = newVariation.GetComponent<DynamicGroupVariation>();
@@ -2189,9 +2192,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                         variation.useLocalization = aVariation.useLocalization;
                         break;
 #if ADDRESSABLES_ENABLED
-                case MasterAudio.AudioLocation.Addressable:
-                    variation.audioClipAddressable = aVariation.audioClipAddressable;
-                    break;
+                    case MasterAudio.AudioLocation.Addressable:
+                        variation.audioClipAddressable = aVariation.audioClipAddressable;
+                        break;
 #endif
                 }
 
@@ -2322,7 +2325,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
             groupScript.logSound = aGroup.logSound;
             groupScript.alwaysHighestPriority = aGroup.alwaysHighestPriority;
 #if ADDRESSABLES_ENABLED
-        groupScript.addressableUnusedSecondsLifespan = aGroup.addressableUnusedSecondsLifespan;
+            groupScript.addressableUnusedSecondsLifespan = aGroup.addressableUnusedSecondsLifespan;
 #endif
 
 
@@ -2336,7 +2339,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
         // ReSharper disable once FunctionComplexityOverflow
         private void ExportGroupToDgsc(DynamicSoundGroup aGroup)
         {
-            var newGroup = (GameObject)Instantiate(_organizer.dynGroupTemplate, _organizer.transform.position, Quaternion.identity);
+            var newGroup = Instantiate(_organizer.dynGroupTemplate, _organizer.transform.position, Quaternion.identity);
             newGroup.name = aGroup.name;
             newGroup.transform.position = _organizer.destObject.transform.position;
 
@@ -2349,7 +2352,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
             {
                 var aVariation = t;
 
-                var newVariation = (GameObject)Instantiate(_organizer.dynVariationTemplate.gameObject, groupTrans.position, Quaternion.identity);
+                var newVariation = Instantiate(_organizer.dynVariationTemplate.gameObject, groupTrans.position, Quaternion.identity);
                 newVariation.transform.parent = groupTrans;
                 newVariation.transform.position = groupTrans.position;
 
@@ -2380,9 +2383,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                         variation.useLocalization = aVariation.useLocalization;
                         break;
 #if ADDRESSABLES_ENABLED
-                case MasterAudio.AudioLocation.Addressable:
-                    variation.audioClipAddressable = aVariation.audioClipAddressable;
-                    break;
+                    case MasterAudio.AudioLocation.Addressable:
+                        variation.audioClipAddressable = aVariation.audioClipAddressable;
+                        break;
 #endif
                 }
 
@@ -2516,7 +2519,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
             groupScript.logSound = aGroup.logSound;
             groupScript.alwaysHighestPriority = aGroup.alwaysHighestPriority;
 #if ADDRESSABLES_ENABLED
-        groupScript.addressableUnusedSecondsLifespan = aGroup.addressableUnusedSecondsLifespan;
+            groupScript.addressableUnusedSecondsLifespan = aGroup.addressableUnusedSecondsLifespan;
 #endif
 
             var dyn = groupScript.GetComponentInParent<DynamicSoundGroupCreator>();
@@ -2573,7 +2576,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
         private void ExportGroupToMA(DynamicSoundGroup aGroup)
         {
-            var newGroup = (GameObject)Instantiate(_organizer.maGroupTemplate, _organizer.transform.position, Quaternion.identity);
+            var newGroup = Instantiate(_organizer.maGroupTemplate, _organizer.transform.position, Quaternion.identity);
             newGroup.name = aGroup.name;
             newGroup.transform.position = _organizer.destObject.transform.position;
 
@@ -2584,7 +2587,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
             foreach (var aVariation in aGroup.groupVariations)
             {
-                var newVariation = (GameObject)Instantiate(_organizer.maVariationTemplate.gameObject, groupTrans.position, Quaternion.identity);
+                var newVariation = Instantiate(_organizer.maVariationTemplate.gameObject, groupTrans.position, Quaternion.identity);
                 newVariation.transform.parent = groupTrans;
                 newVariation.transform.position = groupTrans.position;
 
@@ -2615,9 +2618,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                         variation.useLocalization = aVariation.useLocalization;
                         break;
 #if ADDRESSABLES_ENABLED
-                case MasterAudio.AudioLocation.Addressable:
-                    variation.audioClipAddressable = aVariation.audioClipAddressable;
-                    break;
+                    case MasterAudio.AudioLocation.Addressable:
+                        variation.audioClipAddressable = aVariation.audioClipAddressable;
+                        break;
 #endif
                 }
 
@@ -2754,7 +2757,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
             groupScript.logSound = aGroup.logSound;
             groupScript.alwaysHighestPriority = aGroup.alwaysHighestPriority;
 #if ADDRESSABLES_ENABLED
-        groupScript.addressableUnusedSecondsLifespan = aGroup.addressableUnusedSecondsLifespan;
+            groupScript.addressableUnusedSecondsLifespan = aGroup.addressableUnusedSecondsLifespan;
 #endif
 
             var dyn = groupScript.GetComponentInParent<MasterAudio>();

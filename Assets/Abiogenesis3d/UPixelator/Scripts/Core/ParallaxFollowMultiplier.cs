@@ -20,26 +20,25 @@ namespace Abiogenesis3d
         // public Vector3 rotationMultiplier = Vector3.one;
 
         [Header("Offsets")]
-
-        Vector3 initialTargetPosition;
-        Quaternion initialTargetRotation;
+        private Vector3 initialTargetPosition;
+        private Quaternion initialTargetRotation;
 
         public bool reInitialize;
 
-        UPixelator uPixelator;
+        private UPixelator uPixelator;
 
-        void Start()
+        private void Start()
         {
             Init();
         }
 
-        void Init()
+        private void Init()
         {
             initialTargetPosition = target.position;
             initialTargetRotation = target.rotation;
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             if (!target) return;
 

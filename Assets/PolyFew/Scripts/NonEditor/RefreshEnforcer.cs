@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BrainFailProductions.PolyFew
 {
@@ -8,13 +6,13 @@ namespace BrainFailProductions.PolyFew
     public class RefreshEnforcer : MonoBehaviour
     {
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
             DestroyImmediate(this);
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
 
         }

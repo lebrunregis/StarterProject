@@ -1,8 +1,8 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor
@@ -30,7 +30,7 @@ namespace AmazingAssets.WireframeShader.Editor
             return CanDraw(editor) ? 22 : 0;
         }
 
-        bool CanDraw(MaterialEditor editor)
+        private bool CanDraw(MaterialEditor editor)
         {
             return (editor.target as Material).HasProperty("_CurvedWorldBendSettings");
         }

@@ -1,9 +1,8 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Jobs;
+using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace Pinwheel.Griffin.Rendering
@@ -22,7 +21,7 @@ namespace Pinwheel.Griffin.Rendering
 
         public static Dictionary<GStylizedTerrain, GRenderingVisualization> vis;
 
-        private GStylizedTerrain terrain;
+        private readonly GStylizedTerrain terrain;
         private GFoliage foliage;
 
         private Camera camera;
@@ -125,7 +124,7 @@ namespace Pinwheel.Griffin.Rendering
                 prototypes = new List<GTreePrototype>();
             }
 
-            if (prototypeCache == null || prototypeCache.Length!=prototypes.Count)
+            if (prototypeCache == null || prototypeCache.Length != prototypes.Count)
             {
                 prototypeCache = new PrototypeCache[prototypes.Count];
             }
@@ -333,7 +332,7 @@ namespace Pinwheel.Griffin.Rendering
                     prototypeWillDoFrustumTest[i] = IsInstancingEnabledForAllMaterials(prototypes[i]);
                 }
 
-                GCullAndCalculateTreeTransformJob job = new GCullAndCalculateTreeTransformJob()
+                GCullAndCalculateTreeTransformJob job = new()
                 {
                     instances = nativeData.instances,
                     prototypeIndices = nativeData.prototypeIndices,
@@ -482,7 +481,7 @@ namespace Pinwheel.Griffin.Rendering
                         camera,
                         0,
                         null,
-                        proto.billboardShadowCastingMode, 
+                        proto.billboardShadowCastingMode,
                         proto.BillboardReceiveShadow,
                         null,
                         LightProbeUsage.BlendProbes,

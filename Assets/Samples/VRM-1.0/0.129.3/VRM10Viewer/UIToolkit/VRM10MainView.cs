@@ -11,65 +11,65 @@ namespace UniVRM10.VRM10Viewer
     public class VRM10MainView : MonoBehaviour
     {
         [SerializeField]
-        VRM10ViewerController m_controller = new();
+        private VRM10ViewerController m_controller = new();
 
-        VisualElement m_root;
+        private VisualElement m_root;
         // left
-        Toggle m_useAsync;
-        Toggle m_useSpringboneSingleton;
-        Toggle m_useCustomPbrMaterial;
-        Toggle m_useCustomMToonMaterial;
-        RadioButtonGroup m_motionMode;
-        Slider m_springboneExternalX;
-        Slider m_springboneExternalY;
-        Slider m_springboneExternalZ;
-        Toggle m_useSpringbonePause;
-        Toggle m_useSpringboneScaling;
-        Toggle m_showBoxMan;
-        Toggle m_enableAutoExpression;
-        EmotionElement m_happy;
-        EmotionElement m_angry;
-        EmotionElement m_sad;
-        EmotionElement m_relaxed;
-        EmotionElement m_surprised;
-        Toggle m_enableAutoLipsync;
-        ExpressionElement m_lipAa;
-        ExpressionElement m_lipIh;
-        ExpressionElement m_lipOu;
-        ExpressionElement m_lipEe;
-        ExpressionElement m_lipOh;
-        Toggle m_enableAutoBlink;
-        ExpressionElement m_blink;
-        Toggle m_enableLookatTarget;
-        Slider m_yaw;
-        Slider m_pitch;
+        private Toggle m_useAsync;
+        private Toggle m_useSpringboneSingleton;
+        private Toggle m_useCustomPbrMaterial;
+        private Toggle m_useCustomMToonMaterial;
+        private RadioButtonGroup m_motionMode;
+        private Slider m_springboneExternalX;
+        private Slider m_springboneExternalY;
+        private Slider m_springboneExternalZ;
+        private Toggle m_useSpringbonePause;
+        private Toggle m_useSpringboneScaling;
+        private Toggle m_showBoxMan;
+        private Toggle m_enableAutoExpression;
+        private EmotionElement m_happy;
+        private EmotionElement m_angry;
+        private EmotionElement m_sad;
+        private EmotionElement m_relaxed;
+        private EmotionElement m_surprised;
+        private Toggle m_enableAutoLipsync;
+        private ExpressionElement m_lipAa;
+        private ExpressionElement m_lipIh;
+        private ExpressionElement m_lipOu;
+        private ExpressionElement m_lipEe;
+        private ExpressionElement m_lipOh;
+        private Toggle m_enableAutoBlink;
+        private ExpressionElement m_blink;
+        private Toggle m_enableLookatTarget;
+        private Slider m_yaw;
+        private Slider m_pitch;
 
         // right
-        TextField m_metaName;
-        TextField m_metaVersion;
-        TextField m_metaAuthor;
-        TextField m_metaCopyright;
-        TextField m_metaContact;
-        TextField m_metaReference;
-        TextureElement m_metaThumbnail;
-        TextField m_metaPermissionAllowed;
-        TextField m_metaPermissionViolent;
-        TextField m_metaPermissionSexual;
-        TextField m_metaPermissionCommercial;
-        TextField m_metaLicense;
-        TextField m_metaDistribution;
+        private TextField m_metaName;
+        private TextField m_metaVersion;
+        private TextField m_metaAuthor;
+        private TextField m_metaCopyright;
+        private TextField m_metaContact;
+        private TextField m_metaReference;
+        private TextureElement m_metaThumbnail;
+        private TextField m_metaPermissionAllowed;
+        private TextField m_metaPermissionViolent;
+        private TextField m_metaPermissionSexual;
+        private TextField m_metaPermissionCommercial;
+        private TextField m_metaLicense;
+        private TextField m_metaDistribution;
 
         // runtime
-        VRM10AutoExpression m_autoEmotion;
-        VRM10Blinker m_autoBlink;
-        VRM10AIUEO m_autoLipsync;
+        private VRM10AutoExpression m_autoEmotion;
+        private VRM10Blinker m_autoBlink;
+        private VRM10AIUEO m_autoLipsync;
 
-        void QueryOrAssert<T>(out T dst, VisualElement root, string name) where T : VisualElement
+        private void QueryOrAssert<T>(out T dst, VisualElement root, string name) where T : VisualElement
         {
             dst = root.Q<T>(name);
             Debug.Assert(dst != null, name);
         }
-        void OnEnable()
+        private void OnEnable()
         {
             // The UXML is already instantiated by the UIDocument component
             var uiDocument = GetComponent<UIDocument>();
@@ -165,7 +165,7 @@ namespace UniVRM10.VRM10Viewer
             }
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             m_controller.Dispose();
         }
@@ -291,7 +291,7 @@ namespace UniVRM10.VRM10Viewer
             }
         }
 
-        LoadOptions MakeLoadOptions()
+        private LoadOptions MakeLoadOptions()
         {
             return new LoadOptions()
             {
@@ -302,7 +302,7 @@ namespace UniVRM10.VRM10Viewer
             };
         }
 
-        void OnLoaded(Loaded loaded)
+        private void OnLoaded(Loaded loaded)
         {
             m_showBoxMan.value = false;
             m_happy.OnLoad(loaded.Instance.Vrm.Expression.Happy);

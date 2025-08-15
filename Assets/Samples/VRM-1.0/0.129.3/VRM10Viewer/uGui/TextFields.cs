@@ -6,38 +6,38 @@ using UnityEngine.UI;
 namespace UniVRM10.VRM10Viewer
 {
     [Serializable]
-    class TextFields
+    internal class TextFields
     {
         [SerializeField]
-        Text m_textModelTitle = default;
+        private Text m_textModelTitle = default;
         [SerializeField]
-        Text m_textModelVersion = default;
+        private Text m_textModelVersion = default;
         [SerializeField]
-        Text m_textModelAuthor = default;
+        private Text m_textModelAuthor = default;
         [SerializeField]
-        Text m_textModelCopyright = default;
+        private Text m_textModelCopyright = default;
         [SerializeField]
-        Text m_textModelContact = default;
+        private Text m_textModelContact = default;
         [SerializeField]
-        Text m_textModelReference = default;
+        private Text m_textModelReference = default;
         [SerializeField]
-        RawImage m_thumbnail = default;
+        private RawImage m_thumbnail = default;
 
         [SerializeField, Header("CharacterPermission")]
-        Text m_textPermissionAllowed = default;
+        private Text m_textPermissionAllowed = default;
         [SerializeField]
-        Text m_textPermissionViolent = default;
+        private Text m_textPermissionViolent = default;
         [SerializeField]
-        Text m_textPermissionSexual = default;
+        private Text m_textPermissionSexual = default;
         [SerializeField]
-        Text m_textPermissionCommercial = default;
+        private Text m_textPermissionCommercial = default;
         [SerializeField]
-        Text m_textPermissionOther = default;
+        private Text m_textPermissionOther = default;
 
         [SerializeField, Header("DistributionLicense")]
-        Text m_textDistributionLicense = default;
+        private Text m_textDistributionLicense = default;
         [SerializeField]
-        Text m_textDistributionOther = default;
+        private Text m_textDistributionOther = default;
 
         public void Reset(ObjectMap map)
         {

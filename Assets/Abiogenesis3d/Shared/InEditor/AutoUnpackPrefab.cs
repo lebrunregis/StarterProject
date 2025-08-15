@@ -11,9 +11,9 @@ namespace Abiogenesis3d
     [ExecuteInEditMode]
     public class AutoUnpackPrefab : MonoBehaviour
     {
-        void Awake()
+        private void Awake()
         {
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
             // prefabs are unpacked in play mode by default
             if (Application.isPlaying) return;
 
@@ -24,18 +24,18 @@ namespace Abiogenesis3d
             }
 
             StartCoroutine(DelayedUnpack());
-        #endif
+#endif
         }
 
-        IEnumerator DelayedUnpack()
+        private IEnumerator DelayedUnpack()
         {
             // Wait for one frame to prevent a crash when creating a prefab variant
             yield return null;
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
             PrefabUtility.UnpackPrefabInstance(gameObject, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
             DestroyImmediate(this);
-        #endif
+#endif
         }
     }
 }

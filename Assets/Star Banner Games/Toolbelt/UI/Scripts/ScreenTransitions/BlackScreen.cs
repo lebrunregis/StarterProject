@@ -3,15 +3,15 @@ using UnityEngine.UI;
 
 namespace SBG.Toolbelt.UI
 {
-	[System.Serializable]
-	public class BlackScreen
-	{
-		[SerializeField] private Image panel;
+    [System.Serializable]
+    public class BlackScreen
+    {
+        [SerializeField] private Image panel;
 
-		public void Init()
-		{
-			Disable();
-		}
+        public void Init()
+        {
+            Disable();
+        }
 
         public void ShowBlackscreen(Color screenColor)
         {

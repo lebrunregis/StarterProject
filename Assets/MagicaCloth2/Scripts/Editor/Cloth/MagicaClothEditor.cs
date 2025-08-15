@@ -52,7 +52,7 @@ namespace MagicaCloth2
         }
 
         //=========================================================================================
-        int oldAcitve = -1;
+        private int oldAcitve = -1;
 
         //=========================================================================================
         /// <summary>
@@ -78,7 +78,7 @@ namespace MagicaCloth2
         /// <summary>
         /// エディットメッシュの構築完了通知（成否問わず）
         /// </summary>
-        void OnEditMeshBuildComplete()
+        private void OnEditMeshBuildComplete()
         {
             //Debug.Log($"MagicaClothInspector. OnEditMeshBuildComplete.");
             Repaint();
@@ -160,12 +160,12 @@ namespace MagicaCloth2
         }
 
         //=========================================================================================
-        void DispVersion()
+        private void DispVersion()
         {
             EditorGUILayout.LabelField($"Version {AboutMenu.MagicaClothVersion}");
         }
 
-        void DispStatus()
+        private void DispStatus()
         {
             var cloth = target as MagicaCloth;
 
@@ -195,7 +195,7 @@ namespace MagicaCloth2
             }
         }
 
-        void DispClothStatus(string title, ResultCode result, bool dispWarning)
+        private void DispClothStatus(string title, ResultCode result, bool dispWarning)
         {
             StaticStringBuilder.Clear();
             StaticStringBuilder.AppendLine(title);
@@ -228,7 +228,7 @@ namespace MagicaCloth2
             }
         }
 
-        void DispProxyMesh()
+        private void DispProxyMesh()
         {
             var cloth = target as MagicaCloth;
 
@@ -286,7 +286,7 @@ namespace MagicaCloth2
         }
 
 
-        void ClothMainInspector()
+        private void ClothMainInspector()
         {
             var cloth = target as MagicaCloth;
             var clothType = cloth.SerializeData.clothType;
@@ -448,7 +448,7 @@ namespace MagicaCloth2
             });
         }
 
-        void ClothPreBuildInspector()
+        private void ClothPreBuildInspector()
         {
             var cloth = target as MagicaCloth;
 
@@ -490,7 +490,7 @@ namespace MagicaCloth2
             }
         }
 
-        void ClothParameterInspector()
+        private void ClothParameterInspector()
         {
             var cloth = target as MagicaCloth;
             var clothType = cloth.SerializeData.clothType;
@@ -767,7 +767,7 @@ namespace MagicaCloth2
             return minmax;
         }
 
-        void GizmoInspector()
+        private void GizmoInspector()
         {
 #if MC2_DEBUG
             EditorGUILayout.PropertyField(serializedObject.FindProperty("gizmoSerializeData"));
@@ -884,7 +884,7 @@ namespace MagicaCloth2
                 );
         }
 
-        void FoldOut(string key, string title = null, System.Action drawAct = null)
+        private void FoldOut(string key, string title = null, System.Action drawAct = null)
         {
             bool foldOut1 = EditorPrefs.GetBool(key);
             bool foldOut2 = EditorGUILayout.Foldout(foldOut1, title ?? key);
@@ -901,7 +901,7 @@ namespace MagicaCloth2
             }
         }
 
-        void PaintButton(ClothPainter.PaintMode paintMode)
+        private void PaintButton(ClothPainter.PaintMode paintMode)
         {
             if (EditorApplication.isPlaying)
                 return;

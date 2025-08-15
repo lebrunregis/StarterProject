@@ -1,16 +1,16 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor
 {
     public class WireframeSourceProjectorDrawer : WireframeMaterialBasePropertyDrawer
     {
-        static string[] keywordSourceNames = new string[] { "Baked (Barycentric Coordinates)", "Dynamic (Geometry Shader)" };
-        static int[] intValues = new int[] { 0, 1 };
+        private static readonly string[] keywordSourceNames = new string[] { "Baked (Barycentric Coordinates)", "Dynamic (Geometry Shader)" };
+        private static readonly int[] intValues = new int[] { 0, 1 };
 
 
         public override void OnGUI(Rect position, MaterialProperty prop, string label, MaterialEditor editor)

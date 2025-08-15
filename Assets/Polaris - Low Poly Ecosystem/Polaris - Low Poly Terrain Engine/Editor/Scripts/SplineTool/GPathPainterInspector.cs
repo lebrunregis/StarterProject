@@ -70,8 +70,8 @@ namespace Pinwheel.Griffin.SplineTool
 
         private class GBaseGUI
         {
-            public static readonly GUIContent SPLINE_CREATOR = new GUIContent("Spline Creator", "The Spline Creator component this modifier belongs to");
-            public static readonly GUIContent LIVE_PREVIEW = new GUIContent("Live Preview", "Draw a preview over the terrain");
+            public static readonly GUIContent SPLINE_CREATOR = new("Spline Creator", "The Spline Creator component this modifier belongs to");
+            public static readonly GUIContent LIVE_PREVIEW = new("Live Preview", "Draw a preview over the terrain");
         }
 
         private void DrawBaseGUI()
@@ -90,9 +90,9 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Falloff";
             public static readonly string ID = "spline-path-painter-falloff";
 
-            public static readonly GUIContent FALL_OFF = new GUIContent("Falloff", "Falloff factor of the spline effect, from the center to the edge");
-            public static readonly GUIContent FALL_OFF_NOISE = new GUIContent("Falloff Noise", "Noise map in world space to blend with the falloff curve");
-            public static readonly GUIContent FALL_OFF_NOISE_SIZE = new GUIContent("Falloff Noise Size", "Size of the falloff noise in world space");
+            public static readonly GUIContent FALL_OFF = new("Falloff", "Falloff factor of the spline effect, from the center to the edge");
+            public static readonly GUIContent FALL_OFF_NOISE = new("Falloff Noise", "Noise map in world space to blend with the falloff curve");
+            public static readonly GUIContent FALL_OFF_NOISE_SIZE = new("Falloff Noise Size", "Size of the falloff noise in world space");
         }
 
         private void DrawFalloffGUI()
@@ -116,13 +116,13 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Path";
             public static readonly string ID = "spline-path-painter-path";
 
-            public static readonly GUIContent CHANNEL = new GUIContent("Channel", "The target texture to paint the path on");
-            public static readonly GUIContent COLOR = new GUIContent("Color", "Color of the path");
-            public static readonly GUIContent METALLIC = new GUIContent("Metallic", "Metallic value of the path");
-            public static readonly GUIContent SMOOTHNESS = new GUIContent("Smoothness", "Smoothness value of the path");
-            public static readonly GUIContent AMS_NOTE = new GUIContent("Use a material that utilizes Albedo & Metallic map to see the result!");
-            public static readonly GUIContent SPLAT_PROTOTYPE = new GUIContent("Prototype");
-            public static readonly GUIContent SPLAT_NOTE = new GUIContent("Use a material that utilizes Splat map to see the result!");
+            public static readonly GUIContent CHANNEL = new("Channel", "The target texture to paint the path on");
+            public static readonly GUIContent COLOR = new("Color", "Color of the path");
+            public static readonly GUIContent METALLIC = new("Metallic", "Metallic value of the path");
+            public static readonly GUIContent SMOOTHNESS = new("Smoothness", "Smoothness value of the path");
+            public static readonly GUIContent AMS_NOTE = new("Use a material that utilizes Albedo & Metallic map to see the result!");
+            public static readonly GUIContent SPLAT_PROTOTYPE = new("Prototype");
+            public static readonly GUIContent SPLAT_NOTE = new("Use a material that utilizes Splat map to see the result!");
         }
 
         private void DrawPathGUI()
@@ -156,7 +156,7 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Action";
             public static readonly string ID = "spline-path-painter-action";
 
-            public static readonly GUIContent APPLY_BTN = new GUIContent("Apply");
+            public static readonly GUIContent APPLY_BTN = new("Apply");
         }
 
         private void DrawActionGUI()
@@ -180,7 +180,7 @@ namespace Pinwheel.Griffin.SplineTool
             string historyPrefix =
                 instance.Channel == GPathPainter.PaintChannel.AlbedoAndMetallic ? HISTORY_PREFIX_ALBEDO_METALLIC :
                 instance.Channel == GPathPainter.PaintChannel.Splat ? HISTORY_PREFIX_SPLAT : "Unknown Action";
-            List<GTerrainResourceFlag> resourceFlag = new List<GTerrainResourceFlag>();
+            List<GTerrainResourceFlag> resourceFlag = new();
             if (instance.Channel == GPathPainter.PaintChannel.AlbedoAndMetallic)
             {
                 resourceFlag.Add(GTerrainResourceFlag.AlbedoMap);
@@ -213,7 +213,7 @@ namespace Pinwheel.Griffin.SplineTool
             string historyPrefix =
                 instance.Channel == GPathPainter.PaintChannel.AlbedoAndMetallic ? HISTORY_PREFIX_ALBEDO_METALLIC :
                 instance.Channel == GPathPainter.PaintChannel.Splat ? HISTORY_PREFIX_SPLAT : "Unknown Action";
-            List<GTerrainResourceFlag> resourceFlag = new List<GTerrainResourceFlag>();
+            List<GTerrainResourceFlag> resourceFlag = new();
             if (instance.Channel == GPathPainter.PaintChannel.AlbedoAndMetallic)
             {
                 resourceFlag.Add(GTerrainResourceFlag.AlbedoMap);
@@ -322,7 +322,7 @@ namespace Pinwheel.Griffin.SplineTool
             if (!previewTextures.ContainsKey(key) ||
                 previewTextures[key] == null)
             {
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 rt.wrapMode = TextureWrapMode.Clamp;
                 previewTextures[key] = rt;
             }
@@ -330,7 +330,7 @@ namespace Pinwheel.Griffin.SplineTool
             {
                 previewTextures[key].Release();
                 Object.DestroyImmediate(previewTextures[key]);
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 rt.wrapMode = TextureWrapMode.Clamp;
                 previewTextures[key] = rt;
             }

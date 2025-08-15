@@ -1,12 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
-using Pinwheel.Griffin.GroupTool;
-using Pinwheel.Griffin.PaintTool;
-using Pinwheel.Griffin.SplineTool;
-using Pinwheel.Griffin.StampTool;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.Wizard
 {

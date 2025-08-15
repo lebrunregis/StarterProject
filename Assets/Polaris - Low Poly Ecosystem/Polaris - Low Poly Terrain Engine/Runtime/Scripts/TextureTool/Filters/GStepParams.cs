@@ -22,7 +22,7 @@ namespace Pinwheel.Griffin.TextureTool
 
         public static GStepParams Create()
         {
-            GStepParams param = new GStepParams();
+            GStepParams param = new();
             param.Count = 256;
             return param;
         }

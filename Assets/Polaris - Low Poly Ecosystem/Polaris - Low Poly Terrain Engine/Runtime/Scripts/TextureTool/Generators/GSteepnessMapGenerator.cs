@@ -27,13 +27,13 @@ namespace Pinwheel.Griffin.TextureTool
             }
             else
             {
-                GNormalMapGeneratorParams normalMapParam = new GNormalMapGeneratorParams();
+                GNormalMapGeneratorParams normalMapParam = new();
                 normalMapParam.Terrain = param.Terrain;
                 normalMapParam.Space = GNormalMapSpace.Local;
                 normalMapParam.Mode = param.Mode;
 
-                RenderTexture normalMap = new RenderTexture(targetRt);
-                GNormalMapGenerator gen = new GNormalMapGenerator();
+                RenderTexture normalMap = new(targetRt);
+                GNormalMapGenerator gen = new();
                 if (param.Mode == GNormalMapMode.Sharp)
                 {
                     gen.RenderSharpNormalMap(normalMapParam, normalMap);

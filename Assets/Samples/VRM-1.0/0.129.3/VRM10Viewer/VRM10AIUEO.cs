@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -7,10 +6,10 @@ namespace UniVRM10.VRM10Viewer
 {
     public class VRM10AIUEO : MonoBehaviour
     {
-        Coroutine m_coroutine;
+        private Coroutine m_coroutine;
 
         [SerializeField]
-        float m_wait = 0.5f;
+        private float m_wait = 0.5f;
 
         public float Aa = 0.0f;
         public float Ih = 0.0f;
@@ -18,7 +17,7 @@ namespace UniVRM10.VRM10Viewer
         public float Ee = 0.0f;
         public float Oh = 0.0f;
 
-        void SetWeight(ExpressionPreset preset, float value)
+        private void SetWeight(ExpressionPreset preset, float value)
         {
             switch (preset)
             {
@@ -31,7 +30,7 @@ namespace UniVRM10.VRM10Viewer
             }
         }
 
-        IEnumerator RoutineNest(ExpressionPreset preset, float velocity, float wait)
+        private IEnumerator RoutineNest(ExpressionPreset preset, float velocity, float wait)
         {
             for (var value = 0.0f; value <= 1.0f; value += velocity)
             {
@@ -49,7 +48,7 @@ namespace UniVRM10.VRM10Viewer
             yield return new WaitForSeconds(wait * 2);
         }
 
-        IEnumerator Routine()
+        private IEnumerator Routine()
         {
             while (true)
             {

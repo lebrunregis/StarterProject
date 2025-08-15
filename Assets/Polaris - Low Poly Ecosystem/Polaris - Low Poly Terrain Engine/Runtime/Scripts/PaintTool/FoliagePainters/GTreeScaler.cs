@@ -31,7 +31,7 @@ namespace Pinwheel.Griffin.PaintTool
         {
             get
             {
-                List<Type> types = new List<Type>(new Type[]
+                List<Type> types = new(new Type[]
                 {
                     typeof(GScaleClampFilter)
                 });
@@ -87,7 +87,7 @@ namespace Pinwheel.Griffin.PaintTool
 
             int multiplier = args.ActionType == GPainterActionType.Normal ? 1 : -1;
             int treeIndex = -1;
-            Vector3 terrainSize = new Vector3(
+            Vector3 terrainSize = new(
                 terrain.TerrainData.Geometry.Width,
                 terrain.TerrainData.Geometry.Height,
                 terrain.TerrainData.Geometry.Length);

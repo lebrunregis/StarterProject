@@ -67,7 +67,7 @@ namespace MagicaCloth2
         /// <returns></returns>
         public int* GetJobSchedulePtr()
         {
-            return (int*)Counter.GetUnsafePtrWithoutChecks();
+            return Counter.GetUnsafePtrWithoutChecks();
         }
 
         public override string ToString()

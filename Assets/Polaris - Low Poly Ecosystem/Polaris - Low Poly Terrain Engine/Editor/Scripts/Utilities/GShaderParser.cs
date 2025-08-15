@@ -20,7 +20,7 @@ namespace Pinwheel.Griffin
 
         public static List<string> GetProperties(Shader shader, string type)
         {
-            List<string> props = new List<string>();
+            List<string> props = new();
             List<string> lines = GetShaderContent(shader);
             CleanUpContent(lines);
             ExtractPropertiesLines(lines);
@@ -46,7 +46,7 @@ namespace Pinwheel.Griffin
 
         private static List<string> GetShaderContent(Shader shader)
         {
-            List<string> lines = new List<string>();
+            List<string> lines = new();
             string path = AssetDatabase.GetAssetPath(shader);
             if (File.Exists(path))
             {
@@ -112,7 +112,7 @@ namespace Pinwheel.Griffin
 
         private static void ExtractPropertiesLines(List<string> lines)
         {
-            StringBuilder s = new StringBuilder();
+            StringBuilder s = new();
             for (int i = 0; i < lines.Count; ++i)
             {
                 s.AppendLine(lines[i]);

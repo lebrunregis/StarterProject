@@ -8,7 +8,7 @@ namespace Abiogenesis3d
         public Behaviour target;
         public Behaviour source;
 
-        void Update()
+        private void Update()
         {
             if (!target) return;
 

@@ -184,8 +184,8 @@ namespace Pinwheel.Griffin.StampTool
 
         private Texture2D falloffTexture;
 
-        private Vector3[] worldPoints = new Vector3[4];
-        private Vector2[] uvPoints = new Vector2[4];
+        private readonly Vector3[] worldPoints = new Vector3[4];
+        private readonly Vector2[] uvPoints = new Vector2[4];
 
         private Dictionary<string, RenderTexture> tempRt;
         private Dictionary<string, RenderTexture> TempRt
@@ -428,10 +428,10 @@ namespace Pinwheel.Griffin.StampTool
         private void ApplyAlbedoMetallicSmoothness(GStylizedTerrain t)
         {
             int albedoMapResolution = t.TerrainData.Shading.AlbedoMapResolution;
-            RenderTexture albedoRt = new RenderTexture(albedoMapResolution, albedoMapResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture albedoRt = new(albedoMapResolution, albedoMapResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
 
             int metallicMapResolution = t.TerrainData.Shading.MetallicMapResolution;
-            RenderTexture metallicRt = new RenderTexture(metallicMapResolution, metallicMapResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture metallicRt = new(metallicMapResolution, metallicMapResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
 
             bool succeed = Internal_ApplyAlbedoMetallicSmoothness(t, albedoRt, metallicRt);
             if (!succeed)
@@ -585,7 +585,7 @@ namespace Pinwheel.Griffin.StampTool
             if (!TempRt.ContainsKey(key) ||
                 TempRt[key] == null)
             {
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 rt.wrapMode = TextureWrapMode.Clamp;
                 TempRt[key] = rt;
             }
@@ -593,7 +593,7 @@ namespace Pinwheel.Griffin.StampTool
             {
                 TempRt[key].Release();
                 Object.DestroyImmediate(TempRt[key]);
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 rt.wrapMode = TextureWrapMode.Clamp;
                 TempRt[key] = rt;
             }

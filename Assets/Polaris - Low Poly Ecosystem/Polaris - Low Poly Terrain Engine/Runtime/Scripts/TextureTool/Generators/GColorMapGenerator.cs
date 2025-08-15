@@ -36,11 +36,11 @@ namespace Pinwheel.Griffin.TextureTool
                     {
                         GSplatPrototype p = shading.Splats.Prototypes[prototypeIndex];
                         mat.SetTexture("_Splat" + channel, p.Texture);
-                        Vector2 terrainSize = new Vector2(t.TerrainData.Geometry.Width, t.TerrainData.Geometry.Length);
-                        Vector2 textureScale = new Vector2(
+                        Vector2 terrainSize = new(t.TerrainData.Geometry.Width, t.TerrainData.Geometry.Length);
+                        Vector2 textureScale = new(
                             p.TileSize.x != 0 ? terrainSize.x / p.TileSize.x : 0,
                             p.TileSize.y != 0 ? terrainSize.y / p.TileSize.y : 0);
-                        Vector2 textureOffset = new Vector2(
+                        Vector2 textureOffset = new(
                             p.TileOffset.x != 0 ? terrainSize.x / p.TileOffset.x : 0,
                             p.TileOffset.y != 0 ? terrainSize.y / p.TileOffset.y : 0);
                         mat.SetTextureScale("_Splat" + channel, textureScale);

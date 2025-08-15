@@ -1,11 +1,10 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
- 
+
 using System;
 using System.IO;
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor
@@ -29,7 +28,7 @@ namespace AmazingAssets.WireframeShader.Editor
         #endregion
 
         #region Tabs
-        bool drawTabHelp = false;
+        private bool drawTabHelp = false;
         #endregion
 
 
@@ -86,7 +85,7 @@ namespace AmazingAssets.WireframeShader.Editor
                         {
                             if (Event.current.button == 1)   //Right click
                             {
-                                TextEditor te = new TextEditor();
+                                TextEditor te = new();
                                 te.text = WireframeShaderAbout.supportMail;
                                 te.SelectAll();
                                 te.Copy();
@@ -167,14 +166,14 @@ namespace AmazingAssets.WireframeShader.Editor
 
 
 
-            Rect rectUseParentAsset = new Rect(collumnRect2.xMax - 50, collumnRect2.yMin, 50, collumnRect2.height);
+            Rect rectUseParentAsset = new(collumnRect2.xMax - 50, collumnRect2.yMin, 50, collumnRect2.height);
 
             Texture iconUseParentAsset = EditorResources.IconNone;
             if (useParentAssetNameAsSubfolder) iconUseParentAsset = EditorResources.IconFolder;
 
             if (GUI.Button(rectUseParentAsset, new GUIContent(iconUseParentAsset, "Use parent asset's name as subfolder?")))
             {
-                GenericMenu menu = new GenericMenu();
+                GenericMenu menu = new();
 
                 menu.AddItem(new GUIContent("As Subfolder"), useParentAssetNameAsSubfolder, CallbackUseParentAsset, true);
                 menu.AddItem(new GUIContent("Do Not Use"), !useParentAssetNameAsSubfolder, CallbackUseParentAsset, false);
@@ -433,7 +432,7 @@ namespace AmazingAssets.WireframeShader.Editor
         }
 
 
-        void CallbackUseParentAsset(object obj)
+        private void CallbackUseParentAsset(object obj)
         {
             useParentAssetNameAsSubfolder = (bool)obj;
         }

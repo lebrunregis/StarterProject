@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 namespace Abiogenesis3d
@@ -29,7 +28,7 @@ namespace Abiogenesis3d
         // public static List<T> AddAndGetRendererFeatures<T>() where T : ScriptableRendererFeature
         public static List<T> AddAndGetRendererFeatures<T>(List<UniversalRenderPipelineAsset> urpAssets) where T : ScriptableRendererFeature
         {
-            List<T> features = new List<T>();
+            List<T> features = new();
 
             var handledDataObjects = new List<ScriptableRendererData>();
 
@@ -75,7 +74,7 @@ namespace Abiogenesis3d
         /// </summary>
         /// <param name="asset"></param>
         /// <returns></returns>
-        static int getDefaultRendererIndex(UniversalRenderPipelineAsset asset)
+        private static int getDefaultRendererIndex(UniversalRenderPipelineAsset asset)
         {
             return (int)typeof(UniversalRenderPipelineAsset).GetField("m_DefaultRendererIndex", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(asset);
         }
@@ -85,7 +84,7 @@ namespace Abiogenesis3d
         /// Thanks to: https://forum.unity.com/threads/urp-adding-a-renderfeature-from-script.1117060/#post-7184455
         /// </summary>
         /// <returns></returns>
-        static ScriptableRendererData getDefaultRenderer(UniversalRenderPipelineAsset asset)
+        private static ScriptableRendererData getDefaultRenderer(UniversalRenderPipelineAsset asset)
         {
             if (asset)
             {
@@ -109,7 +108,7 @@ namespace Abiogenesis3d
         /// </summary>
         /// <param name="data"></param>
         /// <param name="feature"></param>
-        static void addRenderFeature(ScriptableRendererData data, ScriptableRendererFeature feature)
+        private static void addRenderFeature(ScriptableRendererData data, ScriptableRendererFeature feature)
         {
             // Let's mirror what Unity does.
             var serializedObject = new SerializedObject(data);

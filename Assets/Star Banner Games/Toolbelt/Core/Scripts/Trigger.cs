@@ -3,8 +3,8 @@ using UnityEngine.Events;
 
 namespace SBG.Toolbelt
 {
-	public abstract class Trigger : MonoBehaviour
-	{
+    public abstract class Trigger : MonoBehaviour
+    {
         protected enum TriggerEvent
         {
             OnTriggerEnter,
@@ -35,12 +35,12 @@ namespace SBG.Toolbelt
 
             switch (triggerEvent)
             {
-                case TriggerEvent.OnTriggerEnter:   OnTriggerEnterEvent?.Invoke(); break;
-                case TriggerEvent.OnTriggerExit:    OnTriggerExitEvent?.Invoke(); break;
-                case TriggerEvent.OnTriggerStay:    OnTriggerStayEvent?.Invoke(); break;
+                case TriggerEvent.OnTriggerEnter: OnTriggerEnterEvent?.Invoke(); break;
+                case TriggerEvent.OnTriggerExit: OnTriggerExitEvent?.Invoke(); break;
+                case TriggerEvent.OnTriggerStay: OnTriggerStayEvent?.Invoke(); break;
                 case TriggerEvent.OnCollisionEnter: OnCollisionEnterEvent?.Invoke(); break;
-                case TriggerEvent.OnCollisionExit:  OnCollisionExitEvent?.Invoke(); break;
-                case TriggerEvent.OnCollisionStay:  OnCollisionStayEvent?.Invoke(); break;
+                case TriggerEvent.OnCollisionExit: OnCollisionExitEvent?.Invoke(); break;
+                case TriggerEvent.OnCollisionStay: OnCollisionStayEvent?.Invoke(); break;
                 default: break;
             }
         }

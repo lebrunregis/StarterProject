@@ -167,7 +167,7 @@ namespace Pinwheel.Griffin.DataTool
         private void DoBulkImport()
         {
             string[] guid = AssetDatabase.FindAssets("t:Texture2D", new string[] { Directory });
-            List<Texture2D> textures = new List<Texture2D>();
+            List<Texture2D> textures = new();
             for (int i = 0; i < guid.Length; ++i)
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid[i]);
@@ -195,7 +195,7 @@ namespace Pinwheel.Griffin.DataTool
                         cm[i] = textures.Find(tex => tex.name.StartsWith("ControlMap" + i.ToString()) && tex.name.EndsWith(t.TerrainData.Id));
                     }
 
-                    GTextureImporter importer = new GTextureImporter();
+                    GTextureImporter importer = new();
                     importer.Terrain = t;
                     importer.DesData = t.TerrainData;
                     importer.HeightMap = hm;
@@ -219,7 +219,7 @@ namespace Pinwheel.Griffin.DataTool
                 GBackup.TryCreateInitialBackup(HISTORY_PREFIX, Terrain, GCommon.AllResourceFlags);
             }
 
-            GTextureImporter importer = new GTextureImporter();
+            GTextureImporter importer = new();
             importer.Terrain = Terrain;
             importer.DesData = DesData;
             importer.HeightMap = HeightMap;

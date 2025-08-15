@@ -137,7 +137,7 @@ namespace Pinwheel.Griffin.DataTool
                 GBackup.TryCreateInitialBackup(HISTORY_PREFIX, Terrain, GCommon.HeightMapAndFoliageResourceFlags);
             }
 
-            GRawImporter importer = new GRawImporter();
+            GRawImporter importer = new();
             importer.Terrain = Terrain;
             importer.DesData = DesData;
             importer.BitDepth = BitDepth;
@@ -154,7 +154,7 @@ namespace Pinwheel.Griffin.DataTool
         private void DoBulkImport()
         {
             string ext = BitDepth == GBitDepth.Bit8 ? "raw" : "r16";
-            List<string> files = new List<string>(Directory.GetFiles(DataDirectory));
+            List<string> files = new(Directory.GetFiles(DataDirectory));
             files.RemoveAll(f => !f.EndsWith(ext));
 
             GCommon.ForEachTerrain(
@@ -175,7 +175,7 @@ namespace Pinwheel.Griffin.DataTool
 
                     GBackup.TryCreateInitialBackup(HISTORY_PREFIX, t, GCommon.HeightMapAndFoliageResourceFlags);
 
-                    GRawImporter importer = new GRawImporter();
+                    GRawImporter importer = new();
                     importer.Terrain = t;
                     importer.DesData = t.TerrainData;
                     importer.BitDepth = BitDepth;

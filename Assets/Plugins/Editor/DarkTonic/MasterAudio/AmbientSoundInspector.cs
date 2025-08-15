@@ -1,6 +1,6 @@
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using System.Collections.Generic;
 
 namespace DarkTonic.MasterAudio.EditorScripts
 {
@@ -303,79 +303,100 @@ namespace DarkTonic.MasterAudio.EditorScripts
                 DTGUIHelper.ShowColorWarning("You can also bulk apply Min/Max Distance and other Audio Source properties with Audio Source Templates using the Master Audio Mixer.");
             }
 
-	        DTGUIHelper.StartGroupHeader();
-	        var newClosest = GUILayout.Toggle(_sounds.UseClosestColliderPosition, new GUIContent(" Use Closest Collider Position", "Using this option, the Audio Source will be updated every frame to the closest position on the caller's collider(s)."));
-	        if (newClosest != _sounds.UseClosestColliderPosition) {
-	            AudioUndoHelper.RecordObjectPropertyForUndo(ref _isDirty, _sounds, "toggle Follow Caller");
-	            _sounds.UseClosestColliderPosition = newClosest;
-	        }
+            DTGUIHelper.StartGroupHeader();
+            var newClosest = GUILayout.Toggle(_sounds.UseClosestColliderPosition, new GUIContent(" Use Closest Collider Position", "Using this option, the Audio Source will be updated every frame to the closest position on the caller's collider(s)."));
+            if (newClosest != _sounds.UseClosestColliderPosition)
+            {
+                AudioUndoHelper.RecordObjectPropertyForUndo(ref _isDirty, _sounds, "toggle Follow Caller");
+                _sounds.UseClosestColliderPosition = newClosest;
+            }
 
-	        EditorGUILayout.EndVertical();
-	        if (_sounds.UseClosestColliderPosition) {
-	            var newTop = EditorGUILayout.Toggle("Use Top Collider", _sounds.UseTopCollider);
-	            if (newTop != _sounds.UseTopCollider) {
-	                AudioUndoHelper.RecordObjectPropertyForUndo(ref _isDirty, _sounds, "toggle Use Top Collider");
-	                _sounds.UseTopCollider = newTop;
-	            }
-	            var newChild = EditorGUILayout.Toggle("Use Child G.O. Colliders", _sounds.IncludeChildColliders);
-	            if (newChild != _sounds.IncludeChildColliders) {
-	                AudioUndoHelper.RecordObjectPropertyForUndo(ref _isDirty, _sounds, "toggle Use Child G.O. Colliders");
-	                _sounds.IncludeChildColliders = newChild;
-	            }
+            EditorGUILayout.EndVertical();
+            if (_sounds.UseClosestColliderPosition)
+            {
+                var newTop = EditorGUILayout.Toggle("Use Top Collider", _sounds.UseTopCollider);
+                if (newTop != _sounds.UseTopCollider)
+                {
+                    AudioUndoHelper.RecordObjectPropertyForUndo(ref _isDirty, _sounds, "toggle Use Top Collider");
+                    _sounds.UseTopCollider = newTop;
+                }
+                var newChild = EditorGUILayout.Toggle("Use Child G.O. Colliders", _sounds.IncludeChildColliders);
+                if (newChild != _sounds.IncludeChildColliders)
+                {
+                    AudioUndoHelper.RecordObjectPropertyForUndo(ref _isDirty, _sounds, "toggle Use Child G.O. Colliders");
+                    _sounds.IncludeChildColliders = newChild;
+                }
 
-	            var colliderObjects = new List<GameObject>();
+                var colliderObjects = new List<GameObject>();
 
-	            if (_sounds.UseTopCollider) {
-	                var collider = _sounds.GetComponent<Collider>();
-	                var collider2d = _sounds.GetComponent<Collider2D>();
-	                if (collider != null) {
-	                    colliderObjects.Add(collider.gameObject);
-	                } else if (collider2d != null) {
-	                    colliderObjects.Add(collider2d.gameObject);
-	                }
-	            }
-	            if (_sounds.IncludeChildColliders) {
-	                for (var i = 0; i < _sounds.transform.childCount; i++) {
-	                    var child = _sounds.transform.GetChild(i);
-	                    var collider = child.GetComponent<Collider>();
-	                    var collider2d = child.GetComponent<Collider2D>();
-	                    if (collider != null) {
-	                        colliderObjects.Add(collider.gameObject);
-	                    } else if (collider2d != null) {
-	                        colliderObjects.Add(collider2d.gameObject);
-	                    }
-	                }
-	            }
+                if (_sounds.UseTopCollider)
+                {
+                    var collider = _sounds.GetComponent<Collider>();
+                    var collider2d = _sounds.GetComponent<Collider2D>();
+                    if (collider != null)
+                    {
+                        colliderObjects.Add(collider.gameObject);
+                    }
+                    else if (collider2d != null)
+                    {
+                        colliderObjects.Add(collider2d.gameObject);
+                    }
+                }
+                if (_sounds.IncludeChildColliders)
+                {
+                    for (var i = 0; i < _sounds.transform.childCount; i++)
+                    {
+                        var child = _sounds.transform.GetChild(i);
+                        var collider = child.GetComponent<Collider>();
+                        var collider2d = child.GetComponent<Collider2D>();
+                        if (collider != null)
+                        {
+                            colliderObjects.Add(collider.gameObject);
+                        }
+                        else if (collider2d != null)
+                        {
+                            colliderObjects.Add(collider2d.gameObject);
+                        }
+                    }
+                }
 
-	            if (colliderObjects.Count == 0) {
-	                DTGUIHelper.ShowRedError("You have zero Colliders selected, so this functionality will not work.");
-	            } else {
-	                EditorGUILayout.BeginHorizontal();
-	                DTGUIHelper.ShowColorWarning("Colliders used: " + colliderObjects.Count);
-	                if (GUILayout.Button("Select\nColliders", GUILayout.Width(70))) {
-	                    Selection.objects = colliderObjects.ToArray();
-	                }
-	                EditorGUILayout.EndHorizontal();
-	            }
+                if (colliderObjects.Count == 0)
+                {
+                    DTGUIHelper.ShowRedError("You have zero Colliders selected, so this functionality will not work.");
+                }
+                else
+                {
+                    EditorGUILayout.BeginHorizontal();
+                    DTGUIHelper.ShowColorWarning("Colliders used: " + colliderObjects.Count);
+                    if (GUILayout.Button("Select\nColliders", GUILayout.Width(70)))
+                    {
+                        Selection.objects = colliderObjects.ToArray();
+                    }
+                    EditorGUILayout.EndHorizontal();
+                }
 
-	            EditorGUILayout.EndVertical();
-	        } else {
-	            EditorGUILayout.EndVertical();
+                EditorGUILayout.EndVertical();
+            }
+            else
+            {
+                EditorGUILayout.EndVertical();
 
-	            DTGUIHelper.StartGroupHeader();
-	            var newFollow =
-	                    GUILayout.Toggle(_sounds.FollowCaller, new GUIContent(" Follow Caller",
-	                            "This option is useful if your caller ever moves, as it will make the Audio Source follow to the location of the caller every frame."));
-	            if (newFollow != _sounds.FollowCaller) {
-	                AudioUndoHelper.RecordObjectPropertyForUndo(ref _isDirty, _sounds, "toggle Follow Caller");
-	                _sounds.FollowCaller = newFollow;
-	            }
-	            EditorGUILayout.EndVertical();
-	            if (_sounds.FollowCaller) {
-	                DTGUIHelper.ShowColorWarning("Will follow caller at runtime.");
-	            }
-	            EditorGUILayout.EndVertical();
-	        }
+                DTGUIHelper.StartGroupHeader();
+                var newFollow =
+                        GUILayout.Toggle(_sounds.FollowCaller, new GUIContent(" Follow Caller",
+                                "This option is useful if your caller ever moves, as it will make the Audio Source follow to the location of the caller every frame."));
+                if (newFollow != _sounds.FollowCaller)
+                {
+                    AudioUndoHelper.RecordObjectPropertyForUndo(ref _isDirty, _sounds, "toggle Follow Caller");
+                    _sounds.FollowCaller = newFollow;
+                }
+                EditorGUILayout.EndVertical();
+                if (_sounds.FollowCaller)
+                {
+                    DTGUIHelper.ShowColorWarning("Will follow caller at runtime.");
+                }
+                EditorGUILayout.EndVertical();
+            }
 
             if (Application.isPlaying)
             {
@@ -396,7 +417,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
             }
 
 #if UNITY_2023_1_OR_NEWER
-            var creators = FindObjectsByType<DynamicSoundGroupCreator>(FindObjectsInactive.Include, FindObjectsSortMode.None) as DynamicSoundGroupCreator[];
+            var creators = FindObjectsByType<DynamicSoundGroupCreator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 #else
             var creators = FindObjectsOfType(typeof(DynamicSoundGroupCreator)) as DynamicSoundGroupCreator[];
 #endif

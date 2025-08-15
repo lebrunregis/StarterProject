@@ -1,11 +1,10 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
-using System.Linq;
 using System.Collections.Generic;
-
-using UnityEngine;
+using System.Linq;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor

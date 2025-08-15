@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace SBG.Toolbelt.DebugTools.Editor
 {
-	[CustomEditor(typeof(RectGizmo))]
-	public class RectGizmoInspector : GizmoDisplayInspector
-	{
+    [CustomEditor(typeof(RectGizmo))]
+    public class RectGizmoInspector : GizmoDisplayInspector
+    {
         private SerializedProperty _applyRot;
         private SerializedProperty _rotOffset;
         private SerializedProperty _size;

@@ -1,10 +1,8 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
-using System;
-using System.Security.Cryptography;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {

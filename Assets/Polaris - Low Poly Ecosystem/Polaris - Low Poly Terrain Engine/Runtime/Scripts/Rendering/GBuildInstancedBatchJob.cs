@@ -1,10 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Jobs;
-using Unity.Burst;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.Rendering
 {
@@ -25,7 +22,7 @@ namespace Pinwheel.Griffin.Rendering
         {
             int startIndex = 0;
             int prototypeIndex = int.MinValue;
-            Vector3Int metadata = new Vector3Int(instances[0].prototypeIndex, startIndex, 0);
+            Vector3Int metadata = new(instances[0].prototypeIndex, startIndex, 0);
             int batchCount = 0;
 
             int length = instances.Length;

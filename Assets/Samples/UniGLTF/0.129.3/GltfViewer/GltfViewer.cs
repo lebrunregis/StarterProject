@@ -5,16 +5,16 @@ namespace UniGLTF.GltfViewer
 {
     public class GltfViewer : MonoBehaviour
     {
-        RuntimeGltfInstance _instance;
+        private RuntimeGltfInstance _instance;
 
         // Start is called before the first frame update
-        void Start()
+        private void Start()
         {
 
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
 
         }
@@ -31,7 +31,7 @@ namespace UniGLTF.GltfViewer
             LoadPathAsync(path);
         }
 
-        async void LoadPathAsync(PathObject path)
+        private async void LoadPathAsync(PathObject path)
         {
             if (_instance)
             {

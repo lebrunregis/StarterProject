@@ -2,6 +2,6 @@
 
 namespace CitrioN.Common
 {
-  [SkipObfuscation]
-  public class GlobalEventListener_GameObject : GlobalEventListener<GameObject> { }
+    [SkipObfuscation]
+    public class GlobalEventListener_GameObject : GlobalEventListener<GameObject> { }
 }

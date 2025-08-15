@@ -12,14 +12,14 @@ namespace MagicaCloth2
     [InitializeOnLoad]
     public class DrawIconInHierarchy
     {
-        const int iconSize = 16;
+        private const int iconSize = 16;
 
         static DrawIconInHierarchy()
         {
             EditorApplication.hierarchyWindowItemOnGUI += DrawIcon;
         }
 
-        static void DrawIcon(int instanceId, Rect rect)
+        private static void DrawIcon(int instanceId, Rect rect)
         {
             rect.width = iconSize;
             GameObject obj = UnityEditor.EditorUtility.InstanceIDToObject(instanceId) as GameObject;

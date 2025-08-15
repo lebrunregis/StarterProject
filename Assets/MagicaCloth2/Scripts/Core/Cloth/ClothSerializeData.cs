@@ -27,7 +27,7 @@ namespace MagicaCloth2
         /// [NG] Runtime changes.
         /// [NG] Export/Import with Presets
         /// </summary>
-        public List<Renderer> sourceRenderers = new List<Renderer>();
+        public List<Renderer> sourceRenderers = new();
 
         /// <summary>
         /// Write target to mesh in MeshCloth.
@@ -60,7 +60,7 @@ namespace MagicaCloth2
         /// [NG] Runtime changes.
         /// [NG] Export/Import with Presets
         /// </summary>
-        public List<Texture2D> paintMaps = new List<Texture2D>();
+        public List<Texture2D> paintMaps = new();
 
         /// <summary>
         /// The UV channel that references the paint map.
@@ -75,7 +75,7 @@ namespace MagicaCloth2
         /// [NG] Runtime changes.
         /// [NG] Export/Import with Presets
         /// </summary>
-        public List<Transform> rootBones = new List<Transform>();
+        public List<Transform> rootBones = new();
 
         /// <summary>
         /// BoneCloth connection method.
@@ -120,22 +120,22 @@ namespace MagicaCloth2
         /// <summary>
         /// vertex reduction parameters.
         /// </summary>
-        public ReductionSettings reductionSetting = new ReductionSettings();
+        public ReductionSettings reductionSetting = new();
 
         /// <summary>
         /// custom skinning parameters.
         /// </summary>
-        public CustomSkinningSettings customSkinningSetting = new CustomSkinningSettings();
+        public CustomSkinningSettings customSkinningSetting = new();
 
         /// <summary>
         /// Normal definition.
         /// </summary>
-        public NormalAlignmentSettings normalAlignmentSetting = new NormalAlignmentSettings();
+        public NormalAlignmentSettings normalAlignmentSetting = new();
 
         /// <summary>
         /// culling settings.
         /// </summary>
-        public CullingSettings cullingSettings = new CullingSettings();
+        public CullingSettings cullingSettings = new();
 
         /// <summary>
         /// axis to use as normal.
@@ -157,7 +157,7 @@ namespace MagicaCloth2
         /// [OK] Runtime changes.
         /// [OK] Export/Import with Presets
         /// </summary>
-        public float3 gravityDirection = new float3(0, -1, 0);
+        public float3 gravityDirection = new(0, -1, 0);
 
         /// <summary>
         /// 初期姿勢での重力の減衰率(0.0 ~ 1.0)
@@ -203,68 +203,68 @@ namespace MagicaCloth2
         /// [OK] Runtime changes.
         /// [OK] Export/Import with Presets
         /// </summary>
-        public CurveSerializeData damping = new CurveSerializeData(0.05f);
+        public CurveSerializeData damping = new(0.05f);
 
         /// <summary>
         /// Particle radius.
         /// [OK] Runtime changes.
         /// [OK] Export/Import with Presets
         /// </summary>
-        public CurveSerializeData radius = new CurveSerializeData(0.02f);
+        public CurveSerializeData radius = new(0.02f);
 
         /// <summary>
         /// Inertia.
         /// </summary>
-        public InertiaConstraint.SerializeData inertiaConstraint = new InertiaConstraint.SerializeData();
+        public InertiaConstraint.SerializeData inertiaConstraint = new();
 
         /// <summary>
         /// Tether.
         /// </summary>
-        public TetherConstraint.SerializeData tetherConstraint = new TetherConstraint.SerializeData();
+        public TetherConstraint.SerializeData tetherConstraint = new();
 
         /// <summary>
         /// Distance restoration.
         /// </summary>
-        public DistanceConstraint.SerializeData distanceConstraint = new DistanceConstraint.SerializeData();
+        public DistanceConstraint.SerializeData distanceConstraint = new();
 
         /// <summary>
         /// Triangle bending / volume.
         /// </summary>
-        public TriangleBendingConstraint.SerializeData triangleBendingConstraint = new TriangleBendingConstraint.SerializeData();
+        public TriangleBendingConstraint.SerializeData triangleBendingConstraint = new();
 
         /// <summary>
         /// Angle restoration.
         /// </summary>
-        public AngleConstraint.RestorationSerializeData angleRestorationConstraint = new AngleConstraint.RestorationSerializeData();
+        public AngleConstraint.RestorationSerializeData angleRestorationConstraint = new();
 
         /// <summary>
         /// Angle Limit.
         /// </summary>
-        public AngleConstraint.LimitSerializeData angleLimitConstraint = new AngleConstraint.LimitSerializeData();
+        public AngleConstraint.LimitSerializeData angleLimitConstraint = new();
 
         /// <summary>
         /// Max distance / Backstop
         /// </summary>
-        public MotionConstraint.SerializeData motionConstraint = new MotionConstraint.SerializeData();
+        public MotionConstraint.SerializeData motionConstraint = new();
 
         /// <summary>
         /// Collider collision.
         /// </summary>
-        public ColliderCollisionConstraint.SerializeData colliderCollisionConstraint = new ColliderCollisionConstraint.SerializeData();
+        public ColliderCollisionConstraint.SerializeData colliderCollisionConstraint = new();
 
         /// <summary>
         /// Self collision
         /// </summary>
-        public SelfCollisionConstraint.SerializeData selfCollisionConstraint = new SelfCollisionConstraint.SerializeData();
+        public SelfCollisionConstraint.SerializeData selfCollisionConstraint = new();
 
         /// <summary>
         /// Wind
         /// </summary>
-        public WindSettings wind = new WindSettings();
+        public WindSettings wind = new();
 
         /// <summary>
         /// Spring
         /// </summary>
-        public SpringConstraint.SerializeData springConstraint = new SpringConstraint.SerializeData();
+        public SpringConstraint.SerializeData springConstraint = new();
     }
 }

@@ -433,7 +433,7 @@ namespace Pinwheel.Griffin.DataTool
 
         private void ImportDataAndCreateTerrain()
         {
-            GameObject terrainRoot = new GameObject(string.Format("{0}-{1}", Root.name, ConversionName));
+            GameObject terrainRoot = new(string.Format("{0}-{1}", Root.name, ConversionName));
             terrainRoot.transform.parent = Root.transform.parent;
             terrainRoot.transform.position = Root.transform.position;
 
@@ -536,7 +536,7 @@ namespace Pinwheel.Griffin.DataTool
                     data.Foliage.Grasses = DataTemplate ? DataTemplate.Foliage.Grasses : GrassGroups[GrassGroupIndices[i]];
                 }
 
-                GUnityTerrainDataImporter importer = new GUnityTerrainDataImporter();
+                GUnityTerrainDataImporter importer = new();
                 importer.SrcData = Terrains[i].terrainData;
                 importer.SrcTerrain = Terrains[i];
                 importer.DesData = data;
@@ -589,7 +589,7 @@ namespace Pinwheel.Griffin.DataTool
 
         private GStylizedTerrain CreateTerrain()
         {
-            GameObject g = new GameObject("Stylized Terrain");
+            GameObject g = new("Stylized Terrain");
             g.transform.localPosition = Vector3.zero;
             g.transform.localRotation = Quaternion.identity;
             g.transform.localScale = Vector3.one;
@@ -597,7 +597,7 @@ namespace Pinwheel.Griffin.DataTool
             GStylizedTerrain terrain = g.AddComponent<GStylizedTerrain>();
             terrain.GroupId = 0;
 
-            GameObject colliderGO = new GameObject("Tree Collider");
+            GameObject colliderGO = new("Tree Collider");
             colliderGO.transform.parent = terrain.transform;
             colliderGO.transform.localPosition = Vector3.zero;
             colliderGO.transform.localRotation = Quaternion.identity;

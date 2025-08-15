@@ -165,7 +165,7 @@ namespace Pinwheel.Griffin.ExtensionSystem
 
         public static GExtensionInfo CreateFromType(Type t)
         {
-            GExtensionInfo info = new GExtensionInfo();
+            GExtensionInfo info = new();
 
             MethodInfo getPublisherMethod = t.GetMethod(
                 GET_PUBLISHER_METHOD_NAME,
@@ -218,7 +218,7 @@ namespace Pinwheel.Griffin.ExtensionSystem
                 BindingFlags.Public | BindingFlags.Static);
             info.GuiMethod = guiMethod;
 
-            List<MethodInfo> allMethods = new List<MethodInfo>(t.GetMethods(BindingFlags.Public | BindingFlags.Static));
+            List<MethodInfo> allMethods = new(t.GetMethods(BindingFlags.Public | BindingFlags.Static));
             info.buttonMethods = allMethods.FindAll(m => m.Name.StartsWith(BUTTON_METHOD_PREFIX));
 
             return info;

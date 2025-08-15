@@ -24,12 +24,12 @@ namespace MagicaCloth2
         /// <summary>
         /// 利用中のプロセス（＝利用カウント）
         /// </summary>
-        HashSet<ClothProcess> useProcessSet = new HashSet<ClothProcess>();
+        private readonly HashSet<ClothProcess> useProcessSet = new();
 
         /// <summary>
         /// Meshへの書き込み停止フラグ
         /// </summary>
-        bool isSkipWriting;
+        private bool isSkipWriting;
 
         //=========================================================================================
         // セットアップデータ
@@ -137,7 +137,7 @@ namespace MagicaCloth2
         }
 
         //=========================================================================================
-        void SwapCustomMesh(ClothProcess process)
+        private void SwapCustomMesh(ClothProcess process)
         {
             Debug.Assert(setupData != null);
 
@@ -185,7 +185,7 @@ namespace MagicaCloth2
                 process.cloth?.OnRendererMeshChange?.Invoke(process.cloth, renderer, true);
         }
 
-        void ResetCustomMeshWorkData()
+        private void ResetCustomMeshWorkData()
         {
             var rm = MagicaManager.Render;
             ref var wdata = ref rm.GetRenderDataWorkRef(renderDataWorkIndex);
@@ -230,7 +230,7 @@ namespace MagicaCloth2
         /// <summary>
         /// オリジナルメッシュに戻す
         /// </summary>
-        void SwapOriginalMesh(ClothProcess process)
+        private void SwapOriginalMesh(ClothProcess process)
         {
             var rm = MagicaManager.Render;
 
@@ -254,7 +254,7 @@ namespace MagicaCloth2
         /// レンダラーにメッシュを設定する
         /// </summary>
         /// <param name="mesh"></param>
-        void SetMesh(Mesh mesh)
+        private void SetMesh(Mesh mesh)
         {
             if (mesh == null)
                 return;
@@ -416,7 +416,7 @@ namespace MagicaCloth2
         //=========================================================================================
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             sb.Append($">>> [{Name}] ref:{ReferenceCount}, useProcess:{useProcessSet.Count}, HasSkinnedMesh:{HasSkinnedMesh}, HasBoneWeight:{HasBoneWeight}");
             sb.AppendLine();

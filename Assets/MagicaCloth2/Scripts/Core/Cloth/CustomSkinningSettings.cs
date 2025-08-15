@@ -24,7 +24,7 @@ namespace MagicaCloth2
         /// [NG] Runtime changes.
         /// [NG] Export/Import with Presets
         /// </summary>
-        public List<Transform> skinningBones = new List<Transform>();
+        public List<Transform> skinningBones = new();
 
         public void DataValidate()
         {

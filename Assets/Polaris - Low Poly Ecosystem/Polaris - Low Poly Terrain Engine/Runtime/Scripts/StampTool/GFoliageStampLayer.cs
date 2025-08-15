@@ -173,7 +173,7 @@ namespace Pinwheel.Griffin.StampTool
 
         public static GFoliageStampLayer Create()
         {
-            GFoliageStampLayer layer = new GFoliageStampLayer();
+            GFoliageStampLayer layer = new();
             layer.StampTrees = true;
             layer.TreeIndices = null;
             layer.StampGrasses = false;

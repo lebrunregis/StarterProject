@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Gamekit3D
 {
@@ -11,13 +9,13 @@ namespace Gamekit3D
         protected float m_SinceActivation = 0.0f;
         protected ParticleSystem m_ParticleSystem;
 
-        void OnEnable()
+        private void OnEnable()
         {
             m_ParticleSystem = GetComponent<ParticleSystem>();
             m_SinceActivation = 0;
         }
 
-        void Update()
+        private void Update()
         {
             m_SinceActivation += Time.deltaTime;
             if (m_SinceActivation > duration)
@@ -26,5 +24,5 @@ namespace Gamekit3D
                 gameObject.SetActive(false);
             }
         }
-    } 
+    }
 }

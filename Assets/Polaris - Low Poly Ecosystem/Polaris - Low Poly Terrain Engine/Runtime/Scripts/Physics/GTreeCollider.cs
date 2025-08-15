@@ -1,9 +1,8 @@
 #if GRIFFIN
 using System.Collections.Generic;
-using UnityEngine;
 using Unity.Collections;
 using Unity.Jobs;
-using System.Linq;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.Physic
 {
@@ -139,7 +138,7 @@ namespace Pinwheel.Griffin.Physic
             cullResults = new bool[instances.Count];
 
             Vector3 terrainSize = Terrain.TerrainData.Geometry.Size;
-            GTransformTreesToLocalSpaceJob job = new GTransformTreesToLocalSpaceJob()
+            GTransformTreesToLocalSpaceJob job = new()
             {
                 instances = nativeTreeInstances,
                 terrainSize = terrainSize
@@ -184,7 +183,7 @@ namespace Pinwheel.Griffin.Physic
             if (actualTarget == null)
                 return;
             Vector3 targetLocalPos = Terrain.transform.InverseTransformPoint(actualTarget.transform.position);
-            GTreeColliderCullJob job = new GTreeColliderCullJob()
+            GTreeColliderCullJob job = new()
             {
                 instances = nativeTreeInstances,
                 cullResults = nativeCullResults,
@@ -262,7 +261,7 @@ namespace Pinwheel.Griffin.Physic
             }
             if (Colliders[index] == null)
             {
-                GameObject g = new GameObject("Collider_" + index.ToString());
+                GameObject g = new("Collider_" + index.ToString());
                 GUtilities.ResetTransform(g.transform, transform);
 
                 CapsuleCollider col = g.AddComponent<CapsuleCollider>();

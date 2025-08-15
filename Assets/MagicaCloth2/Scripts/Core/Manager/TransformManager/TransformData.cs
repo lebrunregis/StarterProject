@@ -85,7 +85,7 @@ namespace MagicaCloth2
         /// <summary>
         /// Transformリストに変更があったかどうか
         /// </summary>
-        bool isDirty = false;
+        private bool isDirty = false;
 
         //=========================================================================================
         /// <summary>
@@ -99,7 +99,7 @@ namespace MagicaCloth2
         /// <summary>
         /// 利用可能な空インデックス
         /// </summary>
-        Queue<int> emptyStack;
+        private Queue<int> emptyStack;
 
         //=========================================================================================
         public TransformData() { }
@@ -572,7 +572,7 @@ namespace MagicaCloth2
         /// <param name="list"></param>
         /// <param name="item"></param>
         /// <returns></returns>
-        int ReferenceIndexOf<T>(List<T> list, T item) where T : class
+        private int ReferenceIndexOf<T>(List<T> list, T item) where T : class
         {
             if (list == null)
                 return -1;
@@ -626,7 +626,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct RestoreTransformJob : IJobParallelForTransform
+        private struct RestoreTransformJob : IJobParallelForTransform
         {
             public int count;
             [Unity.Collections.ReadOnly]
@@ -698,7 +698,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct ReadTransformJob : IJobParallelForTransform
+        private struct ReadTransformJob : IJobParallelForTransform
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<ExBitFlag8> flagList;
@@ -952,7 +952,7 @@ namespace MagicaCloth2
         {
             int transformListCount = transformList?.Count ?? 0;
 
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine("==== TransformData ====");
             sb.AppendLine($"isDirty:{isDirty}");
             sb.AppendLine($"transformList:{transformListCount}");

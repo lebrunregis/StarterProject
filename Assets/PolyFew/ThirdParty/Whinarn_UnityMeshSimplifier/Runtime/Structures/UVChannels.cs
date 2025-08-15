@@ -28,8 +28,8 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
     {
         private static readonly int UVChannelCount = MeshUtils.UVChannelCount;
 
-        private ResizableArray<TVec>[] channels = null;
-        private TVec[][] channelsData = null;
+        private readonly ResizableArray<TVec>[] channels = null;
+        private readonly TVec[][] channelsData = null;
 
         public TVec[][] Data
         {

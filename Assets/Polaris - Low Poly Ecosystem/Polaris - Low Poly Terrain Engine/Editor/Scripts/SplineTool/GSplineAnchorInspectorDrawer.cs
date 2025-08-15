@@ -6,7 +6,7 @@ namespace Pinwheel.Griffin.SplineTool
 {
     public class GSplineAnchorInspectorDrawer
     {
-        private GSplineAnchor instance;
+        private readonly GSplineAnchor instance;
 
         public GSplineAnchorInspectorDrawer(GSplineAnchor anchor)
         {

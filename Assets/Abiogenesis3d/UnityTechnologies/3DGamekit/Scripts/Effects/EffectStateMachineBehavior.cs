@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gamekit3D
@@ -22,8 +21,8 @@ namespace Gamekit3D
 
         public EventInstance[] events;
 
-        protected List<EventInstance> m_EnterEvents = new List<EventInstance>();
-        protected List<EventInstance> m_ExitEvents = new List<EventInstance>();
+        protected List<EventInstance> m_EnterEvents = new();
+        protected List<EventInstance> m_ExitEvents = new();
 
         private void OnEnable()
         {

@@ -1,6 +1,6 @@
 // Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
- 
+
 using System.Linq;
 
 using UnityEditor;
@@ -12,11 +12,11 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
     [CustomEditor(typeof(UnityAssetFile))]
     public class UnityAssetFileEditor : UnityEditor.Editor
     {
-        string infoFileSize;
-        string infoMeshCount;
-        string infoMeshVertexCount;
+        private string infoFileSize;
+        private string infoMeshCount;
+        private string infoMeshVertexCount;
 
-        void OnEnable()
+        private void OnEnable()
         {
             string assetPath = AssetDatabase.GetAssetPath(target.GetInstanceID());
 

@@ -9,10 +9,10 @@ namespace MagicaCloth2
     public class GameObjectContainer : MonoBehaviour
     {
         [SerializeField]
-        private List<GameObject> gameObjectList = new List<GameObject>();
+        private List<GameObject> gameObjectList = new();
 
 
-        private Dictionary<string, GameObject> gameObjectDict = new Dictionary<string, GameObject>();
+        private readonly Dictionary<string, GameObject> gameObjectDict = new();
 
         private void Awake()
         {

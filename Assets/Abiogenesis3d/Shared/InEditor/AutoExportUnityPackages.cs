@@ -26,9 +26,9 @@ namespace Abiogenesis3d
         public string[] commonPaths;
         public PackageInfo[] packages;
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
-        void OnValidate()
+        private void OnValidate()
         {
             if (export)
             {
@@ -38,18 +38,18 @@ namespace Abiogenesis3d
             }
         }
 
-        void Export(string destination)
+        private void Export(string destination)
         {
             foreach (var package in packages)
             {
                 if (!package.export) continue;
 
-                var path = destination + "/"  + package.name + "_v" + package.version + ".unitypackage";
+                var path = destination + "/" + package.name + "_v" + package.version + ".unitypackage";
                 Debug.Log("Exporting: " + path);
                 AssetDatabase.ExportPackage(package.paths.Concat(commonPaths).ToArray(), path, ExportPackageOptions.Recurse);
             }
             AssetDatabase.Refresh();
         }
-        #endif
+#endif
     }
 }

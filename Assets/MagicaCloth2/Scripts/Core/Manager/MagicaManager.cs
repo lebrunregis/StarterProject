@@ -29,7 +29,7 @@ namespace MagicaCloth2
         /// <summary>
         /// 登録マネージャリスト
         /// </summary>
-        static List<IManager> managers = null;
+        private static List<IManager> managers = null;
 
         public static TimeManager Time => managers?[0] as TimeManager;
         public static TeamManager Team => managers?[1] as TeamManager;
@@ -95,14 +95,14 @@ namespace MagicaCloth2
 
 
         //=========================================================================================
-        static volatile bool isPlaying = false;
+        private static volatile bool isPlaying = false;
 
         //=========================================================================================
         /// <summary>
         /// Reload Domain 対策
         /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-        static void Initialize()
+        private static void Initialize()
         {
             Dispose();
 
@@ -145,7 +145,7 @@ namespace MagicaCloth2
         /// エディタの実行状態が変更された場合に呼び出される
         /// </summary>
         [InitializeOnLoadMethod]
-        static void PlayModeStateChange()
+        private static void PlayModeStateChange()
         {
             // プロジェクトセッティングにMagicaCloth2用デファインシンボルを登録する
             try
@@ -211,7 +211,7 @@ namespace MagicaCloth2
         /// スクリプトコンパイル開始
         /// </summary>
         /// <param name="obj"></param>
-        static void OnStarted(object obj)
+        private static void OnStarted(object obj)
         {
             //Debug.Log($"スクリプトコンパイル開始");
             isPlaying = false;
@@ -232,7 +232,7 @@ namespace MagicaCloth2
         /// <summary>
         /// ゲームプレイの実行が停止したとき（エディタ環境のみ）
         /// </summary>
-        static void EnterdEditMode()
+        private static void EnterdEditMode()
         {
             //Debug.Log($"★Manager Enterd Edit Mode.");
             if (managers != null)
@@ -251,7 +251,7 @@ namespace MagicaCloth2
         /// <summary>
         /// エディタでの定期更新
         /// </summary>
-        static void EditoruUpdate()
+        private static void EditoruUpdate()
         {
             defaultUpdateDelegate?.Invoke();
         }
@@ -260,7 +260,7 @@ namespace MagicaCloth2
         /// <summary>
         /// アプリ終了イベント
         /// </summary>
-        static void OnAppQuitting()
+        private static void OnAppQuitting()
         {
             Develop.DebugLog($"OnAppQuitting!");
             Dispose();
@@ -269,7 +269,7 @@ namespace MagicaCloth2
         /// <summary>
         /// マネージャの破棄
         /// </summary>
-        static void Dispose()
+        private static void Dispose()
         {
             Develop.DebugLog("Manager Dispose!");
 
@@ -320,7 +320,7 @@ namespace MagicaCloth2
             PlayerLoop.SetPlayerLoop(playerLoop);
         }
 
-        static void SetCustomGameLoop(ref PlayerLoopSystem playerLoop)
+        private static void SetCustomGameLoop(ref PlayerLoopSystem playerLoop)
         {
 #if false
             // debug
@@ -336,7 +336,7 @@ namespace MagicaCloth2
 
             // after early update 
             // フレームの開始時、すべてのEarlyUpdateの後、FixedUpdate()の前
-            PlayerLoopSystem afterEarlyUpdate = new PlayerLoopSystem()
+            PlayerLoopSystem afterEarlyUpdate = new()
             {
                 type = typeof(MagicaManager),
                 updateDelegate = () => afterEarlyUpdateDelegate?.Invoke()
@@ -345,7 +345,7 @@ namespace MagicaCloth2
 
             // after fixed update 
             // FixedUpdate()の後
-            PlayerLoopSystem afterFixedUpdate = new PlayerLoopSystem()
+            PlayerLoopSystem afterFixedUpdate = new()
             {
                 type = typeof(MagicaManager),
                 updateDelegate = () =>
@@ -356,7 +356,7 @@ namespace MagicaCloth2
             AddPlayerLoop(afterFixedUpdate, ref playerLoop, "FixedUpdate", "ScriptRunBehaviourFixedUpdate");
 
             // first pre update
-            PlayerLoopSystem firstPreUpdate = new PlayerLoopSystem()
+            PlayerLoopSystem firstPreUpdate = new()
             {
                 type = typeof(MagicaManager),
                 updateDelegate = () =>
@@ -368,7 +368,7 @@ namespace MagicaCloth2
 
             // after update 
             // Update()の後
-            PlayerLoopSystem afterUpdate = new PlayerLoopSystem()
+            PlayerLoopSystem afterUpdate = new()
             {
                 type = typeof(MagicaManager),
                 updateDelegate = () =>
@@ -386,7 +386,7 @@ namespace MagicaCloth2
 
             // before late update 
             // LateUpdate()の前
-            PlayerLoopSystem beforeLateUpdate = new PlayerLoopSystem()
+            PlayerLoopSystem beforeLateUpdate = new()
             {
                 type = typeof(MagicaManager),
                 updateDelegate = () => beforeLateUpdateDelegate?.Invoke()
@@ -395,7 +395,7 @@ namespace MagicaCloth2
 
             // after late update 
             // LateUpdate()の後
-            PlayerLoopSystem afterLateUpdate = new PlayerLoopSystem()
+            PlayerLoopSystem afterLateUpdate = new()
             {
                 type = typeof(MagicaManager),
                 updateDelegate = () => afterLateUpdateDelegate?.Invoke()
@@ -410,7 +410,7 @@ namespace MagicaCloth2
             // Start()の初期化処理などでNativeリストにアクセスすると例外が発生してしまう。
             // 従って遅延実行時はクロスコンポーネントのStart()が完了するScriptRunDelayedDynamicFrameRate
             // の後にシミュレーションを開始するようにする。
-            PlayerLoopSystem afterDelayedUpdate = new PlayerLoopSystem()
+            PlayerLoopSystem afterDelayedUpdate = new()
             {
                 type = typeof(MagicaManager),
                 updateDelegate = () => afterDelayedDelegate?.Invoke()
@@ -419,7 +419,7 @@ namespace MagicaCloth2
 
             // after rendering
             // レンダリング完了後
-            PlayerLoopSystem afterRendering = new PlayerLoopSystem()
+            PlayerLoopSystem afterRendering = new()
             {
                 type = typeof(MagicaManager),
                 updateDelegate = () => afterRenderingDelegate?.Invoke()
@@ -434,7 +434,7 @@ namespace MagicaCloth2
         /// <param name="playerLoop"></param>
         /// <param name="categoryName"></param>
         /// <param name="systemName"></param>
-        static void AddPlayerLoop(PlayerLoopSystem method, ref PlayerLoopSystem playerLoop, string categoryName, string systemName, int firstLast = 0, bool before = false)
+        private static void AddPlayerLoop(PlayerLoopSystem method, ref PlayerLoopSystem playerLoop, string categoryName, string systemName, int firstLast = 0, bool before = false)
         {
             int sysIndex = Array.FindIndex(playerLoop.subSystemList, (s) => s.type.Name == categoryName);
             PlayerLoopSystem category = playerLoop.subSystemList[sysIndex];
@@ -468,7 +468,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="playerLoop"></param>
         /// <returns></returns>
-        static bool CheckRegist(ref PlayerLoopSystem playerLoop)
+        private static bool CheckRegist(ref PlayerLoopSystem playerLoop)
         {
             var t = typeof(MagicaManager);
             foreach (var subloop in playerLoop.subSystemList)

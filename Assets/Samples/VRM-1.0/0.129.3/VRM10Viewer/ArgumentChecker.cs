@@ -5,16 +5,16 @@ using UnityEngine;
 
 namespace UniVRM10.VRM10Viewer
 {
-    static class ArgumentChecker
+    internal static class ArgumentChecker
     {
-        static string[] Supported = {
+        private static readonly string[] Supported = {
                 ".gltf",
                 ".glb",
                 ".vrm",
                 ".zip",
             };
 
-        static string UnityHubPath => System.Environment.GetEnvironmentVariable("ProgramFiles") + "\\Unity\\Hub";
+        private static string UnityHubPath => System.Environment.GetEnvironmentVariable("ProgramFiles") + "\\Unity\\Hub";
 
         public static bool IsLoadable(string path)
         {

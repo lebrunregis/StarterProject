@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -10,13 +9,13 @@ namespace Gamekit3D
     {
         public Shader depthOnlyShader;
 
-        protected List<Camera> _cameraBufferAdded = new List<Camera>();
+        protected List<Camera> _cameraBufferAdded = new();
 
-        CommandBuffer cb = null;
+        private CommandBuffer cb = null;
         private Material m = null;
         //private RenderTexture RT;
 
-        void OnEnable()
+        private void OnEnable()
         {
             CreateBuffer();
             _cameraBufferAdded.Clear();
@@ -24,7 +23,7 @@ namespace Gamekit3D
             Camera.onPreRender += PreRenderCamera;
         }
 
-        void CreateBuffer()
+        private void CreateBuffer()
         {
             if (depthOnlyShader != null)
             {
@@ -43,17 +42,17 @@ namespace Gamekit3D
             }
         }
 
-        void PreRenderCamera(Camera cam)
+        private void PreRenderCamera(Camera cam)
         {
-            if(cb == null)
-             CreateBuffer();
+            if (cb == null)
+                CreateBuffer();
 
             if (cb == null)
                 return;
 
             if ((cam.cullingMask & (1 << gameObject.layer)) == 0)
                 return;
-            
+
             if (!_cameraBufferAdded.Contains(cam))
             {
                 _cameraBufferAdded.Add(cam);

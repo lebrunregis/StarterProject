@@ -9,18 +9,18 @@ namespace MagicaCloth2
     public class ModelController : MonoBehaviour
     {
         [SerializeField]
-        private List<GameObject> characterList = new List<GameObject>();
+        private List<GameObject> characterList = new();
 
         [SerializeField]
         private float slowTime = 0.1f;
 
         private bool slow;
 
-        void Start()
+        private void Start()
         {
         }
 
-        void Update()
+        private void Update()
         {
         }
 

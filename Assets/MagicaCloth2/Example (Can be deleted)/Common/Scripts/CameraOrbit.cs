@@ -79,7 +79,7 @@ namespace MagicaCloth2
         private float cameraYawVelocity;
         private float offsetYaw;
 
-        void Start()
+        private void Start()
         {
             if (cameraTransform == null)
             {
@@ -95,7 +95,7 @@ namespace MagicaCloth2
             setCameraYaw = cameraYaw;
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             // 入力イベント登録
             SimpleInputManager.OnTouchMove += OnTouchMove;
@@ -103,7 +103,7 @@ namespace MagicaCloth2
             SimpleInputManager.OnTouchPinch += OnTouchPinch;
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             // 入力イベント解除
             SimpleInputManager.OnTouchMove -= OnTouchMove;
@@ -111,7 +111,7 @@ namespace MagicaCloth2
             SimpleInputManager.OnTouchPinch -= OnTouchPinch;
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             // カメラ更新
             updateCamera();
@@ -140,7 +140,7 @@ namespace MagicaCloth2
             // 座標確定
             Quaternion q = Quaternion.Euler(cameraPitch, cameraYaw + offsetYaw, 0);
             q = transform.rotation * q; // コンポーネントの回転
-            Vector3 v = new Vector3(0, 0, -cameraDist);
+            Vector3 v = new(0, 0, -cameraDist);
             Vector3 pos = q * v;
 
             // ターゲットポジション

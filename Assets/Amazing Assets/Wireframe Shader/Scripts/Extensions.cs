@@ -1,6 +1,6 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
- 
+
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -33,7 +33,7 @@ namespace AmazingAssets.WireframeShader
         }
         public static void Populate<T>(this List<T> list, int count, T value)
         {
-            list.Clear(); 
+            list.Clear();
             for (int i = 0; i < count; i++)
             {
                 list.Add(value);

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 namespace Gamekit3D
@@ -11,12 +9,12 @@ namespace Gamekit3D
         public LayerMask layers;
         public UnityEvent OnCollision;
 
-        void Reset()
+        private void Reset()
         {
             layers = LayerMask.NameToLayer("Everything");
         }
 
-        void OnCollisionEnter(Collision c)
+        private void OnCollisionEnter(Collision c)
         {
             Debug.Log(c);
             if (0 != (layers.value & 1 << c.transform.gameObject.layer))
@@ -25,15 +23,15 @@ namespace Gamekit3D
             }
         }
 
-        void OnDrawGizmos()
+        private void OnDrawGizmos()
         {
             Gizmos.DrawIcon(transform.position, "InteractionTrigger", false);
         }
 
-        void OnDrawGizmosSelected()
+        private void OnDrawGizmosSelected()
         {
             //need to inspect events and draw arrows to relevant gameObjects.
         }
 
-    } 
+    }
 }

@@ -16,7 +16,7 @@ namespace Pinwheel.Griffin.PaintTool
 
         public static GSpawnFilterArgs Create()
         {
-            GSpawnFilterArgs args = new GSpawnFilterArgs();
+            GSpawnFilterArgs args = new();
             args.Position = Vector3.zero;
             args.Rotation = Quaternion.identity;
             args.Scale = Vector3.one;

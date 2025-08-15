@@ -1,8 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Collections;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -38,7 +36,7 @@ namespace Pinwheel.Griffin
 
         public static Color GetColorBilinear(GTextureNativeDataDescriptor<Color32> tex, ref Vector2 uv)
         {
-            Vector2 pixelCoord = new Vector2(
+            Vector2 pixelCoord = new(
                 Mathf.Lerp(0, tex.width - 1, uv.x),
                 Mathf.Lerp(0, tex.height - 1, uv.y));
             //apply a bilinear filter
@@ -52,7 +50,7 @@ namespace Pinwheel.Griffin
             Color f10 = tex.data[To1DIndex(ref xCeil, ref yFloor, ref tex.width)];
             Color f11 = tex.data[To1DIndex(ref xCeil, ref yCeil, ref tex.width)];
 
-            Vector2 unitCoord = new Vector2(
+            Vector2 unitCoord = new(
                 pixelCoord.x - xFloor,
                 pixelCoord.y - yFloor);
 
@@ -67,7 +65,7 @@ namespace Pinwheel.Griffin
 
         public static Color GetColorPoint(GTextureNativeDataDescriptor<Color32> tex, Vector2 uv)
         {
-            Vector2 pixelCoord = new Vector2(
+            Vector2 pixelCoord = new(
                 Mathf.Lerp(0, tex.width - 1, uv.x),
                 Mathf.Lerp(0, tex.height - 1, uv.y));
 

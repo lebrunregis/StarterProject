@@ -61,9 +61,9 @@ namespace Pinwheel.Griffin.BillboardTool
                 return;
             args.Mode = GBillboardRenderMode.Atlas;
 
-            Vector2 viewPortSize = new Vector2(1f / args.Column, 1f / args.Row);
-            Vector2 viewPortPosition = new Vector2(0, 0);
-            RenderTexture tempRt = new RenderTexture(Mathf.RoundToInt(viewPortSize.x * rt.width), Mathf.RoundToInt(viewPortSize.y * rt.height), 24, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            Vector2 viewPortSize = new(1f / args.Column, 1f / args.Row);
+            Vector2 viewPortPosition = new(0, 0);
+            RenderTexture tempRt = new(Mathf.RoundToInt(viewPortSize.x * rt.width), Mathf.RoundToInt(viewPortSize.y * rt.height), 24, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             Camera cam = CreatePreviewCamera(args);
             cam.targetTexture = tempRt;
             GameObject g = CreatePreviewGameObject(cam.transform, args);
@@ -99,9 +99,9 @@ namespace Pinwheel.Griffin.BillboardTool
                 return;
             args.Mode = GBillboardRenderMode.Normal;
 
-            Vector2 viewPortSize = new Vector2(1f / args.Column, 1f / args.Row);
-            Vector2 viewPortPosition = new Vector2(0, 0);
-            RenderTexture tempRt = new RenderTexture(Mathf.RoundToInt(viewPortSize.x * rt.width), Mathf.RoundToInt(viewPortSize.y * rt.height), 24, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            Vector2 viewPortSize = new(1f / args.Column, 1f / args.Row);
+            Vector2 viewPortPosition = new(0, 0);
+            RenderTexture tempRt = new(Mathf.RoundToInt(viewPortSize.x * rt.width), Mathf.RoundToInt(viewPortSize.y * rt.height), 24, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             Camera cam = CreatePreviewCamera(args);
             cam.targetTexture = tempRt;
             GameObject g = CreatePreviewGameObject(cam.transform, args);
@@ -155,7 +155,7 @@ namespace Pinwheel.Griffin.BillboardTool
 
         private static Camera CreatePreviewCamera(GBillboardCreatorArgs args)
         {
-            GameObject previewCam = new GameObject("~BillboardEditorCam");
+            GameObject previewCam = new("~BillboardEditorCam");
             //previewCam.hideFlags = HideFlags.HideAndDontSave;
             previewCam.transform.position = -Vector3.one * 10000;
             previewCam.transform.rotation = Quaternion.identity;
@@ -179,7 +179,7 @@ namespace Pinwheel.Griffin.BillboardTool
             {
                 return new GameObject("~EmptyBillboardCreatorTarget");
             }
-            GameObject g = GameObject.Instantiate(args.Target) as GameObject;
+            GameObject g = GameObject.Instantiate(args.Target);
             g.name = "~BillboardCreatorTarget";
             //g.hideFlags = HideFlags.HideAndDontSave;
             g.transform.position = cameraTransform.transform.TransformPoint(args.CameraOffset);
@@ -194,7 +194,7 @@ namespace Pinwheel.Griffin.BillboardTool
                 for (int j = 0; j < sharedMaterials.Length; ++j)
                 {
                     //Material mat = Object.Instantiate<Material>(baseMaterial);
-                    Material mat = new Material(baseMaterial.shader);
+                    Material mat = new(baseMaterial.shader);
                     mat.SetColor(args.DesColorProps, Color.white);
                     mat.SetTexture(args.DesTextureProps, null);
                     //mat.CopyPropertiesFromMaterial(sharedMaterials[j]);
@@ -258,7 +258,7 @@ namespace Pinwheel.Griffin.BillboardTool
 
         public static ushort[] Triangulate(Vector2[] vertices)
         {
-            List<ushort> tris = new List<ushort>();
+            List<ushort> tris = new();
             for (ushort x = 0; x < vertices.Length; ++x)
             {
                 for (ushort y = 0; y < vertices.Length; ++y)
@@ -280,7 +280,7 @@ namespace Pinwheel.Griffin.BillboardTool
                 }
             }
 
-            List<ushort> result = new List<ushort>();
+            List<ushort> result = new();
             int trisCount = tris.Count / 3;
             for (ushort i = 0; i < trisCount; ++i)
             {
@@ -336,7 +336,7 @@ namespace Pinwheel.Griffin.BillboardTool
 
             if (renderers.Length > 0)
             {
-                Bounds b = new Bounds();
+                Bounds b = new();
                 b.SetMinMax(
                     renderers[0].bounds.min,
                     renderers[0].bounds.max);
@@ -366,7 +366,7 @@ namespace Pinwheel.Griffin.BillboardTool
 
         public static BillboardAsset CreateBillboardAsset(GBillboardCreatorArgs args)
         {
-            BillboardAsset billboard = new BillboardAsset();
+            BillboardAsset billboard = new();
             billboard.SetVertices(args.Vertices);
             billboard.SetIndices(Triangulate(args.Vertices));
             billboard.width = args.Width;
@@ -374,8 +374,8 @@ namespace Pinwheel.Griffin.BillboardTool
             billboard.bottom = args.Bottom;
 
             Vector4[] texcoords = new Vector4[args.Row * args.Column];
-            Vector2 imageSize = new Vector2(1f / args.Column, 1f / args.Row);
-            Vector2 imageTopLeft = new Vector2(0, 0);
+            Vector2 imageSize = new(1f / args.Column, 1f / args.Row);
+            Vector2 imageTopLeft = new(0, 0);
 
             for (int y = 0; y < args.Row; ++y)
             {
@@ -396,7 +396,7 @@ namespace Pinwheel.Griffin.BillboardTool
             RenderTexture rt = null;
             PrepareRenderTexture(ref rt, args);
             RenderPreviewAtlas(rt, args);
-            Texture2D atlas = new Texture2D(rt.width, rt.height, TextureFormat.ARGB32, true, true);
+            Texture2D atlas = new(rt.width, rt.height, TextureFormat.ARGB32, true, true);
             GCommon.CopyFromRT(atlas, rt);
             rt.Release();
             GUtilities.DestroyObject(rt);
@@ -410,7 +410,7 @@ namespace Pinwheel.Griffin.BillboardTool
             RenderTexture rt = null;
             PrepareRenderTexture(ref rt, args);
             RenderPreviewNormal(rt, args);
-            Texture2D atlas = new Texture2D(rt.width, rt.height, TextureFormat.ARGB32, true, true);
+            Texture2D atlas = new(rt.width, rt.height, TextureFormat.ARGB32, true, true);
             GCommon.CopyFromRT(atlas, rt);
             rt.Release();
             GUtilities.DestroyObject(rt);

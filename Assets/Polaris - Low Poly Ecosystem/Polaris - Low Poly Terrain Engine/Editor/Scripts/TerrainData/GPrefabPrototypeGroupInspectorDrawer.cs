@@ -1,13 +1,13 @@
 #if GRIFFIN
+using System.IO;
 using UnityEditor;
 using UnityEngine;
-using System.IO;
 
 namespace Pinwheel.Griffin.PaintTool
 {
     public class GPrefabPrototypeGroupInspectorDrawer
     {
-        private GPrefabPrototypeGroup instance;
+        private readonly GPrefabPrototypeGroup instance;
         private GPrefabPrototypeGroupInspectorDrawer(GPrefabPrototypeGroup instance)
         {
             this.instance = instance;
@@ -51,7 +51,7 @@ namespace Pinwheel.Griffin.PaintTool
                 string id = "treeprototype" + i + instance.GetInstanceID().ToString();
 
                 int index = i;
-                GenericMenu menu = new GenericMenu();
+                GenericMenu menu = new();
                 menu.AddItem(
                     new GUIContent("Remove"),
                     false,

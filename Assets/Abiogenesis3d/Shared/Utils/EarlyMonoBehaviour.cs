@@ -10,7 +10,7 @@ namespace Abiogenesis3d
 
         public event FixedUpdateAction OnEarlyFixedUpdate;
 
-        void FixedUpdate()
+        private void FixedUpdate()
         {
             OnEarlyFixedUpdate?.Invoke();
         }

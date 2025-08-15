@@ -1,23 +1,15 @@
 #if UNITY_EDITOR
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using UnityEngine;
 using UnityEditor;
-using UnityEditor.ShortcutManagement;
-using UnityEngine.UIElements;
-using UnityEngine.SceneManagement;
-using UnityEditor.SceneManagement;
 using UnityEditor.IMGUI.Controls;
-using Type = System.Type;
-using static VHierarchy.Libs.VUtils;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using static VHierarchy.Libs.VGUI;
+using static VHierarchy.Libs.VUtils;
 // using static VTools.VDebug;
 using static VHierarchy.VHierarchy;
-using static VHierarchy.VHierarchyData;
-using static VHierarchy.VHierarchyCache;
 
 
 
@@ -730,14 +722,14 @@ namespace VHierarchy
 
         }
 
-        List<int> hierarchyLines_verticalGaps = new();
-        bool hierarchyLines_isFirstRowDrawn;
-        int hierarchyLines_prevRowDepth;
+        private readonly List<int> hierarchyLines_verticalGaps = new();
+        private bool hierarchyLines_isFirstRowDrawn;
+        private int hierarchyLines_prevRowDepth;
 
-        bool mousePressed;
-        Vector2 mouseDownPos;
+        private bool mousePressed;
+        private Vector2 mouseDownPos;
 
-        Rect lastVisibleSelectedRowRect;
+        private Rect lastVisibleSelectedRowRect;
 
 
 
@@ -956,9 +948,9 @@ namespace VHierarchy
 
         }
 
-        int pressedSceneSelectorId;
+        private int pressedSceneSelectorId;
 
-        Vector2 mouseDownOnSelectorPos;
+        private Vector2 mouseDownOnSelectorPos;
 
 
 
@@ -1001,7 +993,7 @@ namespace VHierarchy
 
         public List<int> dragSelectionList = new();
 
-        GameObject defaultParent;
+        private GameObject defaultParent;
 
 
 

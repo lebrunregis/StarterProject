@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Gamekit3D
 {
@@ -8,19 +6,19 @@ namespace Gamekit3D
     public class WaterRipple : MonoBehaviour
     {
 
-        Material mat;
+        private Material mat;
         public Transform offsetPos;
 
         // Use this for initialization
-        void Start()
+        private void Start()
         {
             mat = GetComponent<MeshRenderer>().material;
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             mat.SetVector("_UVOffset", new Vector4(offsetPos.position.x, 0, offsetPos.position.z, 1));
         }
-    } 
+    }
 }

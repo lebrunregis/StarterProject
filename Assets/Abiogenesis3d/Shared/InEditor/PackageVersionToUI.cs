@@ -10,7 +10,7 @@ namespace Abiogenesis3d
         public string package;
         public AutoExportUnityPackages exporter;
 
-        void Update()
+        private void Update()
         {
             if (!text) return;
             if (!exporter) return;

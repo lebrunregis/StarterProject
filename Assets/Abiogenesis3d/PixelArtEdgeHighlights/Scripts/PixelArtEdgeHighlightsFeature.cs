@@ -23,7 +23,7 @@ namespace Abiogenesis3d
     {
         public PixelArtEdgeHighlightsSettings settings;
         [HideInInspector] public Material material;
-        PixelArtEdgeHighlightsPass pixelArtEdgeHighlightsPass;
+        private PixelArtEdgeHighlightsPass pixelArtEdgeHighlightsPass;
 
         public override void Create()
         {
@@ -73,16 +73,16 @@ namespace Abiogenesis3d
         }
     }
 
-    class PixelArtEdgeHighlightsPass : ScriptableRenderPass
+    internal class PixelArtEdgeHighlightsPass : ScriptableRenderPass
     {
 
-        ScriptableRenderer renderer;
-        PixelArtEdgeHighlightsSettings settings;
+        private ScriptableRenderer renderer;
+        private readonly PixelArtEdgeHighlightsSettings settings;
 
-        Material material;
+        private readonly Material material;
         public bool isMatDirty;
 
-        ProfilingSampler profilingSampler;
+        private readonly ProfilingSampler profilingSampler;
 
         public void UpdateMaterialProperties()
         {
@@ -137,11 +137,11 @@ namespace Abiogenesis3d
                 // TODO: figure out how to prevent loss of effect on scene save without this
                 UpdateMaterialProperties();
 
-                #if UNITY_2022_1_OR_NEWER
+#if UNITY_2022_1_OR_NEWER
                 cmd.SetRenderTarget(renderer.cameraColorTargetHandle);
-                #else
+#else
                 cmd.SetRenderTarget(renderer.cameraColorTarget);
-                #endif
+#endif
                 cmd.DrawMesh(RenderingUtils.fullscreenMesh, Matrix4x4.identity, material, submeshIndex: 0, shaderPass: 0);
             }
 

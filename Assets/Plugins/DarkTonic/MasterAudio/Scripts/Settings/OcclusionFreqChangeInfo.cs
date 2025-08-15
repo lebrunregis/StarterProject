@@ -2,10 +2,12 @@
 using System;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     [Serializable]
     // ReSharper disable once CheckNamespace
-	public class OcclusionFreqChangeInfo {
+    public class OcclusionFreqChangeInfo
+    {
         public SoundGroupVariation ActingVariation;
         public float StartFrequency;
         public float TargetFrequency;

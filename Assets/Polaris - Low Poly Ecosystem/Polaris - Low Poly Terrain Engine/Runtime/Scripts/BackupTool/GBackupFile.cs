@@ -86,7 +86,7 @@ namespace Pinwheel.Griffin.BackupTool
             if (backupName.StartsWith("~"))
             {
                 GHistoryEntry entry = EnsureHistoryEntryExists(backupName);
-                GHistoryBuffer buffer = new GHistoryBuffer(fileNameNoExt, data);
+                GHistoryBuffer buffer = new(fileNameNoExt, data);
                 entry.Buffers.Add(buffer);
                 return string.Empty;
             }
@@ -117,7 +117,7 @@ namespace Pinwheel.Griffin.BackupTool
 
         public static string[] GetAllFilePaths(string backupName)
         {
-            List<string> files = new List<string>(Directory.GetFiles(GetFileDirectory(backupName)));
+            List<string> files = new(Directory.GetFiles(GetFileDirectory(backupName)));
             files.RemoveAll(f => !f.EndsWith(EXTENSION));
             return files.ToArray();
         }
@@ -173,7 +173,7 @@ namespace Pinwheel.Griffin.BackupTool
         public static string[] GetAllBackupNames()
         {
             GUtilities.EnsureDirectoryExists(GetRootDirectory());
-            List<string> names = new List<string>(Directory.GetDirectories(GetRootDirectory()));
+            List<string> names = new(Directory.GetDirectories(GetRootDirectory()));
             for (int i = 0; i < names.Count; ++i)
             {
                 names[i] = Path.GetFileNameWithoutExtension(names[i]);

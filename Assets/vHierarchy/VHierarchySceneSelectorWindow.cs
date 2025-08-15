@@ -1,22 +1,14 @@
 #if UNITY_EDITOR
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using UnityEditor.ShortcutManagement;
-using System.Reflection;
 using System.Linq;
-using UnityEngine.UIElements;
-using UnityEngine.SceneManagement;
-using UnityEditor.SceneManagement;
+using UnityEditor;
 using UnityEditor.IMGUI.Controls;
-using System.Diagnostics;
-using Type = System.Type;
-using Delegate = System.Delegate;
-using Action = System.Action;
-using static VHierarchy.VHierarchy;
-using static VHierarchy.Libs.VUtils;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using static VHierarchy.Libs.VGUI;
+using static VHierarchy.Libs.VUtils;
+using static VHierarchy.VHierarchy;
 // using static VTools.VDebug;
 
 
@@ -25,7 +17,7 @@ namespace VHierarchy
     public class VHierarchySceneSelectorWindow : EditorWindow
     {
 
-        void OnGUI()
+        private void OnGUI()
         {
 
             void background()
@@ -236,31 +228,29 @@ namespace VHierarchy
 
         }
 
-        Rect windowRect => position.SetPos(0, 0);
-        Rect bookmarksRect;
+        private Rect windowRect => position.SetPos(0, 0);
+        private Rect bookmarksRect;
 
-        SearchField searchField;
+        private SearchField searchField;
 
-        Color windowBackground => Greyscale(isDarkTheme ? .23f : .8f);
+        private Color windowBackground => Greyscale(isDarkTheme ? .23f : .8f);
 
-        string searchString = "";
-        string prevSearchString = "";
+        private string searchString = "";
+        private string prevSearchString = "";
 
-        float scrollPos;
+        private float scrollPos;
 
-        float rowHeight => 22;
-        float dividerHeight => 11;
-        float firstRowOffsetTop => bookmarkedEntries.Any() && searchString == "" ? 21 : 20;
+        private float rowHeight => 22;
+        private float dividerHeight => 11;
+        private float firstRowOffsetTop => bookmarkedEntries.Any() && searchString == "" ? 21 : 20;
 
-        int nextRowIndex;
-        float nextRowY;
+        private int nextRowIndex;
+        private float nextRowY;
 
-        float scrollAreaHeight = 1232;
-        int rowCount = 123;
+        private float scrollAreaHeight = 1232;
+        private int rowCount = 123;
 
-        int keyboardFocusedRowIndex = -1;
-
-
+        private int keyboardFocusedRowIndex = -1;
 
 
 
@@ -268,7 +258,9 @@ namespace VHierarchy
 
 
 
-        void RowGUI(Rect rowRect, SceneEntry entry)
+
+
+        private void RowGUI(Rect rowRect, SceneEntry entry)
         {
 
             var isHovered = rowRect.IsHovered();
@@ -536,18 +528,18 @@ namespace VHierarchy
 
         }
 
-        SceneEntry pressedEntry;
+        private SceneEntry pressedEntry;
 
-        bool isMousePressedOnEntry;
+        private bool isMousePressedOnEntry;
 
-        Vector2 mouseDownPosition;
+        private Vector2 mouseDownPosition;
 
-        SceneEntry keyboardFocusedEntry;
-
-
+        private SceneEntry keyboardFocusedEntry;
 
 
-        void OpenScene(SceneEntry entry, bool openAdditive)
+
+
+        private void OpenScene(SceneEntry entry, bool openAdditive)
         {
             if (!Application.isPlaying)
                 if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return; // if clicked cancel
@@ -647,12 +639,12 @@ namespace VHierarchy
 
         }
 
-        int GetBookmarkIndex(float mouseY)
+        private int GetBookmarkIndex(float mouseY)
         {
             return ((mouseY - bookmarksRect.y) / rowHeight).FloorToInt();
         }
 
-        float GetBookmarY(int i, bool includeGaps = true)
+        private float GetBookmarY(int i, bool includeGaps = true)
         {
             var centerY = bookmarksRect.y
                         + i * rowHeight
@@ -671,7 +663,7 @@ namespace VHierarchy
 
 
 
-        void BookmarksDragging()
+        private void BookmarksDragging()
         {
             void init()
             {
@@ -754,22 +746,22 @@ namespace VHierarchy
 
         }
 
-        bool draggingBookmark;
+        private bool draggingBookmark;
 
-        float draggedBookmarkHoldOffsetY;
+        private float draggedBookmarkHoldOffsetY;
 
-        float draggedBookmarkY;
-        int insertDraggedBookmarkAtIndex;
+        private float draggedBookmarkY;
+        private int insertDraggedBookmarkAtIndex;
 
-        SceneEntry draggedBookmark;
-        SceneEntry droppedBookmark;
-
-
+        private SceneEntry draggedBookmark;
+        private SceneEntry droppedBookmark;
 
 
 
 
-        void BookmarksAnimations()
+
+
+        private void BookmarksAnimations()
         {
             if (!curEvent.isLayout) return;
 
@@ -819,14 +811,14 @@ namespace VHierarchy
 
         }
 
-        float droppedBookmarkY;
-        float droppedBookmarkYTarget;
-        float droppedBookmarkYDerivative;
+        private float droppedBookmarkY;
+        private float droppedBookmarkYTarget;
+        private float droppedBookmarkYDerivative;
 
-        bool animatingDroppedBookmark;
-        bool animatingGaps;
+        private bool animatingDroppedBookmark;
+        private bool animatingGaps;
 
-        List<float> gaps
+        private List<float> gaps
         {
             get
             {
@@ -837,7 +829,7 @@ namespace VHierarchy
 
             }
         }
-        List<float> _gaps = new();
+        private readonly List<float> _gaps = new();
 
 
 
@@ -883,7 +875,7 @@ namespace VHierarchy
 
         }
 
-        static List<SceneEntry> allEntries = new();
+        private static List<SceneEntry> allEntries = new();
 
         [System.Serializable]
         public class SceneEntry
@@ -896,13 +888,13 @@ namespace VHierarchy
 
 
 
-        void GetBookmarkedEntries()
+        private void GetBookmarkedEntries()
         {
             bookmarkedEntries = data.bookmarkedScenePaths.Select(r => allEntries.FirstOrDefault(rr => rr.scenePath == r))
                                                          .Where(r => r != null)
                                                          .ToList();
         }
-        void SaveBookmarkedEntries()
+        private void SaveBookmarkedEntries()
         {
             data.bookmarkedScenePaths = bookmarkedEntries.Select(r => r.scenePath).ToList();
 
@@ -910,24 +902,26 @@ namespace VHierarchy
 
         }
 
-        List<SceneEntry> bookmarkedEntries = new();
+        private List<SceneEntry> bookmarkedEntries = new();
 
 
 
-        void OnEnable() { UpdateAllEntries(); GetBookmarkedEntries(); }
+        private void OnEnable()
+        { UpdateAllEntries(); GetBookmarkedEntries(); }
 
-        void OnDisable() { SaveBookmarkedEntries(); }
-
-
-
-
-
-
+        private void OnDisable()
+        { SaveBookmarkedEntries(); }
 
 
 
 
-        void UpdateSearch()
+
+
+
+
+
+
+        private void UpdateSearch()
         {
 
             bool tryMatch(string name, string query, int[] matchIndexes, ref float cost)
@@ -1121,17 +1115,17 @@ namespace VHierarchy
                                                 .ToList();
         }
 
-        List<SceneEntry> searchedEntries = new();
+        private List<SceneEntry> searchedEntries = new();
 
-        Dictionary<SceneEntry, string> namesFormattedForFuzzySearch_byEntry = new();
-
-
+        private readonly Dictionary<SceneEntry, string> namesFormattedForFuzzySearch_byEntry = new();
 
 
 
 
 
-        void OnLostFocus()
+
+
+        private void OnLostFocus()
         {
             EditorApplication.delayCall += () =>
             {

@@ -4,7 +4,7 @@ namespace Abiogenesis3d
 {
     [ExecuteInEditMode]
     // NOTE: needs to run after your scripts and before UPixelator
-    [DefaultExecutionOrder(int.MaxValue -101)]
+    [DefaultExecutionOrder(int.MaxValue - 101)]
     public class OrthographicSizeCorrection : MonoBehaviour
     {
         public Camera cam;
@@ -20,7 +20,7 @@ namespace Abiogenesis3d
         [Header("This will be used if myScriptSetsOrthoSize is disabled.")]
         public float standardOrthoSize = 1;
 
-        void EnsureCam()
+        private void EnsureCam()
         {
             if (!cam)
             {
@@ -29,18 +29,18 @@ namespace Abiogenesis3d
             }
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             if (!cam) return;
             cam.orthographicSize = standardOrthoSize;
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             EnsureCam();
             if (!cam) return;
 
-           // NOTE: either your custom script sets it or this script sets it, otherwise the multiplication will keep stacking
+            // NOTE: either your custom script sets it or this script sets it, otherwise the multiplication will keep stacking
             if (!myScriptSetsOrthoSize) cam.orthographicSize = standardOrthoSize;
 #if UNITY_EDITOR
             if (!Application.isPlaying)

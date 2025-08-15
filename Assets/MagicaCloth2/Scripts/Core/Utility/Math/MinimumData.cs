@@ -12,9 +12,9 @@ namespace MagicaCloth2
     /// <typeparam name="T2"></typeparam>
     public class MinimumData<T1, T2> where T1 : unmanaged where T2 : unmanaged
     {
-        T1 minDist;
-        T2 minData;
-        bool isValid = false;
+        private T1 minDist;
+        private T2 minData;
+        private bool isValid = false;
 
         /// <summary>
         /// データの追加。現在のデータより距離が短い場合のみ上書きする

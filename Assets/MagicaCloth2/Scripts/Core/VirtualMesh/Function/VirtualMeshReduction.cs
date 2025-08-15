@@ -152,7 +152,7 @@ namespace MagicaCloth2
         /// リダクション用作業データの初期化
         /// </summary>
         /// <param name="workData"></param>
-        void InitReductionWorkData(ReductionWorkData workData)
+        private void InitReductionWorkData(ReductionWorkData workData)
         {
             try
             {
@@ -179,7 +179,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        unsafe struct Reduction_InitVertexToVertexJob2 : IJob
+        private unsafe struct Reduction_InitVertexToVertexJob2 : IJob
         {
             public int triangleCount;
 
@@ -251,7 +251,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="setting"></param>
         /// <param name="workData"></param>
-        void Organization(ReductionSettings setting, ReductionWorkData workData)
+        private void Organization(ReductionSettings setting, ReductionWorkData workData)
         {
             try
             {
@@ -279,7 +279,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="setting"></param>
         /// <param name="workData"></param>
-        void OrganizationInit(ReductionSettings setting, ReductionWorkData workData)
+        private void OrganizationInit(ReductionSettings setting, ReductionWorkData workData)
         {
             // 最終的な頂点数
             // 生存頂点のみのリスト
@@ -335,7 +335,7 @@ namespace MagicaCloth2
         /// 削除された頂点やボーンを生存するデータへ接続する
         /// </summary>
         /// <param name="workData"></param>
-        void OrganizationCreateRemapData(ReductionWorkData workData)
+        private void OrganizationCreateRemapData(ReductionWorkData workData)
         {
             // 頂点リマップデータ作成
             // 生存頂点にインデックスを割り振る、削除頂点に新しい生存頂点インデックスを割り振る
@@ -370,7 +370,7 @@ namespace MagicaCloth2
         /// 生存頂点にインデックスを割り振る
         /// </summary>
         [BurstCompile]
-        struct Organize_RemapVertexJob : IJob
+        private struct Organize_RemapVertexJob : IJob
         {
             public int oldVertexCount;
 
@@ -410,7 +410,7 @@ namespace MagicaCloth2
         /// 使用しているスキニングボーンを収集する
         /// </summary>
         [BurstCompile]
-        struct Organize_CollectUseSkinBoneJob : IJob
+        private struct Organize_CollectUseSkinBoneJob : IJob
         {
             public int oldVertexCount;
 
@@ -489,7 +489,7 @@ namespace MagicaCloth2
         /// Line/Triangleを再編成するための基本的なデータを作成する
         /// </summary>
         /// <param name="workData"></param>
-        void OrganizationCreateBasicData(ReductionWorkData workData)
+        private void OrganizationCreateBasicData(ReductionWorkData workData)
         {
             int newVertexCount = workData.newVertexCount;
             int oldVertexCount = workData.oldVertexCount;
@@ -541,7 +541,7 @@ namespace MagicaCloth2
         /// 新しい頂点にリダクション後のPositin/Normal/Tangent/Attributeをコピーする
         /// </summary>
         [BurstCompile]
-        struct Organize_CopyVertexJob : IJobParallelFor
+        private struct Organize_CopyVertexJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<int> joinIndices;
@@ -588,7 +588,7 @@ namespace MagicaCloth2
         /// 新しいボーンウエイトリストを作成する
         /// </summary>
         [BurstCompile]
-        struct Organize_RemapBoneWeightJob : IJobParallelFor
+        private struct Organize_RemapBoneWeightJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<int> joinIndices;
@@ -636,7 +636,7 @@ namespace MagicaCloth2
         /// 新しい頂点の接続頂点リストを作成する
         /// </summary>
         [BurstCompile]
-        struct Organize_RemapLinkPointArrayJob : IJobParallelFor
+        private struct Organize_RemapLinkPointArrayJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<int> joinIndices;
@@ -673,7 +673,7 @@ namespace MagicaCloth2
         /// 新しいラインとトライアングルを生成する
         /// </summary>
         /// <param name="workData"></param>
-        void OrganizationCreateLineTriangle(ReductionWorkData workData)
+        private void OrganizationCreateLineTriangle(ReductionWorkData workData)
         {
             // 新しい頂点接続情報からエッジセットを作成する
             var createLineTriangleJob = new Organize_CreateLineTriangleJob()
@@ -707,7 +707,7 @@ namespace MagicaCloth2
         /// エッジセットを作成する
         /// </summary>
         [BurstCompile]
-        struct Organize_CreateLineTriangleJob : IJob
+        private struct Organize_CreateLineTriangleJob : IJob
         {
             public int newVertexCount;
 
@@ -740,7 +740,7 @@ namespace MagicaCloth2
         /// エッジセットからラインとトライアングルセットを作成する
         /// </summary>
         [BurstCompile]
-        struct Organize_CreateLineTriangleJob2 : IJob
+        private struct Organize_CreateLineTriangleJob2 : IJob
         {
             [Unity.Collections.ReadOnly]
             public NativeParallelMultiHashMap<ushort, ushort> newVertexToVertexMap;
@@ -791,7 +791,7 @@ namespace MagicaCloth2
         /// トライアングルセットからトライアングルリストを作成する
         /// </summary>
         [BurstCompile]
-        struct Organize_CreateNewTriangleJob3 : IJob
+        private struct Organize_CreateNewTriangleJob3 : IJob
         {
             [Unity.Collections.WriteOnly]
             public NativeList<int3> newTriangleList;
@@ -819,7 +819,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="setting"></param>
         /// <param name="workData"></param>
-        void OrganizeStoreVirtualMesh(ReductionWorkData workData)
+        private void OrganizeStoreVirtualMesh(ReductionWorkData workData)
         {
             try
             {

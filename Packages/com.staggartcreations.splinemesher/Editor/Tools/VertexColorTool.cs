@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using sc.modeling.splines.runtime;
 using UnityEditor;
 using UnityEditor.EditorTools;
-using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
 #if MATHEMATICS
@@ -26,15 +25,15 @@ namespace sc.modeling.splines.editor
     [EditorTool("Spline Mesh Vertex Color", typeof(SplineMesher))]
     public class VertexColorTool : EditorTool
     {
-        #if SPLINES
-        GUIContent m_IconContent;
+#if SPLINES
+        private GUIContent m_IconContent;
         public override GUIContent toolbarIcon => m_IconContent;
 
         protected bool m_DisableHandles = false;
         protected const float SLIDER_WIDTH = 150f;
-        
-        static readonly Color headerBackgroundDark = new Color(0.1f, 0.1f, 0.1f, 0.9f);
-        static readonly Color headerBackgroundLight = new Color(1f, 1f, 1f, 0.9f);
+
+        private static readonly Color headerBackgroundDark = new(0.1f, 0.1f, 0.1f, 0.9f);
+        private static readonly Color headerBackgroundLight = new(1f, 1f, 1f, 0.9f);
         public static Color headerBackground => EditorGUIUtility.isProSkin ? headerBackgroundDark : headerBackgroundLight;
 
         public enum Channel
@@ -49,7 +48,7 @@ namespace sc.modeling.splines.editor
             get => (Channel)SessionState.GetInt(PlayerSettings.productName + "_SM_targetChannel", (int)Channel.Red);
             set => SessionState.SetInt(PlayerSettings.productName + "_SM_targetChannel", (int)value);
         }
-        
+
         public enum VisualizationChannel
         {
             None,
@@ -61,16 +60,16 @@ namespace sc.modeling.splines.editor
             get => (VisualizationChannel)SessionState.GetInt(PlayerSettings.productName + "_SM_visualizationChannel", (int)VisualizationChannel.Current);
             set => SessionState.SetInt(PlayerSettings.productName + "_SM_visualizationChannel", (int)value);
         }
-        
+
         private VertexColorToolUI ui;
         private Material vertexColorMaterial;
-        
+
         public static Texture2D LoadIcon()
         {
             return AssetDatabase.LoadAssetAtPath<Texture2D>($"{SplineMesher.kPackageRoot}/Editor/Resources/spline-mesher-color-icon-64px.psd");
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             m_IconContent = new GUIContent
             {
@@ -89,9 +88,9 @@ namespace sc.modeling.splines.editor
 
         public override void OnActivated()
         {
-            #if UNITY_2022_1_OR_NEWER
+#if UNITY_2022_1_OR_NEWER
             SceneView.AddOverlayToActiveView(ui = new VertexColorToolUI());
-            #endif
+#endif
 
             VertexColorToolUI.Show = true;
 
@@ -114,10 +113,10 @@ namespace sc.modeling.splines.editor
             foreach (var m_target in targets)
             {
                 SplineMesher splineMesher = (SplineMesher)m_target;
-                
+
                 if (splineMesher == null || splineMesher.splineContainer == null)
                     continue;
-                
+
                 if (visualizationChannel != VisualizationChannel.None)
                 {
                     int channel = -1;
@@ -129,7 +128,7 @@ namespace sc.modeling.splines.editor
                         transparent = true;
                     }
                     else channel = (int)targetChannel;
-                    
+
                     vertexColorMaterial.EnableKeyword("_DISPLAY_COLOR");
                     vertexColorMaterial.SetFloat("_ColorChannel", channel);
                     vertexColorMaterial.SetFloat("_Transparent", transparent ? 1 : 0);
@@ -142,25 +141,29 @@ namespace sc.modeling.splines.editor
                         if (mf) Graphics.DrawMeshNow(mf.sharedMesh, mf.transform.localToWorldMatrix);
                     }
                 }
-                
+
                 var splines = splineMesher.splineContainer.Splines;
 
                 List<SplineData<SplineMesher.VertexColorChannel>> data = null;
 
                 switch (targetChannel)
                 {
-                    case Channel.Red: data = splineMesher.vertexColorRedData;
+                    case Channel.Red:
+                        data = splineMesher.vertexColorRedData;
                         break;
-                    case Channel.Green: data = splineMesher.vertexColorGreenData;
+                    case Channel.Green:
+                        data = splineMesher.vertexColorGreenData;
                         break;
-                    case Channel.Blue: data = splineMesher.vertexColorBlueData;
+                    case Channel.Blue:
+                        data = splineMesher.vertexColorBlueData;
                         break;
-                    case Channel.Alpha: data = splineMesher.vertexColorAlphaData;
+                    case Channel.Alpha:
+                        data = splineMesher.vertexColorAlphaData;
                         break;
                 }
 
                 Handles.color = GetColor();
-                
+
                 for (var i = 0; i < splines.Count; i++)
                 {
                     if (i < data.Count)
@@ -173,7 +176,7 @@ namespace sc.modeling.splines.editor
                         DrawDataPoints(nativeSpline, data[i]);
 
                         nativeSpline.DataPointHandles<ISpline, SplineMesher.VertexColorChannel>(data[i], true, i);
-                    
+
                         if (GUI.changed)
                         {
                             splineMesher.Rebuild();
@@ -182,7 +185,7 @@ namespace sc.modeling.splines.editor
                 }
             }
         }
-        
+
         protected bool DrawDataPoints(ISpline spline, SplineData<SplineMesher.VertexColorChannel> splineData)
         {
             SplineMesher modeler = target as SplineMesher;
@@ -200,7 +203,7 @@ namespace sc.modeling.splines.editor
                     dataPoint.Value = result;
                     splineData[dataFrameIndex] = dataPoint;
                     inUse = true;
-                    
+
                     modeler.Rebuild();
                 }
             }
@@ -208,13 +211,13 @@ namespace sc.modeling.splines.editor
         }
 
         private const float boxPadding = 5f;
-        
+
         protected bool DrawDataPoint(Vector3 position, Vector3 tangent, Vector3 up, SplineMesher.VertexColorChannel inValue, out SplineMesher.VertexColorChannel outValue)
         {
             int id = m_DisableHandles ? -1 : GUIUtility.GetControlID(FocusType.Passive);
 
             outValue = inValue;
-            
+
             if (tangent == Vector3.zero) return false;
 
             if (Event.current.type == EventType.MouseUp && Event.current.button != 0 && (GUIUtility.hotControl == id))
@@ -239,17 +242,17 @@ namespace sc.modeling.splines.editor
                     Handles.BeginGUI();
 
                     Vector2 screenPos = HandleUtility.WorldToGUIPoint(position);
-                    Rect bgRect = new Rect(screenPos.x - (SLIDER_WIDTH * 0.5f) - boxPadding, screenPos.y - 80f, SLIDER_WIDTH + boxPadding, 55);
+                    Rect bgRect = new(screenPos.x - (SLIDER_WIDTH * 0.5f) - boxPadding, screenPos.y - 80f, SLIDER_WIDTH + boxPadding, 55);
                     EditorGUI.DrawRect(bgRect, headerBackground);
-                    
-                    Rect sliderRect = new Rect(screenPos.x - (SLIDER_WIDTH * 0.5f), screenPos.y - 50f, SLIDER_WIDTH - boxPadding, 22f);
+
+                    Rect sliderRect = new(screenPos.x - (SLIDER_WIDTH * 0.5f), screenPos.y - 50f, SLIDER_WIDTH - boxPadding, 22f);
 
                     outValue.value = EditorGUI.Slider(sliderRect, inValue.value, -1f, 1f);
                     outValue.value = math.clamp(outValue.value, -1f, 1f);
-                    
+
                     sliderRect.y -= 27f;
                     outValue.blend = EditorGUI.ToggleLeft(sliderRect, new GUIContent("Blend", "Blend the value with the original vertex color value"), inValue.blend);
-                    
+
                     Handles.EndGUI();
                 }
             }
@@ -266,18 +269,18 @@ namespace sc.modeling.splines.editor
 
         public override void OnWillBeDeactivated()
         {
-            #if UNITY_2022_1_OR_NEWER
+#if UNITY_2022_1_OR_NEWER
             SceneView.RemoveOverlayFromActiveView(ui);
-            #endif
-            
+#endif
+
             VertexColorToolUI.Show = false;
         }
-        
-        #if UNITY_2022_1_OR_NEWER
+
+#if UNITY_2022_1_OR_NEWER
         [Overlay(defaultDisplay = true)]
-        #else
+#else
         [Overlay(typeof(SceneView), "Spline Mesh Vertex Tool")]
-        #endif
+#endif
         public class VertexColorToolUI : Overlay, ITransientOverlay
         {
             public static bool Show;
@@ -286,32 +289,32 @@ namespace sc.modeling.splines.editor
             public override VisualElement CreatePanelContent()
             {
                 this.displayName = "Vertex Colors";
-                
+
                 var root = new VisualElement();
-                
-                EnumField targetChannel = new EnumField("Channel")
+
+                EnumField targetChannel = new("Channel")
                 {
                     value = VertexColorTool.targetChannel,
                     tooltip = "Select which vertex color channel to edit"
                 };
                 targetChannel.Init(targetChannel.value);
-                targetChannel.RegisterValueChangedCallback(evt => { VertexColorTool.targetChannel = (Channel)evt.newValue; } );
+                targetChannel.RegisterValueChangedCallback(evt => { VertexColorTool.targetChannel = (Channel)evt.newValue; });
 
                 root.Add(targetChannel);
 
-                EnumField vizChannel = new EnumField("Visualize")
+                EnumField vizChannel = new("Visualize")
                 {
                     value = VertexColorTool.visualizationChannel,
                     tooltip = "Draw the spline mesh with its vertex color value visualized"
                 };
                 vizChannel.Init(vizChannel.value);
-                vizChannel.RegisterValueChangedCallback(evt => { VertexColorTool.visualizationChannel = (VisualizationChannel)evt.newValue; } );
+                vizChannel.RegisterValueChangedCallback(evt => { VertexColorTool.visualizationChannel = (VisualizationChannel)evt.newValue; });
 
                 root.Add(vizChannel);
 
                 return root;
             }
         }
-        #endif
+#endif
     }
 }

@@ -1,7 +1,6 @@
 #if GRIFFIN
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace Pinwheel.Griffin.SplineTool
 {
@@ -216,7 +215,7 @@ namespace Pinwheel.Griffin.SplineTool
         private void ApplyAlbedoAndMetallic(GStylizedTerrain t)
         {
             int albedoResolution = t.TerrainData.Shading.AlbedoMapResolution;
-            RenderTexture rtAlbedo = new RenderTexture(albedoResolution, albedoResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture rtAlbedo = new(albedoResolution, albedoResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             Internal_ApplyAlbedo(t, rtAlbedo);
 
             RenderTexture.active = rtAlbedo;
@@ -227,7 +226,7 @@ namespace Pinwheel.Griffin.SplineTool
             Object.DestroyImmediate(rtAlbedo);
 
             int metallicResolution = t.TerrainData.Shading.MetallicMapResolution;
-            RenderTexture rtMetallic = new RenderTexture(metallicResolution, metallicResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture rtMetallic = new(metallicResolution, metallicResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             Internal_ApplyMetallic(t, rtMetallic);
 
             RenderTexture.active = rtMetallic;

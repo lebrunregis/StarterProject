@@ -16,7 +16,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
         private const string AllFoldersKey = "[All]";
         private const int MaxPageSize = 200;
 
-        private readonly AudioInfoData _clipList = new AudioInfoData();
+        private readonly AudioInfoData _clipList = new();
 
         private int _pageNumber;
         private bool isBulkMode;
@@ -25,13 +25,14 @@ namespace DarkTonic.MasterAudio.EditorScripts
         private List<AudioInformation> _filteredOut;
         private Vector2 _scrollPos;
         private Vector2 _outsideScrollPos;
-        private readonly List<string> _folderPaths = new List<string>();
+        private readonly List<string> _folderPaths = new();
         private string _selectedFolderPath = AllFoldersKey;
 
-        private readonly List<int> _sampleRates = new List<int> { 8000, 11025, 22050, 44100, 48000, 96000, 192000 };
+        private readonly List<int> _sampleRates = new() { 8000, 11025, 22050, 44100, 48000, 96000, 192000 };
         private readonly string[] _sampleRateDisplays = new[] { "8000", "11025", "22050", "44100", "48000", "96000", "192000" };
 
         [MenuItem("Window/Master Audio/Bulk Audio Importer")]
+        private
         // ReSharper disable once UnusedMember.Local
         static void Init()
         {
@@ -39,13 +40,13 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
             window.minSize = new Vector2(949, 610);
             window.maxSize = new Vector2(949, 610);
-            
+
             window.minSize = window.maxSize;
         }
 
         // ReSharper disable once UnusedMember.Local
         // ReSharper disable once InconsistentNaming
-        void OnGUI()
+        private void OnGUI()
         {
             _outsideScrollPos = GUI.BeginScrollView(new Rect(0, 0, position.width, position.height), _outsideScrollPos, new Rect(0, 0, 936, 610));
 
@@ -248,8 +249,10 @@ namespace DarkTonic.MasterAudio.EditorScripts
             }
         }
 
-        private List<AudioInformation> SelectedClips {
-            get {
+        private List<AudioInformation> SelectedClips
+        {
+            get
+            {
                 var selected = new List<AudioInformation>();
 
                 foreach (var t in FilteredClips)
@@ -266,8 +269,10 @@ namespace DarkTonic.MasterAudio.EditorScripts
             }
         }
 
-        private List<AudioInformation> FilteredClips {
-            get {
+        private List<AudioInformation> FilteredClips
+        {
+            get
+            {
                 if (_filterClips != null)
                 {
                     return _filterClips;
@@ -540,7 +545,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
                     GUI.backgroundColor = Color.white;
                 }
 
-                GUIStyle style = new GUIStyle(EditorStyles.miniButtonMid)
+                GUIStyle style = new(EditorStyles.miniButtonMid)
                 {
                     fixedHeight = 22
                 };
@@ -990,7 +995,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
                 var importer = AudioImporter.GetAtPath(aPath) as AudioImporter;
                 if (importer == null)
                 {
-                    continue; 
+                    continue;
                 }
 
                 // ReSharper disable once UseObjectOrCollectionInitializer
@@ -1005,7 +1010,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
 #endif
 
 
-                var newClip = new AudioInformation(aPath, Path.GetFileNameWithoutExtension(aPath), importer.forceToMono, importer.loadInBackground, 
+                var newClip = new AudioInformation(aPath, Path.GetFileNameWithoutExtension(aPath), importer.forceToMono, importer.loadInBackground,
                     preloadAudioData,
                     settings.loadType, settings.compressionFormat, settings.quality, settings.sampleRateSetting, int.Parse(settings.sampleRateOverride.ToString()));
 
@@ -1118,7 +1123,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
         public class AudioInfoData
         {
-            public List<AudioInformation> AudioInfor = new List<AudioInformation>();
+            public List<AudioInformation> AudioInfor = new();
             public string SearchFilter = string.Empty;
             public ClipSortColumn SortColumn = ClipSortColumn.Name;
             public ClipSortDirection SortDir = ClipSortDirection.Ascending;
@@ -1265,19 +1270,24 @@ namespace DarkTonic.MasterAudio.EditorScripts
             }
         }
 
-        private string CacheFilePath {
-            get {
+        private string CacheFilePath
+        {
+            get
+            {
                 var path = MasterAudio.MasterAudioFolderPath + "/audioImportSettings.xml";
                 return path;
             }
         }
 
 #if UNITY_2022_2_OR_NEWER
-        private string PlatformString {
-            get {
+        private string PlatformString
+        {
+            get
+            {
                 var platform = string.Empty;
 
-                switch (Application.platform) {
+                switch (Application.platform)
+                {
                     case RuntimePlatform.IPhonePlayer:
                         platform = "iOS";
                         break;

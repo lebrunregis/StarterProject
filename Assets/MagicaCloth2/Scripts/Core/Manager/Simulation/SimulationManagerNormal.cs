@@ -17,7 +17,7 @@ namespace MagicaCloth2
     public partial class SimulationManager
     {
         [BurstCompile]
-        unsafe struct SimulationNormalJob : IJobParallelFor
+        private unsafe struct SimulationNormalJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeList<int> batchNormalTeamList;
@@ -853,7 +853,7 @@ namespace MagicaCloth2
         /// -リセット
         /// -移動影響
         /// </summary>
-        static void SimulationPreTeamUpdate(
+        private static void SimulationPreTeamUpdate(
             DataChunk chunk,
             // team
             ref TeamManager.TeamData tdata,
@@ -975,7 +975,7 @@ namespace MagicaCloth2
             }
         }
 
-        static float3 WindBatchJob(
+        private static float3 WindBatchJob(
             int teamId,
             in WindParams windParams,
             int vindex,
@@ -1035,7 +1035,7 @@ namespace MagicaCloth2
             return windForce;
         }
 
-        static void SimulationStepUpdateParticles(
+        private static void SimulationStepUpdateParticles(
             DataChunk chunk,
             float4 simulationPower,
             float simulationDeltaTime,
@@ -1223,7 +1223,7 @@ namespace MagicaCloth2
             }
         }
 
-        static void SpringBatchJob(
+        private static void SpringBatchJob(
             in SpringConstraint.SpringConstraintParams springParams,
             ClothNormalAxis normalAxis,
             ref float3 nextPos,
@@ -1308,7 +1308,7 @@ namespace MagicaCloth2
             nextPos = basePos + v;
         }
 
-        static void SimulationStepUpdateBaseLinePose(
+        private static void SimulationStepUpdateBaseLinePose(
             DataChunk chunk,
             // team
             ref TeamManager.TeamData tdata,
@@ -1409,7 +1409,7 @@ namespace MagicaCloth2
             }
         }
 
-        static float3 WindForceBlendBatchJob(
+        private static float3 WindForceBlendBatchJob(
             in TeamWindInfo windInfo,
             in WindParams windParams,
             in float3 windPos,
@@ -1431,7 +1431,7 @@ namespace MagicaCloth2
 
             // Noise波形
             var noisePos = windPos + windInfo.time * 2.3132f; // Sin波形との調整用
-            float2 noiseXY = new float2(noise.cnoise(noisePos.xy), noise.cnoise(noisePos.yx));
+            float2 noiseXY = new(noise.cnoise(noisePos.xy), noise.cnoise(noisePos.yx));
             noiseXY *= 2.3f; // cnoiseは弱いので補強 2.0?
 
             // 波形ブレンド
@@ -1465,7 +1465,7 @@ namespace MagicaCloth2
         /// <summary>
         /// 座標確定
         /// </summary>
-        static void SimulationStepPostTeam(
+        private static void SimulationStepPostTeam(
             DataChunk chunk,
             float simulationDeltaTime,
             // team
@@ -1644,7 +1644,7 @@ namespace MagicaCloth2
         /// シミュレーション完了後の表示位置の計算
         /// - 未来予測
         /// </summary>
-        static void SimulationCalcDisplayPosition(
+        private static void SimulationCalcDisplayPosition(
             DataChunk chunk,
             float simulationDeltaTime,
             // team
@@ -1742,7 +1742,7 @@ namespace MagicaCloth2
             }
         }
 
-        unsafe static void SimulationClearTempBuffer(
+        private static unsafe void SimulationClearTempBuffer(
             DataChunk chunk,
             // team
             ref TeamManager.TeamData tdata,

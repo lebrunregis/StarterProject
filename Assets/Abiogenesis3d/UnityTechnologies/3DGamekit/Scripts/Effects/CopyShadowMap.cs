@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -7,9 +6,9 @@ namespace Gamekit3D
     [ExecuteInEditMode]
     public class CopyShadowMap : MonoBehaviour
     {
-        CommandBuffer cb = null;
+        private CommandBuffer cb = null;
 
-        void OnEnable()
+        private void OnEnable()
         {
             var light = GetComponent<Light>();
             if (light)
@@ -21,7 +20,7 @@ namespace Gamekit3D
             }
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             var light = GetComponent<Light>();
             if (light)

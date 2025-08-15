@@ -136,7 +136,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
 
 public static class EdgeListExt
 {
-    private static EdgeErrorkeyedComparer eec = new EdgeErrorkeyedComparer();
+    private static readonly EdgeErrorkeyedComparer eec = new();
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void AddSortedFromPosition<Edge>(this List<Edge> edgeList, int position, Edge edge)

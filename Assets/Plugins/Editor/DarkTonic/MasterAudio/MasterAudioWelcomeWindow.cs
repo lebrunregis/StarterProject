@@ -14,11 +14,14 @@ namespace DarkTonic.MasterAudio.EditorScripts
         private const string VideoSymbol = "VIDEO_ENABLED";
         private const string AddresablesSymbol = "ADDRESSABLES_ENABLED";
 
-        private static bool showOnStartPrefs { // Records the customer's preference to show the window on start or not.
-            get {
+        private static bool showOnStartPrefs
+        { // Records the customer's preference to show the window on start or not.
+            get
+            {
                 return MasterAudioSettings.Instance.ShowWelcomeWindowOnStart;
             }
-            set {
+            set
+            {
                 MasterAudioSettings.Instance.ShowWelcomeWindowOnStart = value;
                 EditorUtility.SetDirty(MasterAudioSettings.Instance);
             }
@@ -60,7 +63,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
             }
         }
 
-        void OnGUI()
+        private void OnGUI()
         {
             DTGUIHelper.ShowHeaderTexture(MasterAudioInspectorResources.LogoTexture);
             //DTGUIHelper.HelpHeader("https://www.dtdevtools.com/docs/masteraudio/MasterAudioManager.htm");
@@ -98,7 +101,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
             DTGUIHelper.VerticalSpace(1);
             GUILayout.Label("Feature toggle", EditorStyles.boldLabel);
             DTGUIHelper.VerticalSpace(1);
-			// physics 2D
+            // physics 2D
             var disable3DSound = DTDefineHelper.DoesScriptingDefineSymbolExist(Disable3DSoundSymbol);
             var newDisable3DSound = GUILayout.Toggle(disable3DSound, " Disable 3D Sound (" + Disable3DSoundSymbol + ")");
             if (newDisable3DSound != disable3DSound)

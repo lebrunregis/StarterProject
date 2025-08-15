@@ -34,12 +34,14 @@ namespace DarkTonic.MasterAudio.EditorScripts
             if (ma != null)
             {
                 playlistNames.AddRange(ma.PlaylistNames);
-            } else {
+            }
+            else
+            {
                 labelText += " (MA not in Scene)";
             }
 
 #if UNITY_2023_1_OR_NEWER
-            var creators = Object.FindObjectsByType<DynamicSoundGroupCreator>(FindObjectsInactive.Include, FindObjectsSortMode.None) as DynamicSoundGroupCreator[];
+            var creators = Object.FindObjectsByType<DynamicSoundGroupCreator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 #else
             var creators = Object.FindObjectsOfType(typeof(DynamicSoundGroupCreator)) as DynamicSoundGroupCreator[];
 #endif

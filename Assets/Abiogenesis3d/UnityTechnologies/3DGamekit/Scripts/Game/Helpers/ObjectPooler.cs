@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gamekit3D
@@ -45,5 +44,5 @@ namespace Gamekit3D
     {
         int poolID { get; set; }
         ObjectPooler<T> pool { get; set; }
-    } 
+    }
 }

@@ -57,7 +57,7 @@ namespace MagicaCloth2
         /// レンダー情報へのハンドル
         /// （レンダラーのセットアップデータ）
         /// </summary>
-        internal List<int> renderHandleList = new List<int>();
+        internal List<int> renderHandleList = new();
 
         /// <summary>
         /// BoneClothのセットアップデータ
@@ -76,12 +76,12 @@ namespace MagicaCloth2
             //public DataChunk renderMeshTangentChunk;
             public int renderDataWorkIndex;
         }
-        internal List<RenderMeshInfo> renderMeshInfoList = new List<RenderMeshInfo>();
+        internal List<RenderMeshInfo> renderMeshInfoList = new();
 
         /// <summary>
         /// カスタムスキニングのボーン情報
         /// </summary>
-        internal List<TransformRecord> customSkinningBoneRecords = new List<TransformRecord>();
+        internal List<TransformRecord> customSkinningBoneRecords = new();
 
         /// <summary>
         /// 法線調整用のトランスフォーム状態
@@ -130,7 +130,7 @@ namespace MagicaCloth2
         /// <summary>
         /// リダクション設定（外部から設定する）
         /// </summary>
-        ReductionSettings reductionSettings;
+        private ReductionSettings reductionSettings;
 
         /// <summary>
         /// シミュレーションパラメータ
@@ -148,7 +148,7 @@ namespace MagicaCloth2
         /// メインコライダーのインデックス０はあり得る
         /// シンメトリーコライダーのインデックス０はシンメトリーが存在しないことを示す
         /// </summary>
-        internal Dictionary<ColliderComponent, int2> colliderDict = new Dictionary<ColliderComponent, int2>();
+        internal Dictionary<ColliderComponent, int2> colliderDict = new();
 
         //=========================================================================================
         /// <summary>
@@ -182,7 +182,7 @@ namespace MagicaCloth2
         /// <summary>
         /// カリング用アニメーター配下のレンダラーリスト
         /// </summary>
-        internal List<Renderer> interlockingAnimatorRenderers = new List<Renderer>();
+        internal List<Renderer> interlockingAnimatorRenderers = new();
 
         /// <summary>
         /// 現在アンカーとして設定されているTransformのインスタンスID
@@ -209,8 +209,8 @@ namespace MagicaCloth2
         /// <summary>
         /// キャンセルトークン
         /// </summary>
-        CancellationTokenSource cts = new CancellationTokenSource();
-        volatile object lockObject = new object();
+        private readonly CancellationTokenSource cts = new();
+        private readonly object lockObject = new();
         //volatile object lockState = new object();
 
         /// <summary>
@@ -221,17 +221,17 @@ namespace MagicaCloth2
         /// <summary>
         /// 破棄フラグ
         /// </summary>
-        volatile bool isDestory = false;
+        private volatile bool isDestory = false;
 
         /// <summary>
         /// 内部データまで完全に破棄されたかどうか
         /// </summary>
-        volatile bool isDestoryInternal = false;
+        private volatile bool isDestoryInternal = false;
 
         /// <summary>
         /// 構築中フラグ
         /// </summary>
-        volatile bool isBuild = false;
+        private volatile bool isBuild = false;
 
         public BitField32 GetStateFlag()
         {
@@ -310,7 +310,7 @@ namespace MagicaCloth2
             //Debug.Log($"ClothProcessData.Dispose()!");
         }
 
-        void DisposeInternal()
+        private void DisposeInternal()
         {
             lock (lockObject)
             {

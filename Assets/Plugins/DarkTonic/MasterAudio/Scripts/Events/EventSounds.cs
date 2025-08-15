@@ -1,21 +1,21 @@
 /*! \cond PRIVATE */
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
 #if MULTIPLAYER_ENABLED
     using DarkTonic.MasterAudio.Multiplayer;
 #endif
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     [AudioScriptOrder(-30)]
     [AddComponentMenu("Dark Tonic/Master Audio/Event Sounds")]
     // ReSharper disable once CheckNamespace
-    public class EventSounds : MonoBehaviour, ICustomEventReceiver {
+    public class EventSounds : MonoBehaviour, ICustomEventReceiver
+    {
         // ReSharper disable InconsistentNaming
         public MasterAudio.SoundSpawnLocationMode soundSpawnMode = MasterAudio.SoundSpawnLocationMode.AttachToCaller;
         public bool disableSounds = false;
@@ -30,7 +30,8 @@ namespace DarkTonic.MasterAudio {
         public bool logMissingEvents = true;
         // ReSharper restore InconsistentNaming
 
-        public enum UnityUIVersion {
+        public enum UnityUIVersion
+        {
             Legacy,
             uGUI
         }
@@ -44,7 +45,8 @@ namespace DarkTonic.MasterAudio {
         /*! \endcond */
 #endif
 
-        public enum EventType {
+        public enum EventType
+        {
             OnStart,
             OnVisible,
             OnInvisible,
@@ -98,24 +100,28 @@ namespace DarkTonic.MasterAudio {
             CodeTriggeredEvent2
         }
 
-        public enum GlidePitchType {
+        public enum GlidePitchType
+        {
             None,
             RaisePitch,
             LowerPitch
         }
 
-        public enum VariationType {
+        public enum VariationType
+        {
             PlaySpecific,
             PlayRandom
         }
 
-        public enum PreviousSoundStopMode {
+        public enum PreviousSoundStopMode
+        {
             None,
             Stop,
             FadeOut
         }
 
-        public enum RetriggerLimMode {
+        public enum RetriggerLimMode
+        {
             None,
             FrameBased,
             TimeBased
@@ -127,7 +133,7 @@ namespace DarkTonic.MasterAudio {
         };
 #endif
 
-        public static List<string> LayerTagFilterEvents = new List<string>()
+        public static List<string> LayerTagFilterEvents = new()
         {
             EventType.OnCollision.ToString(),
             EventType.OnTriggerEnter.ToString(),
@@ -140,7 +146,7 @@ namespace DarkTonic.MasterAudio {
             EventType.OnCollisionExit2D.ToString()
         };
 
-        public static List<MasterAudio.PlaylistCommand> PlaylistCommandsWithAll = new List<MasterAudio.PlaylistCommand>()
+        public static List<MasterAudio.PlaylistCommand> PlaylistCommandsWithAll = new()
         {
             MasterAudio.PlaylistCommand.FadeToVolume,
             MasterAudio.PlaylistCommand.Pause,
@@ -208,8 +214,8 @@ namespace DarkTonic.MasterAudio {
         public AudioEventGroup unityCancelSound;
         public AudioEventGroup unityToggleSound;
 
-        public List<AudioEventGroup> userDefinedSounds = new List<AudioEventGroup>();
-        public List<AudioEventGroup> mechanimStateChangedSounds = new List<AudioEventGroup>();
+        public List<AudioEventGroup> userDefinedSounds = new();
+        public List<AudioEventGroup> mechanimStateChangedSounds = new();
 
         public bool useStartSound = false;
         public bool useVisibleSound = false;
@@ -273,8 +279,8 @@ namespace DarkTonic.MasterAudio {
 
         private bool _isVisible;
         private bool _needsCoroutine;
-        private float? _triggerEnterTime;
-        private float? _triggerEnter2dTime;
+        private readonly float? _triggerEnterTime;
+        private readonly float? _triggerEnter2dTime;
 
 #if UNITY_IPHONE || UNITY_ANDROID
     // no mouse events!
@@ -284,13 +290,14 @@ namespace DarkTonic.MasterAudio {
 #endif
 
         private Transform _trans;
-        private readonly List<AudioEventGroup> _validMechanimStateChangedSounds = new List<AudioEventGroup>();
+        private readonly List<AudioEventGroup> _validMechanimStateChangedSounds = new();
         private Animator _anim;
         private AudioEventGroup eventsToPlayDuringStart = null;
         private bool startHappened = false;
 
         // ReSharper disable once UnusedMember.Local
-        private void Awake() {
+        private void Awake()
+        {
             _trans = transform;
             _anim = GetComponent<Animator>();
 
@@ -300,28 +307,33 @@ namespace DarkTonic.MasterAudio {
             _toggle = GetComponent<UnityEngine.UI.Toggle>();
             // ReSharper restore RedundantNameQualifier
 
-            if (IsSetToUGUI) {
+            if (IsSetToUGUI)
+            {
                 AddUGUIComponents();
             }
 
             SpawnedOrAwake();
         }
 
-        protected virtual void SpawnedOrAwake() {
+        protected virtual void SpawnedOrAwake()
+        {
             _isVisible = false;
 
             // check if we need a coroutine for Mechanim stuff
             _validMechanimStateChangedSounds.Clear();
             _needsCoroutine = false;
 
-            if (disableSounds || _anim == null) {
+            if (disableSounds || _anim == null)
+            {
                 return;
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < mechanimStateChangedSounds.Count; i++) {
+            for (var i = 0; i < mechanimStateChangedSounds.Count; i++)
+            {
                 var state = mechanimStateChangedSounds[i];
-                if (!state.mechanimEventActive || string.IsNullOrEmpty(state.mechanimStateName)) {
+                if (!state.mechanimEventActive || string.IsNullOrEmpty(state.mechanimStateName))
+                {
                     continue;
                 }
                 _needsCoroutine = true;
@@ -329,21 +341,26 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        private IEnumerator CoUpdate() {
-            while (true) {
+        private IEnumerator CoUpdate()
+        {
+            while (true)
+            {
                 yield return MasterAudio.EndOfFrameDelay;
 
                 // ReSharper disable once ForCanBeConvertedToForeach
-                for (var i = 0; i < _validMechanimStateChangedSounds.Count; i++) {
+                for (var i = 0; i < _validMechanimStateChangedSounds.Count; i++)
+                {
                     var chg = _validMechanimStateChangedSounds[i];
 
                     var matchState = _anim.GetCurrentAnimatorStateInfo(0).IsName(chg.mechanimStateName);
-                    if (!matchState) {
+                    if (!matchState)
+                    {
                         chg.mechEventPlayedForState = false;
                         continue;
                     }
 
-                    if (chg.mechEventPlayedForState) {
+                    if (chg.mechEventPlayedForState)
+                    {
                         continue;
                     }
 
@@ -357,10 +374,12 @@ namespace DarkTonic.MasterAudio {
         #region Core Monobehavior events
 
         // ReSharper disable once UnusedMember.Local
-        private void Start() {
+        private void Start()
+        {
             CheckForIllegalCustomEvents();
 
-            if (useStartSound) {
+            if (useStartSound)
+            {
                 PlaySounds(startSound, EventType.OnStart);
             }
 
@@ -374,8 +393,10 @@ namespace DarkTonic.MasterAudio {
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnBecameVisible() {
-            if (!useVisibleSound || _isVisible) {
+        private void OnBecameVisible()
+        {
+            if (!useVisibleSound || _isVisible)
+            {
                 return;
             }
             _isVisible = true;
@@ -383,8 +404,10 @@ namespace DarkTonic.MasterAudio {
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnBecameInvisible() {
-            if (!useInvisibleSound) {
+        private void OnBecameInvisible()
+        {
+            if (!useInvisibleSound)
+            {
                 return;
             }
             _isVisible = false;
@@ -392,15 +415,19 @@ namespace DarkTonic.MasterAudio {
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnEnable() {
-            if (_slider != null) {
+        private void OnEnable()
+        {
+            if (_slider != null)
+            {
                 _slider.onValueChanged.AddListener(SliderChanged);
                 RestorePersistentSliders();
             }
-            if (_button != null) {
+            if (_button != null)
+            {
                 _button.onClick.AddListener(ButtonClicked);
             }
-            if (_toggle != null) {
+            if (_toggle != null)
+            {
                 _toggle.onValueChanged.AddListener(ToggleChanged);
             }
 
@@ -415,22 +442,28 @@ namespace DarkTonic.MasterAudio {
 
             // start coroutine if we're doing Mechanim monitoring.
             // ReSharper disable once InvertIf
-            if (_needsCoroutine) {
+            if (_needsCoroutine)
+            {
                 StopAllCoroutines();
                 StartCoroutine(CoUpdate());
             }
 
-            if (useEnableSound) {
-                if (!startHappened) {
+            if (useEnableSound)
+            {
+                if (!startHappened)
+                {
                     var hasPlaylistEvent = false;
-                    for (var i = 0; i < enableSound.SoundEvents.Count; i++) {
-                        if (enableSound.SoundEvents[i].currentSoundFunctionType == MasterAudio.EventSoundFunctionType.PlaylistControl) {
+                    for (var i = 0; i < enableSound.SoundEvents.Count; i++)
+                    {
+                        if (enableSound.SoundEvents[i].currentSoundFunctionType == MasterAudio.EventSoundFunctionType.PlaylistControl)
+                        {
                             hasPlaylistEvent = true;
                             break;
                         }
                     }
 
-                    if (hasPlaylistEvent) {
+                    if (hasPlaylistEvent)
+                    {
                         eventsToPlayDuringStart = enableSound;
                         return;
                     }
@@ -440,54 +473,66 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        private void RestorePersistentSliders() {
+        private void RestorePersistentSliders()
+        {
             // restore sliders if they are used for "Persistent" settings.
-            if (!useUnitySliderChangedSound) {
+            if (!useUnitySliderChangedSound)
+            {
                 return;
             }
 
-            foreach (var action in unitySliderChangedSound.SoundEvents) {
-                if (action.currentSoundFunctionType != MasterAudio.EventSoundFunctionType.PersistentSettingsControl) {
+            foreach (var action in unitySliderChangedSound.SoundEvents)
+            {
+                if (action.currentSoundFunctionType != MasterAudio.EventSoundFunctionType.PersistentSettingsControl)
+                {
                     continue;
                 }
 
-                if (action.targetVolMode != AudioEvent.TargetVolumeMode.UseSliderValue) {
+                if (action.targetVolMode != AudioEvent.TargetVolumeMode.UseSliderValue)
+                {
                     continue;
                 }
 
-                switch (action.currentPersistentSettingsCommand) {
+                switch (action.currentPersistentSettingsCommand)
+                {
                     case MasterAudio.PersistentSettingsCommand.SetMusicVolume:
                         var musicVol = PersistentAudioSettings.MusicVolume;
-                        if (musicVol.HasValue) {
+                        if (musicVol.HasValue)
+                        {
                             _slider.value = musicVol.Value;
                         }
 
                         break;
                     case MasterAudio.PersistentSettingsCommand.SetBusVolume:
-                        if (action.allSoundTypesForBusCmd) {
+                        if (action.allSoundTypesForBusCmd)
+                        {
                             continue;
                         }
 
                         var busVol = PersistentAudioSettings.GetBusVolume(action.busName);
-                        if (busVol.HasValue) {
+                        if (busVol.HasValue)
+                        {
                             _slider.value = busVol.Value;
                         }
 
                         break;
                     case MasterAudio.PersistentSettingsCommand.SetMixerVolume:
                         var mixerVol = PersistentAudioSettings.MixerVolume;
-                        if (mixerVol.HasValue) {
+                        if (mixerVol.HasValue)
+                        {
                             _slider.value = mixerVol.Value;
                         }
 
                         break;
                     case MasterAudio.PersistentSettingsCommand.SetGroupVolume:
-                        if (action.allSoundTypesForGroupCmd) {
+                        if (action.allSoundTypesForGroupCmd)
+                        {
                             continue;
                         }
 
                         var grpVol = PersistentAudioSettings.GetGroupVolume(action.soundType);
-                        if (grpVol.HasValue) {
+                        if (grpVol.HasValue)
+                        {
                             _slider.value = grpVol.Value;
                         }
 
@@ -497,24 +542,30 @@ namespace DarkTonic.MasterAudio {
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnDisable() {
-            if (MasterAudio.SafeInstance == null || MasterAudio.AppIsShuttingDown) {
+        private void OnDisable()
+        {
+            if (MasterAudio.SafeInstance == null || MasterAudio.AppIsShuttingDown)
+            {
                 return;
             }
 
-            if (_slider != null) {
+            if (_slider != null)
+            {
                 _slider.onValueChanged.RemoveListener(SliderChanged);
             }
-            if (_button != null) {
+            if (_button != null)
+            {
                 _button.onClick.RemoveListener(ButtonClicked);
             }
-            if (_toggle != null) {
+            if (_toggle != null)
+            {
                 _toggle.onValueChanged.RemoveListener(ToggleChanged);
             }
 
             UnregisterReceiver();
 
-            if (!useDisableSound || MasterAudio.AppIsShuttingDown) {
+            if (!useDisableSound || MasterAudio.AppIsShuttingDown)
+            {
                 return;
             }
 
@@ -733,147 +784,188 @@ namespace DarkTonic.MasterAudio {
 #endif
 
         // ReSharper disable once UnusedMember.Local
-        private void OnParticleCollision(GameObject other) {
-            if (!useParticleCollisionSound) {
+        private void OnParticleCollision(GameObject other)
+        {
+            if (!useParticleCollisionSound)
+            {
                 return;
             }
 
             // check filters for matches if turned on
             if (particleCollisionSound.useLayerFilter &&
-                !particleCollisionSound.matchingLayers.Contains(other.gameObject.layer)) {
+                !particleCollisionSound.matchingLayers.Contains(other.gameObject.layer))
+            {
                 return;
             }
 
             if (particleCollisionSound.useTagFilter &&
-                !particleCollisionSound.matchingTags.Contains(other.gameObject.tag)) {
+                !particleCollisionSound.matchingTags.Contains(other.gameObject.tag))
+            {
                 return;
             }
 
             PlaySounds(particleCollisionSound, EventType.OnParticleCollision);
         }
 
-#endregion
+        #endregion
 
-#region UI Events
-        public void OnPointerEnter(PointerEventData data) {
-            if (IsSetToUGUI && useUnityPointerEnterSound) {
+        #region UI Events
+        public void OnPointerEnter(PointerEventData data)
+        {
+            if (IsSetToUGUI && useUnityPointerEnterSound)
+            {
                 PlaySounds(unityPointerEnterSound, EventType.UnityPointerEnter);
             }
         }
 
-        public void OnPointerExit(PointerEventData data) {
-            if (IsSetToUGUI && useUnityPointerExitSound) {
+        public void OnPointerExit(PointerEventData data)
+        {
+            if (IsSetToUGUI && useUnityPointerExitSound)
+            {
                 PlaySounds(unityPointerExitSound, EventType.UnityPointerExit);
             }
         }
 
-        public void OnPointerDown(PointerEventData data) {
-            if (IsSetToUGUI && useUnityPointerDownSound) {
+        public void OnPointerDown(PointerEventData data)
+        {
+            if (IsSetToUGUI && useUnityPointerDownSound)
+            {
                 PlaySounds(unityPointerDownSound, EventType.UnityPointerDown);
             }
         }
 
-        public void OnPointerUp(PointerEventData data) {
-            if (IsSetToUGUI && useUnityPointerUpSound) {
+        public void OnPointerUp(PointerEventData data)
+        {
+            if (IsSetToUGUI && useUnityPointerUpSound)
+            {
                 PlaySounds(unityPointerUpSound, EventType.UnityPointerUp);
             }
         }
 
         // ReSharper disable once UnusedMember.Local
         // ReSharper disable once UnusedParameter.Local
-        private void OnDrag(Vector2 delta) {
+        private void OnDrag(Vector2 delta)
+        {
             // No Function. Here to prevent error spam.
         }
 
-        public void OnDrag(PointerEventData data) {
-            if (IsSetToUGUI && useUnityDragSound) {
+        public void OnDrag(PointerEventData data)
+        {
+            if (IsSetToUGUI && useUnityDragSound)
+            {
                 PlaySounds(unityDragSound, EventType.UnityDrag);
             }
         }
 
         // ReSharper disable once UnusedMember.Local
         // ReSharper disable once UnusedParameter.Local
-        private void OnDrop(GameObject go) {
+        private void OnDrop(GameObject go)
+        {
             // No Function. Here to prevent error spam.
         }
 
-        public void OnDrop(PointerEventData data) {
-            if (IsSetToUGUI && useUnityDropSound) {
+        public void OnDrop(PointerEventData data)
+        {
+            if (IsSetToUGUI && useUnityDropSound)
+            {
                 PlaySounds(unityDropSound, EventType.UnityDrop);
             }
         }
 
-        public void OnScroll(PointerEventData data) {
-            if (IsSetToUGUI && useUnityScrollSound) {
+        public void OnScroll(PointerEventData data)
+        {
+            if (IsSetToUGUI && useUnityScrollSound)
+            {
                 PlaySounds(unityScrollSound, EventType.UnityScroll);
             }
         }
 
-        public void OnUpdateSelected(BaseEventData data) {
-            if (IsSetToUGUI && useUnityUpdateSelectedSound) {
+        public void OnUpdateSelected(BaseEventData data)
+        {
+            if (IsSetToUGUI && useUnityUpdateSelectedSound)
+            {
                 PlaySounds(unityUpdateSelectedSound, EventType.UnityUpdateSelected);
             }
         }
 
         // ReSharper disable once UnusedMember.Local
         // ReSharper disable once UnusedParameter.Local
-        private void OnSelect(bool isSelected) {
+        private void OnSelect(bool isSelected)
+        {
             // No Function. Here to prevent error spam from NGUI
         }
 
-        public void OnSelect(BaseEventData data) {
-            if (IsSetToUGUI && useUnitySelectSound) {
+        public void OnSelect(BaseEventData data)
+        {
+            if (IsSetToUGUI && useUnitySelectSound)
+            {
                 PlaySounds(unitySelectSound, EventType.UnitySelect);
             }
         }
 
-        public void OnDeselect(BaseEventData data) {
-            if (IsSetToUGUI && useUnityDeselectSound) {
+        public void OnDeselect(BaseEventData data)
+        {
+            if (IsSetToUGUI && useUnityDeselectSound)
+            {
                 PlaySounds(unityDeselectSound, EventType.UnityDeselect);
             }
         }
 
-        public void OnMove(AxisEventData data) {
-            if (IsSetToUGUI && useUnityMoveSound) {
+        public void OnMove(AxisEventData data)
+        {
+            if (IsSetToUGUI && useUnityMoveSound)
+            {
                 PlaySounds(unityMoveSound, EventType.UnityMove);
             }
         }
 
-        public void OnInitializePotentialDrag(PointerEventData data) {
-            if (IsSetToUGUI && useUnityInitializePotentialDragSound) {
+        public void OnInitializePotentialDrag(PointerEventData data)
+        {
+            if (IsSetToUGUI && useUnityInitializePotentialDragSound)
+            {
                 PlaySounds(unityInitializePotentialDragSound, EventType.UnityInitializePotentialDrag);
             }
         }
 
-        public void OnBeginDrag(PointerEventData data) {
-            if (IsSetToUGUI && useUnityBeginDragSound) {
+        public void OnBeginDrag(PointerEventData data)
+        {
+            if (IsSetToUGUI && useUnityBeginDragSound)
+            {
                 PlaySounds(unityBeginDragSound, EventType.UnityBeginDrag);
             }
         }
 
-        public void OnEndDrag(PointerEventData data) {
-            if (IsSetToUGUI && useUnityEndDragSound) {
+        public void OnEndDrag(PointerEventData data)
+        {
+            if (IsSetToUGUI && useUnityEndDragSound)
+            {
                 PlaySounds(unityEndDragSound, EventType.UnityEndDrag);
             }
         }
 
-        public void OnSubmit(BaseEventData data) {
-            if (IsSetToUGUI && useUnitySubmitSound) {
+        public void OnSubmit(BaseEventData data)
+        {
+            if (IsSetToUGUI && useUnitySubmitSound)
+            {
                 PlaySounds(unitySubmitSound, EventType.UnitySubmit);
             }
         }
 
-        public void OnCancel(BaseEventData data) {
-            if (IsSetToUGUI && useUnityCancelSound) {
+        public void OnCancel(BaseEventData data)
+        {
+            if (IsSetToUGUI && useUnityCancelSound)
+            {
                 PlaySounds(unityCancelSound, EventType.UnityCancel);
             }
         }
 
-#endregion
+        #endregion
 
-#region Unity UI Events (4.6)
-        private void SliderChanged(float newValue) {
-            if (!useUnitySliderChangedSound) {
+        #region Unity UI Events (4.6)
+        private void SliderChanged(float newValue)
+        {
+            if (!useUnitySliderChangedSound)
+            {
                 return;
             }
 
@@ -881,29 +973,35 @@ namespace DarkTonic.MasterAudio {
             PlaySounds(unitySliderChangedSound, EventType.UnitySliderChanged);
         }
 
-        private void ToggleChanged(bool newValue) {
-            if (!useUnityToggleSound) {
+        private void ToggleChanged(bool newValue)
+        {
+            if (!useUnityToggleSound)
+            {
                 return;
             }
 
             PlaySounds(unityToggleSound, EventType.UnityToggle);
         }
 
-        private void ButtonClicked() {
-            if (useUnityButtonClickedSound) {
+        private void ButtonClicked()
+        {
+            if (useUnityButtonClickedSound)
+            {
                 PlaySounds(unityButtonClickedSound, EventType.UnityButtonClicked);
             }
         }
-#endregion
+        #endregion
 
-#region Unity GUI Mouse Events
+        #region Unity GUI Mouse Events
 
         // ReSharper disable once UnusedMember.Local
-        private bool IsSetToUGUI {
+        private bool IsSetToUGUI
+        {
             get { return unityUIMode != UnityUIVersion.Legacy; }
         }
 
-        private bool IsSetToLegacyUI {
+        private bool IsSetToLegacyUI
+        {
             get { return unityUIMode == UnityUIVersion.Legacy; }
         }
 
@@ -911,45 +1009,57 @@ namespace DarkTonic.MasterAudio {
     // no mouse events!
 #else
         // ReSharper disable once UnusedMember.Local
-        private void OnMouseEnter() {
-            if (IsSetToLegacyUI && useMouseEnterSound) {
+        private void OnMouseEnter()
+        {
+            if (IsSetToLegacyUI && useMouseEnterSound)
+            {
                 PlaySounds(mouseEnterSound, EventType.OnMouseEnter);
             }
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnMouseExit() {
-            if (IsSetToLegacyUI && useMouseExitSound) {
+        private void OnMouseExit()
+        {
+            if (IsSetToLegacyUI && useMouseExitSound)
+            {
                 PlaySounds(mouseExitSound, EventType.OnMouseExit);
             }
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnMouseDown() {
-            if (IsSetToLegacyUI && useMouseClickSound) {
+        private void OnMouseDown()
+        {
+            if (IsSetToLegacyUI && useMouseClickSound)
+            {
                 PlaySounds(mouseClickSound, EventType.OnMouseClick);
             }
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnMouseUp() {
-            if (IsSetToLegacyUI && useMouseUpSound) {
+        private void OnMouseUp()
+        {
+            if (IsSetToLegacyUI && useMouseUpSound)
+            {
                 PlaySounds(mouseUpSound, EventType.OnMouseUp);
             }
 
-            if (useMouseDragSound) {
-                switch (mouseUpSound.mouseDragStopMode) {
+            if (useMouseDragSound)
+            {
+                switch (mouseUpSound.mouseDragStopMode)
+                {
                     case PreviousSoundStopMode.Stop:
                         // stop the drag sound
                         if (_mouseDragResult != null &&
-                            (_mouseDragResult.SoundPlayed || _mouseDragResult.SoundScheduled)) {
+                            (_mouseDragResult.SoundPlayed || _mouseDragResult.SoundScheduled))
+                        {
                             _mouseDragResult.ActingVariation.Stop(true);
                         }
                         break;
                     case PreviousSoundStopMode.FadeOut:
                         // stop the drag sound
                         if (_mouseDragResult != null &&
-                            (_mouseDragResult.SoundPlayed || _mouseDragResult.SoundScheduled)) {
+                            (_mouseDragResult.SoundPlayed || _mouseDragResult.SoundScheduled))
+                        {
                             _mouseDragResult.ActingVariation.FadeToVolume(0f, mouseUpSound.mouseDragFadeOutTime);
                         }
                         break;
@@ -962,11 +1072,14 @@ namespace DarkTonic.MasterAudio {
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnMouseDrag() {
-            if (!IsSetToLegacyUI || !useMouseDragSound) {
+        private void OnMouseDrag()
+        {
+            if (!IsSetToLegacyUI || !useMouseDragSound)
+            {
                 return;
             }
-            if (_mouseDragSoundPlayed) {
+            if (_mouseDragSoundPlayed)
+            {
                 return;
             }
             PlaySounds(mouseDragSound, EventType.OnMouseDrag);
@@ -974,67 +1087,87 @@ namespace DarkTonic.MasterAudio {
         }
 #endif
 
-#endregion
+        #endregion
 
-#region NGUI Events
+        #region NGUI Events
 
         // ReSharper disable once UnusedMember.Local
-        private void OnPress(bool isDown) {
-            if (!showNGUI) {
+        private void OnPress(bool isDown)
+        {
+            if (!showNGUI)
+            {
                 return;
             }
 
-            if (isDown) {
-                if (useNguiMouseDownSound) {
+            if (isDown)
+            {
+                if (useNguiMouseDownSound)
+                {
                     PlaySounds(nguiMouseDownSound, EventType.NGUIMouseDown);
                 }
-            } else {
-                if (useNguiMouseUpSound) {
+            }
+            else
+            {
+                if (useNguiMouseUpSound)
+                {
                     PlaySounds(nguiMouseUpSound, EventType.NGUIMouseUp);
                 }
             }
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnClick() {
-            if (showNGUI && useNguiOnClickSound) {
+        private void OnClick()
+        {
+            if (showNGUI && useNguiOnClickSound)
+            {
                 PlaySounds(nguiOnClickSound, EventType.NGUIOnClick);
             }
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnHover(bool isOver) {
-            if (!showNGUI) {
+        private void OnHover(bool isOver)
+        {
+            if (!showNGUI)
+            {
                 return;
             }
 
-            if (isOver) {
-                if (useNguiMouseEnterSound) {
+            if (isOver)
+            {
+                if (useNguiMouseEnterSound)
+                {
                     PlaySounds(nguiMouseEnterSound, EventType.NGUIMouseEnter);
                 }
-            } else {
-                if (useNguiMouseExitSound) {
+            }
+            else
+            {
+                if (useNguiMouseExitSound)
+                {
                     PlaySounds(nguiMouseExitSound, EventType.NGUIMouseExit);
                 }
             }
         }
 
-#endregion
+        #endregion
 
-#region Pooling Events
+        #region Pooling Events
 
         // ReSharper disable once UnusedMember.Local
-        private void OnSpawned() {
+        private void OnSpawned()
+        {
             SpawnedOrAwake();
 
-            if (showPoolManager && useSpawnedSound) {
+            if (showPoolManager && useSpawnedSound)
+            {
                 PlaySounds(spawnedSound, EventType.OnSpawned);
             }
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnDespawned() {
-            if (showPoolManager && useDespawnedSound) {
+        private void OnDespawned()
+        {
+            if (showPoolManager && useDespawnedSound)
+            {
                 PlaySounds(despawnedSound, EventType.OnDespawned);
             }
         }
@@ -1061,10 +1194,12 @@ namespace DarkTonic.MasterAudio {
 
         #region public methods
         /*! \cond PRIVATE */
-        public void CalculateRadius(AudioEvent anEvent) {
+        public void CalculateRadius(AudioEvent anEvent)
+        {
             var aud = GetNamedOrFirstAudioSource(anEvent);
 
-            if (aud == null) {
+            if (aud == null)
+            {
                 anEvent.colliderMaxDistance = 0f;
                 return;
             }
@@ -1072,26 +1207,31 @@ namespace DarkTonic.MasterAudio {
             anEvent.colliderMaxDistance = aud.maxDistance;
         }
 
-        public AudioSource GetNamedOrFirstAudioSource(AudioEvent anEvent) {
-            if (string.IsNullOrEmpty(anEvent.soundType)) {
+        public AudioSource GetNamedOrFirstAudioSource(AudioEvent anEvent)
+        {
+            if (string.IsNullOrEmpty(anEvent.soundType))
+            {
                 anEvent.colliderMaxDistance = 0;
                 return null;
             }
 
-            if (MasterAudio.SafeInstance == null) {
+            if (MasterAudio.SafeInstance == null)
+            {
                 anEvent.colliderMaxDistance = 0;
                 return null;
             }
 
             var grp = MasterAudio.Instance.transform.Find(anEvent.soundType);
-            if (grp == null) {
+            if (grp == null)
+            {
                 anEvent.colliderMaxDistance = 0;
                 return null;
             }
 
             Transform transVar = null;
 
-            switch (anEvent.variationType) {
+            switch (anEvent.variationType)
+            {
                 case VariationType.PlayRandom:
                     transVar = grp.GetChild(0);
                     break;
@@ -1100,7 +1240,8 @@ namespace DarkTonic.MasterAudio {
                     break;
             }
 
-            if (transVar == null) {
+            if (transVar == null)
+            {
                 anEvent.colliderMaxDistance = 0;
                 return null;
             }
@@ -1108,26 +1249,31 @@ namespace DarkTonic.MasterAudio {
             return transVar.GetComponent<AudioSource>();
         }
 
-        public List<AudioSource> GetAllVariationAudioSources(AudioEvent anEvent) {
-            if (string.IsNullOrEmpty(anEvent.soundType)) {
+        public List<AudioSource> GetAllVariationAudioSources(AudioEvent anEvent)
+        {
+            if (string.IsNullOrEmpty(anEvent.soundType))
+            {
                 anEvent.colliderMaxDistance = 0;
                 return null;
             }
 
-            if (MasterAudio.SafeInstance == null) {
+            if (MasterAudio.SafeInstance == null)
+            {
                 anEvent.colliderMaxDistance = 0;
                 return null;
             }
 
             var grp = MasterAudio.Instance.transform.Find(anEvent.soundType);
-            if (grp == null) {
+            if (grp == null)
+            {
                 anEvent.colliderMaxDistance = 0;
                 return null;
             }
 
             var audioSources = new List<AudioSource>(grp.childCount);
 
-            for (var i = 0; i < grp.childCount; i++) {
+            for (var i = 0; i < grp.childCount; i++)
+            {
                 var a = grp.GetChild(i).GetComponent<AudioSource>();
                 audioSources.Add(a);
             }
@@ -1138,7 +1284,8 @@ namespace DarkTonic.MasterAudio {
         /*! \endcond */
 
         /*! \cond PRIVATE */
-        public AudioEventGroup GetMechanimAudioEventGroup(string stateName) {
+        public AudioEventGroup GetMechanimAudioEventGroup(string stateName)
+        {
             for (var i = 0; i < _validMechanimStateChangedSounds.Count; i++)
             {
                 var aSound = _validMechanimStateChangedSounds[i];
@@ -1152,17 +1299,21 @@ namespace DarkTonic.MasterAudio {
         }
         /*! \endcond */
 
-        public bool PlaySounds(AudioEventGroup eventGrp, EventType eType) {
-            if (!CheckForRetriggerLimit(eventGrp)) {
+        public bool PlaySounds(AudioEventGroup eventGrp, EventType eType)
+        {
+            if (!CheckForRetriggerLimit(eventGrp))
+            {
                 return false;
             }
 
-            if (MasterAudio.SafeInstance == null) {
+            if (MasterAudio.SafeInstance == null)
+            {
                 return false;
             }
 
             // set the last triggered time or frame
-            switch (eventGrp.retriggerLimitMode) {
+            switch (eventGrp.retriggerLimitMode)
+            {
                 case RetriggerLimMode.FrameBased:
                     eventGrp.triggeredLastFrame = AudioUtil.FrameCount;
                     break;
@@ -1172,34 +1323,40 @@ namespace DarkTonic.MasterAudio {
             }
 
             // Pre-warm event sounds!
-            if (!MasterAudio.AppIsShuttingDown && MasterAudio.IsWarming) {
+            if (!MasterAudio.AppIsShuttingDown && MasterAudio.IsWarming)
+            {
                 var evt = new AudioEvent();
                 PerformSingleAction(eventGrp, evt, eType);
                 return true;
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < eventGrp.SoundEvents.Count; i++) {
+            for (var i = 0; i < eventGrp.SoundEvents.Count; i++)
+            {
                 PerformSingleAction(eventGrp, eventGrp.SoundEvents[i], eType);
             }
 
             return true;
         }
-#endregion
+        #endregion
 
-#region Helpers
+        #region Helpers
         // ReSharper disable once UnusedMember.Local
-        private void OnDrawGizmos() {
-            if (MasterAudio.SafeInstance == null || !MasterAudio.Instance.showRangeSoundGizmos || eventToGizmo == null) {
+        private void OnDrawGizmos()
+        {
+            if (MasterAudio.SafeInstance == null || !MasterAudio.Instance.showRangeSoundGizmos || eventToGizmo == null)
+            {
                 return;
             }
 
-            if (eventToGizmo.colliderMaxDistance == 0f) {
+            if (eventToGizmo.colliderMaxDistance == 0f)
+            {
                 return;
             }
 
             var gizmoColor = Color.green;
-            if (MasterAudio.SafeInstance != null) {
+            if (MasterAudio.SafeInstance != null)
+            {
                 gizmoColor = MasterAudio.Instance.rangeGizmoColor;
             }
 
@@ -1207,17 +1364,21 @@ namespace DarkTonic.MasterAudio {
             Gizmos.DrawWireSphere(transform.position, eventToGizmo.colliderMaxDistance);
         }
 
-        void OnDrawGizmosSelected() {
-            if (MasterAudio.SafeInstance == null || !MasterAudio.Instance.showSelectedRangeSoundGizmos || eventToGizmo == null) {
+        private void OnDrawGizmosSelected()
+        {
+            if (MasterAudio.SafeInstance == null || !MasterAudio.Instance.showSelectedRangeSoundGizmos || eventToGizmo == null)
+            {
                 return;
             }
 
-            if (eventToGizmo.colliderMaxDistance == 0f) {
+            if (eventToGizmo.colliderMaxDistance == 0f)
+            {
                 return;
             }
 
             var gizmoColor = Color.green;
-            if (MasterAudio.SafeInstance != null) {
+            if (MasterAudio.SafeInstance != null)
+            {
                 gizmoColor = MasterAudio.Instance.selectedRangeGizmoColor;
             }
 
@@ -1225,16 +1386,20 @@ namespace DarkTonic.MasterAudio {
             Gizmos.DrawWireSphere(transform.position, eventToGizmo.colliderMaxDistance);
         }
 
-        private static bool CheckForRetriggerLimit(AudioEventGroup grp) {
+        private static bool CheckForRetriggerLimit(AudioEventGroup grp)
+        {
             // check for limiting restraints
-            switch (grp.retriggerLimitMode) {
+            switch (grp.retriggerLimitMode)
+            {
                 case RetriggerLimMode.FrameBased:
-                    if (grp.triggeredLastFrame > 0 && AudioUtil.FrameCount - grp.triggeredLastFrame < grp.limitPerXFrm) {
+                    if (grp.triggeredLastFrame > 0 && AudioUtil.FrameCount - grp.triggeredLastFrame < grp.limitPerXFrm)
+                    {
                         return false;
                     }
                     break;
                 case RetriggerLimMode.TimeBased:
-                    if (grp.triggeredLastTime > 0 && AudioUtil.Time - grp.triggeredLastTime < grp.limitPerXSec) {
+                    if (grp.triggeredLastTime > 0 && AudioUtil.Time - grp.triggeredLastTime < grp.limitPerXSec)
+                    {
                         return false;
                     }
                     break;
@@ -1255,8 +1420,10 @@ namespace DarkTonic.MasterAudio {
 #endif
 
         // ReSharper disable once FunctionComplexityOverflow
-        private void PerformSingleAction(AudioEventGroup grp, AudioEvent aEvent, EventType eType) {
-            if (disableSounds || MasterAudio.AppIsShuttingDown || MasterAudio.SafeInstance == null) {
+        private void PerformSingleAction(AudioEventGroup grp, AudioEvent aEvent, EventType eType)
+        {
+            if (disableSounds || MasterAudio.AppIsShuttingDown || MasterAudio.SafeInstance == null)
+            {
                 return;
             }
 
@@ -1264,7 +1431,8 @@ namespace DarkTonic.MasterAudio {
             var volume = aEvent.volume;
             var sType = aEvent.soundType;
             float? pitch = aEvent.pitch;
-            if (!aEvent.useFixedPitch) {
+            if (!aEvent.useFixedPitch)
+            {
                 pitch = null;
             }
 
@@ -1274,27 +1442,33 @@ namespace DarkTonic.MasterAudio {
 #endif
             var soundSpawnModeToUse = soundSpawnMode;
 
-            if (eType == EventType.OnDisable || eType == EventType.OnDespawned) {
+            if (eType == EventType.OnDisable || eType == EventType.OnDespawned)
+            {
                 soundSpawnModeToUse = MasterAudio.SoundSpawnLocationMode.CallerLocation;
             }
 
             // these events need a PlaySoundResult, the rest do not. Save on allocation!
             var needsResult = eType == EventType.OnMouseDrag || aEvent.glidePitchType != GlidePitchType.None;
 
-            switch (aEvent.currentSoundFunctionType) {
+            switch (aEvent.currentSoundFunctionType)
+            {
                 case MasterAudio.EventSoundFunctionType.PlaySound:
                     string variationName = null;
-                    if (aEvent.variationType == VariationType.PlaySpecific) {
+                    if (aEvent.variationType == VariationType.PlaySpecific)
+                    {
                         variationName = aEvent.variationName;
                     }
 
-                    if (useSliderValue) {
+                    if (useSliderValue)
+                    {
                         volume = grp.sliderValue;
                     }
 
-                    switch (soundSpawnModeToUse) {
+                    switch (soundSpawnModeToUse)
+                    {
                         case MasterAudio.SoundSpawnLocationMode.CallerLocation:
-                            if (needsResult) {
+                            if (needsResult)
+                            {
 #if MULTIPLAYER_ENABLED                                
                                 if (willSendToAllPlayers) {
                                     soundPlayed = MasterAudioMultiplayerAdapter.PlaySound3DAtTransform(sType, Trans, volume, pitch, aEvent.delaySound, variationName);
@@ -1306,7 +1480,9 @@ namespace DarkTonic.MasterAudio {
                                 soundPlayed = MasterAudio.PlaySound3DAtTransform(sType, _trans, volume, pitch,
                                     aEvent.delaySound, variationName);
 #endif
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.PlaySound3DAtTransformAndForget(sType, Trans, volume, pitch, aEvent.delaySound, variationName);
@@ -1320,7 +1496,8 @@ namespace DarkTonic.MasterAudio {
                             }
                             break;
                         case MasterAudio.SoundSpawnLocationMode.AttachToCaller:
-                            if (needsResult) {
+                            if (needsResult)
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     soundPlayed = MasterAudioMultiplayerAdapter.PlaySound3DFollowTransform(sType, Trans, volume, pitch,
@@ -1333,7 +1510,9 @@ namespace DarkTonic.MasterAudio {
                                 soundPlayed = MasterAudio.PlaySound3DFollowTransform(sType, _trans, volume, pitch,
                                     aEvent.delaySound, variationName);
 #endif
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.PlaySound3DFollowTransformAndForget(sType, Trans, volume, pitch,
@@ -1350,27 +1529,35 @@ namespace DarkTonic.MasterAudio {
                             break;
                     }
 
-                    if (soundPlayed != null && soundPlayed.ActingVariation != null && aEvent.glidePitchType != GlidePitchType.None) {
-                        switch (aEvent.glidePitchType) {
+                    if (soundPlayed != null && soundPlayed.ActingVariation != null && aEvent.glidePitchType != GlidePitchType.None)
+                    {
+                        switch (aEvent.glidePitchType)
+                        {
                             case GlidePitchType.RaisePitch:
-                                if (!string.IsNullOrEmpty(aEvent.theCustomEventName)) {
-                                    soundPlayed.ActingVariation.GlideByPitch(aEvent.targetGlidePitch, aEvent.pitchGlideTime, 
-                                        delegate
-                                        {
-                                            MasterAudio.FireCustomEvent(aEvent.theCustomEventName, _trans);
-                                        });
-                                } else {
-                                    soundPlayed.ActingVariation.GlideByPitch(aEvent.targetGlidePitch, aEvent.pitchGlideTime);
-                                }
-                                break;
-                            case GlidePitchType.LowerPitch:
-                                if (!string.IsNullOrEmpty(aEvent.theCustomEventName)) {
+                                if (!string.IsNullOrEmpty(aEvent.theCustomEventName))
+                                {
                                     soundPlayed.ActingVariation.GlideByPitch(aEvent.targetGlidePitch, aEvent.pitchGlideTime,
                                         delegate
                                         {
                                             MasterAudio.FireCustomEvent(aEvent.theCustomEventName, _trans);
                                         });
-                                } else {
+                                }
+                                else
+                                {
+                                    soundPlayed.ActingVariation.GlideByPitch(aEvent.targetGlidePitch, aEvent.pitchGlideTime);
+                                }
+                                break;
+                            case GlidePitchType.LowerPitch:
+                                if (!string.IsNullOrEmpty(aEvent.theCustomEventName))
+                                {
+                                    soundPlayed.ActingVariation.GlideByPitch(aEvent.targetGlidePitch, aEvent.pitchGlideTime,
+                                        delegate
+                                        {
+                                            MasterAudio.FireCustomEvent(aEvent.theCustomEventName, _trans);
+                                        });
+                                }
+                                else
+                                {
                                     soundPlayed.ActingVariation.GlideByPitch(-aEvent.targetGlidePitch, aEvent.pitchGlideTime);
                                 }
                                 break;
@@ -1380,28 +1567,33 @@ namespace DarkTonic.MasterAudio {
 #if UNITY_IPHONE || UNITY_ANDROID
     // no mouse events!
 #else
-                    if (eType == EventType.OnMouseDrag) {
+                    if (eType == EventType.OnMouseDrag)
+                    {
                         _mouseDragResult = soundPlayed;
                     }
 #endif
                     break;
                 case MasterAudio.EventSoundFunctionType.PlaylistControl:
-                    soundPlayed = new PlaySoundResult() {
+                    soundPlayed = new PlaySoundResult()
+                    {
                         ActingVariation = null,
                         SoundPlayed = true,
                         SoundScheduled = false
                     };
 
-                    if (string.IsNullOrEmpty(aEvent.playlistControllerName)) {
+                    if (string.IsNullOrEmpty(aEvent.playlistControllerName))
+                    {
                         aEvent.playlistControllerName = MasterAudio.OnlyPlaylistControllerName;
                     }
 
-                    switch (aEvent.currentPlaylistCommand) {
+                    switch (aEvent.currentPlaylistCommand)
+                    {
                         case MasterAudio.PlaylistCommand.None:
                             soundPlayed.SoundPlayed = false;
                             break;
                         case MasterAudio.PlaylistCommand.Restart:
-                            if (aEvent.allPlaylistControllersForGroupCmd) {
+                            if (aEvent.allPlaylistControllersForGroupCmd)
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.RestartAllPlaylists(Trans);
@@ -1411,9 +1603,13 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.RestartAllPlaylists();
 #endif
-                            } else if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                            {
                                 // don't play	
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.RestartPlaylist(Trans, aEvent.playlistControllerName);
@@ -1427,9 +1623,12 @@ namespace DarkTonic.MasterAudio {
                             break;
                         case MasterAudio.PlaylistCommand.Start:
                             if (aEvent.playlistControllerName == MasterAudio.NoGroupName ||
-                                aEvent.playlistName == MasterAudio.NoGroupName) {
+                                aEvent.playlistName == MasterAudio.NoGroupName)
+                            {
                                 // don't play	
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.StartPlaylist(Trans, aEvent.playlistControllerName, aEvent.playlistName);
@@ -1442,14 +1641,20 @@ namespace DarkTonic.MasterAudio {
                             }
                             break;
                         case MasterAudio.PlaylistCommand.ChangePlaylist:
-                            if (string.IsNullOrEmpty(aEvent.playlistName)) {
+                            if (string.IsNullOrEmpty(aEvent.playlistName))
+                            {
                                 Debug.Log("You have not specified a Playlist name for Event Sounds on '" +
                                             _trans.name + "'.");
                                 soundPlayed.SoundPlayed = false;
-                            } else {
-                                if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else
+                            {
+                                if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                                {
                                     // don't play	
-                                } else {
+                                }
+                                else
+                                {
 #if MULTIPLAYER_ENABLED
                                     if (willSendToAllPlayers) {
                                         MasterAudioMultiplayerAdapter.ChangePlaylistByName(Trans, aEvent.playlistControllerName, aEvent.playlistName, aEvent.startPlaylist);
@@ -1466,7 +1671,8 @@ namespace DarkTonic.MasterAudio {
 
                             break;
                         case MasterAudio.PlaylistCommand.StopLoopingCurrentSong:
-                            if (aEvent.allPlaylistControllersForGroupCmd) {
+                            if (aEvent.allPlaylistControllersForGroupCmd)
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.StopLoopingAllCurrentSongs(Trans);
@@ -1476,9 +1682,13 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.StopLoopingAllCurrentSongs();
 #endif
-                            } else if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                            {
                                 // don't play	
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.StopLoopingCurrentSong(Trans, aEvent.playlistControllerName);
@@ -1491,7 +1701,8 @@ namespace DarkTonic.MasterAudio {
                             }
                             break;
                         case MasterAudio.PlaylistCommand.StopPlaylistAfterCurrentSong:
-                            if (aEvent.allPlaylistControllersForGroupCmd) {
+                            if (aEvent.allPlaylistControllersForGroupCmd)
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.StopAllPlaylistsAfterCurrentSongs(Trans);
@@ -1501,9 +1712,13 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.StopAllPlaylistsAfterCurrentSongs();
 #endif
-                            } else if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                            {
                                 // don't play	
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.StopPlaylistAfterCurrentSong(Trans, aEvent.playlistControllerName);
@@ -1518,7 +1733,8 @@ namespace DarkTonic.MasterAudio {
                         case MasterAudio.PlaylistCommand.FadeToVolume:
                             var targetVol = useSliderValue ? grp.sliderValue : aEvent.fadeVolume;
 
-                            if (aEvent.allPlaylistControllersForGroupCmd) {
+                            if (aEvent.allPlaylistControllersForGroupCmd)
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.FadeAllPlaylistsToVolume(Trans, targetVol, aEvent.fadeTime);
@@ -1528,9 +1744,13 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.FadeAllPlaylistsToVolume(targetVol, aEvent.fadeTime);
 #endif
-                            } else if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                            {
                                 // don't play	
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.FadePlaylistToVolume(Trans, aEvent.playlistControllerName, targetVol,
@@ -1546,7 +1766,8 @@ namespace DarkTonic.MasterAudio {
                             }
                             break;
                         case MasterAudio.PlaylistCommand.Mute:
-                            if (aEvent.allPlaylistControllersForGroupCmd) {
+                            if (aEvent.allPlaylistControllersForGroupCmd)
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.MuteAllPlaylists(Trans);
@@ -1556,9 +1777,13 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.MuteAllPlaylists();
 #endif
-                            } else if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                            {
                                 // don't play	
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.MutePlaylist(Trans, aEvent.playlistControllerName);
@@ -1571,7 +1796,8 @@ namespace DarkTonic.MasterAudio {
                             }
                             break;
                         case MasterAudio.PlaylistCommand.Unmute:
-                            if (aEvent.allPlaylistControllersForGroupCmd) {
+                            if (aEvent.allPlaylistControllersForGroupCmd)
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.UnmuteAllPlaylists(Trans);
@@ -1581,9 +1807,13 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.UnmuteAllPlaylists();
 #endif
-                            } else if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                            {
                                 // don't play	
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.UnmutePlaylist(Trans, aEvent.playlistControllerName);
@@ -1596,7 +1826,8 @@ namespace DarkTonic.MasterAudio {
                             }
                             break;
                         case MasterAudio.PlaylistCommand.ToggleMute:
-                            if (aEvent.allPlaylistControllersForGroupCmd) {
+                            if (aEvent.allPlaylistControllersForGroupCmd)
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.ToggleMuteAllPlaylists(Trans);
@@ -1606,9 +1837,13 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.ToggleMuteAllPlaylists();
 #endif
-                            } else if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                            {
                                 // don't play	
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.ToggleMutePlaylist(Trans, aEvent.playlistControllerName);
@@ -1621,14 +1856,20 @@ namespace DarkTonic.MasterAudio {
                             }
                             break;
                         case MasterAudio.PlaylistCommand.PlaySong:
-                            if (string.IsNullOrEmpty(aEvent.clipName)) {
+                            if (string.IsNullOrEmpty(aEvent.clipName))
+                            {
                                 Debug.Log("You have not specified a song name for Event Sounds on '" + _trans.name +
                                             "'.");
                                 soundPlayed.SoundPlayed = false;
-                            } else {
-                                if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else
+                            {
+                                if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                                {
                                     // don't play	
-                                } else {
+                                }
+                                else
+                                {
 #if MULTIPLAYER_ENABLED
                                     if (willSendToAllPlayers) {
                                         if (!MasterAudioMultiplayerAdapter.TriggerPlaylistClip(Trans, aEvent.playlistControllerName, aEvent.clipName)) {
@@ -1640,7 +1881,8 @@ namespace DarkTonic.MasterAudio {
                                         }
                                     }
 #else
-                                    if (!MasterAudio.TriggerPlaylistClip(aEvent.playlistControllerName, aEvent.clipName)) {
+                                    if (!MasterAudio.TriggerPlaylistClip(aEvent.playlistControllerName, aEvent.clipName))
+                                    {
                                         soundPlayed.SoundPlayed = false;
                                     }
 #endif
@@ -1651,12 +1893,18 @@ namespace DarkTonic.MasterAudio {
                         case MasterAudio.PlaylistCommand.AddSongToQueue:
                             soundPlayed.SoundPlayed = false;
 
-                            if (string.IsNullOrEmpty(aEvent.clipName)) {
+                            if (string.IsNullOrEmpty(aEvent.clipName))
+                            {
                                 Debug.Log("You have not specified a song name for Event Sounds on '" + _trans.name + "'.");
-                            } else {
-                                if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else
+                            {
+                                if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                                {
                                     // don't play	
-                                } else {
+                                }
+                                else
+                                {
 #if MULTIPLAYER_ENABLED
                                     if (willSendToAllPlayers) {
                                         MasterAudioMultiplayerAdapter.QueuePlaylistClip(Trans, aEvent.playlistControllerName, aEvent.clipName);
@@ -1672,7 +1920,8 @@ namespace DarkTonic.MasterAudio {
 
                             break;
                         case MasterAudio.PlaylistCommand.PlayRandomSong:
-                            if (aEvent.allPlaylistControllersForGroupCmd) {
+                            if (aEvent.allPlaylistControllersForGroupCmd)
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.TriggerRandomClipAllPlaylists(Trans);
@@ -1682,9 +1931,13 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.TriggerRandomClipAllPlaylists();
 #endif
-                            } else if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                            {
                                 // don't play	
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.TriggerRandomPlaylistClip(Trans, aEvent.playlistControllerName);
@@ -1697,7 +1950,8 @@ namespace DarkTonic.MasterAudio {
                             }
                             break;
                         case MasterAudio.PlaylistCommand.PlayNextSong:
-                            if (aEvent.allPlaylistControllersForGroupCmd) {
+                            if (aEvent.allPlaylistControllersForGroupCmd)
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.TriggerNextClipAllPlaylists(Trans);
@@ -1707,9 +1961,13 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.TriggerNextClipAllPlaylists();
 #endif
-                            } else if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                            {
                                 // don't play	
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.TriggerNextPlaylistClip(Trans, aEvent.playlistControllerName);
@@ -1722,7 +1980,8 @@ namespace DarkTonic.MasterAudio {
                             }
                             break;
                         case MasterAudio.PlaylistCommand.Pause:
-                            if (aEvent.allPlaylistControllersForGroupCmd) {
+                            if (aEvent.allPlaylistControllersForGroupCmd)
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.PauseAllPlaylists(Trans);
@@ -1732,9 +1991,13 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.PauseAllPlaylists();
 #endif
-                            } else if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                            {
                                 // don't play	
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.PausePlaylist(Trans, aEvent.playlistControllerName);
@@ -1747,7 +2010,8 @@ namespace DarkTonic.MasterAudio {
                             }
                             break;
                         case MasterAudio.PlaylistCommand.Stop:
-                            if (aEvent.allPlaylistControllersForGroupCmd) {
+                            if (aEvent.allPlaylistControllersForGroupCmd)
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.StopAllPlaylists(Trans);
@@ -1757,9 +2021,13 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.StopAllPlaylists();
 #endif
-                            } else if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                            {
                                 // don't play	
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.StopPlaylist(Trans, aEvent.playlistControllerName);
@@ -1772,7 +2040,8 @@ namespace DarkTonic.MasterAudio {
                             }
                             break;
                         case MasterAudio.PlaylistCommand.Resume:
-                            if (aEvent.allPlaylistControllersForGroupCmd) {
+                            if (aEvent.allPlaylistControllersForGroupCmd)
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.UnpauseAllPlaylists(Trans);
@@ -1782,9 +2051,13 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.UnpauseAllPlaylists();
 #endif
-                            } else if (aEvent.playlistControllerName == MasterAudio.NoGroupName) {
+                            }
+                            else if (aEvent.playlistControllerName == MasterAudio.NoGroupName)
+                            {
                                 // don't play	
-                            } else {
+                            }
+                            else
+                            {
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.UnpausePlaylist(Trans, aEvent.playlistControllerName);
@@ -1799,7 +2072,8 @@ namespace DarkTonic.MasterAudio {
                     }
                     break;
                 case MasterAudio.EventSoundFunctionType.GroupControl:
-                    soundPlayed = new PlaySoundResult() {
+                    soundPlayed = new PlaySoundResult()
+                    {
                         ActingVariation = null,
                         SoundPlayed = true,
                         SoundScheduled = false
@@ -1808,9 +2082,12 @@ namespace DarkTonic.MasterAudio {
                     var soundTypeOverride = string.Empty;
 
                     var soundTypesForCmd = new List<string>();
-                    if (!aEvent.allSoundTypesForGroupCmd || MasterAudio.GroupCommandsWithNoAllGroupSelector.Contains(aEvent.currentSoundGroupCommand)) {
+                    if (!aEvent.allSoundTypesForGroupCmd || MasterAudio.GroupCommandsWithNoAllGroupSelector.Contains(aEvent.currentSoundGroupCommand))
+                    {
                         soundTypesForCmd.Add(aEvent.soundType);
-                    } else {
+                    }
+                    else
+                    {
                         soundTypesForCmd.AddRange(MasterAudio.RuntimeSoundGroupNames);
 #if MULTIPLAYER_ENABLED
                         if (willSendToAllPlayers) {
@@ -1820,18 +2097,22 @@ namespace DarkTonic.MasterAudio {
                     }
 
                     // ReSharper disable once ForCanBeConvertedToForeach
-                    for (var i = 0; i < soundTypesForCmd.Count; i++) {
+                    for (var i = 0; i < soundTypesForCmd.Count; i++)
+                    {
                         var soundType = soundTypesForCmd[i];
-                        if (!string.IsNullOrEmpty(soundTypeOverride)) { // for multiplayer "do all"
+                        if (!string.IsNullOrEmpty(soundTypeOverride))
+                        { // for multiplayer "do all"
                             soundType = soundTypeOverride;
                         }
 
-                        switch (aEvent.currentSoundGroupCommand) {
+                        switch (aEvent.currentSoundGroupCommand)
+                        {
                             case MasterAudio.SoundGroupCommand.None:
                                 soundPlayed.SoundPlayed = false;
                                 break;
                             case MasterAudio.SoundGroupCommand.ToggleSoundGroup:
-                                if (MasterAudio.IsSoundGroupPlaying(soundType)) {
+                                if (MasterAudio.IsSoundGroupPlaying(soundType))
+                                {
 #if MULTIPLAYER_ENABLED
                                     if (willSendToAllPlayers) {
                                         MasterAudioMultiplayerAdapter.FadeOutAllOfSound(Trans, soundType, aEvent.fadeTime);
@@ -1841,8 +2122,11 @@ namespace DarkTonic.MasterAudio {
 #else
                                     MasterAudio.FadeOutAllOfSound(soundType, aEvent.fadeTime);
 #endif
-                                } else {
-                                    switch (soundSpawnModeToUse) {
+                                }
+                                else
+                                {
+                                    switch (soundSpawnModeToUse)
+                                    {
                                         case MasterAudio.SoundSpawnLocationMode.CallerLocation:
 #if MULTIPLAYER_ENABLED
                                             if (willSendToAllPlayers) {
@@ -1869,7 +2153,8 @@ namespace DarkTonic.MasterAudio {
                                 }
                                 break;
                             case MasterAudio.SoundGroupCommand.ToggleSoundGroupOfTransform:
-                                if (MasterAudio.IsTransformPlayingSoundGroup(soundType, _trans))                                 {
+                                if (MasterAudio.IsTransformPlayingSoundGroup(soundType, _trans))
+                                {
 #if MULTIPLAYER_ENABLED
                                     if (willSendToAllPlayers) {
                                         MasterAudioMultiplayerAdapter.FadeOutSoundGroupOfTransform(Trans, soundType, aEvent.fadeTime);
@@ -1879,8 +2164,11 @@ namespace DarkTonic.MasterAudio {
 #else
                                     MasterAudio.FadeOutSoundGroupOfTransform(_trans, soundType, aEvent.fadeTime);
 #endif
-                                } else {
-                                    switch (soundSpawnModeToUse) {
+                                }
+                                else
+                                {
+                                    switch (soundSpawnModeToUse)
+                                    {
                                         case MasterAudio.SoundSpawnLocationMode.CallerLocation:
 #if MULTIPLAYER_ENABLED
                                             if (willSendToAllPlayers) {
@@ -1946,15 +2234,18 @@ namespace DarkTonic.MasterAudio {
                                     }
                                 }
 #else
-                                if (hasDelegate) {
+                                if (hasDelegate)
+                                {
                                     MasterAudio.FadeSoundGroupToVolume(soundType, targetVol, aEvent.fadeTime,
                                         delegate
                                         {
                                             MasterAudio.FireCustomEvent(aEvent.theCustomEventName, _trans);
                                         },
-                                        aEvent.stopAfterFade, 
+                                        aEvent.stopAfterFade,
                                         aEvent.restoreVolumeAfterFade);
-                                } else {
+                                }
+                                else
+                                {
                                     MasterAudio.FadeSoundGroupToVolume(soundType, targetVol, aEvent.fadeTime, null, aEvent.stopAfterFade, aEvent.restoreVolumeAfterFade);
                                 }
 #endif
@@ -2148,7 +2439,8 @@ namespace DarkTonic.MasterAudio {
                                 break;
                             case MasterAudio.SoundGroupCommand.RouteToBus:
                                 var busName = aEvent.busName;
-                                if (busName == MasterAudio.NoGroupName) {
+                                if (busName == MasterAudio.NoGroupName)
+                                {
                                     busName = null;
                                 }
 
@@ -2165,7 +2457,8 @@ namespace DarkTonic.MasterAudio {
                             case MasterAudio.SoundGroupCommand.GlideByPitch:
                                 var hasActionDelegate = !string.IsNullOrEmpty(aEvent.theCustomEventName);
 
-                                switch (aEvent.glidePitchType) {
+                                switch (aEvent.glidePitchType)
+                                {
                                     case GlidePitchType.RaisePitch:
 #if MULTIPLAYER_ENABLED
                                         if (willSendToAllPlayers) {
@@ -2190,13 +2483,16 @@ namespace DarkTonic.MasterAudio {
                                             }
                                         }
 #else
-                                        if (hasActionDelegate) {
+                                        if (hasActionDelegate)
+                                        {
                                             MasterAudio.GlideSoundGroupByPitch(soundType, aEvent.targetGlidePitch, aEvent.pitchGlideTime,
                                                 delegate
                                                 {
                                                     MasterAudio.FireCustomEvent(aEvent.theCustomEventName, _trans);
                                                 });
-                                        } else {
+                                        }
+                                        else
+                                        {
                                             MasterAudio.GlideSoundGroupByPitch(soundType, aEvent.targetGlidePitch, aEvent.pitchGlideTime);
                                         }
 #endif
@@ -2225,13 +2521,16 @@ namespace DarkTonic.MasterAudio {
                                             }
                                         }
 #else
-                                        if (hasActionDelegate) {
-                                            MasterAudio.GlideSoundGroupByPitch(soundType, -aEvent.targetGlidePitch, aEvent.pitchGlideTime, 
+                                        if (hasActionDelegate)
+                                        {
+                                            MasterAudio.GlideSoundGroupByPitch(soundType, -aEvent.targetGlidePitch, aEvent.pitchGlideTime,
                                                 delegate
                                                 {
                                                     MasterAudio.FireCustomEvent(aEvent.theCustomEventName, _trans);
                                                 });
-                                        } else {
+                                        }
+                                        else
+                                        {
                                             MasterAudio.GlideSoundGroupByPitch(soundType, -aEvent.targetGlidePitch, aEvent.pitchGlideTime);
                                         }
 #endif
@@ -2262,7 +2561,7 @@ namespace DarkTonic.MasterAudio {
 #endif
                                 break;
                         }
-                         
+
 #if MULTIPLAYER_ENABLED
                         if (willSendToAllPlayers) {
                             // don't continue loop, we've done everything already.
@@ -2273,7 +2572,8 @@ namespace DarkTonic.MasterAudio {
 
                     break;
                 case MasterAudio.EventSoundFunctionType.BusControl:
-                    soundPlayed = new PlaySoundResult() {
+                    soundPlayed = new PlaySoundResult()
+                    {
                         ActingVariation = null,
                         SoundPlayed = true,
                         SoundScheduled = false
@@ -2282,9 +2582,12 @@ namespace DarkTonic.MasterAudio {
                     var busNameOverride = string.Empty;
 
                     var busesForCmd = new List<string>();
-                    if (!aEvent.allSoundTypesForBusCmd) {
+                    if (!aEvent.allSoundTypesForBusCmd)
+                    {
                         busesForCmd.Add(aEvent.busName);
-                    } else {
+                    }
+                    else
+                    {
                         busesForCmd.AddRange(MasterAudio.RuntimeBusNames);
 #if MULTIPLAYER_ENABLED
                         if (willSendToAllPlayers) {
@@ -2294,13 +2597,16 @@ namespace DarkTonic.MasterAudio {
                     }
 
                     // ReSharper disable once ForCanBeConvertedToForeach
-                    for (var i = 0; i < busesForCmd.Count; i++) {
+                    for (var i = 0; i < busesForCmd.Count; i++)
+                    {
                         var busName = busesForCmd[i];
-                        if (!string.IsNullOrEmpty(busNameOverride)) { // for multiplayer "do all"
+                        if (!string.IsNullOrEmpty(busNameOverride))
+                        { // for multiplayer "do all"
                             busName = busNameOverride;
                         }
 
-                        switch (aEvent.currentBusCommand) {
+                        switch (aEvent.currentBusCommand)
+                        {
                             case MasterAudio.BusCommand.None:
                                 soundPlayed.SoundPlayed = false;
                                 break;
@@ -2333,13 +2639,16 @@ namespace DarkTonic.MasterAudio {
                                     }
                                 }
 #else
-                                if (hasCustomEventAfter) {
-                                    MasterAudio.FadeBusToVolume(busName, targetVol, aEvent.fadeTime, 
+                                if (hasCustomEventAfter)
+                                {
+                                    MasterAudio.FadeBusToVolume(busName, targetVol, aEvent.fadeTime,
                                         delegate
                                         {
                                             MasterAudio.FireCustomEvent(aEvent.theCustomEventName, _trans);
                                         }, aEvent.stopAfterFade, aEvent.restoreVolumeAfterFade);
-                                } else {
+                                }
+                                else
+                                {
                                     MasterAudio.FadeBusToVolume(busName, targetVol, aEvent.fadeTime, null, aEvent.stopAfterFade, aEvent.restoreVolumeAfterFade);
                                 }
 #endif
@@ -2347,7 +2656,8 @@ namespace DarkTonic.MasterAudio {
                             case MasterAudio.BusCommand.GlideByPitch:
                                 var willFireCustomEventAfter = !string.IsNullOrEmpty(aEvent.theCustomEventName);
 
-                                switch (aEvent.glidePitchType) {
+                                switch (aEvent.glidePitchType)
+                                {
                                     case GlidePitchType.RaisePitch:
 #if MULTIPLAYER_ENABLED
                                         if (willSendToAllPlayers) {
@@ -2372,13 +2682,16 @@ namespace DarkTonic.MasterAudio {
                                             }
                                         }
 #else
-                                        if (willFireCustomEventAfter) {
-                                            MasterAudio.GlideBusByPitch(busName, aEvent.targetGlidePitch, aEvent.pitchGlideTime, 
+                                        if (willFireCustomEventAfter)
+                                        {
+                                            MasterAudio.GlideBusByPitch(busName, aEvent.targetGlidePitch, aEvent.pitchGlideTime,
                                                 delegate
                                                 {
                                                     MasterAudio.FireCustomEvent(aEvent.theCustomEventName, _trans);
                                                 });
-                                        } else {
+                                        }
+                                        else
+                                        {
                                             MasterAudio.GlideBusByPitch(busName, aEvent.targetGlidePitch, aEvent.pitchGlideTime);
                                         }
 #endif
@@ -2407,13 +2720,16 @@ namespace DarkTonic.MasterAudio {
                                             }
                                         }
 #else
-                                        if (willFireCustomEventAfter) {
+                                        if (willFireCustomEventAfter)
+                                        {
                                             MasterAudio.GlideBusByPitch(busName, -aEvent.targetGlidePitch, aEvent.pitchGlideTime,
                                                 delegate
                                                 {
                                                     MasterAudio.FireCustomEvent(aEvent.theCustomEventName, _trans);
                                                 });
-                                        } else {
+                                        }
+                                        else
+                                        {
                                             MasterAudio.GlideBusByPitch(busName, -aEvent.targetGlidePitch, aEvent.pitchGlideTime);
                                         }
 #endif
@@ -2519,7 +2835,7 @@ namespace DarkTonic.MasterAudio {
                                 MasterAudio.ChangeBusPitch(busName, aEvent.pitch);
 #endif
                                 break;
-							case MasterAudio.BusCommand.PauseBusOfTransform:
+                            case MasterAudio.BusCommand.PauseBusOfTransform:
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.PauseBusOfTransform(Trans, busName);
@@ -2529,8 +2845,8 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.PauseBusOfTransform(_trans, aEvent.busName);
 #endif
-								break;
-							case MasterAudio.BusCommand.UnpauseBusOfTransform:
+                                break;
+                            case MasterAudio.BusCommand.UnpauseBusOfTransform:
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.UnpauseBusOfTransform(Trans, busName);
@@ -2540,8 +2856,8 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.UnpauseBusOfTransform(_trans, aEvent.busName);
 #endif
-								break;
-							case MasterAudio.BusCommand.StopBusOfTransform:
+                                break;
+                            case MasterAudio.BusCommand.StopBusOfTransform:
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
                                     MasterAudioMultiplayerAdapter.StopBusOfTransform(Trans, busName);
@@ -2551,7 +2867,7 @@ namespace DarkTonic.MasterAudio {
 #else
                                 MasterAudio.StopBusOfTransform(_trans, aEvent.busName);
 #endif
-								break;
+                                break;
                             case MasterAudio.BusCommand.StopOldBusVoices:
 #if MULTIPLAYER_ENABLED
                                 if (willSendToAllPlayers) {
@@ -2574,7 +2890,7 @@ namespace DarkTonic.MasterAudio {
                                 MasterAudio.FadeOutOldBusVoices(busName, aEvent.minAge, aEvent.fadeTime);
 #endif
                                 break;
-                            }
+                        }
 
 #if MULTIPLAYER_ENABLED
                         if (willSendToAllPlayers) {
@@ -2586,11 +2902,13 @@ namespace DarkTonic.MasterAudio {
 
                     break;
                 case MasterAudio.EventSoundFunctionType.CustomEventControl:
-                    if (eType == EventType.UserDefinedEvent) {
+                    if (eType == EventType.UserDefinedEvent)
+                    {
                         Debug.LogError("Custom Event Receivers cannot fire events. Occured in Transform '" + name + "'.");
                         break;
                     }
-                    switch (aEvent.currentCustomEventCommand) {
+                    switch (aEvent.currentCustomEventCommand)
+                    {
                         case MasterAudio.CustomEventCommand.FireEvent:
 #if MULTIPLAYER_ENABLED
                             if (willSendToAllPlayers) {
@@ -2605,7 +2923,8 @@ namespace DarkTonic.MasterAudio {
                     }
                     break;
                 case MasterAudio.EventSoundFunctionType.GlobalControl:
-                    switch (aEvent.currentGlobalCommand) {
+                    switch (aEvent.currentGlobalCommand)
+                    {
                         case MasterAudio.GlobalCommand.PauseAudioListener:
 #if MULTIPLAYER_ENABLED
                             if (willSendToAllPlayers) {
@@ -2744,7 +3063,8 @@ namespace DarkTonic.MasterAudio {
                     }
                     break;
                 case MasterAudio.EventSoundFunctionType.UnityMixerControl:
-                    switch (aEvent.currentMixerCommand) {
+                    switch (aEvent.currentMixerCommand)
+                    {
                         case MasterAudio.UnityMixerCommand.TransitionToSnapshot:
                             var snapshot = aEvent.snapshotToTransitionTo;
                             if (snapshot != null)
@@ -2763,15 +3083,20 @@ namespace DarkTonic.MasterAudio {
                             AudioMixer theMixer = null;
 
                             // ReSharper disable once ForCanBeConvertedToForeach
-                            for (var i = 0; i < aEvent.snapshotsToBlend.Count; i++) {
+                            for (var i = 0; i < aEvent.snapshotsToBlend.Count; i++)
+                            {
                                 var aSnap = aEvent.snapshotsToBlend[i];
-                                if (aSnap.snapshot == null) {
+                                if (aSnap.snapshot == null)
+                                {
                                     continue;
                                 }
 
-                                if (theMixer == null) {
+                                if (theMixer == null)
+                                {
                                     theMixer = aSnap.snapshot.audioMixer;
-                                } else if (theMixer != aSnap.snapshot.audioMixer) {
+                                }
+                                else if (theMixer != aSnap.snapshot.audioMixer)
+                                {
                                     Debug.LogError("Snapshot '" + aSnap.snapshot.name + "' isn't in the same Audio Mixer as the previous snapshot in EventSounds on GameObject '" + name + "'. Please make sure all the Snapshots to blend are on the same mixer.");
                                     break;
                                 }
@@ -2780,7 +3105,8 @@ namespace DarkTonic.MasterAudio {
                                 weights.Add(aSnap.weight);
                             }
 
-                            if (snapshots.Count > 0) {
+                            if (snapshots.Count > 0)
+                            {
                                 theMixer.updateMode = MasterAudio.Instance.mixerUpdateMode;
                                 // ReSharper disable once PossibleNullReferenceException
                                 theMixer.TransitionToSnapshots(snapshots.ToArray(), weights.ToArray(), aEvent.snapshotTransitionTime);
@@ -2790,17 +3116,22 @@ namespace DarkTonic.MasterAudio {
                     }
                     break;
                 case MasterAudio.EventSoundFunctionType.PersistentSettingsControl:
-                    switch (aEvent.currentPersistentSettingsCommand) {
+                    switch (aEvent.currentPersistentSettingsCommand)
+                    {
                         case MasterAudio.PersistentSettingsCommand.SetBusVolume:
                             var busesForCommand = new List<string>();
-                            if (!aEvent.allSoundTypesForBusCmd) {
+                            if (!aEvent.allSoundTypesForBusCmd)
+                            {
                                 busesForCommand.Add(aEvent.busName);
-                            } else {
+                            }
+                            else
+                            {
                                 busesForCommand.AddRange(MasterAudio.RuntimeBusNames);
                             }
 
                             // ReSharper disable once ForCanBeConvertedToForeach
-                            for (var i = 0; i < busesForCommand.Count; i++) {
+                            for (var i = 0; i < busesForCommand.Count; i++)
+                            {
                                 var aBusName = busesForCommand[i];
                                 var tgtVol = useSliderValue ? grp.sliderValue : aEvent.volume;
                                 PersistentAudioSettings.SetBusVolume(aBusName, tgtVol);
@@ -2808,14 +3139,18 @@ namespace DarkTonic.MasterAudio {
                             break;
                         case MasterAudio.PersistentSettingsCommand.SetGroupVolume:
                             var groupsForCommand = new List<string>();
-                            if (!aEvent.allSoundTypesForGroupCmd) {
+                            if (!aEvent.allSoundTypesForGroupCmd)
+                            {
                                 groupsForCommand.Add(aEvent.soundType);
-                            } else {
+                            }
+                            else
+                            {
                                 groupsForCommand.AddRange(MasterAudio.RuntimeSoundGroupNames);
                             }
 
                             // ReSharper disable once ForCanBeConvertedToForeach
-                            for (var i = 0; i < groupsForCommand.Count; i++) {
+                            for (var i = 0; i < groupsForCommand.Count; i++)
+                            {
                                 var aGroupName = groupsForCommand[i];
                                 var tgtVol = useSliderValue ? grp.sliderValue : aEvent.volume;
                                 PersistentAudioSettings.SetGroupVolume(aGroupName, tgtVol);
@@ -2830,16 +3165,22 @@ namespace DarkTonic.MasterAudio {
                             PersistentAudioSettings.MusicVolume = targVol;
                             break;
                         case MasterAudio.PersistentSettingsCommand.MixerMuteToggle:
-                            if (PersistentAudioSettings.MixerMuted.HasValue) {
+                            if (PersistentAudioSettings.MixerMuted.HasValue)
+                            {
                                 PersistentAudioSettings.MixerMuted = !PersistentAudioSettings.MixerMuted.Value;
-                            } else {
+                            }
+                            else
+                            {
                                 PersistentAudioSettings.MixerMuted = true;
                             }
                             break;
                         case MasterAudio.PersistentSettingsCommand.MusicMuteToggle:
-                            if (PersistentAudioSettings.MusicMuted.HasValue) {
+                            if (PersistentAudioSettings.MusicMuted.HasValue)
+                            {
                                 PersistentAudioSettings.MusicMuted = !PersistentAudioSettings.MusicMuted.Value;
-                            } else {
+                            }
+                            else
+                            {
                                 PersistentAudioSettings.MusicMuted = true;
                             }
                             break;
@@ -2848,169 +3189,221 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        private void LogIfCustomEventMissing(AudioEventGroup eventGroup) {
-            if (!logMissingEvents) {
+        private void LogIfCustomEventMissing(AudioEventGroup eventGroup)
+        {
+            if (!logMissingEvents)
+            {
                 return;
             }
 
-            if (eventGroup.isCustomEvent) {
-                if (!eventGroup.customSoundActive || string.IsNullOrEmpty(eventGroup.customEventName)) {
+            if (eventGroup.isCustomEvent)
+            {
+                if (!eventGroup.customSoundActive || string.IsNullOrEmpty(eventGroup.customEventName))
+                {
                     return;
                 }
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < eventGroup.SoundEvents.Count; i++) {
+            for (var i = 0; i < eventGroup.SoundEvents.Count; i++)
+            {
                 var aEvent = eventGroup.SoundEvents[i];
 
-                if (aEvent.currentSoundFunctionType != MasterAudio.EventSoundFunctionType.CustomEventControl) {
+                if (aEvent.currentSoundFunctionType != MasterAudio.EventSoundFunctionType.CustomEventControl)
+                {
                     continue;
                 }
 
                 var customEventName = aEvent.theCustomEventName;
-                if (!MasterAudio.CustomEventExists(customEventName)) {
+                if (!MasterAudio.CustomEventExists(customEventName))
+                {
                     MasterAudio.LogWarning("Transform '" + name + "' is set up to receive or fire Custom Event '" +
                                            customEventName + "', which does not exist in Master Audio.");
                 }
             }
         }
 
-#endregion
+        #endregion
 
-#region ICustomEventReceiver methods
+        #region ICustomEventReceiver methods
 
-        public void CheckForIllegalCustomEvents() {
-            if (useStartSound) {
+        public void CheckForIllegalCustomEvents()
+        {
+            if (useStartSound)
+            {
                 LogIfCustomEventMissing(startSound);
             }
-            if (useVisibleSound) {
+            if (useVisibleSound)
+            {
                 LogIfCustomEventMissing(visibleSound);
             }
-            if (useInvisibleSound) {
+            if (useInvisibleSound)
+            {
                 LogIfCustomEventMissing(invisibleSound);
             }
-            if (useCollisionSound) {
+            if (useCollisionSound)
+            {
                 LogIfCustomEventMissing(collisionSound);
             }
-            if (useCollisionExitSound) {
+            if (useCollisionExitSound)
+            {
                 LogIfCustomEventMissing(collisionExitSound);
             }
-            if (useTriggerEnterSound) {
+            if (useTriggerEnterSound)
+            {
                 LogIfCustomEventMissing(triggerSound);
             }
-            if (useTriggerExitSound) {
+            if (useTriggerExitSound)
+            {
                 LogIfCustomEventMissing(triggerExitSound);
             }
-            if (useMouseEnterSound) {
+            if (useMouseEnterSound)
+            {
                 LogIfCustomEventMissing(mouseEnterSound);
             }
-            if (useMouseExitSound) {
+            if (useMouseExitSound)
+            {
                 LogIfCustomEventMissing(mouseExitSound);
             }
-            if (useMouseClickSound) {
+            if (useMouseClickSound)
+            {
                 LogIfCustomEventMissing(mouseClickSound);
             }
-            if (useMouseDragSound) {
+            if (useMouseDragSound)
+            {
                 LogIfCustomEventMissing(mouseDragSound);
             }
-            if (useMouseUpSound) {
+            if (useMouseUpSound)
+            {
                 LogIfCustomEventMissing(mouseUpSound);
             }
-            if (useNguiMouseDownSound) {
+            if (useNguiMouseDownSound)
+            {
                 LogIfCustomEventMissing(nguiMouseDownSound);
             }
-            if (useNguiMouseUpSound) {
+            if (useNguiMouseUpSound)
+            {
                 LogIfCustomEventMissing(nguiMouseUpSound);
             }
-            if (useNguiOnClickSound) {
+            if (useNguiOnClickSound)
+            {
                 LogIfCustomEventMissing(nguiOnClickSound);
             }
-            if (useNguiMouseEnterSound) {
+            if (useNguiMouseEnterSound)
+            {
                 LogIfCustomEventMissing(nguiMouseEnterSound);
             }
-            if (useNguiMouseExitSound) {
+            if (useNguiMouseExitSound)
+            {
                 LogIfCustomEventMissing(nguiMouseExitSound);
             }
-            if (useSpawnedSound) {
+            if (useSpawnedSound)
+            {
                 LogIfCustomEventMissing(spawnedSound);
             }
-            if (useDespawnedSound) {
+            if (useDespawnedSound)
+            {
                 LogIfCustomEventMissing(despawnedSound);
             }
-            if (useEnableSound) {
+            if (useEnableSound)
+            {
                 LogIfCustomEventMissing(enableSound);
             }
-            if (useDisableSound) {
+            if (useDisableSound)
+            {
                 LogIfCustomEventMissing(disableSound);
             }
-            if (useCollision2dSound) {
+            if (useCollision2dSound)
+            {
                 LogIfCustomEventMissing(collision2dSound);
             }
-            if (useCollisionExit2dSound) {
+            if (useCollisionExit2dSound)
+            {
                 LogIfCustomEventMissing(collisionExit2dSound);
             }
-            if (useTriggerEnter2dSound) {
+            if (useTriggerEnter2dSound)
+            {
                 LogIfCustomEventMissing(triggerEnter2dSound);
             }
-            if (useTriggerExit2dSound) {
+            if (useTriggerExit2dSound)
+            {
                 LogIfCustomEventMissing(triggerExit2dSound);
             }
-            if (useParticleCollisionSound) {
+            if (useParticleCollisionSound)
+            {
                 LogIfCustomEventMissing(particleCollisionSound);
             }
 
-            if (useUnitySliderChangedSound) {
+            if (useUnitySliderChangedSound)
+            {
                 LogIfCustomEventMissing(unitySliderChangedSound);
             }
-            if (useUnityButtonClickedSound) {
+            if (useUnityButtonClickedSound)
+            {
                 LogIfCustomEventMissing(unityButtonClickedSound);
             }
-            if (useUnityPointerDownSound) {
+            if (useUnityPointerDownSound)
+            {
                 LogIfCustomEventMissing(unityPointerDownSound);
             }
-            if (useUnityDragSound) {
+            if (useUnityDragSound)
+            {
                 LogIfCustomEventMissing(unityDragSound);
             }
-            if (useUnityDropSound) {
+            if (useUnityDropSound)
+            {
                 LogIfCustomEventMissing(unityDropSound);
             }
-            if (useUnityPointerUpSound) {
+            if (useUnityPointerUpSound)
+            {
                 LogIfCustomEventMissing(unityPointerUpSound);
             }
-            if (useUnityPointerEnterSound) {
+            if (useUnityPointerEnterSound)
+            {
                 LogIfCustomEventMissing(unityPointerEnterSound);
             }
-            if (useUnityPointerExitSound) {
+            if (useUnityPointerExitSound)
+            {
                 LogIfCustomEventMissing(unityPointerExitSound);
             }
-            if (useUnityScrollSound) {
+            if (useUnityScrollSound)
+            {
                 LogIfCustomEventMissing(unityScrollSound);
             }
-            if (useUnityUpdateSelectedSound) {
+            if (useUnityUpdateSelectedSound)
+            {
                 LogIfCustomEventMissing(unityUpdateSelectedSound);
             }
-            if (useUnitySelectSound) {
+            if (useUnitySelectSound)
+            {
                 LogIfCustomEventMissing(unitySelectSound);
             }
-            if (useUnityDeselectSound) {
+            if (useUnityDeselectSound)
+            {
                 LogIfCustomEventMissing(unityDeselectSound);
             }
-            if (useUnityMoveSound) {
+            if (useUnityMoveSound)
+            {
                 LogIfCustomEventMissing(unityMoveSound);
             }
-            if (useUnityInitializePotentialDragSound) {
+            if (useUnityInitializePotentialDragSound)
+            {
                 LogIfCustomEventMissing(unityInitializePotentialDragSound);
             }
-            if (useUnityBeginDragSound) {
+            if (useUnityBeginDragSound)
+            {
                 LogIfCustomEventMissing(unityBeginDragSound);
             }
-            if (useUnityEndDragSound) {
+            if (useUnityEndDragSound)
+            {
                 LogIfCustomEventMissing(unityEndDragSound);
             }
-            if (useUnitySubmitSound) {
+            if (useUnitySubmitSound)
+            {
                 LogIfCustomEventMissing(unitySubmitSound);
             }
-            if (useUnityCancelSound) {
+            if (useUnityCancelSound)
+            {
                 LogIfCustomEventMissing(unityCancelSound);
             }
             if (useCodeTriggeredEvent1Sound)
@@ -3023,23 +3416,28 @@ namespace DarkTonic.MasterAudio {
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < userDefinedSounds.Count; i++) {
+            for (var i = 0; i < userDefinedSounds.Count; i++)
+            {
                 var custEvent = userDefinedSounds[i];
 
                 LogIfCustomEventMissing(custEvent);
             }
         }
 
-        public void ReceiveEvent(string customEventName, Vector3 originPoint) {
+        public void ReceiveEvent(string customEventName, Vector3 originPoint)
+        {
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < userDefinedSounds.Count; i++) {
+            for (var i = 0; i < userDefinedSounds.Count; i++)
+            {
                 var userDefGroup = userDefinedSounds[i];
 
-                if (!userDefGroup.customSoundActive || string.IsNullOrEmpty(userDefGroup.customEventName)) {
+                if (!userDefGroup.customSoundActive || string.IsNullOrEmpty(userDefGroup.customEventName))
+                {
                     continue;
                 }
 
-                if (!userDefGroup.customEventName.Equals(customEventName)) {
+                if (!userDefGroup.customEventName.Equals(customEventName))
+                {
                     continue;
                 }
 
@@ -3047,13 +3445,16 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        public bool SubscribesToEvent(string customEventName) {
+        public bool SubscribesToEvent(string customEventName)
+        {
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < userDefinedSounds.Count; i++) {
+            for (var i = 0; i < userDefinedSounds.Count; i++)
+            {
                 var customGrp = userDefinedSounds[i];
 
                 if (customGrp.customSoundActive && !string.IsNullOrEmpty(customGrp.customEventName) &&
-                    customGrp.customEventName.Equals(customEventName)) {
+                    customGrp.customEventName.Equals(customEventName))
+                {
                     return true;
                 }
             }
@@ -3061,19 +3462,24 @@ namespace DarkTonic.MasterAudio {
             return false;
         }
 
-        public void RegisterReceiver() {
-            if (userDefinedSounds.Count > 0) {
+        public void RegisterReceiver()
+        {
+            if (userDefinedSounds.Count > 0)
+            {
                 MasterAudio.AddCustomEventReceiver(this, _trans);
             }
         }
 
-        public void UnregisterReceiver() {
-            if (userDefinedSounds.Count > 0) {
+        public void UnregisterReceiver()
+        {
+            if (userDefinedSounds.Count > 0)
+            {
                 MasterAudio.RemoveCustomEventReceiver(this);
             }
         }
 
-        public IList<AudioEventGroup> GetAllEvents() {
+        public IList<AudioEventGroup> GetAllEvents()
+        {
 #if UNITY_WSA
 				return userDefinedSounds; // can't compile the one below.
 #else
@@ -3081,12 +3487,13 @@ namespace DarkTonic.MasterAudio {
 #endif
         }
 
-#endregion
+        #endregion
 
 
         // UGUI events are handled by separate components so that only
         // the events we care about are actually trapped and handled
-        private void AddUGUIComponents() {
+        private void AddUGUIComponents()
+        {
             AddUGUIHandler<EventSoundsPointerEnterHandler>(useUnityPointerEnterSound);
             AddUGUIHandler<EventSoundsPointerExitHandler>(useUnityPointerExitSound);
             AddUGUIHandler<EventSoundsPointerDownHandler>(useUnityPointerDownSound);
@@ -3105,8 +3512,10 @@ namespace DarkTonic.MasterAudio {
             AddUGUIHandler<EventSoundsCancelHandler>(useUnityCancelSound);
         }
 
-        private void AddUGUIHandler<T>(bool useSound) where T : EventSoundsUGUIHandler {
-            if (!useSound) {
+        private void AddUGUIHandler<T>(bool useSound) where T : EventSoundsUGUIHandler
+        {
+            if (!useSound)
+            {
                 return;
             }
 
@@ -3114,9 +3523,12 @@ namespace DarkTonic.MasterAudio {
             handler.eventSounds = this;
         }
 
-        private Transform Trans {
-            get {
-                if (_trans != null) {
+        private Transform Trans
+        {
+            get
+            {
+                if (_trans != null)
+                {
                     return _trans;
                 }
                 _trans = transform;
@@ -3127,141 +3539,190 @@ namespace DarkTonic.MasterAudio {
     }
 
     /*! \cond PRIVATE */
-#region UGUI methods
+    #region UGUI methods
     // UGUI event handler components
-    public class EventSoundsUGUIHandler : MonoBehaviour {
+    public class EventSoundsUGUIHandler : MonoBehaviour
+    {
         // ReSharper disable once InconsistentNaming
         public EventSounds eventSounds { get; set; }
     }
 
-    public class EventSoundsPointerEnterHandler : EventSoundsUGUIHandler, IPointerEnterHandler {
-        public void OnPointerEnter(PointerEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsPointerEnterHandler : EventSoundsUGUIHandler, IPointerEnterHandler
+    {
+        public void OnPointerEnter(PointerEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnPointerEnter(data);
             }
         }
     }
 
-    public class EventSoundsPointerExitHandler : EventSoundsUGUIHandler, IPointerExitHandler {
-        public void OnPointerExit(PointerEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsPointerExitHandler : EventSoundsUGUIHandler, IPointerExitHandler
+    {
+        public void OnPointerExit(PointerEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnPointerExit(data);
             }
         }
     }
 
-    public class EventSoundsPointerDownHandler : EventSoundsUGUIHandler, IPointerDownHandler {
-        public void OnPointerDown(PointerEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsPointerDownHandler : EventSoundsUGUIHandler, IPointerDownHandler
+    {
+        public void OnPointerDown(PointerEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnPointerDown(data);
             }
         }
     }
 
-    public class EventSoundsPointerUpHandler : EventSoundsUGUIHandler, IPointerUpHandler {
-        public void OnPointerUp(PointerEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsPointerUpHandler : EventSoundsUGUIHandler, IPointerUpHandler
+    {
+        public void OnPointerUp(PointerEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnPointerUp(data);
             }
         }
     }
 
-    public class EventSoundsDragHandler : EventSoundsUGUIHandler, IDragHandler {
-        public void OnDrag(PointerEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsDragHandler : EventSoundsUGUIHandler, IDragHandler
+    {
+        public void OnDrag(PointerEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnDrag(data);
             }
         }
     }
 
-    public class EventSoundsDropHandler : EventSoundsUGUIHandler, IDropHandler {
-        public void OnDrop(PointerEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsDropHandler : EventSoundsUGUIHandler, IDropHandler
+    {
+        public void OnDrop(PointerEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnDrop(data);
             }
         }
     }
 
-    public class EventSoundsScrollHandler : EventSoundsUGUIHandler, IScrollHandler {
-        public void OnScroll(PointerEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsScrollHandler : EventSoundsUGUIHandler, IScrollHandler
+    {
+        public void OnScroll(PointerEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnScroll(data);
             }
         }
     }
 
-    public class EventSoundsUpdateSelectedHandler : EventSoundsUGUIHandler, IUpdateSelectedHandler {
-        public void OnUpdateSelected(BaseEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsUpdateSelectedHandler : EventSoundsUGUIHandler, IUpdateSelectedHandler
+    {
+        public void OnUpdateSelected(BaseEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnUpdateSelected(data);
             }
         }
     }
 
-    public class EventSoundsSelectHandler : EventSoundsUGUIHandler, ISelectHandler {
-        public void OnSelect(BaseEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsSelectHandler : EventSoundsUGUIHandler, ISelectHandler
+    {
+        public void OnSelect(BaseEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnSelect(data);
             }
         }
     }
 
-    public class EventSoundsDeselectHandler : EventSoundsUGUIHandler, IDeselectHandler {
-        public void OnDeselect(BaseEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsDeselectHandler : EventSoundsUGUIHandler, IDeselectHandler
+    {
+        public void OnDeselect(BaseEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnDeselect(data);
             }
         }
     }
 
-    public class EventSoundsMoveHandler : EventSoundsUGUIHandler, IMoveHandler {
-        public void OnMove(AxisEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsMoveHandler : EventSoundsUGUIHandler, IMoveHandler
+    {
+        public void OnMove(AxisEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnMove(data);
             }
         }
     }
 
-    public class EventSoundsInitializePotentialDragHandler : EventSoundsUGUIHandler, IInitializePotentialDragHandler {
-        public void OnInitializePotentialDrag(PointerEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsInitializePotentialDragHandler : EventSoundsUGUIHandler, IInitializePotentialDragHandler
+    {
+        public void OnInitializePotentialDrag(PointerEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnInitializePotentialDrag(data);
             }
         }
     }
 
-    public class EventSoundsBeginDragHandler : EventSoundsUGUIHandler, IBeginDragHandler {
-        public void OnBeginDrag(PointerEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsBeginDragHandler : EventSoundsUGUIHandler, IBeginDragHandler
+    {
+        public void OnBeginDrag(PointerEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnBeginDrag(data);
             }
         }
     }
 
-    public class EventSoundsEndDragHandler : EventSoundsUGUIHandler, IEndDragHandler {
-        public void OnEndDrag(PointerEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsEndDragHandler : EventSoundsUGUIHandler, IEndDragHandler
+    {
+        public void OnEndDrag(PointerEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnEndDrag(data);
             }
         }
     }
 
-    public class EventSoundsSubmitHandler : EventSoundsUGUIHandler, ISubmitHandler {
-        public void OnSubmit(BaseEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsSubmitHandler : EventSoundsUGUIHandler, ISubmitHandler
+    {
+        public void OnSubmit(BaseEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnSubmit(data);
             }
         }
     }
 
-    public class EventSoundsCancelHandler : EventSoundsUGUIHandler, ICancelHandler {
-        public void OnCancel(BaseEventData data) {
-            if (eventSounds != null) {
+    public class EventSoundsCancelHandler : EventSoundsUGUIHandler, ICancelHandler
+    {
+        public void OnCancel(BaseEventData data)
+        {
+            if (eventSounds != null)
+            {
                 eventSounds.OnCancel(data);
             }
         }
     }
-#endregion
+    #endregion
     /*! \endcond */
 }
 /*! \endcond */

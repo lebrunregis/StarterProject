@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 namespace Gamekit3D
@@ -12,7 +10,7 @@ namespace Gamekit3D
         public UnityEvent OnEnter, OnExit;
         public new SphereCollider collider;
 
-        void Reset()
+        private void Reset()
         {
             layers = LayerMask.NameToLayer("Everything");
             collider = GetComponent<SphereCollider>();
@@ -20,7 +18,7 @@ namespace Gamekit3D
             collider.isTrigger = true;
         }
 
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (0 != (layers.value & 1 << other.gameObject.layer))
             {
@@ -28,7 +26,7 @@ namespace Gamekit3D
             }
         }
 
-        void OnTriggerExit(Collider other)
+        private void OnTriggerExit(Collider other)
         {
             if (0 != (layers.value & 1 << other.gameObject.layer))
             {
@@ -36,15 +34,15 @@ namespace Gamekit3D
             }
         }
 
-        void OnDrawGizmos()
+        private void OnDrawGizmos()
         {
             Gizmos.DrawIcon(transform.position, "InteractionTrigger", false);
         }
 
-        void OnDrawGizmosSelected()
+        private void OnDrawGizmosSelected()
         {
             //need to inspect events and draw arrows to relevant gameObjects.
         }
 
-    } 
+    }
 }

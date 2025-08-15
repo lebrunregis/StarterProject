@@ -21,11 +21,11 @@ namespace MagicaCloth2
     /// <typeparam name="T"></typeparam>
     public class ExNativeArray<T> : IDisposable where T : unmanaged
     {
-        NativeArray<T> nativeArray;
+        private NativeArray<T> nativeArray;
 
-        List<DataChunk> emptyChunks = new List<DataChunk>();
+        private readonly List<DataChunk> emptyChunks = new();
 
-        int useCount;
+        private int useCount;
 
         public void Dispose()
         {
@@ -537,7 +537,7 @@ namespace MagicaCloth2
             FillInternal(chunk.startIndex, chunk.dataLength, fillData);
         }
 
-        unsafe void FillInternal(int start, int size, T fillData = default(T))
+        private unsafe void FillInternal(int start, int size, T fillData = default(T))
         {
             //byte* dst_p = (byte*)nativeArray.GetUnsafePtr();
             void* dst_p = nativeArray.GetUnsafePtr();
@@ -606,7 +606,7 @@ namespace MagicaCloth2
         }
 
         //=========================================================================================
-        DataChunk GetEmptyChunk(int dataLength)
+        private DataChunk GetEmptyChunk(int dataLength)
         {
             if (dataLength <= 0)
                 return new DataChunk();
@@ -637,7 +637,7 @@ namespace MagicaCloth2
             return new DataChunk();
         }
 
-        void AddEmptyChunk(DataChunk chunk)
+        private void AddEmptyChunk(DataChunk chunk)
         {
             if (chunk.IsValid == false)
                 return;
@@ -679,7 +679,7 @@ namespace MagicaCloth2
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             sb.AppendLine($"ExNativeArray Length:{Length} Count:{Count} IsValid:{IsValid}");
             sb.AppendLine("---- Datas[100] ----");

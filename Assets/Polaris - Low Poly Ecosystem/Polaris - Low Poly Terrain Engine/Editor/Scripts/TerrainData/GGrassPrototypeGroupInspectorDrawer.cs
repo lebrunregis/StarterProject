@@ -1,15 +1,15 @@
 #if GRIFFIN
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
-using System.IO;
 
 namespace Pinwheel.Griffin
 {
     public class GGrassPrototypeGroupInspectorDrawer
     {
-        private GGrassPrototypeGroup instance;
+        private readonly GGrassPrototypeGroup instance;
 
         public GGrassPrototypeGroupInspectorDrawer(GGrassPrototypeGroup group)
         {
@@ -63,7 +63,7 @@ namespace Pinwheel.Griffin
                 string id = "grassprototype" + i + instance.GetInstanceID().ToString();
 
                 int index = i;
-                GenericMenu menu = new GenericMenu();
+                GenericMenu menu = new();
                 menu.AddItem(
                     new GUIContent("Remove"),
                     false,
@@ -120,7 +120,7 @@ namespace Pinwheel.Griffin
                     {
                         EditorGUILayout.LabelField("Detail Object uses the first sub-mesh and material found in its prefab, and may NOT affected by wind.", GEditorCommon.WarningLabel);
 
-                        if (p.DetailMaterial!=null && !p.DetailMaterial.enableInstancing)
+                        if (p.DetailMaterial != null && !p.DetailMaterial.enableInstancing)
                         {
                             EditorGUILayout.LabelField("Prototype's material has GPU Instancing option turned off. This prototype will not be rendered.", GEditorCommon.WarningLabel);
                         }

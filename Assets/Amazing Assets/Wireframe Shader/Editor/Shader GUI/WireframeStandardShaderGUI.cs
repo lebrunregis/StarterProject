@@ -1,8 +1,8 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor
@@ -32,24 +32,24 @@ namespace AmazingAssets.WireframeShader.Editor
 
         private static class Styles
         {
-            public static GUIContent uvSetLabel = new GUIContent("UV Set");
+            public static GUIContent uvSetLabel = new("UV Set");
 
-            public static GUIContent albedoText = new GUIContent("Albedo", "Albedo (RGB) and Transparency (A)");
-            public static GUIContent alphaCutoffText = new GUIContent("Alpha Cutoff", "Threshold for alpha cutoff");
-            public static GUIContent specularMapText = new GUIContent("Specular", "Specular (RGB) and Smoothness (A)");
-            public static GUIContent metallicMapText = new GUIContent("Metallic", "Metallic (R) and Smoothness (A)");
-            public static GUIContent smoothnessText = new GUIContent("Smoothness", "Smoothness value");
-            public static GUIContent smoothnessScaleText = new GUIContent("Smoothness", "Smoothness scale factor");
-            public static GUIContent smoothnessMapChannelText = new GUIContent("Source", "Smoothness texture and channel");
-            public static GUIContent highlightsText = new GUIContent("Specular Highlights", "Specular Highlights");
-            public static GUIContent reflectionsText = new GUIContent("Reflections", "Glossy Reflections");
-            public static GUIContent normalMapText = new GUIContent("Normal Map", "Normal Map");
-            public static GUIContent heightMapText = new GUIContent("Height Map", "Height Map (G)");
-            public static GUIContent occlusionText = new GUIContent("Occlusion", "Occlusion (G)");
-            public static GUIContent emissionText = new GUIContent("Color", "Emission (RGB)");
-            public static GUIContent detailMaskText = new GUIContent("Detail Mask", "Mask for Secondary Maps (A)");
-            public static GUIContent detailAlbedoText = new GUIContent("Detail Albedo x2", "Albedo (RGB) multiplied by 2");
-            public static GUIContent detailNormalMapText = new GUIContent("Normal Map", "Normal Map");
+            public static GUIContent albedoText = new("Albedo", "Albedo (RGB) and Transparency (A)");
+            public static GUIContent alphaCutoffText = new("Alpha Cutoff", "Threshold for alpha cutoff");
+            public static GUIContent specularMapText = new("Specular", "Specular (RGB) and Smoothness (A)");
+            public static GUIContent metallicMapText = new("Metallic", "Metallic (R) and Smoothness (A)");
+            public static GUIContent smoothnessText = new("Smoothness", "Smoothness value");
+            public static GUIContent smoothnessScaleText = new("Smoothness", "Smoothness scale factor");
+            public static GUIContent smoothnessMapChannelText = new("Source", "Smoothness texture and channel");
+            public static GUIContent highlightsText = new("Specular Highlights", "Specular Highlights");
+            public static GUIContent reflectionsText = new("Reflections", "Glossy Reflections");
+            public static GUIContent normalMapText = new("Normal Map", "Normal Map");
+            public static GUIContent heightMapText = new("Height Map", "Height Map (G)");
+            public static GUIContent occlusionText = new("Occlusion", "Occlusion (G)");
+            public static GUIContent emissionText = new("Color", "Emission (RGB)");
+            public static GUIContent detailMaskText = new("Detail Mask", "Mask for Secondary Maps (A)");
+            public static GUIContent detailAlbedoText = new("Detail Albedo x2", "Albedo (RGB) multiplied by 2");
+            public static GUIContent detailNormalMapText = new("Normal Map", "Normal Map");
 
             public static string primaryMapsText = "Main Maps";
             public static string secondaryMapsText = "Secondary Maps";
@@ -59,64 +59,64 @@ namespace AmazingAssets.WireframeShader.Editor
             public static readonly string[] blendNames = System.Enum.GetNames(typeof(BlendMode));
         }
 
-        MaterialProperty blendMode = null;
-        MaterialProperty albedoMap = null;
-        MaterialProperty albedoColor = null;
-        MaterialProperty alphaCutoff = null;
-        MaterialProperty specularMap = null;
-        MaterialProperty specularColor = null;
-        MaterialProperty metallicMap = null;
-        MaterialProperty metallic = null;
-        MaterialProperty smoothness = null;
-        MaterialProperty smoothnessScale = null;
-        MaterialProperty smoothnessMapChannel = null;
-        MaterialProperty highlights = null;
-        MaterialProperty reflections = null;
-        MaterialProperty bumpScale = null;
-        MaterialProperty bumpMap = null;
-        MaterialProperty occlusionStrength = null;
-        MaterialProperty occlusionMap = null;
-        MaterialProperty heigtMapScale = null;
-        MaterialProperty heightMap = null;
-        MaterialProperty emissionColorForRendering = null;
-        MaterialProperty emissionMap = null;
-        MaterialProperty detailMask = null;
-        MaterialProperty detailAlbedoMap = null;
-        MaterialProperty detailNormalMapScale = null;
-        MaterialProperty detailNormalMap = null;
-        MaterialProperty uvSetSecondary = null;
+        private MaterialProperty blendMode = null;
+        private MaterialProperty albedoMap = null;
+        private MaterialProperty albedoColor = null;
+        private MaterialProperty alphaCutoff = null;
+        private MaterialProperty specularMap = null;
+        private MaterialProperty specularColor = null;
+        private MaterialProperty metallicMap = null;
+        private MaterialProperty metallic = null;
+        private MaterialProperty smoothness = null;
+        private MaterialProperty smoothnessScale = null;
+        private MaterialProperty smoothnessMapChannel = null;
+        private MaterialProperty highlights = null;
+        private MaterialProperty reflections = null;
+        private MaterialProperty bumpScale = null;
+        private MaterialProperty bumpMap = null;
+        private MaterialProperty occlusionStrength = null;
+        private MaterialProperty occlusionMap = null;
+        private MaterialProperty heigtMapScale = null;
+        private MaterialProperty heightMap = null;
+        private MaterialProperty emissionColorForRendering = null;
+        private MaterialProperty emissionMap = null;
+        private MaterialProperty detailMask = null;
+        private MaterialProperty detailAlbedoMap = null;
+        private MaterialProperty detailNormalMapScale = null;
+        private MaterialProperty detailNormalMap = null;
+        private MaterialProperty uvSetSecondary = null;
 
 
 
-        MaterialProperty _CurvedWorldBendSettings = null;
+        private MaterialProperty _CurvedWorldBendSettings = null;
 
-        MaterialProperty _Wireframe_Title_S_Options = null;
-        MaterialProperty _Wireframe_Title_W_Options = null;
-        MaterialProperty _Wireframe_Title_GI_Options = null;
-        MaterialProperty _Wireframe_Transparency_M_Options = null;
-        MaterialProperty _Wireframe_Title_M_Options = null;
+        private MaterialProperty _Wireframe_Title_S_Options = null;
+        private MaterialProperty _Wireframe_Title_W_Options = null;
+        private MaterialProperty _Wireframe_Title_GI_Options = null;
+        private MaterialProperty _Wireframe_Transparency_M_Options = null;
+        private MaterialProperty _Wireframe_Title_M_Options = null;
 
-        MaterialProperty _WireframeShader_Thickness = null;
-        MaterialProperty _WireframeShader_Smoothness = null;
-
-
-        MaterialProperty _Wireframe_Color = null;
-        MaterialProperty _Wireframe_ColorTexture = null;
-        MaterialProperty _Wireframe_ColorTexture_Scroll = null;
-        MaterialProperty _Wireframe_ColorEmissionStrength = null;
-        MaterialProperty _Wireframe_MetaPassMultiplier = null;
-
-        MaterialProperty _Wireframe_TransparencyEnumID = null;
-        MaterialProperty _Wireframe_FresnelEnumID = null;
-        MaterialProperty _Wireframe_DistanceFade = null;
-        MaterialProperty _Wireframe_DynamicMaskEnumID = null;
+        private MaterialProperty _WireframeShader_Thickness = null;
+        private MaterialProperty _WireframeShader_Smoothness = null;
 
 
+        private MaterialProperty _Wireframe_Color = null;
+        private MaterialProperty _Wireframe_ColorTexture = null;
+        private MaterialProperty _Wireframe_ColorTexture_Scroll = null;
+        private MaterialProperty _Wireframe_ColorEmissionStrength = null;
+        private MaterialProperty _Wireframe_MetaPassMultiplier = null;
 
-        MaterialEditor m_MaterialEditor;
-        WorkflowMode m_WorkflowMode = WorkflowMode.Specular;
+        private MaterialProperty _Wireframe_TransparencyEnumID = null;
+        private MaterialProperty _Wireframe_FresnelEnumID = null;
+        private MaterialProperty _Wireframe_DistanceFade = null;
+        private MaterialProperty _Wireframe_DynamicMaskEnumID = null;
 
-        bool m_FirstTimeApply = true;
+
+
+        private MaterialEditor m_MaterialEditor;
+        private WorkflowMode m_WorkflowMode = WorkflowMode.Specular;
+
+        private bool m_FirstTimeApply = true;
 
         public void FindProperties(MaterialProperty[] props)
         {
@@ -323,7 +323,7 @@ namespace AmazingAssets.WireframeShader.Editor
             MaterialChanged(material, m_WorkflowMode);
         }
 
-        void BlendModePopup()
+        private void BlendModePopup()
         {
             EditorGUI.showMixedValue = blendMode.hasMixedValue;
             var mode = (BlendMode)blendMode.floatValue;
@@ -339,7 +339,7 @@ namespace AmazingAssets.WireframeShader.Editor
             EditorGUI.showMixedValue = false;
         }
 
-        void DoNormalArea()
+        private void DoNormalArea()
         {
             m_MaterialEditor.TexturePropertySingleLine(Styles.normalMapText, bumpMap, bumpMap.textureValue != null ? bumpScale : null);
             //if (bumpScale.floatValue != 1
@@ -352,7 +352,7 @@ namespace AmazingAssets.WireframeShader.Editor
             //    }
         }
 
-        void DoAlbedoArea(Material material)
+        private void DoAlbedoArea(Material material)
         {
             m_MaterialEditor.TexturePropertySingleLine(Styles.albedoText, albedoMap, albedoColor);
             if (((BlendMode)material.GetFloat("_Mode") == BlendMode.Cutout))
@@ -361,7 +361,7 @@ namespace AmazingAssets.WireframeShader.Editor
             }
         }
 
-        void DoEmissionArea(Material material)
+        private void DoEmissionArea(Material material)
         {
             // Emission for GI?
             if (m_MaterialEditor.EmissionEnabledProperty())
@@ -381,7 +381,7 @@ namespace AmazingAssets.WireframeShader.Editor
             }
         }
 
-        void DoSpecularMetallicArea()
+        private void DoSpecularMetallicArea()
         {
             bool hasGlossMap = false;
             if (m_WorkflowMode == WorkflowMode.Specular)
@@ -458,7 +458,7 @@ namespace AmazingAssets.WireframeShader.Editor
             }
         }
 
-        static SmoothnessMapChannel GetSmoothnessMapChannel(Material material)
+        private static SmoothnessMapChannel GetSmoothnessMapChannel(Material material)
         {
             int ch = (int)material.GetFloat("_SmoothnessTextureChannel");
             if (ch == (int)SmoothnessMapChannel.AlbedoAlpha)
@@ -467,7 +467,7 @@ namespace AmazingAssets.WireframeShader.Editor
                 return SmoothnessMapChannel.SpecularMetallicAlpha;
         }
 
-        static void SetMaterialKeywords(Material material, WorkflowMode workflowMode)
+        private static void SetMaterialKeywords(Material material, WorkflowMode workflowMode)
         {
             // Note: keywords must be based on Material value not on MaterialProperty due to multi-edit & material animation
             // (MaterialProperty value might come from renderer material property block)
@@ -492,14 +492,14 @@ namespace AmazingAssets.WireframeShader.Editor
             }
         }
 
-        static void MaterialChanged(Material material, WorkflowMode workflowMode)
+        private static void MaterialChanged(Material material, WorkflowMode workflowMode)
         {
             SetupMaterialWithBlendMode(material, (BlendMode)material.GetFloat("_Mode"));
 
             SetMaterialKeywords(material, workflowMode);
         }
 
-        static void SetKeyword(Material m, string keyword, bool state)
+        private static void SetKeyword(Material m, string keyword, bool state)
         {
             if (state)
                 m.EnableKeyword(keyword);
@@ -510,7 +510,7 @@ namespace AmazingAssets.WireframeShader.Editor
 
 
 
-        void DrawWireframeGUI(Material material, MaterialEditor editor)
+        private void DrawWireframeGUI(Material material, MaterialEditor editor)
         {
             editor.ShaderProperty(_Wireframe_Title_S_Options, "Wireframe Shader Options");
 
@@ -524,13 +524,13 @@ namespace AmazingAssets.WireframeShader.Editor
             DrawWireOptions_DynamicMask(material, editor);
         }
 
-        void DrawWireOptions_ThicknessAndSmoothness(Material targetMaterial, MaterialEditor editor)
+        private void DrawWireOptions_ThicknessAndSmoothness(Material targetMaterial, MaterialEditor editor)
         {
             editor.ShaderProperty(_WireframeShader_Thickness, "Thickness");
             editor.ShaderProperty(_WireframeShader_Smoothness, "Smoothness");
         }
 
-        void DrawWireOptions_BaseOptions(Material targetMaterial, MaterialEditor editor)
+        private void DrawWireOptions_BaseOptions(Material targetMaterial, MaterialEditor editor)
         {
             GUILayout.Space(5);
 
@@ -558,7 +558,7 @@ namespace AmazingAssets.WireframeShader.Editor
             editor.ShaderProperty(_Wireframe_MetaPassMultiplier, string.Empty);
         }
 
-        void DrawWireOptions_Transparency(Material targetMaterial, MaterialEditor editor)
+        private void DrawWireOptions_Transparency(Material targetMaterial, MaterialEditor editor)
         {
             GUILayout.Space(5);
 
@@ -574,7 +574,7 @@ namespace AmazingAssets.WireframeShader.Editor
         }
 
 
-        void DrawWireOptions_DynamicMask(Material targetMaterial, MaterialEditor editor)
+        private void DrawWireOptions_DynamicMask(Material targetMaterial, MaterialEditor editor)
         {
             GUILayout.Space(5);
 

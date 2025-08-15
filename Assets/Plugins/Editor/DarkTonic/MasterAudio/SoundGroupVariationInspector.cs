@@ -31,7 +31,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
                 return;
             }
 
-            var isVideoPlayersGroup = DTGUIHelper.IsVideoPlayersGroup(_variation.ParentGroup.GameObjectName); 
+            var isVideoPlayersGroup = DTGUIHelper.IsVideoPlayersGroup(_variation.ParentGroup.GameObjectName);
             AudioSource previewer;
 
             EditorGUILayout.BeginHorizontal(EditorStyles.toolbar);
@@ -44,13 +44,15 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
             if (Application.isPlaying)
             {
-                if (isVideoPlayersGroup && DTMonoHelper.IsActive(_variation.gameObject)) 
+                if (isVideoPlayersGroup && DTMonoHelper.IsActive(_variation.gameObject))
                 {
                     GUI.color = Color.green;
                     var label = "Playing";
                     EditorGUILayout.LabelField(label,
                         EditorStyles.miniButtonMid, GUILayout.Height(16), GUILayout.Width(240));
-                } else if (_variation.IsPlaying && _variation.VarAudio.clip != null) { 
+                }
+                else if (_variation.IsPlaying && _variation.VarAudio.clip != null)
+                {
                     // wait for Resource files to load
                     GUI.color = Color.green;
 
@@ -151,9 +153,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                                     }
                                     break;
 #if ADDRESSABLES_ENABLED
-                            case MasterAudio.AudioLocation.Addressable:
-                                DTGUIHelper.PreviewAddressable(_variation.audioClipAddressable, previewer, calcVolume);
-                                break;
+                                case MasterAudio.AudioLocation.Addressable:
+                                    DTGUIHelper.PreviewAddressable(_variation.audioClipAddressable, previewer, calcVolume);
+                                    break;
 #endif
                             }
                         }
@@ -163,7 +165,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
                         {
                             break;
                         }
-                        
+
                         if (Application.isPlaying)
                         {
                             MasterAudio.StopAllOfSound(_variation.transform.parent.name);
@@ -239,16 +241,17 @@ namespace DarkTonic.MasterAudio.EditorScripts
                         }
                         break;
 #if ADDRESSABLES_ENABLED
-            case MasterAudio.AudioLocation.Addressable:
-                serializedObject.Update();
-                EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(SoundGroupVariation.audioClipAddressable)), true);
-                serializedObject.ApplyModifiedProperties();
+                    case MasterAudio.AudioLocation.Addressable:
+                        serializedObject.Update();
+                        EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(SoundGroupVariation.audioClipAddressable)), true);
+                        serializedObject.ApplyModifiedProperties();
 
-                if (!DTGUIHelper.IsAddressableTypeValid(_variation.audioClipAddressable, _variation.GameObjectName)) {
-                    _variation.audioClipAddressable = null;
-                    isDirty = true;
-                }
-                break;
+                        if (!DTGUIHelper.IsAddressableTypeValid(_variation.audioClipAddressable, _variation.GameObjectName))
+                        {
+                            _variation.audioClipAddressable = null;
+                            isDirty = true;
+                        }
+                        break;
 #endif
                     case MasterAudio.AudioLocation.ResourceFile:
                         EditorGUILayout.BeginVertical();

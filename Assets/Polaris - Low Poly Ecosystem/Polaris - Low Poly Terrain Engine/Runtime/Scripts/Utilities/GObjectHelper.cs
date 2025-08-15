@@ -64,8 +64,8 @@ namespace Pinwheel.Griffin
 
         public void Snap()
         {
-            RaycastHit hit = new RaycastHit();
-            Ray r = new Ray();
+            RaycastHit hit = new();
+            Ray r = new();
             r.direction = Vector3.down;
             Transform[] children = GUtilities.GetChildrenTransforms(transform);
             for (int i = 0; i < children.Length; ++i)

@@ -72,12 +72,12 @@ namespace Pinwheel.Griffin.SplineTool
 
         private class GBaseGUI
         {
-            public static readonly GUIContent GROUP_ID = new GUIContent("Group Id", "Id of the terrain group this tool will work on");
-            public static readonly GUIContent RAYCAST_LAYER = new GUIContent("Raycast Layers", "Game object layers to perform raycast when adding anchors");
-            public static readonly GUIContent RAYCAST_LAYER_WARNING = new GUIContent("You can't edit the spline with Raycast Layers set to Nothing");
-            public static readonly GUIContent AUTO_TANGENT = new GUIContent("Auto Tangent", "Smooth the spline automatically");
-            public static readonly GUIContent ENABLE_TERRAIN_MASK = new GUIContent("Enable Terrain Mask", "Use the terrain Mask texture (R) to lock particular regions from being edited");
-            public static readonly GUIContent ENABLE_TOPOGRAPHIC = new GUIContent("Enable Topographic", "Draw an overlay topographic view for better sense of elevation");
+            public static readonly GUIContent GROUP_ID = new("Group Id", "Id of the terrain group this tool will work on");
+            public static readonly GUIContent RAYCAST_LAYER = new("Raycast Layers", "Game object layers to perform raycast when adding anchors");
+            public static readonly GUIContent RAYCAST_LAYER_WARNING = new("You can't edit the spline with Raycast Layers set to Nothing");
+            public static readonly GUIContent AUTO_TANGENT = new("Auto Tangent", "Smooth the spline automatically");
+            public static readonly GUIContent ENABLE_TERRAIN_MASK = new("Enable Terrain Mask", "Use the terrain Mask texture (R) to lock particular regions from being edited");
+            public static readonly GUIContent ENABLE_TOPOGRAPHIC = new("Enable Topographic", "Draw an overlay topographic view for better sense of elevation");
         }
 
         public override void OnInspectorGUI()
@@ -122,7 +122,7 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Instruction";
             public static readonly string ID = "spline-creator-instruction";
 
-            public static readonly GUIContent INSTRUCTION = new GUIContent(
+            public static readonly GUIContent INSTRUCTION = new(
                 string.Format(
                     "Create a edit bezier spline.\n" +
                     "   - Left Click to select element.\n" +
@@ -144,11 +144,11 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Transform";
             public static readonly string ID = "spline-creator-transform";
 
-            public static readonly GUIContent SET_PIVOT_TO_MEDIAN_POINT = new GUIContent("Set Pivot To Median Point");
-            public static readonly GUIContent POSITION = new GUIContent("Position", "Position of the Spline object");
-            public static readonly GUIContent ROTATION = new GUIContent("Rotation", "Rotation of the Spline object");
-            public static readonly GUIContent SCALE = new GUIContent("Scale", "Scale of the Spline object");
-            public static readonly GUIContent SHOW_TRANSFORM_GIZMOS = new GUIContent("Show Transform Gizmos", "Show gizmos to move, rotate and scale the Spline object");
+            public static readonly GUIContent SET_PIVOT_TO_MEDIAN_POINT = new("Set Pivot To Median Point");
+            public static readonly GUIContent POSITION = new("Position", "Position of the Spline object");
+            public static readonly GUIContent ROTATION = new("Rotation", "Rotation of the Spline object");
+            public static readonly GUIContent SCALE = new("Scale", "Scale of the Spline object");
+            public static readonly GUIContent SHOW_TRANSFORM_GIZMOS = new("Show Transform Gizmos", "Show gizmos to move, rotate and scale the Spline object");
         }
 
         private void DrawTransformGUI()
@@ -158,7 +158,7 @@ namespace Pinwheel.Griffin.SplineTool
                 GEditorCommon.ExpandFoldout(GTransformGUI.ID);
             }
 
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 GTransformGUI.SET_PIVOT_TO_MEDIAN_POINT,
                 false,
@@ -180,9 +180,9 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Anchor Defaults";
             public static readonly string ID = "spline-creator-anchor-defaults";
 
-            public static readonly GUIContent POSITION_OFFSET = new GUIContent("Position Offset", "Offset from the raycast point of the anchor");
-            public static readonly GUIContent INITIAL_ROTATION = new GUIContent("Rotation", "Initial rotation of the new anchor");
-            public static readonly GUIContent INITIAL_SCALE = new GUIContent("Scale", "Initial scale of the new anchor");
+            public static readonly GUIContent POSITION_OFFSET = new("Position Offset", "Offset from the raycast point of the anchor");
+            public static readonly GUIContent INITIAL_ROTATION = new("Rotation", "Initial rotation of the new anchor");
+            public static readonly GUIContent INITIAL_SCALE = new("Scale", "Initial scale of the new anchor");
         }
 
         private void DrawAnchorDefaultValueGUI()
@@ -200,11 +200,11 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Selected Anchor";
             public static readonly string ID = "spline-creator-selected-anchor";
 
-            public static readonly GUIContent POSITION = new GUIContent("Position", "Position of the anchor");
-            public static readonly GUIContent ROTATION = new GUIContent("Rotation", "Rotation of the anchor, you can't change this if Auto Tangent is enable");
-            public static readonly GUIContent SCALE = new GUIContent("Scale", "Scale of the anchor");
+            public static readonly GUIContent POSITION = new("Position", "Position of the anchor");
+            public static readonly GUIContent ROTATION = new("Rotation", "Rotation of the anchor, you can't change this if Auto Tangent is enable");
+            public static readonly GUIContent SCALE = new("Scale", "Scale of the anchor");
 
-            public static readonly GUIContent NO_ANCHOR_SELECTED = new GUIContent("No Anchor selected!");
+            public static readonly GUIContent NO_ANCHOR_SELECTED = new("No Anchor selected!");
         }
 
         private void DrawSelectedAnchorGUI()
@@ -243,9 +243,9 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Segment Defaults";
             public static readonly string ID = "spline-creator-segment-defaults";
 
-            public static readonly GUIContent SMOOTHNESS = new GUIContent("Smoothness", "Spline subdivision factor, larger number produces smoother spline");
-            public static readonly GUIContent WIDTH = new GUIContent("Width", "Width of the inner part of the spline body where there is no falloff");
-            public static readonly GUIContent FALLOFF_WIDTH = new GUIContent("Falloff Width", "Width of the outer part of the spline body where falloff takes into account");
+            public static readonly GUIContent SMOOTHNESS = new("Smoothness", "Spline subdivision factor, larger number produces smoother spline");
+            public static readonly GUIContent WIDTH = new("Width", "Width of the inner part of the spline body where there is no falloff");
+            public static readonly GUIContent FALLOFF_WIDTH = new("Falloff Width", "Width of the outer part of the spline body where falloff takes into account");
         }
 
         private void DrawSegmentDefaultValueGUI()
@@ -270,10 +270,10 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Selected Segment";
             public static readonly string ID = "spline-creator-selected-segment";
 
-            public static readonly GUIContent START_TANGENT = new GUIContent("Start Tangent", "Position of the first tangent, you can't change this if Auto Tangent is on");
-            public static readonly GUIContent END_TANGENT = new GUIContent("End Tangent", "Position of the second tangent, you can't change this if Auto Tangent is on");
-            public static readonly GUIContent FLIP_DIRECTION_BTN = new GUIContent("Flip Direction", "Flip the direction of this segment");
-            public static readonly GUIContent NO_SEGMENT_SELECTED = new GUIContent("No Segment selected!");
+            public static readonly GUIContent START_TANGENT = new("Start Tangent", "Position of the first tangent, you can't change this if Auto Tangent is on");
+            public static readonly GUIContent END_TANGENT = new("End Tangent", "Position of the second tangent, you can't change this if Auto Tangent is on");
+            public static readonly GUIContent FLIP_DIRECTION_BTN = new("Flip Direction", "Flip the direction of this segment");
+            public static readonly GUIContent NO_SEGMENT_SELECTED = new("No Segment selected!");
         }
 
         private void DrawSelectedSegmentGUI()
@@ -326,7 +326,7 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Modifiers";
             public static readonly string ID = "spline-creator-modifiers";
 
-            public static readonly GUIContent ADD_MODIFIER_BTN = new GUIContent("Add Modifier");
+            public static readonly GUIContent ADD_MODIFIER_BTN = new("Add Modifier");
         }
 
         private void DrawModifiersGUI()
@@ -340,7 +340,7 @@ namespace Pinwheel.Griffin.SplineTool
                     addModifierButtonRect = r;
                 if (GUI.Button(r, GModifiersGUI.ADD_MODIFIER_BTN))
                 {
-                    GenericMenu menu = new GenericMenu();
+                    GenericMenu menu = new();
                     for (int i = 0; i < ModifierTypes.Count; ++i)
                     {
                         Type t = ModifierTypes[i];

@@ -1,13 +1,11 @@
 #if GRIFFIN
 #if UNITY_EDITOR
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-using Pinwheel.Griffin;
 using Pinwheel.Griffin.Physic;
 using Pinwheel.Griffin.GroupTool;
 using Pinwheel.Griffin.HelpTool;
@@ -25,7 +23,7 @@ namespace Pinwheel.Griffin.Wizard
         public static List<GStylizedTerrain> CreateTerrains(GameObject root)
         {
             GEditorSettings.WizardToolsSettings settings = GEditorSettings.Instance.wizardTools;
-            List<GStylizedTerrain> terrains = new List<GStylizedTerrain>();
+            List<GStylizedTerrain> terrains = new();
 
 #if UNITY_EDITOR
             if (!Application.isPlaying)
@@ -48,7 +46,7 @@ namespace Pinwheel.Griffin.Wizard
                             string.Format("Creating tile ({0},{1})", x, z),
                             tileCount / totalTile);
 #endif
-                        GameObject g = new GameObject();
+                        GameObject g = new();
                         g.transform.parent = root.transform;
                         g.transform.position = new Vector3(x * settings.tileSize.x, 0, z * settings.tileSize.z) + settings.origin;
                         g.transform.rotation = Quaternion.identity;
@@ -117,7 +115,7 @@ namespace Pinwheel.Griffin.Wizard
                         Undo.RegisterCreatedObjectUndo(g, "Creating Low Poly Terrain");
 #endif
 
-                        GameObject colliderGO = new GameObject("Tree Collider");
+                        GameObject colliderGO = new("Tree Collider");
                         colliderGO.transform.parent = g.transform;
                         colliderGO.transform.localPosition = Vector3.zero;
                         colliderGO.transform.localRotation = Quaternion.identity;
@@ -145,7 +143,7 @@ namespace Pinwheel.Griffin.Wizard
         public static GStylizedTerrain CreateTerrainFromSource(GTerrainData srcData)
         {
             GEditorSettings.WizardToolsSettings settings = GEditorSettings.Instance.wizardTools;
-            GameObject g = new GameObject("Low Poly Terrain");
+            GameObject g = new("Low Poly Terrain");
 
             g.transform.localPosition = Vector3.zero;
             g.transform.localRotation = Quaternion.identity;
@@ -185,7 +183,7 @@ namespace Pinwheel.Griffin.Wizard
             Undo.RegisterCreatedObjectUndo(g, "Creating Low Poly Terrain");
 #endif
 
-            GameObject colliderGO = new GameObject("Tree Collider");
+            GameObject colliderGO = new("Tree Collider");
             colliderGO.transform.parent = terrain.transform;
             colliderGO.transform.localPosition = Vector3.zero;
             colliderGO.transform.localRotation = Quaternion.identity;
@@ -215,18 +213,18 @@ namespace Pinwheel.Griffin.Wizard
 
         public static GameObject CreateTerrainToolsRoot()
         {
-            GameObject root = new GameObject("Polaris Tools");
+            GameObject root = new("Polaris Tools");
             root.AddComponent<GTerrainTools>();
             root.hideFlags = HideFlags.HideInInspector;
 
-            GameObject helpGO = new GameObject("Help");
+            GameObject helpGO = new("Help");
             helpGO.transform.parent = root.transform;
             helpGO.transform.position = Vector3.zero;
             helpGO.transform.rotation = Quaternion.identity;
             helpGO.transform.localScale = Vector3.one;
             GHelpComponent h = helpGO.AddComponent<GHelpComponent>();
 
-            GameObject assetExplorerGO = new GameObject("Asset Explorer");
+            GameObject assetExplorerGO = new("Asset Explorer");
             assetExplorerGO.transform.parent = root.transform;
             assetExplorerGO.transform.position = Vector3.zero;
             assetExplorerGO.transform.rotation = Quaternion.identity;
@@ -243,7 +241,7 @@ namespace Pinwheel.Griffin.Wizard
             {
                 root = CreateTerrainToolsRoot();
             }
-            GameObject g = new GameObject("Group Tool");
+            GameObject g = new("Group Tool");
             g.transform.parent = root.transform;
             g.transform.position = Vector3.zero;
             g.transform.rotation = Quaternion.identity;
@@ -261,7 +259,7 @@ namespace Pinwheel.Griffin.Wizard
             {
                 root = CreateTerrainToolsRoot();
             }
-            GameObject g = new GameObject("Geometry - Texture Painter");
+            GameObject g = new("Geometry - Texture Painter");
             g.transform.parent = root.transform;
             g.transform.position = Vector3.zero;
             g.transform.rotation = Quaternion.identity;
@@ -279,7 +277,7 @@ namespace Pinwheel.Griffin.Wizard
             {
                 root = CreateTerrainToolsRoot();
             }
-            GameObject g = new GameObject("Foliage Painter");
+            GameObject g = new("Foliage Painter");
             g.transform.parent = root.transform;
             g.transform.position = Vector3.zero;
             g.transform.rotation = Quaternion.identity;
@@ -299,7 +297,7 @@ namespace Pinwheel.Griffin.Wizard
             {
                 root = CreateTerrainToolsRoot();
             }
-            GameObject g = new GameObject("Object Painter");
+            GameObject g = new("Object Painter");
             g.transform.parent = root.transform;
             g.transform.position = Vector3.zero;
             g.transform.rotation = Quaternion.identity;
@@ -319,7 +317,7 @@ namespace Pinwheel.Griffin.Wizard
             {
                 root = CreateTerrainToolsRoot();
             }
-            GameObject g = new GameObject("Geometry Stamper");
+            GameObject g = new("Geometry Stamper");
             g.transform.parent = root.transform;
             g.transform.position = Vector3.zero;
             g.transform.rotation = Quaternion.identity;
@@ -337,7 +335,7 @@ namespace Pinwheel.Griffin.Wizard
             {
                 root = CreateTerrainToolsRoot();
             }
-            GameObject g = new GameObject("Texture Stamper");
+            GameObject g = new("Texture Stamper");
             g.transform.parent = root.transform;
             g.transform.position = Vector3.zero;
             g.transform.rotation = Quaternion.identity;
@@ -355,11 +353,11 @@ namespace Pinwheel.Griffin.Wizard
             {
                 root = CreateTerrainToolsRoot();
             }
-            GameObject g = new GameObject("Erosion Simulator");
+            GameObject g = new("Erosion Simulator");
             g.transform.parent = root.transform;
             g.transform.position = Vector3.zero;
             g.transform.rotation = Quaternion.identity;
-            g.transform.localScale = Vector3.one*100;
+            g.transform.localScale = Vector3.one * 100;
 
             GErosionSimulator simulator = g.AddComponent<GErosionSimulator>();
             return simulator;
@@ -372,7 +370,7 @@ namespace Pinwheel.Griffin.Wizard
             {
                 root = CreateTerrainToolsRoot();
             }
-            GameObject g = new GameObject("Foliage Stamper");
+            GameObject g = new("Foliage Stamper");
             g.transform.parent = root.transform;
             g.transform.position = Vector3.zero;
             g.transform.rotation = Quaternion.identity;
@@ -390,7 +388,7 @@ namespace Pinwheel.Griffin.Wizard
             {
                 root = CreateTerrainToolsRoot();
             }
-            GameObject g = new GameObject("Object Stamper");
+            GameObject g = new("Object Stamper");
             g.transform.parent = root.transform;
             g.transform.position = Vector3.zero;
             g.transform.rotation = Quaternion.identity;
@@ -408,7 +406,7 @@ namespace Pinwheel.Griffin.Wizard
             {
                 root = CreateTerrainToolsRoot();
             }
-            GameObject g = new GameObject("Spline");
+            GameObject g = new("Spline");
             g.transform.parent = root.transform;
             g.transform.position = Vector3.zero;
             g.transform.rotation = Quaternion.identity;
@@ -421,7 +419,7 @@ namespace Pinwheel.Griffin.Wizard
 
         public static GWindZone CreateWindZone()
         {
-            GameObject g = new GameObject("Wind Zone");
+            GameObject g = new("Wind Zone");
             g.transform.position = Vector3.zero;
             g.transform.rotation = Quaternion.identity;
             g.transform.localScale = Vector3.one;

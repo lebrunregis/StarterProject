@@ -1,14 +1,14 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEditor.Build;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEditor.Rendering;
-using UnityEditor.Build;
-using UnityEditor;
 
 namespace Abiogenesis3d
 {
-    class ShaderPreprocessor : IPreprocessShaders
+    internal class ShaderPreprocessor : IPreprocessShaders
     {
         public int callbackOrder { get { return 0; } }
 
@@ -18,11 +18,11 @@ namespace Abiogenesis3d
             {
                 for (int i = 0; i < data.Count; ++i)
                 {
-                    #if UNITY_PIPELINE_URP
+#if UNITY_PIPELINE_URP
                     var keyword_URP = new ShaderKeyword("UNITY_PIPELINE_URP");
                     if (!data[i].shaderKeywordSet.IsEnabled(keyword_URP))
                         data[i].shaderKeywordSet.Enable(keyword_URP);
-                    #endif
+#endif
 
                     if (EditorUserBuildSettings.activeBuildTarget == BuildTarget.WebGL)
                     {

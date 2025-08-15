@@ -81,7 +81,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct InitGridJob : IJob
+        private struct InitGridJob : IJob
         {
             public int vcnt;
             public float gridSize;
@@ -107,7 +107,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct SearchJoinEdgeJob : IJob
+        private struct SearchJoinEdgeJob : IJob
         {
             public int vcnt;
             public float gridSize;

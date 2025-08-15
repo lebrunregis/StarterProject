@@ -1,7 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.Rendering
 {
@@ -36,7 +35,7 @@ namespace Pinwheel.Griffin.Rendering
 
         private static Mesh CreateMesh(BillboardAsset billboard)
         {
-            Mesh m = new Mesh();
+            Mesh m = new();
             Vector2[] uvs = billboard.GetVertices();
             Vector3[] vertices = new Vector3[billboard.vertexCount];
             for (int i = 0; i < vertices.Length; ++i)

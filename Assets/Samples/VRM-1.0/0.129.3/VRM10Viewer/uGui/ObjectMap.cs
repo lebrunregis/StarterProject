@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace UniVRM10.VRM10Viewer
 {
-    class ObjectMap
+    internal class ObjectMap
     {
-        Dictionary<string, GameObject> _map = new();
+        private readonly Dictionary<string, GameObject> _map = new();
         public IReadOnlyDictionary<string, GameObject> Objects => _map;
 
         public ObjectMap(GameObject root)

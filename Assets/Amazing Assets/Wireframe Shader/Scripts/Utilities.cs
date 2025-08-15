@@ -1,11 +1,10 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-
 using UnityEngine;
 
 
@@ -119,7 +118,7 @@ namespace AmazingAssets.WireframeShader
 
 
             int verticesCount = 0;
-            List<CombineInstance> combineInstances = new List<CombineInstance>();
+            List<CombineInstance> combineInstances = new();
 
             for (int i = 0; i < meshFilters.Length; i++)
             {
@@ -130,7 +129,7 @@ namespace AmazingAssets.WireframeShader
                         MeshRenderer meshRenderer = meshFilters[i].gameObject.GetComponent<MeshRenderer>();
                         if (meshRenderer != null && meshRenderer.sharedMaterials != null && meshRenderer.sharedMaterials.Length > 0)
                         {
-                            CombineInstance instance = new CombineInstance
+                            CombineInstance instance = new()
                             {
                                 mesh = meshFilters[i].sharedMesh,
                                 subMeshIndex = s,
@@ -172,7 +171,7 @@ namespace AmazingAssets.WireframeShader
             }
 
 
-            Mesh combinedMesh = new Mesh();
+            Mesh combinedMesh = new();
             combinedMesh.subMeshCount = combineInstances.Count;
             if (verticesCount > WireframeShaderConstants.vertexLimitIn16BitsIndexBuffer)
                 combinedMesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
@@ -188,7 +187,7 @@ namespace AmazingAssets.WireframeShader
 
             return combinedMesh;
         }
-        static void DestroyLODGroupRenderers(GameObject parent)
+        private static void DestroyLODGroupRenderers(GameObject parent)
         {
             LODGroup[] lodGroup = parent.GetComponentsInChildren<LODGroup>();
             for (int i = 0; i < lodGroup.Length; i++)

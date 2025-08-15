@@ -110,7 +110,7 @@ namespace Pinwheel.Griffin.DataTool
 
         private void DoExport()
         {
-            GRawExporter exporter = new GRawExporter();
+            GRawExporter exporter = new();
             exporter.SrcData = SrcData;
             exporter.BitDepth = BitDepth;
             exporter.DataDirectory = DataDirectory;
@@ -125,7 +125,7 @@ namespace Pinwheel.Griffin.DataTool
                 {
                     if (t.TerrainData == null)
                         return;
-                    GRawExporter exporter = new GRawExporter();
+                    GRawExporter exporter = new();
                     exporter.SrcData = t.TerrainData;
                     exporter.BitDepth = BitDepth;
                     exporter.DataDirectory = DataDirectory;

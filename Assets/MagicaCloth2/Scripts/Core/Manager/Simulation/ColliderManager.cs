@@ -116,9 +116,9 @@ namespace MagicaCloth2
         /// 登録コライダーコンポーネント
         /// 現在はデバッグ用
         /// </summary>
-        HashSet<ColliderComponent> colliderSet = new HashSet<ColliderComponent>();
+        private readonly HashSet<ColliderComponent> colliderSet = new();
 
-        bool isValid = false;
+        private bool isValid = false;
 
         //=========================================================================================
         /// <summary>
@@ -359,7 +359,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="cprocess"></param>
         /// <param name="col"></param>
-        void AddCollider(ClothProcess cprocess, ColliderComponent col)
+        private void AddCollider(ClothProcess cprocess, ColliderComponent col)
         {
             if (isValid == false)
                 return;
@@ -383,7 +383,7 @@ namespace MagicaCloth2
             col.Register(cprocess.TeamId);
         }
 
-        void AddColliderInternal(ref TeamManager.TeamData tdata, ClothProcess cprocess, ColliderComponent col, bool isSymmetry)
+        private void AddColliderInternal(ref TeamManager.TeamData tdata, ClothProcess cprocess, ColliderComponent col, bool isSymmetry)
         {
             // シンメトリーの有効性
             if (isSymmetry)
@@ -598,7 +598,7 @@ namespace MagicaCloth2
             }
         }
 
-        void RemoveColliderInternal(ColliderComponent col, int teamId, bool isSymmetry)
+        private void RemoveColliderInternal(ColliderComponent col, int teamId, bool isSymmetry)
         {
             if (isValid == false)
                 return;
@@ -1254,7 +1254,7 @@ namespace MagicaCloth2
         //=========================================================================================
         public void InformationLog(StringBuilder allsb)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine($"========== Collider Manager ==========");
             if (IsValid() == false)
             {

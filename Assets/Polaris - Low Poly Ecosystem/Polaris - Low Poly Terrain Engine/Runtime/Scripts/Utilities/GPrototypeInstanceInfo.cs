@@ -1,7 +1,5 @@
 #if GRIFFIN
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Pinwheel.Griffin
 {
@@ -14,7 +12,7 @@ namespace Pinwheel.Griffin
 
         public GGrassInstance ToGrassInstance()
         {
-            GGrassInstance g = new GGrassInstance();
+            GGrassInstance g = new();
             g.prototypeIndex = prototypeIndex;
             g.position = position;
             g.rotation = rotation;
@@ -24,7 +22,7 @@ namespace Pinwheel.Griffin
 
         public GTreeInstance ToTreeInstance()
         {
-            GTreeInstance t = new GTreeInstance();
+            GTreeInstance t = new();
             t.prototypeIndex = prototypeIndex;
             t.position = position;
             t.rotation = rotation;

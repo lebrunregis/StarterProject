@@ -1,11 +1,11 @@
-using UnityEngine;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEditor;
 using UnityEditor.Callbacks;
-using System;
 using UnityEditor.PackageManager;
 using UnityEditor.PackageManager.Requests;
-using System.Reflection;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -235,7 +235,7 @@ namespace Pinwheel.Griffin
             BuildTargetGroup buildGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
 
             string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(buildGroup);
-            List<string> symbolList = new List<string>(symbols.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries));
+            List<string> symbolList = new(symbols.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries));
 
             bool isDirty = false;
 
@@ -279,8 +279,8 @@ namespace Pinwheel.Griffin
 
         public static List<System.Type> GetAllLoadedTypes()
         {
-            List<System.Type> loadedTypes = new List<System.Type>();
-            List<string> typeName = new List<string>();
+            List<System.Type> loadedTypes = new();
+            List<string> typeName = new();
             foreach (Assembly assembly in System.AppDomain.CurrentDomain.GetAssemblies())
             {
                 foreach (var t in assembly.GetTypes())
@@ -298,7 +298,7 @@ namespace Pinwheel.Griffin
         public static string ListElementsToString<T>(IEnumerable<T> list, string separator)
         {
             IEnumerator<T> i = list.GetEnumerator();
-            System.Text.StringBuilder s = new System.Text.StringBuilder();
+            System.Text.StringBuilder s = new();
             while (i.MoveNext())
             {
                 s.Append(i.Current).Append(separator);

@@ -20,7 +20,7 @@ namespace MagicaCloth2
 
         public string name = string.Empty;
 
-        public ResultCode result = new ResultCode();
+        public ResultCode result = new();
 
         public bool isManaged; // PreBuild DeserializeManager管理
 
@@ -75,25 +75,25 @@ namespace MagicaCloth2
         /// <summary>
         /// 現在の頂点が指す元の頂点インデックス
         /// </summary>
-        public ExSimpleNativeArray<int> referenceIndices = new ExSimpleNativeArray<int>();
+        public ExSimpleNativeArray<int> referenceIndices = new();
 
         /// <summary>
         /// 頂点属性
         /// </summary>
-        public ExSimpleNativeArray<VertexAttribute> attributes = new ExSimpleNativeArray<VertexAttribute>();
+        public ExSimpleNativeArray<VertexAttribute> attributes = new();
 
-        public ExSimpleNativeArray<float3> localPositions = new ExSimpleNativeArray<float3>();
-        public ExSimpleNativeArray<float3> localNormals = new ExSimpleNativeArray<float3>();
-        public ExSimpleNativeArray<float3> localTangents = new ExSimpleNativeArray<float3>();
+        public ExSimpleNativeArray<float3> localPositions = new();
+        public ExSimpleNativeArray<float3> localNormals = new();
+        public ExSimpleNativeArray<float3> localTangents = new();
 
         /// <summary>
         /// VirtualMeshのUVはTangent計算用でありテクスチャマッピング用ではないので注意！
         /// </summary>
-        public ExSimpleNativeArray<float2> uv = new ExSimpleNativeArray<float2>();
-        public ExSimpleNativeArray<VirtualMeshBoneWeight> boneWeights = new ExSimpleNativeArray<VirtualMeshBoneWeight>();
+        public ExSimpleNativeArray<float2> uv = new();
+        public ExSimpleNativeArray<VirtualMeshBoneWeight> boneWeights = new();
 
-        public ExSimpleNativeArray<int3> triangles = new ExSimpleNativeArray<int3>();
-        public ExSimpleNativeArray<int2> lines = new ExSimpleNativeArray<int2>();
+        public ExSimpleNativeArray<int3> triangles = new();
+        public ExSimpleNativeArray<int2> lines = new();
 
         /// <summary>
         /// メッシュの基準トランスフォーム
@@ -122,8 +122,8 @@ namespace MagicaCloth2
         /// <summary>
         /// スキニングボーン
         /// </summary>
-        public ExSimpleNativeArray<int> skinBoneTransformIndices = new ExSimpleNativeArray<int>();
-        public ExSimpleNativeArray<float4x4> skinBoneBindPoses = new ExSimpleNativeArray<float4x4>();
+        public ExSimpleNativeArray<int> skinBoneTransformIndices = new();
+        public ExSimpleNativeArray<float4x4> skinBoneBindPoses = new();
 
         /// <summary>
         /// このメッシュで利用するTransformの情報
@@ -491,7 +491,7 @@ namespace MagicaCloth2
         //=========================================================================================
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             sb.AppendLine($"===== {name} =====");
             sb.AppendLine($"Result:{result.GetResultString()}");

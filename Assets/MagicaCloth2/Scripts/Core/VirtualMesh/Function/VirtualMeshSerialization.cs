@@ -82,7 +82,7 @@ namespace MagicaCloth2
 
             public override string ToString()
             {
-                StringBuilder sb = new StringBuilder(1024);
+                StringBuilder sb = new(1024);
 
                 sb.AppendLine("===== VirtualMesh.SerializeData =====");
                 sb.AppendLine($"name:{name}");

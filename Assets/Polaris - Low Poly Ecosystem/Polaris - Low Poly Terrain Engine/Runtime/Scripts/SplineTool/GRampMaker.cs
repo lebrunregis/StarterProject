@@ -1,7 +1,6 @@
 #if GRIFFIN
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace Pinwheel.Griffin.SplineTool
 {
@@ -168,7 +167,7 @@ namespace Pinwheel.Griffin.SplineTool
             if (t.TerrainData == null)
                 return;
             int heightMapResolution = t.TerrainData.Geometry.HeightMapResolution;
-            RenderTexture rt = new RenderTexture(heightMapResolution, heightMapResolution, 0, GGeometry.HeightMapRTFormat, RenderTextureReadWrite.Linear);
+            RenderTexture rt = new(heightMapResolution, heightMapResolution, 0, GGeometry.HeightMapRTFormat, RenderTextureReadWrite.Linear);
             Internal_DrawOnTexture(t, rt);
 
             Color[] oldHeightMapColors = t.TerrainData.Geometry.HeightMap.GetPixels();
@@ -181,7 +180,7 @@ namespace Pinwheel.Griffin.SplineTool
             rt.Release();
             Object.DestroyImmediate(rt);
 
-            List<Rect> dirtyRects = new List<Rect>(GCommon.CompareTerrainTexture(t.TerrainData.Geometry.ChunkGridSize, oldHeightMapColors, newHeightMapColors));
+            List<Rect> dirtyRects = new(GCommon.CompareTerrainTexture(t.TerrainData.Geometry.ChunkGridSize, oldHeightMapColors, newHeightMapColors));
             for (int i = 0; i < dirtyRects.Count; ++i)
             {
                 t.TerrainData.Geometry.SetRegionDirty(dirtyRects[i]);

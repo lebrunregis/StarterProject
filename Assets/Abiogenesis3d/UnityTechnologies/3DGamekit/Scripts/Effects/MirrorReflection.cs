@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 namespace Gamekit3D
 {
@@ -12,13 +11,13 @@ namespace Gamekit3D
         public Camera reflectionCamera;
         public int textureSize = 256;
         public float clipPlaneOffset = 0.07f;
-        RenderTexture reflectionTexture = null;
-        int reflectionTexID;
+        private RenderTexture reflectionTexture = null;
+        private int reflectionTexID;
 
 
-        void OnEnable()
+        private void OnEnable()
         {
-            if(mainCamera != null)
+            if (mainCamera != null)
                 mainCamera.depthTextureMode = DepthTextureMode.Depth;
 
             reflectionTexture = new RenderTexture(textureSize, textureSize, 16, RenderTextureFormat.ARGB32);
@@ -27,7 +26,7 @@ namespace Gamekit3D
             reflectionCamera.enabled = false;
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             if (reflectionCamera != null) reflectionCamera.targetTexture = null;
             if (reflectionTexture != null) DestroyImmediate(reflectionTexture);
@@ -100,7 +99,7 @@ namespace Gamekit3D
         }
 
         // Given position/normal of the plane, calculates plane in camera space.
-        Vector4 CameraSpacePlane(Camera cam, Vector3 pos, Vector3 normal, float sideSign)
+        private Vector4 CameraSpacePlane(Camera cam, Vector3 pos, Vector3 normal, float sideSign)
         {
             var offsetPos = pos + normal * clipPlaneOffset;
             var m = cam.worldToCameraMatrix;
@@ -110,7 +109,7 @@ namespace Gamekit3D
         }
 
         // Calculates reflection matrix around the given plane
-        static void CalculateReflectionMatrix(ref Matrix4x4 reflectionMat, Vector4 plane)
+        private static void CalculateReflectionMatrix(ref Matrix4x4 reflectionMat, Vector4 plane)
         {
             reflectionMat.m00 = (1F - 2F * plane[0] * plane[0]);
             reflectionMat.m01 = (-2F * plane[0] * plane[1]);

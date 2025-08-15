@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gamekit3D
@@ -27,7 +26,7 @@ namespace Gamekit3D
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             for (int i = 0; i < s_ProcessList.Count; ++i)
             {
@@ -36,12 +35,12 @@ namespace Gamekit3D
         }
 
         [RuntimeInitializeOnLoadMethod]
-        static void Init()
+        private static void Init()
         {
             if (s_Instance != null)
                 return;
 
-            GameObject obj = new GameObject("BatchProcessor");
+            GameObject obj = new("BatchProcessor");
             DontDestroyOnLoad(obj);
             s_Instance = obj.AddComponent<BatchProcessor>();
         }

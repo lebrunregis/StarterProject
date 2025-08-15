@@ -275,7 +275,7 @@ namespace Pinwheel.Griffin
         {
             get
             {
-                Bounds b = new Bounds();
+                Bounds b = new();
                 Vector3 size = terrainData != null ?
                     new Vector3(terrainData.Geometry.width, terrainData.Geometry.height, terrainData.Geometry.length) :
                     Vector3.zero;
@@ -289,7 +289,7 @@ namespace Pinwheel.Griffin
         {
             get
             {
-                Rect r = new Rect();
+                Rect r = new();
                 r.size = TerrainData != null ?
                                     new Vector2(TerrainData.Geometry.Width, TerrainData.Geometry.Length) :
                                     Vector2.zero;
@@ -347,10 +347,10 @@ namespace Pinwheel.Griffin
                 return;
             if (!AutoConnect)
                 return;
-            Vector2 sizeXZ = new Vector2(
+            Vector2 sizeXZ = new(
                 TerrainData.Geometry.Width,
                 TerrainData.Geometry.Length);
-            Vector2 posXZ = new Vector2(
+            Vector2 posXZ = new(
                 transform.position.x,
                 transform.position.z);
 
@@ -363,17 +363,17 @@ namespace Pinwheel.Griffin
                 if (GroupId != t.GroupId)
                     continue;
 
-                Vector2 neighborSizeXZ = new Vector2(
+                Vector2 neighborSizeXZ = new(
                     t.TerrainData.Geometry.Width,
                     t.TerrainData.Geometry.Length);
-                Vector2 neighborPosXZ = new Vector2(
+                Vector2 neighborPosXZ = new(
                     t.transform.position.x,
                     t.transform.position.z);
                 Vector2 neighborCenter = neighborPosXZ + neighborSizeXZ * 0.5f;
 
                 if (LeftNeighbor == null)
                 {
-                    Rect r = new Rect();
+                    Rect r = new();
                     r.size = sizeXZ;
                     r.position = new Vector2(posXZ.x - sizeXZ.x, posXZ.y);
                     if (r.Contains(neighborCenter))
@@ -384,7 +384,7 @@ namespace Pinwheel.Griffin
                 }
                 if (TopNeighbor == null)
                 {
-                    Rect r = new Rect();
+                    Rect r = new();
                     r.size = sizeXZ;
                     r.position = new Vector2(posXZ.x, posXZ.y + sizeXZ.y);
                     if (r.Contains(neighborCenter))
@@ -395,7 +395,7 @@ namespace Pinwheel.Griffin
                 }
                 if (RightNeighbor == null)
                 {
-                    Rect r = new Rect();
+                    Rect r = new();
                     r.size = sizeXZ;
                     r.position = new Vector2(posXZ.x + sizeXZ.x, posXZ.y);
                     if (r.Contains(neighborCenter))
@@ -406,7 +406,7 @@ namespace Pinwheel.Griffin
                 }
                 if (BottomNeighbor == null)
                 {
-                    Rect r = new Rect();
+                    Rect r = new();
                     r.size = sizeXZ;
                     r.position = new Vector2(posXZ.x, posXZ.y - sizeXZ.y);
                     if (r.Contains(neighborCenter))
@@ -791,7 +791,7 @@ namespace Pinwheel.Griffin
         {
             JobHandle[] jobHandles = new JobHandle[chunksToUpdate.Count];
             TerrainData.Geometry.Internal_CreateNewSubDivisionMap();
-            GTextureNativeDataDescriptor<Color32> subdivMap = new GTextureNativeDataDescriptor<Color32>(TerrainData.Geometry.Internal_SubDivisionMap);
+            GTextureNativeDataDescriptor<Color32> subdivMap = new(TerrainData.Geometry.Internal_SubDivisionMap);
             for (int i = 0; i < chunksToUpdate.Count; ++i)
             {
                 GSplitBaseTreeForDynamicPolygonJob j = chunksToUpdate[i].GetSplitBaseTreeForDynamicPolygonJob(
@@ -813,7 +813,7 @@ namespace Pinwheel.Griffin
             int stitchSeamIteration = 0;
             int stitchSeamMaxIteration = GRuntimeSettings.Instance.geometryGeneration.triangulateIteration;
             bool newVertexCreated = true;
-            List<NativeArray<bool>> markers = new List<NativeArray<bool>>();
+            List<NativeArray<bool>> markers = new();
 
             while (newVertexCreated && stitchSeamIteration <= stitchSeamMaxIteration)
             {
@@ -898,7 +898,7 @@ namespace Pinwheel.Griffin
             int lod)
         {
             JobHandle[] jobHandles = new JobHandle[chunksToUpdate.Count];
-            List<NativeArray<bool>> markers = new List<NativeArray<bool>>();
+            List<NativeArray<bool>> markers = new();
             int stitchSeamIteration = 0;
             int stitchSeamMaxIteration = GRuntimeSettings.Instance.geometryGeneration.triangulateIteration;
             bool newVertexCreated = true;
@@ -966,10 +966,10 @@ namespace Pinwheel.Griffin
             bool smoothNormal = TerrainData.Geometry.SmoothNormal;
             bool useSmoothNormalMask = TerrainData.Geometry.UseSmoothNormalMask;
             bool mergeUv = TerrainData.Geometry.MergeUv;
-            GTextureNativeDataDescriptor<Color32> maskMap = new GTextureNativeDataDescriptor<Color32>((smoothNormal && useSmoothNormalMask) ? TerrainData.Mask.MaskMapOrDefault : null);
+            GTextureNativeDataDescriptor<Color32> maskMap = new((smoothNormal && useSmoothNormalMask) ? TerrainData.Mask.MaskMapOrDefault : null);
             GTextureNativeDataDescriptor<Color32>[] heightMapGrid = GetHeightMapGrid();
             GAlbedoToVertexColorMode albedoToVertexColor = TerrainData.Geometry.AlbedoToVertexColorMode;
-            GTextureNativeDataDescriptor<Color32> albedoMap = new GTextureNativeDataDescriptor<Color32>(albedoToVertexColor != GAlbedoToVertexColorMode.None ? TerrainData.Shading.AlbedoMapOrDefault : null);
+            GTextureNativeDataDescriptor<Color32> albedoMap = new(albedoToVertexColor != GAlbedoToVertexColorMode.None ? TerrainData.Shading.AlbedoMapOrDefault : null);
             for (int i = 0; i < chunksToUpdate.Count; ++i)
             {
                 GCreateVertexJob j = chunksToUpdate[i].GetCreateVertexJob(
@@ -1018,7 +1018,7 @@ namespace Pinwheel.Griffin
 
         private void BakeCollisionMesh(List<GTerrainChunk> chunksToUpdate)
         {
-            NativeArray<int> meshLod0 = new NativeArray<int>(chunksToUpdate.Count, Allocator.TempJob);
+            NativeArray<int> meshLod0 = new(chunksToUpdate.Count, Allocator.TempJob);
             for (int i = 0; i < chunksToUpdate.Count; ++i)
             {
                 Mesh m = chunksToUpdate[i].GetMesh(0);
@@ -1028,7 +1028,7 @@ namespace Pinwheel.Griffin
                 }
             }
 
-            GBakeCollisionMeshJob job = new GBakeCollisionMeshJob();
+            GBakeCollisionMeshJob job = new();
             job.instanceIds = meshLod0;
 
             JobHandle h = job.Schedule(meshLod0.Length, 1);
@@ -1060,7 +1060,7 @@ namespace Pinwheel.Griffin
             ForceLOD(0);
 
             int coreCount = 1; //SystemInfo.processorCount - 1;
-            List<GTerrainChunk> chunks = new List<GTerrainChunk>();
+            List<GTerrainChunk> chunks = new();
 
             int step = (chunksToUpdate.Count + coreCount - 1) / coreCount;
             for (int repeat = 0; repeat < 2; ++repeat) //generate 2 times for seams to stitch up
@@ -1111,7 +1111,7 @@ namespace Pinwheel.Griffin
 
         private List<GTerrainChunk> ExtractDirtyChunks(GTerrainChunk[] chunks)
         {
-            List<GTerrainChunk> dirtyChunks = new List<GTerrainChunk>();
+            List<GTerrainChunk> dirtyChunks = new();
             Rect[] dirtyRegion = TerrainData.Geometry.GetDirtyRegions();
             for (int i = 0; i < chunks.Length; ++i)
             {
@@ -1310,7 +1310,7 @@ namespace Pinwheel.Griffin
             if (!LeftNeighbor.gameObject.activeInHierarchy)
                 return null;
 
-            List<GTerrainChunk> leftTerrainChunks = new List<GTerrainChunk>(LeftNeighbor.GetChunks());
+            List<GTerrainChunk> leftTerrainChunks = new(LeftNeighbor.GetChunks());
             index.x = maxIndex;
             GTerrainChunk neighborChunk = leftTerrainChunks.Find(c0 => c0.Index == index);
             return neighborChunk;
@@ -1330,7 +1330,7 @@ namespace Pinwheel.Griffin
             if (!TopNeighbor.gameObject.activeInHierarchy)
                 return null;
 
-            List<GTerrainChunk> topTerrainChunks = new List<GTerrainChunk>(TopNeighbor.GetChunks());
+            List<GTerrainChunk> topTerrainChunks = new(TopNeighbor.GetChunks());
             index.y = 0;
             GTerrainChunk neighborChunk = topTerrainChunks.Find(c0 => c0.Index == index);
             return neighborChunk;
@@ -1350,7 +1350,7 @@ namespace Pinwheel.Griffin
             if (!RightNeighbor.gameObject.activeInHierarchy)
                 return null;
 
-            List<GTerrainChunk> rightTerrainChunks = new List<GTerrainChunk>(RightNeighbor.GetChunks());
+            List<GTerrainChunk> rightTerrainChunks = new(RightNeighbor.GetChunks());
             index.x = 0;
             GTerrainChunk neighborChunk = rightTerrainChunks.Find(c0 => c0.Index == index);
             return neighborChunk;
@@ -1370,7 +1370,7 @@ namespace Pinwheel.Griffin
             if (!BottomNeighbor.gameObject.activeInHierarchy)
                 return null;
 
-            List<GTerrainChunk> bottomTerrainChunks = new List<GTerrainChunk>(BottomNeighbor.GetChunks());
+            List<GTerrainChunk> bottomTerrainChunks = new(BottomNeighbor.GetChunks());
             index.y = maxIndex;
             GTerrainChunk neighborChunk = bottomTerrainChunks.Find(c0 => c0.Index == index);
             return neighborChunk;
@@ -1539,7 +1539,7 @@ namespace Pinwheel.Griffin
 
         private List<GTerrainChunk> GetChunksSortedByDistance(Vector3 origin)
         {
-            List<GTerrainChunk> chunks = new List<GTerrainChunk>(GetChunks());
+            List<GTerrainChunk> chunks = new(GetChunks());
             SortChunkByDistance(origin, chunks);
             return chunks;
         }
@@ -1574,7 +1574,7 @@ namespace Pinwheel.Griffin
 
         public bool Raycast(Vector3 normalizePoint, out RaycastHit hit)
         {
-            Ray r = new Ray();
+            Ray r = new();
             Vector3 origin = NormalizedToWorldPoint(normalizePoint);
             origin.y = 10000;
             r.origin = origin;
@@ -1585,7 +1585,7 @@ namespace Pinwheel.Griffin
 
         public static bool Raycast(Ray ray, out RaycastHit hit, float distance, int groupId)
         {
-            List<RaycastHit> hitInfo = new List<RaycastHit>();
+            List<RaycastHit> hitInfo = new();
             IEnumerator<GStylizedTerrain> terrain = ActiveTerrains.GetEnumerator();
             while (terrain.MoveNext())
             {
@@ -1617,8 +1617,8 @@ namespace Pinwheel.Griffin
             if (TerrainData == null)
                 return Vector2.zero;
             Vector3 localPoint = transform.InverseTransformPoint(point);
-            Vector3 terrainSize = new Vector3(TerrainData.Geometry.Width, TerrainData.Geometry.Height, TerrainData.Geometry.Length);
-            Vector2 uv = new Vector2(
+            Vector3 terrainSize = new(TerrainData.Geometry.Width, TerrainData.Geometry.Height, TerrainData.Geometry.Length);
+            Vector2 uv = new(
                 GUtilities.InverseLerpUnclamped(0, terrainSize.x, localPoint.x),
                 GUtilities.InverseLerpUnclamped(0, terrainSize.z, localPoint.z));
             return uv;
@@ -1629,8 +1629,8 @@ namespace Pinwheel.Griffin
             if (TerrainData == null)
                 return Vector2.zero;
             Vector3 localPoint = transform.InverseTransformPoint(point);
-            Vector3 terrainSize = new Vector3(TerrainData.Geometry.Width, TerrainData.Geometry.Height, TerrainData.Geometry.Length);
-            Vector3 normalized = new Vector3(
+            Vector3 terrainSize = new(TerrainData.Geometry.Width, TerrainData.Geometry.Height, TerrainData.Geometry.Length);
+            Vector3 normalized = new(
                 GUtilities.InverseLerpUnclamped(0, terrainSize.x, localPoint.x),
                 GUtilities.InverseLerpUnclamped(0, terrainSize.y, localPoint.y),
                 GUtilities.InverseLerpUnclamped(0, terrainSize.z, localPoint.z));
@@ -1799,7 +1799,7 @@ namespace Pinwheel.Griffin
                 return;
             if (LeftNeighbor != null)
             {
-                Rect leftRect = new Rect();
+                Rect leftRect = new();
                 leftRect.size = new Vector2(0.01f, 1);
                 leftRect.center = new Vector2(0, 0.5f);
                 TerrainData.Geometry.SetRegionDirty(leftRect);
@@ -1807,7 +1807,7 @@ namespace Pinwheel.Griffin
 
             if (TopNeighbor != null)
             {
-                Rect topRect = new Rect();
+                Rect topRect = new();
                 topRect.size = new Vector2(1, 0.01f);
                 topRect.center = new Vector2(0.5f, 1);
                 TerrainData.Geometry.SetRegionDirty(topRect);
@@ -1815,7 +1815,7 @@ namespace Pinwheel.Griffin
 
             if (RightNeighbor != null)
             {
-                Rect rightRect = new Rect();
+                Rect rightRect = new();
                 rightRect.size = new Vector2(0.01f, 1f);
                 rightRect.center = new Vector2(1, 0.5f);
                 TerrainData.Geometry.SetRegionDirty(rightRect);
@@ -1823,7 +1823,7 @@ namespace Pinwheel.Griffin
 
             if (BottomNeighbor != null)
             {
-                Rect bottomRect = new Rect();
+                Rect bottomRect = new();
                 bottomRect.size = new Vector2(1, 0.01f);
                 bottomRect.center = new Vector2(0.5f, 0);
                 TerrainData.Geometry.SetRegionDirty(bottomRect);
@@ -1852,14 +1852,14 @@ namespace Pinwheel.Griffin
             }
 
             NativeArray<Vector2> treePosisitonsNA = TerrainData.Foliage.GetTreesPositionArray(Allocator.TempJob);
-            NativeArray<Rect> dirtyRectsNA = new NativeArray<Rect>(TerrainData.Foliage.GetTreeDirtyRegions(), Allocator.TempJob);
-            NativeArray<RaycastCommand> commandsNA = new NativeArray<RaycastCommand>(treePosisitonsNA.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<RaycastHit> hitsNA = new NativeArray<RaycastHit>(treePosisitonsNA.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<Rect> dirtyRectsNA = new(TerrainData.Foliage.GetTreeDirtyRegions(), Allocator.TempJob);
+            NativeArray<RaycastCommand> commandsNA = new(treePosisitonsNA.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<RaycastHit> hitsNA = new(treePosisitonsNA.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
 
             Vector3 terrainSize = TerrainData.Geometry.Size;
             int maxHit = 1;
 
-            GBuildRaycastCommandJob job = new GBuildRaycastCommandJob()
+            GBuildRaycastCommandJob job = new()
             {
                 dirtyRects = dirtyRectsNA,
                 positions = treePosisitonsNA,
@@ -1925,7 +1925,7 @@ namespace Pinwheel.Griffin
                 mask |= TerrainData.Foliage.GrassSnapLayerMask;
             }
 
-            NativeArray<Rect> dirtyRectsNA = new NativeArray<Rect>(TerrainData.Foliage.GetGrassDirtyRegions(), Allocator.TempJob);
+            NativeArray<Rect> dirtyRectsNA = new(TerrainData.Foliage.GetGrassDirtyRegions(), Allocator.TempJob);
             List<GGrassPrototype> prototypes = null;
             if (TerrainData.Foliage.Grasses != null)
             {
@@ -1942,13 +1942,13 @@ namespace Pinwheel.Griffin
                 }
 
                 NativeArray<Vector2> positionsNA = p.GetGrassPositionArray();
-                NativeArray<RaycastCommand> commandsNA = new NativeArray<RaycastCommand>(p.InstanceCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-                NativeArray<RaycastHit> hitsNA = new NativeArray<RaycastHit>(p.InstanceCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+                NativeArray<RaycastCommand> commandsNA = new(p.InstanceCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+                NativeArray<RaycastHit> hitsNA = new(p.InstanceCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
 
                 Vector3 terrainSize = TerrainData.Geometry.Size;
                 int maxHit = 1;
 
-                GBuildRaycastCommandJob job = new GBuildRaycastCommandJob()
+                GBuildRaycastCommandJob job = new()
                 {
                     dirtyRects = dirtyRectsNA,
                     positions = positionsNA,
@@ -2100,11 +2100,11 @@ namespace Pinwheel.Griffin
 
         private void RenderSharpNormalMap(RenderTexture rt)
         {
-            GNormalMapGeneratorParams param = new GNormalMapGeneratorParams();
+            GNormalMapGeneratorParams param = new();
             param.Terrain = this;
             param.Space = GNormalMapSpace.Local;
             param.Mode = GNormalMapMode.Sharp;
-            GNormalMapGenerator gen = new GNormalMapGenerator();
+            GNormalMapGenerator gen = new();
             gen.RenderSharpNormalMap(param, rt);
         }
 
@@ -2137,11 +2137,11 @@ namespace Pinwheel.Griffin
 
         private void RenderInterpolatedNormalMap(RenderTexture rt)
         {
-            GNormalMapGeneratorParams param = new GNormalMapGeneratorParams();
+            GNormalMapGeneratorParams param = new();
             param.Terrain = this;
             param.Space = GNormalMapSpace.Local;
             param.Mode = GNormalMapMode.Interpolated;
-            GNormalMapGenerator gen = new GNormalMapGenerator();
+            GNormalMapGenerator gen = new();
             gen.RenderInterpolatedNormalMap(param, rt);
         }
 
@@ -2174,11 +2174,11 @@ namespace Pinwheel.Griffin
 
         private void RenderPerPixelNormalMap(RenderTexture rt)
         {
-            GNormalMapGeneratorParams param = new GNormalMapGeneratorParams();
+            GNormalMapGeneratorParams param = new();
             param.Terrain = this;
             param.Space = GNormalMapSpace.Local;
             param.Mode = GNormalMapMode.PerPixel;
-            GNormalMapGenerator gen = new GNormalMapGenerator();
+            GNormalMapGenerator gen = new();
             gen.RenderPerPixelNormalMap(param, rt);
         }
 
@@ -2196,7 +2196,7 @@ namespace Pinwheel.Griffin
         private void DrawChunkUpdateDebug(Camera cam)
         {
             Material mat = GInternalMaterials.MaskVisualizerMaterial;
-            MaterialPropertyBlock block = new MaterialPropertyBlock();
+            MaterialPropertyBlock block = new();
 
             GTerrainChunk[] chunks = GetChunks();
             for (int i = 0; i < chunks.Length; ++i)
@@ -2214,7 +2214,7 @@ namespace Pinwheel.Griffin
                     continue;
 
                 float alpha = 1 - Mathf.InverseLerp(0, duration, span);
-                Color color = new Color(1, 1, 1, alpha * 0.5f);
+                Color color = new(1, 1, 1, alpha * 0.5f);
                 block.SetColor("_Color", color);
                 Graphics.DrawMesh(
                     m,
@@ -2236,7 +2236,7 @@ namespace Pinwheel.Griffin
             Material mat = GEditorSettings.Instance.topographic.topographicMaterial;
             if (mat == null)
                 return;
-            MaterialPropertyBlock block = new MaterialPropertyBlock();
+            MaterialPropertyBlock block = new();
 
             GTerrainChunk[] chunks = GetChunks();
             for (int i = 0; i < chunks.Length; ++i)
@@ -2340,14 +2340,14 @@ namespace Pinwheel.Griffin
 
             int gridSize = TerrainData.Geometry.ChunkGridSize;
             Vector3 terrainSize = TerrainData.Geometry.Size;
-            Vector2 rectSize = new Vector2(terrainSize.x / gridSize, terrainSize.z / gridSize);
+            Vector2 rectSize = new(terrainSize.x / gridSize, terrainSize.z / gridSize);
 
-            NativeArray<Rect> rects = new NativeArray<Rect>(gridSize * gridSize, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<Rect> rects = new(gridSize * gridSize, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
             for (int z = 0; z < gridSize; ++z)
             {
                 for (int x = 0; x < gridSize; ++x)
                 {
-                    Rect r = new Rect();
+                    Rect r = new();
                     r.x = transform.position.x + x * rectSize.x;
                     r.y = transform.position.z + z * rectSize.y;
                     r.size = rectSize;
@@ -2365,14 +2365,14 @@ namespace Pinwheel.Griffin
 
             int gridSize = TerrainData.Geometry.ChunkGridSize;
             Vector3 terrainSize = TerrainData.Geometry.Size;
-            Vector2 rectSize = new Vector2(terrainSize.x / gridSize, terrainSize.z / gridSize);
+            Vector2 rectSize = new(terrainSize.x / gridSize, terrainSize.z / gridSize);
 
             Rect[] rects = new Rect[gridSize * gridSize];
             for (int z = 0; z < gridSize; ++z)
             {
                 for (int x = 0; x < gridSize; ++x)
                 {
-                    Rect r = new Rect();
+                    Rect r = new();
                     r.x = transform.position.x + x * rectSize.x;
                     r.y = transform.position.z + z * rectSize.y;
                     r.size = rectSize;

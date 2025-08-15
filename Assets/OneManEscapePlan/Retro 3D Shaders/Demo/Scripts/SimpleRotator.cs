@@ -1,13 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SimpleRotator : MonoBehaviour {
+public class SimpleRotator : MonoBehaviour
+{
 
-	public Vector3 speed;
-	
-	// Update is called once per frame
-	void Update () {
-		transform.Rotate(speed * Time.deltaTime);
-	}
+    public Vector3 speed;
+
+    // Update is called once per frame
+    private void Update()
+    {
+        transform.Rotate(speed * Time.deltaTime);
+    }
 }

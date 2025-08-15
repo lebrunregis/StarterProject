@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UIElements;
 
-class TextureElement : VisualElement
+internal class TextureElement : VisualElement
 {
     public TextureElement()
     {
@@ -12,7 +11,8 @@ class TextureElement : VisualElement
 
     public new class UxmlTraits : VisualElement.UxmlTraits
     {
-        UxmlStringAttributeDescription m_texture = new UxmlStringAttributeDescription { name = "texture" };
+        private readonly UxmlStringAttributeDescription m_texture = new()
+        { name = "texture" };
 
         public override IEnumerable<UxmlChildElementDescription> uxmlChildElementsDescription
         {

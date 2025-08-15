@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UniGLTF;
 using UnityEngine;
@@ -11,8 +9,8 @@ namespace UniVRM10.VRM10Viewer
         // public const string ALPHABLEND_SHADER_NAME = "Shader Graphs/TinyPbrAlphaBlend";
         // public const string OPAQUE_SHADER_NAME = "Shader Graphs/TinyPbrOpaque";
 
-        Material m_opaque;
-        Material m_alphablend;
+        private readonly Material m_opaque;
+        private readonly Material m_alphablend;
 
         public TinyPbrMaterialImporter(Material opaque, Material alphablend)
         {

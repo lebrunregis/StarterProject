@@ -8,7 +8,7 @@ namespace MagicaCloth2
     public class MagicaWindZoneGizmoDrawer
     {
         [DrawGizmo(GizmoType.Active | GizmoType.NonSelected | GizmoType.InSelectionHierarchy)]
-        static void DrawGizmo(MagicaWindZone scr, GizmoType gizmoType)
+        private static void DrawGizmo(MagicaWindZone scr, GizmoType gizmoType)
         {
             ClothEditorManager.RegisterComponent(scr, gizmoType);
         }

@@ -2,13 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     /// <summary>
     /// This class is used to configure and create temporary per-Scene Sound Groups and Buses
     /// </summary>
     [AudioScriptOrder(-35)]
     // ReSharper disable once CheckNamespace
-    public class DynamicSoundGroupCreator : MonoBehaviour {
+    public class DynamicSoundGroupCreator : MonoBehaviour
+    {
         /*! \cond PRIVATE */
         public const int ExtraHardCodedBusOptions = 1;
 
@@ -24,20 +26,21 @@ namespace DarkTonic.MasterAudio {
         public CreateItemsWhen reUseMode = CreateItemsWhen.FirstEnableOnly;
         public bool showCustomEvents = true;
         public MasterAudio.AudioLocation bulkVariationMode = MasterAudio.AudioLocation.Clip;
-        public List<CustomEvent> customEventsToCreate = new List<CustomEvent>();
-		public List<CustomEventCategory> customEventCategories = new List<CustomEventCategory> {
-			new CustomEventCategory()
-		};
-		public string newEventName = "my event";
-		public string newCustomEventCategoryName = "New Category";
-		public string addToCustomEventCategoryName = "New Category";
-		public bool showMusicDucking = true;
-        public List<DuckGroupInfo> musicDuckingSounds = new List<DuckGroupInfo>();
-        public List<GroupBus> groupBuses = new List<GroupBus>();
+        public List<CustomEvent> customEventsToCreate = new();
+        public List<CustomEventCategory> customEventCategories = new()
+        {
+            new CustomEventCategory()
+        };
+        public string newEventName = "my event";
+        public string newCustomEventCategoryName = "New Category";
+        public string addToCustomEventCategoryName = "New Category";
+        public bool showMusicDucking = true;
+        public List<DuckGroupInfo> musicDuckingSounds = new();
+        public List<GroupBus> groupBuses = new();
         public bool playListExpanded = false;
         public bool playlistEditorExp = true;
-        public List<MasterAudio.Playlist> musicPlaylists = new List<MasterAudio.Playlist>();
-        public List<GameObject> audioSourceTemplates = new List<GameObject>(10);
+        public List<MasterAudio.Playlist> musicPlaylists = new();
+        public List<GameObject> audioSourceTemplates = new(10);
         public string audioSourceTemplateName = "Max Distance 500";
         public bool groupByBus = false;
 
@@ -48,61 +51,73 @@ namespace DarkTonic.MasterAudio {
         // ReSharper restore InconsistentNaming
 
         private bool _hasCreated;
-        private readonly List<Transform> _groupsToRemove = new List<Transform>();
+        private readonly List<Transform> _groupsToRemove = new();
         private Transform _trans;
         private int _instanceId = -1;
 
-        public enum CreateItemsWhen {
+        public enum CreateItemsWhen
+        {
             FirstEnableOnly,
             EveryEnable
         }
         /*! \endcond */
 
-        private readonly List<DynamicSoundGroup> _groupsToCreate = new List<DynamicSoundGroup>();
+        private readonly List<DynamicSoundGroup> _groupsToCreate = new();
 
         // ReSharper disable once UnusedMember.Local
-        private void Awake() {
+        private void Awake()
+        {
             _trans = transform;
             _hasCreated = false;
             var aud = GetComponent<AudioSource>();
-            if (aud != null) {
+            if (aud != null)
+            {
                 Destroy(aud);
             }
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnEnable() {
+        private void OnEnable()
+        {
             CreateItemsIfReady(); // create in Enable event if it's all ready
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void Start() {
+        private void Start()
+        {
             CreateItemsIfReady(); // if it wasn't ready in Enable, create everything in Start
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnDisable() {
-            if (MasterAudio.AppIsShuttingDown) {
+        private void OnDisable()
+        {
+            if (MasterAudio.AppIsShuttingDown)
+            {
                 return;
             }
 
             // scene changing
-            if (!removeGroupsOnSceneChange) {
+            if (!removeGroupsOnSceneChange)
+            {
                 // nothing to do.
                 return;
             }
 
-            if (MasterAudio.SafeInstance != null) {
+            if (MasterAudio.SafeInstance != null)
+            {
                 RemoveItems();
             }
         }
 
-        private void CreateItemsIfReady() {
-            if (MasterAudio.SafeInstance == null) { 
-				return;
-			}
+        private void CreateItemsIfReady()
+        {
+            if (MasterAudio.SafeInstance == null)
+            {
+                return;
+            }
 
-			if (createOnAwake && MasterAudio.SoundsReady && !_hasCreated) {
+            if (createOnAwake && MasterAudio.SoundsReady && !_hasCreated)
+            {
                 CreateItems();
             }
         }
@@ -110,13 +125,16 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This method will remove the Sound Groups, Variations, buses, ducking triggers and Playlist objects specified in the Dynamic Sound Group Creator's Inspector. It is called automatically if you check the "Auto-remove Items" checkbox, otherwise you will need to call this method manually.
         /// </summary>
-        public void RemoveItems() {
+        public void RemoveItems()
+        {
             // delete any buses we created too
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < groupBuses.Count; i++) {
+            for (var i = 0; i < groupBuses.Count; i++)
+            {
                 var aBus = groupBuses[i];
 
-                if (aBus.isExisting) {
+                if (aBus.isExisting)
+                {
                     continue; // don't delete!
                 }
 
@@ -139,7 +157,8 @@ namespace DarkTonic.MasterAudio {
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < _groupsToRemove.Count; i++) {
+            for (var i = 0; i < _groupsToRemove.Count; i++)
+            {
                 var groupName = _groupsToRemove[i].name;
 
                 var grp = MasterAudio.GrabGroup(groupName, false);
@@ -161,10 +180,11 @@ namespace DarkTonic.MasterAudio {
 
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < customEventsToCreate.Count; i++) {
+            for (var i = 0; i < customEventsToCreate.Count; i++)
+            {
                 var anEvent = customEventsToCreate[i];
 
-                var matchingEvent = MasterAudio.Instance.customEvents.Find(delegate(CustomEvent cEvent)
+                var matchingEvent = MasterAudio.Instance.customEvents.Find(delegate (CustomEvent cEvent)
                 {
                     return cEvent.EventName == anEvent.EventName && cEvent.isTemporary;
                 });
@@ -185,10 +205,11 @@ namespace DarkTonic.MasterAudio {
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < customEventCategories.Count; i++) {
-				var aCat = customEventCategories[i];
+            for (var i = 0; i < customEventCategories.Count; i++)
+            {
+                var aCat = customEventCategories[i];
 
-                var matchingCat = MasterAudio.Instance.customEventCategories.Find(delegate(CustomEventCategory category)
+                var matchingCat = MasterAudio.Instance.customEventCategories.Find(delegate (CustomEventCategory category)
                 {
                     return category.CatName == aCat.CatName && category.IsTemporary;
                 });
@@ -209,7 +230,8 @@ namespace DarkTonic.MasterAudio {
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < musicPlaylists.Count; i++) {
+            for (var i = 0; i < musicPlaylists.Count; i++)
+            {
                 var aPlaylist = musicPlaylists[i];
 
                 var playlist = MasterAudio.GrabPlaylist(aPlaylist.playlistName);
@@ -228,7 +250,8 @@ namespace DarkTonic.MasterAudio {
                 MasterAudio.DeletePlaylist(aPlaylist.playlistName);
             }
 
-            if (reUseMode == CreateItemsWhen.EveryEnable) {
+            if (reUseMode == CreateItemsWhen.EveryEnable)
+            {
                 _hasCreated = false;
             }
 
@@ -238,27 +261,33 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This method will create the Sound Groups, Variations, buses, ducking triggers and Playlist objects specified in the Dynamic Sound Group Creator's Inspector. It is called automatically if you check the "Auto-create Items" checkbox, otherwise you will need to call this method manually.
         /// </summary>
-        public void CreateItems() {
-            if (_hasCreated) {
+        public void CreateItems()
+        {
+            if (_hasCreated)
+            {
                 Debug.LogWarning("DynamicSoundGroupCreator '" + transform.name +
                                  "' has already created its items. Cannot create again.");
                 return;
             }
 
             var ma = MasterAudio.Instance;
-            if (ma == null) {
+            if (ma == null)
+            {
                 return;
             }
 
             PopulateGroupData();
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < groupBuses.Count; i++) {
+            for (var i = 0; i < groupBuses.Count; i++)
+            {
                 var aBus = groupBuses[i];
 
-                if (aBus.isExisting) {
+                if (aBus.isExisting)
+                {
                     var confirmBus = MasterAudio.GrabBusByName(aBus.busName);
-                    if (confirmBus == null) {
+                    if (confirmBus == null)
+                    {
                         MasterAudio.LogWarning("Existing bus '" + aBus.busName +
                                                "' was not found, specified in prefab '" + name + "'.");
                     }
@@ -273,16 +302,20 @@ namespace DarkTonic.MasterAudio {
                     {
                         createdBus = MasterAudio.GrabBusByName(aBus.busName);
                     }
-                } else {
+                }
+                else
+                {
                     createdBus.AddActorInstanceId(InstanceId);
                 }
 
-                if (createdBus == null) {
+                if (createdBus == null)
+                {
                     continue;
                 }
 
                 var busVol = PersistentAudioSettings.GetBusVolume(aBus.busName);
-                if (!busVol.HasValue) {
+                if (!busVol.HasValue)
+                {
                     createdBus.volume = aBus.volume;
                     createdBus.OriginalVolume = createdBus.volume;
                 }
@@ -295,12 +328,14 @@ namespace DarkTonic.MasterAudio {
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < _groupsToCreate.Count; i++) {
+            for (var i = 0; i < _groupsToCreate.Count; i++)
+            {
                 var aGroup = _groupsToCreate[i];
 
                 var busName = string.Empty;
                 var selectedBusIndex = aGroup.busIndex == -1 ? 0 : aGroup.busIndex;
-                if (selectedBusIndex >= HardCodedBusOptions) {
+                if (selectedBusIndex >= HardCodedBusOptions)
+                {
                     var selectedBus = groupBuses[selectedBusIndex - HardCodedBusOptions];
                     busName = selectedBus.busName;
                 }
@@ -312,36 +347,46 @@ namespace DarkTonic.MasterAudio {
                 {
                     existingGroup.AddActorInstanceId(InstanceId);
                     groupTrans = existingGroup.transform;
-                } else {
+                }
+                else
+                {
                     groupTrans = MasterAudio.CreateSoundGroup(aGroup, InstanceId, errorOnDuplicates);
                 }
 
                 // remove fx components
                 // ReSharper disable ForCanBeConvertedToForeach
-                for (var v = 0; v < aGroup.groupVariations.Count; v++) {
+                for (var v = 0; v < aGroup.groupVariations.Count; v++)
+                {
                     // ReSharper restore ForCanBeConvertedToForeach
                     var aVar = aGroup.groupVariations[v];
-                    if (aVar.LowPassFilter != null) {
+                    if (aVar.LowPassFilter != null)
+                    {
                         Destroy(aVar.LowPassFilter);
                     }
-                    if (aVar.HighPassFilter != null) {
+                    if (aVar.HighPassFilter != null)
+                    {
                         Destroy(aVar.HighPassFilter);
                     }
-                    if (aVar.DistortionFilter != null) {
+                    if (aVar.DistortionFilter != null)
+                    {
                         Destroy(aVar.DistortionFilter);
                     }
-                    if (aVar.ChorusFilter != null) {
+                    if (aVar.ChorusFilter != null)
+                    {
                         Destroy(aVar.ChorusFilter);
                     }
-                    if (aVar.EchoFilter != null) {
+                    if (aVar.EchoFilter != null)
+                    {
                         Destroy(aVar.EchoFilter);
                     }
-                    if (aVar.ReverbFilter != null) {
+                    if (aVar.ReverbFilter != null)
+                    {
                         Destroy(aVar.ReverbFilter);
                     }
                 }
 
-                if (groupTrans == null) {
+                if (groupTrans == null)
+                {
                     continue;
                 }
 
@@ -349,9 +394,11 @@ namespace DarkTonic.MasterAudio {
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < musicDuckingSounds.Count; i++) {
+            for (var i = 0; i < musicDuckingSounds.Count; i++)
+            {
                 var aDuck = musicDuckingSounds[i];
-                if (aDuck.soundType == MasterAudio.NoGroupName) {
+                if (aDuck.soundType == MasterAudio.NoGroupName)
+                {
                     continue;
                 }
 
@@ -359,23 +406,26 @@ namespace DarkTonic.MasterAudio {
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < customEventCategories.Count; i++) {
-				var aCat = customEventCategories[i];
-				MasterAudio.CreateCustomEventCategoryIfNotThere(aCat.CatName, InstanceId, errorOnDuplicates, true);
-			}
-
-            // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < customEventsToCreate.Count; i++) {
-                var anEvent = customEventsToCreate[i];
-				MasterAudio.CreateCustomEvent(anEvent.EventName, anEvent.eventReceiveMode, anEvent.distanceThreshold, anEvent.eventRcvFilterMode, anEvent.filterModeQty, InstanceId, anEvent.categoryName, true, errorOnDuplicates);
+            for (var i = 0; i < customEventCategories.Count; i++)
+            {
+                var aCat = customEventCategories[i];
+                MasterAudio.CreateCustomEventCategoryIfNotThere(aCat.CatName, InstanceId, errorOnDuplicates, true);
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < musicPlaylists.Count; i++) {
-                var aPlaylist = musicPlaylists[i];
-				aPlaylist.isTemporary = true;
+            for (var i = 0; i < customEventsToCreate.Count; i++)
+            {
+                var anEvent = customEventsToCreate[i];
+                MasterAudio.CreateCustomEvent(anEvent.EventName, anEvent.eventReceiveMode, anEvent.distanceThreshold, anEvent.eventRcvFilterMode, anEvent.filterModeQty, InstanceId, anEvent.categoryName, true, errorOnDuplicates);
+            }
 
-                var existingPlaylist = MasterAudio.Instance.musicPlaylists.Find(delegate(MasterAudio.Playlist playlist)
+            // ReSharper disable once ForCanBeConvertedToForeach
+            for (var i = 0; i < musicPlaylists.Count; i++)
+            {
+                var aPlaylist = musicPlaylists[i];
+                aPlaylist.isTemporary = true;
+
+                var existingPlaylist = MasterAudio.Instance.musicPlaylists.Find(delegate (MasterAudio.Playlist playlist)
                 {
                     return playlist.playlistName == aPlaylist.playlistName && aPlaylist.isTemporary;
                 });
@@ -386,7 +436,7 @@ namespace DarkTonic.MasterAudio {
                     continue;
                 }
 
-				MasterAudio.CreatePlaylist(aPlaylist, errorOnDuplicates);
+                MasterAudio.CreatePlaylist(aPlaylist, errorOnDuplicates);
                 aPlaylist.AddActorInstanceId(InstanceId);
             }
 
@@ -394,33 +444,41 @@ namespace DarkTonic.MasterAudio {
 
             _hasCreated = true;
 
-            if (itemsCreatedEventExpanded) {
-				FireEvents();
+            if (itemsCreatedEventExpanded)
+            {
+                FireEvents();
             }
         }
 
-		private void FireEvents() {
+        private void FireEvents()
+        {
             MasterAudio.FireCustomEventNextFrame(itemsCreatedCustomEvent, _trans);
-		}
+        }
 
         /*! \cond PRIVATE */
-        public void PopulateGroupData() {
-            if (_trans == null) {
+        public void PopulateGroupData()
+        {
+            if (_trans == null)
+            {
                 _trans = transform;
             }
             _groupsToCreate.Clear();
 
-            for (var i = 0; i < _trans.childCount; i++) {
+            for (var i = 0; i < _trans.childCount; i++)
+            {
                 var aGroup = _trans.GetChild(i).GetComponent<DynamicSoundGroup>();
-                if (aGroup == null) {
+                if (aGroup == null)
+                {
                     continue;
                 }
 
                 aGroup.groupVariations.Clear();
 
-                for (var c = 0; c < aGroup.transform.childCount; c++) {
+                for (var c = 0; c < aGroup.transform.childCount; c++)
+                {
                     var aVar = aGroup.transform.GetChild(c).GetComponent<DynamicGroupVariation>();
-                    if (aVar == null) {
+                    if (aVar == null)
+                    {
                         continue;
                     }
 
@@ -431,7 +489,8 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        public static int HardCodedBusOptions {
+        public static int HardCodedBusOptions
+        {
             get { return MasterAudio.HardCodedBusOptions + ExtraHardCodedBusOptions; }
         }
         /*! \endcond */
@@ -439,13 +498,16 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property can be used to read and write the Dynamic Sound Groups.
         /// </summary>	
-        public List<DynamicSoundGroup> GroupsToCreate {
+        public List<DynamicSoundGroup> GroupsToCreate
+        {
             get { return _groupsToCreate; }
         }
 
-		/*! \cond PRIVATE */
-		public int InstanceId {
-            get {
+        /*! \cond PRIVATE */
+        public int InstanceId
+        {
+            get
+            {
                 if (_instanceId < 0)
                 {
                     _instanceId = GetInstanceID();
@@ -455,8 +517,10 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        public bool ShouldShowUnityAudioMixerGroupAssignments {
-            get {
+        public bool ShouldShowUnityAudioMixerGroupAssignments
+        {
+            get
+            {
                 return showUnityMixerGroupAssignment;
             }
         }

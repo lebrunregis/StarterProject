@@ -1,10 +1,8 @@
 #if GRIFFIN
 using System.Collections.Generic;
-using UnityEngine;
-using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
-using UnityEngine.Rendering;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.SplineTool
 {
@@ -172,7 +170,7 @@ namespace Pinwheel.Griffin.SplineTool
         {
             if (t.TerrainData == null)
                 return;
-            RenderTexture rt = new RenderTexture(MaskResolution, MaskResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture rt = new(MaskResolution, MaskResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             Internal_Apply(t, rt);
             Texture2D mask = GCommon.CreateTexture(MaskResolution, Color.clear);
             GCommon.CopyFromRT(mask, rt);
@@ -197,10 +195,10 @@ namespace Pinwheel.Griffin.SplineTool
         private void RemoveTreeOnTerrain(GStylizedTerrain t, Texture2D mask)
         {
             NativeArray<Vector2> positionsNA = t.TerrainData.Foliage.GetTreesPositionArray();
-            NativeArray<bool> resultNA = new NativeArray<bool>(positionsNA.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            GTextureNativeDataDescriptor<Color32> maskNA = new GTextureNativeDataDescriptor<Color32>(mask);
+            NativeArray<bool> resultNA = new(positionsNA.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            GTextureNativeDataDescriptor<Color32> maskNA = new(mask);
 
-            GMaskCullingJob job = new GMaskCullingJob()
+            GMaskCullingJob job = new()
             {
                 positions = positionsNA,
                 result = resultNA,
@@ -210,7 +208,7 @@ namespace Pinwheel.Griffin.SplineTool
             JobHandle jHandle = job.Schedule(positionsNA.Length, 100);
             jHandle.Complete();
 
-            HashSet<int> selectedPrototypes = new HashSet<int>(TreePrototypeIndices);
+            HashSet<int> selectedPrototypes = new(TreePrototypeIndices);
             int index = 0;
             t.TerrainData.Foliage.RemoveTreeInstances(tree =>
             {
@@ -230,16 +228,16 @@ namespace Pinwheel.Griffin.SplineTool
             GGrassPatch[] patches = t.TerrainData.Foliage.GrassPatches;
             GMaskCullingDataHolder[] data = new GMaskCullingDataHolder[patches.Length];
             JobHandle[] jHandles = new JobHandle[patches.Length];
-            GTextureNativeDataDescriptor<Color32> maskNA = new GTextureNativeDataDescriptor<Color32>(mask);
+            GTextureNativeDataDescriptor<Color32> maskNA = new(mask);
 
             for (int i = 0; i < patches.Length; ++i)
             {
-                GMaskCullingDataHolder d = new GMaskCullingDataHolder();
+                GMaskCullingDataHolder d = new();
                 d.positionsNA = patches[i].GetGrassPositionArray();
                 d.resultNA = new NativeArray<bool>(d.positionsNA.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
                 data[i] = d;
 
-                GMaskCullingJob job = new GMaskCullingJob()
+                GMaskCullingJob job = new()
                 {
                     positions = d.positionsNA,
                     result = d.resultNA,
@@ -250,7 +248,7 @@ namespace Pinwheel.Griffin.SplineTool
                 jHandles[i] = h;
             }
 
-            HashSet<int> selectedPrototypes = new HashSet<int>(GrassPrototypeIndices);
+            HashSet<int> selectedPrototypes = new(GrassPrototypeIndices);
             for (int i = 0; i < patches.Length; ++i)
             {
                 JobHandle h = jHandles[i];

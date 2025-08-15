@@ -22,7 +22,7 @@ namespace Pinwheel.Griffin.PaintTool
         {
             get
             {
-                List<Type> types = new List<Type>(new Type[]
+                List<Type> types = new(new Type[]
                 {
                     typeof(GAlignToSurfaceFilter),
                     typeof(GHeightConstraintFilter),
@@ -68,7 +68,7 @@ namespace Pinwheel.Griffin.PaintTool
             Vector3 rayOrigin = Vector3.zero;
             Vector3 rayDirection = Vector3.down;
             float sqrtTwo = Mathf.Sqrt(2);
-            Ray ray = new Ray();
+            Ray ray = new();
             RaycastHit samplePoint;
             Vector3 bary0 = Vector3.zero;
             Vector3 bary1 = Vector3.zero;

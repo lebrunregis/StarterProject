@@ -1,5 +1,4 @@
 #if GRIFFIN
-using UnityEditor.Callbacks;
 using UnityEngine;
 
 namespace Pinwheel.Griffin
@@ -19,7 +18,7 @@ namespace Pinwheel.Griffin
         private const string LINK_COLOR_PLACEHOLDER = "${LC}";
 
         private const float LOG_MESSAGE_PROBABIILITY = 0.03F;
-        private static string[] messages = new string[]
+        private static readonly string[] messages = new string[]
         {
 
         };

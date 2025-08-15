@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gamekit3D
@@ -59,7 +58,7 @@ namespace Gamekit3D
 
         public TargetFollower RegisterNewFollower()
         {
-            TargetFollower follower = new TargetFollower(this);
+            TargetFollower follower = new(this);
             m_Followers.Add(follower);
             return follower;
         }

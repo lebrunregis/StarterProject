@@ -175,7 +175,7 @@ namespace MagicaCloth2
             clothSetupDataList?.ForEach(x => x.ReplaceTransform(replaceDict));
         }
 
-        int GetLocalHash()
+        private int GetLocalHash()
         {
             // ローカルハッシュ
             // ・編集用メッシュが再構築されるたびにこのハッシュで保存チェックされる
@@ -192,7 +192,7 @@ namespace MagicaCloth2
             return hash;
         }
 
-        int GetGlobalHash()
+        private int GetGlobalHash()
         {
             // グローバルハッシュ
             // ・頂点ペイント終了時にこのハッシュで保存チェックされる

@@ -1,12 +1,9 @@
 #if GRIFFIN
+using Pinwheel.Griffin.DataTool;
+using Pinwheel.Griffin.Wizard;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using Pinwheel.Griffin.Rendering;
-using Pinwheel.Griffin.DataTool;
-using Unity.Collections;
-using System.Text;
-using Pinwheel.Griffin.Wizard;
 #if __MICROSPLAT_POLARIS__
 using JBooth.MicroSplat;
 #endif
@@ -76,8 +73,8 @@ namespace Pinwheel.Griffin
 
         private class GBaseGUI
         {
-            public static readonly GUIContent TERRAIN_DATA = new GUIContent("Terrain Data", "The asset contains Polaris terrain data. Go to Assets> Create> Polaris> TerrainData to create one. This is NOT Unity Terrain Data.");
-            public static readonly GUIContent GENERATED_GEOMETRY = new GUIContent("Generated Geometry", "The asset contains generated terrain meshes. It will be created automatically if you don't have one.");
+            public static readonly GUIContent TERRAIN_DATA = new("Terrain Data", "The asset contains Polaris terrain data. Go to Assets> Create> Polaris> TerrainData to create one. This is NOT Unity Terrain Data.");
+            public static readonly GUIContent GENERATED_GEOMETRY = new("Generated Geometry", "The asset contains generated terrain meshes. It will be created automatically if you don't have one.");
         }
 
         private void DrawBaseGUI()
@@ -105,42 +102,42 @@ namespace Pinwheel.Griffin
             public static readonly string ID = "terrain-data-geometry";
             public static readonly string DEFERRED_UPDATE_KEY = "geometry-deferred-update";
 
-            public static readonly GUIContent CONTEXT_RESET = new GUIContent("Reset");
-            public static readonly GUIContent CONTEXT_UPDATE = new GUIContent("Update");
-            public static readonly GUIContent CONTEXT_MATCH_EDGES = new GUIContent("Match Edges");
-            public static readonly GUIContent CONTEXT_CLEAN_UP = new GUIContent("Clean Up");
-            public static readonly GUIContent CONTEXT_TOGGLE_DEFERRED_UPDATE = new GUIContent("Toggle Deferred Update");
-            public static readonly GUIContent CONTEXT_REMOVE_HEIGHT_MAP = new GUIContent("Advanced/Remove Height Map");
+            public static readonly GUIContent CONTEXT_RESET = new("Reset");
+            public static readonly GUIContent CONTEXT_UPDATE = new("Update");
+            public static readonly GUIContent CONTEXT_MATCH_EDGES = new("Match Edges");
+            public static readonly GUIContent CONTEXT_CLEAN_UP = new("Clean Up");
+            public static readonly GUIContent CONTEXT_TOGGLE_DEFERRED_UPDATE = new("Toggle Deferred Update");
+            public static readonly GUIContent CONTEXT_REMOVE_HEIGHT_MAP = new("Advanced/Remove Height Map");
 
             public static readonly string CHUNK_POSITION_WARNING = "- Chunk position placement has been changed for better level streaming and baking. Go to CONTEXT>Update to re-generate the terrain.";
             public static readonly string BURST_WARNING = "- Install Burst Compiler (com.unity.burst) to speed up generation.";
             public static readonly string EDITOR_COROUTINES_WARNING = "- Install Editor Coroutines (com.unity.editorcoroutines) to enable time-sliced generation in editor.";
 
             public static readonly string HEADER_DIMENSION = "Dimension";
-            public static readonly GUIContent WIDTH = new GUIContent("Width", "Size of the terrain on X-axis");
-            public static readonly GUIContent HEIGHT = new GUIContent("Height", "Size of the terrain on Y-axis");
-            public static readonly GUIContent LENGTH = new GUIContent("Length", "Size of the terrain on Z-axis");
+            public static readonly GUIContent WIDTH = new("Width", "Size of the terrain on X-axis");
+            public static readonly GUIContent HEIGHT = new("Height", "Size of the terrain on Y-axis");
+            public static readonly GUIContent LENGTH = new("Length", "Size of the terrain on Z-axis");
 
             public static readonly string HEADER_HEIGHT_MAP = "Height Map";
-            public static readonly GUIContent HEIGHT_MAP_RESOLUTION = new GUIContent("Height Map Resolution", "Size of the height map in pixel");
+            public static readonly GUIContent HEIGHT_MAP_RESOLUTION = new("Height Map Resolution", "Size of the height map in pixel");
 
             public static readonly string HEADER_MESH_GENERATION = "Mesh Generation";
-            public static readonly GUIContent MESH_BASE_RESOLUTION = new GUIContent("Mesh Base Resolution", "Define the triangle density at the least detailed part of the terrain, usually at smooth, flat, less bumpy areas");
-            public static readonly GUIContent MESH_RESOLUTION = new GUIContent("Mesh Resolution", "Define the triangle density at the most detailed part of the terrain, usually at rough, bumpy areas");
-            public static readonly GUIContent GRID_SIZE = new GUIContent("Grid Size", "Split the terrain into several smaller chunks in a square grid. The total chunk count is GridSize x GridSize");
-            public static readonly GUIContent LOD_COUNT = new GUIContent("LOD Count", "Number of LOD for each chunk, should be kept at 1 during level editing for faster processing");
-            public static readonly GUIContent DISPLACEMENT_SEED = new GUIContent("Displacement Seed", "Random seed for vertex XZ displacement");
-            public static readonly GUIContent DISPLACEMENT_STRENGTH = new GUIContent("Displacement Strength", "Strength of the vertex XZ displacement. Choose an appropriated value to prevent triangles overlapping");
-            public static readonly GUIContent ALBEDO_TO_VERTEX_COLOR = new GUIContent("Albedo To Vertex Color", "Choose how to write to vertex color channel from the Albedo map, only use for Vertex Color shading mode");
-            public static readonly GUIContent SMOOTH_NORMAL = new GUIContent("Smooth Normal", "Calculate an interpolated normal vector for each vertex, instead of the sharp one");
-            public static readonly GUIContent SMOOTH_NORMAL_USE_MASK = new GUIContent("Smooth Normal Use Mask (G)", "Use the G channel of the terrain Mask map to blend between sharp and smooth normal vector");
-            public static readonly GUIContent MERGE_UV = new GUIContent("Merge UV", "Merge triangles UV to their midpoint to create sharp looking color");
+            public static readonly GUIContent MESH_BASE_RESOLUTION = new("Mesh Base Resolution", "Define the triangle density at the least detailed part of the terrain, usually at smooth, flat, less bumpy areas");
+            public static readonly GUIContent MESH_RESOLUTION = new("Mesh Resolution", "Define the triangle density at the most detailed part of the terrain, usually at rough, bumpy areas");
+            public static readonly GUIContent GRID_SIZE = new("Grid Size", "Split the terrain into several smaller chunks in a square grid. The total chunk count is GridSize x GridSize");
+            public static readonly GUIContent LOD_COUNT = new("LOD Count", "Number of LOD for each chunk, should be kept at 1 during level editing for faster processing");
+            public static readonly GUIContent DISPLACEMENT_SEED = new("Displacement Seed", "Random seed for vertex XZ displacement");
+            public static readonly GUIContent DISPLACEMENT_STRENGTH = new("Displacement Strength", "Strength of the vertex XZ displacement. Choose an appropriated value to prevent triangles overlapping");
+            public static readonly GUIContent ALBEDO_TO_VERTEX_COLOR = new("Albedo To Vertex Color", "Choose how to write to vertex color channel from the Albedo map, only use for Vertex Color shading mode");
+            public static readonly GUIContent SMOOTH_NORMAL = new("Smooth Normal", "Calculate an interpolated normal vector for each vertex, instead of the sharp one");
+            public static readonly GUIContent SMOOTH_NORMAL_USE_MASK = new("Smooth Normal Use Mask (G)", "Use the G channel of the terrain Mask map to blend between sharp and smooth normal vector");
+            public static readonly GUIContent MERGE_UV = new("Merge UV", "Merge triangles UV to their midpoint to create sharp looking color");
 
             public static readonly string HEADER_UTILITIES = "Utilites";
-            public static readonly GUIContent STORAGE = new GUIContent("Storage", "Mesh storage mode, write to asset files or clean up and re-generate on enable");
-            public static readonly GUIContent TIME_SLICED = new GUIContent("Time Sliced", "If on, terrain generation will be splitted up to multiple frames");
+            public static readonly GUIContent STORAGE = new("Storage", "Mesh storage mode, write to asset files or clean up and re-generate on enable");
+            public static readonly GUIContent TIME_SLICED = new("Time Sliced", "If on, terrain generation will be splitted up to multiple frames");
 
-            public static readonly GUIContent UPDATE_BTN = new GUIContent("Update", "Re-generate the terrain");
+            public static readonly GUIContent UPDATE_BTN = new("Update", "Re-generate the terrain");
 
         }
 
@@ -148,7 +145,7 @@ namespace Pinwheel.Griffin
         {
             bool deferredUpdate = EditorPrefs.GetBool(GEditorCommon.GetProjectRelatedEditorPrefsKey(GGeometryGUI.DEFERRED_UPDATE_KEY), false);
 
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 new GUIContent(GGeometryGUI.CONTEXT_RESET),
                 false,
@@ -181,7 +178,7 @@ namespace Pinwheel.Griffin
                 false,
                 () => { ConfirmAndRemoveHeightMap(); });
 
-            List<string> warnings = new List<string>();
+            List<string> warnings = new();
             if (terrain != null &&
                 terrain.geometryVersion < GStylizedTerrain.GEOMETRY_VERSION_CHUNK_POSITION_AT_CHUNK_CENTER)
             {
@@ -288,57 +285,57 @@ namespace Pinwheel.Griffin
             public static readonly string LABEL = "Shading";
             public static readonly string ID = "terrain-data-shading";
 
-            public static readonly GUIContent CONTEXT_RESET = new GUIContent("Reset");
-            public static readonly GUIContent CONTEXT_REFRESH = new GUIContent("Refresh");
-            public static readonly GUIContent CONTEXT_SET_SHADER = new GUIContent("Set Shader");
+            public static readonly GUIContent CONTEXT_RESET = new("Reset");
+            public static readonly GUIContent CONTEXT_REFRESH = new("Refresh");
+            public static readonly GUIContent CONTEXT_SET_SHADER = new("Set Shader");
 
             public static readonly string CONTEXT_ADVANCED_SEPARATOR = "Advanced/";
-            public static readonly GUIContent CONTEXT_SPLAT_TO_ALBEDO = new GUIContent("Advanced/Convert Splats To Albedo");
-            public static readonly GUIContent CONTEXT_REMOVE_ALBEDO = new GUIContent("Advanced/Remove Albedo Map");
-            public static readonly GUIContent CONTEXT_REMOVE_METALLIC = new GUIContent("Advanced/Remove Metallic Map");
-            public static readonly GUIContent CONTEXT_REMOVE_CONTROLS = new GUIContent("Advanced/Remove Splat Control Maps");
-            public static readonly GUIContent CONTEXT_REMOVE_LOOKUP = new GUIContent("Advanced/Remove Gradient Lookup Maps");
+            public static readonly GUIContent CONTEXT_SPLAT_TO_ALBEDO = new("Advanced/Convert Splats To Albedo");
+            public static readonly GUIContent CONTEXT_REMOVE_ALBEDO = new("Advanced/Remove Albedo Map");
+            public static readonly GUIContent CONTEXT_REMOVE_METALLIC = new("Advanced/Remove Metallic Map");
+            public static readonly GUIContent CONTEXT_REMOVE_CONTROLS = new("Advanced/Remove Splat Control Maps");
+            public static readonly GUIContent CONTEXT_REMOVE_LOOKUP = new("Advanced/Remove Gradient Lookup Maps");
 
             public static readonly string HEADER_SHADING_SYSTEM = "System";
-            public static readonly GUIContent SHADING_SYSTEM = new GUIContent("Shading System", "Whether to use Polaris built-in shaders or MicroSplat shaders");
+            public static readonly GUIContent SHADING_SYSTEM = new("Shading System", "Whether to use Polaris built-in shaders or MicroSplat shaders");
 
             public static readonly string HEADER_MATERIAL_SHADER = "Material & Shader";
-            public static readonly GUIContent MATERIAL = new GUIContent("Material", "The material to render the terrain");
-            public static readonly GUIContent SHADER = new GUIContent("Shader", "The terrain shader in used");
+            public static readonly GUIContent MATERIAL = new("Material", "The material to render the terrain");
+            public static readonly GUIContent SHADER = new("Shader", "The terrain shader in used");
 
-            public static readonly GUIContent TEXTURE_ARRAY_CONFIG = new GUIContent("Texture Array Config", "The texture array config asset generated from MicroSplat");
+            public static readonly GUIContent TEXTURE_ARRAY_CONFIG = new("Texture Array Config", "The texture array config asset generated from MicroSplat");
 
             public static readonly string HEADER_COLOR_MAP_GRADIENT_LOOKUP = "Color Map & Gradient Lookup";
-            public static readonly GUIContent ALBEDO_MAP_RESOLUTION = new GUIContent("Albedo Map Resolution", "Size of the Albedo Map in pixel");
-            public static readonly GUIContent METALLIC_MAP_RESOLUTION = new GUIContent("Metallic Map Resolution", "Size of the Metallic Map in pixel");
-            public static readonly GUIContent COLOR_BY_NORMAL = new GUIContent("Color By Normal", "Color strip to shade the terrain based on its normal vector, from perpendicular to parallel to the up vector");
-            public static readonly GUIContent BLEND_BY_HEIGHT = new GUIContent("Blend By Height", "A curve to blend between CBH and CBN, where X-axis represent vertex height, Y-axis represent the color blend factor");
-            public static readonly GUIContent COLOR_BY_HEIGHT = new GUIContent("Color By Height", "Color strip to shade the terrain based on its height, from 0 to max height");
+            public static readonly GUIContent ALBEDO_MAP_RESOLUTION = new("Albedo Map Resolution", "Size of the Albedo Map in pixel");
+            public static readonly GUIContent METALLIC_MAP_RESOLUTION = new("Metallic Map Resolution", "Size of the Metallic Map in pixel");
+            public static readonly GUIContent COLOR_BY_NORMAL = new("Color By Normal", "Color strip to shade the terrain based on its normal vector, from perpendicular to parallel to the up vector");
+            public static readonly GUIContent BLEND_BY_HEIGHT = new("Blend By Height", "A curve to blend between CBH and CBN, where X-axis represent vertex height, Y-axis represent the color blend factor");
+            public static readonly GUIContent COLOR_BY_HEIGHT = new("Color By Height", "Color strip to shade the terrain based on its height, from 0 to max height");
 
             public static readonly string HEADER_SPLATS = "Splats";
-            public static readonly GUIContent PROTOTYPES = new GUIContent("Prototypes", "The Splat Prototypes Group asset contains splat layers for this terrain. Go to Assets> Create> Polaris> Splat Prototype Group to create one");
-            public static readonly GUIContent CONTROL_MAP_RESOLUTION = new GUIContent("Control Map Resolution", "Size of the Splat Control Maps in pixel");
+            public static readonly GUIContent PROTOTYPES = new("Prototypes", "The Splat Prototypes Group asset contains splat layers for this terrain. Go to Assets> Create> Polaris> Splat Prototype Group to create one");
+            public static readonly GUIContent CONTROL_MAP_RESOLUTION = new("Control Map Resolution", "Size of the Splat Control Maps in pixel");
 
             public static readonly string HEADER_ADVANCED = "Advanced";
             public static readonly string PROPERTIES_NAME_FOLDOUT_KEY = "foldout-shading-properties-name";
-            public static readonly GUIContent PROPERTIES_NAME = new GUIContent("Properties Name", "Name of the material properties to bind terrain textures to");
-            public static readonly GUIContent PROPS_ALBEDO_MAP = new GUIContent("Albedo Map");
-            public static readonly GUIContent PROPS_METALLIC_MAP = new GUIContent("Metallic Map");
-            public static readonly GUIContent PROPS_COLOR_BY_HEIGHT = new GUIContent("Color By Height");
-            public static readonly GUIContent PROPS_COLOR_BY_NORMAL = new GUIContent("Color By Normal");
-            public static readonly GUIContent PROPS_COLOR_BLEND = new GUIContent("Color Blend");
-            public static readonly GUIContent PROPS_DIMENSION = new GUIContent("Dimension");
-            public static readonly GUIContent PROPS_SPLAT_CONTROL_MAP = new GUIContent("Splat Control Map");
-            public static readonly GUIContent PROPS_SPLAT_MAP = new GUIContent("Splat Map");
-            public static readonly GUIContent PROPS_SPLAT_NORMAL_MAP = new GUIContent("Splat Normal Map");
-            public static readonly GUIContent PROPS_SPLAT_METALLIC = new GUIContent("Splat Metallic");
-            public static readonly GUIContent PROPS_SPLAT_SMOOTHNESS = new GUIContent("Splat Smoothness");
+            public static readonly GUIContent PROPERTIES_NAME = new("Properties Name", "Name of the material properties to bind terrain textures to");
+            public static readonly GUIContent PROPS_ALBEDO_MAP = new("Albedo Map");
+            public static readonly GUIContent PROPS_METALLIC_MAP = new("Metallic Map");
+            public static readonly GUIContent PROPS_COLOR_BY_HEIGHT = new("Color By Height");
+            public static readonly GUIContent PROPS_COLOR_BY_NORMAL = new("Color By Normal");
+            public static readonly GUIContent PROPS_COLOR_BLEND = new("Color Blend");
+            public static readonly GUIContent PROPS_DIMENSION = new("Dimension");
+            public static readonly GUIContent PROPS_SPLAT_CONTROL_MAP = new("Splat Control Map");
+            public static readonly GUIContent PROPS_SPLAT_MAP = new("Splat Map");
+            public static readonly GUIContent PROPS_SPLAT_NORMAL_MAP = new("Splat Normal Map");
+            public static readonly GUIContent PROPS_SPLAT_METALLIC = new("Splat Metallic");
+            public static readonly GUIContent PROPS_SPLAT_SMOOTHNESS = new("Splat Smoothness");
 
         }
 
         private void DrawShadingGUI()
         {
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 GShadingGUI.CONTEXT_RESET,
                 false,
@@ -542,32 +539,32 @@ namespace Pinwheel.Griffin
             public static readonly string LABEL = "Rendering";
             public static readonly string ID = "terrain-data-rendering";
 
-            public static readonly GUIContent CONTEXT_RESET = new GUIContent("Reset");
+            public static readonly GUIContent CONTEXT_RESET = new("Reset");
 
             public static readonly string HEADER_TERRAIN_SHADOW = "Terrain Shadow";
-            public static readonly GUIContent CAST_SHADOW = new GUIContent("Cast Shadow", "Should the terrain cast shadow?");
-            public static readonly GUIContent RECEIVE_SHADOW = new GUIContent("Receive Shadow", "Should the terrain receive shadow?");
+            public static readonly GUIContent CAST_SHADOW = new("Cast Shadow", "Should the terrain cast shadow?");
+            public static readonly GUIContent RECEIVE_SHADOW = new("Receive Shadow", "Should the terrain receive shadow?");
 
             public static readonly string HEADER_TREE_RENDERING = "Tree Rendering";
-            public static readonly GUIContent DRAW_TREES = new GUIContent("Draw", "Toggle tree drawing");
-            public static readonly GUIContent ENABLE_INSTANCING = new GUIContent("Enable Instancing", "Toggle instancing for tree rendering");
-            public static readonly GUIContent BILLBOARD_START = new GUIContent("Billboard Start", "Minimum distance from the camera where trees begin to be rendered as billboards");
-            public static readonly GUIContent TREE_DISTANCE = new GUIContent("Tree Distance", "Maximum distance where trees are visible");
-            public static readonly GUIContent TREE_CULL_BIAS = new GUIContent("Cull Bias", "Bias the tree culling to prevent popping shadow");
+            public static readonly GUIContent DRAW_TREES = new("Draw", "Toggle tree drawing");
+            public static readonly GUIContent ENABLE_INSTANCING = new("Enable Instancing", "Toggle instancing for tree rendering");
+            public static readonly GUIContent BILLBOARD_START = new("Billboard Start", "Minimum distance from the camera where trees begin to be rendered as billboards");
+            public static readonly GUIContent TREE_DISTANCE = new("Tree Distance", "Maximum distance where trees are visible");
+            public static readonly GUIContent TREE_CULL_BIAS = new("Cull Bias", "Bias the tree culling to prevent popping shadow");
 
             public static readonly string HEADER_GRASS_RENDERING = "Grass & Detail Rendering";
-            public static readonly GUIContent DRAW_GRASS = new GUIContent("Draw", "Toggle grass & detail rendering");
-            public static readonly GUIContent GRASS_DISTANCE = new GUIContent("Grass Distance", "Maximum distance where grasses are visible");
-            public static readonly GUIContent FADE_START = new GUIContent("Fade Start", "Relative distance where grass begin to fade out in size");
-            public static readonly GUIContent GRASS_CULL_BIAS = new GUIContent("Cull Bias", "Bias the grass culling to prevent popping grass");
+            public static readonly GUIContent DRAW_GRASS = new("Draw", "Toggle grass & detail rendering");
+            public static readonly GUIContent GRASS_DISTANCE = new("Grass Distance", "Maximum distance where grasses are visible");
+            public static readonly GUIContent FADE_START = new("Fade Start", "Relative distance where grass begin to fade out in size");
+            public static readonly GUIContent GRASS_CULL_BIAS = new("Cull Bias", "Bias the grass culling to prevent popping grass");
 
             public static readonly string HEADER_TOPOGRAPHIC = "Topographic";
-            public static readonly GUIContent ENABLE_TOPOGRAPHIC = new GUIContent("Enable", "Draw a topographic view overlay in the scene view for better sense of elevation");
+            public static readonly GUIContent ENABLE_TOPOGRAPHIC = new("Enable", "Draw a topographic view overlay in the scene view for better sense of elevation");
         }
 
         private void DrawRenderingGUI()
         {
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 GRenderingGUI.CONTEXT_RESET,
                 false,
@@ -620,37 +617,37 @@ namespace Pinwheel.Griffin
             public static readonly string LABEL = "Foliage";
             public static readonly string ID = "terrain-data-foliage";
 
-            public static readonly GUIContent CONTEXT_RESET = new GUIContent("Reset");
-            public static readonly GUIContent CONTEXT_REFRESH = new GUIContent("Refresh");
-            public static readonly GUIContent CONTEXT_CLEAR_TREES = new GUIContent("Clear All Trees");
-            public static readonly GUIContent CONTEXT_CLEAR_GRASSES = new GUIContent("Clear All Grasses");
-            public static readonly GUIContent CONTEXT_UPDATE_TREES = new GUIContent("Update Trees");
-            public static readonly GUIContent CONTEXT_UPDATE_GRASSES = new GUIContent("Update Grasses");
-            public static readonly GUIContent CONTEXT_UPDATE_GRASS_VERSION = new GUIContent("Update Grass Serialize Version");
+            public static readonly GUIContent CONTEXT_RESET = new("Reset");
+            public static readonly GUIContent CONTEXT_REFRESH = new("Refresh");
+            public static readonly GUIContent CONTEXT_CLEAR_TREES = new("Clear All Trees");
+            public static readonly GUIContent CONTEXT_CLEAR_GRASSES = new("Clear All Grasses");
+            public static readonly GUIContent CONTEXT_UPDATE_TREES = new("Update Trees");
+            public static readonly GUIContent CONTEXT_UPDATE_GRASSES = new("Update Grasses");
+            public static readonly GUIContent CONTEXT_UPDATE_GRASS_VERSION = new("Update Grass Serialize Version");
             public static readonly string GRASS_VERSION_WARNING = "New grass serialize version is available, use context menu to upgrade (Recommended).";
 
             public static readonly string HEADER_TREES = "Trees";
-            public static readonly GUIContent TREE_PROTOTYPES = new GUIContent("Prototypes", "The Tree Prototype Group Asset contains tree types to render on this terrain. Go to Assets> Create> Polaris> Tree Prototype Group to create one");
-            public static readonly GUIContent TREE_SNAP_MODE = new GUIContent("Snap Mode", "Whether to snap trees to the terrain or world objects");
-            public static readonly GUIContent TREE_SNAP_LAYERS = new GUIContent("Snap Layers", "Game object layers to snap trees on");
-            public static readonly GUIContent TREE_INSTANCE_COUNT = new GUIContent("Instance Count", "Total tree instance of this terrain");
+            public static readonly GUIContent TREE_PROTOTYPES = new("Prototypes", "The Tree Prototype Group Asset contains tree types to render on this terrain. Go to Assets> Create> Polaris> Tree Prototype Group to create one");
+            public static readonly GUIContent TREE_SNAP_MODE = new("Snap Mode", "Whether to snap trees to the terrain or world objects");
+            public static readonly GUIContent TREE_SNAP_LAYERS = new("Snap Layers", "Game object layers to snap trees on");
+            public static readonly GUIContent TREE_INSTANCE_COUNT = new("Instance Count", "Total tree instance of this terrain");
 
             public static readonly string HEADER_GRASSES = "Grasses & Details";
-            public static readonly GUIContent GRASS_PROTOTYPES = new GUIContent("Prototypes", "The Grass Prototype Group Asset contains grass types to render on this terrain. Go to Assets> Create> Polaris> Grass Prototype Group to create one");
-            public static readonly GUIContent PATCH_GRID_SIZE = new GUIContent("Patch Grid Size", "Divide grasses into several patches for culling and rendering");
-            public static readonly GUIContent GRASS_SNAP_MODE = new GUIContent("Snap Mode", "Whether to snap grasses to the terrain or world objects");
-            public static readonly GUIContent GRASS_SNAP_LAYERS = new GUIContent("Snap Layers", "Game object layers to snap grasses on");
-            public static readonly GUIContent INTERACTIVE_GRASS = new GUIContent("Interactive Grass", "Toggle grass bending when the player passes by. You also need to add a GInteractiveGrassAgent component to your character");
-            public static readonly GUIContent VECTOR_FIELD_MAP_RESOLUTION = new GUIContent("Vector Field Map Resolution", "Size of the vector field map in pixel");
-            public static readonly GUIContent BEND_SENSITIVE = new GUIContent("Bend Sensitive", "How fast the grass bend down when the player passes by");
-            public static readonly GUIContent RESTORE_SENSITIVE = new GUIContent("Restore Sensive", "How fast the grass get back to its initial shape when the player goes away");
+            public static readonly GUIContent GRASS_PROTOTYPES = new("Prototypes", "The Grass Prototype Group Asset contains grass types to render on this terrain. Go to Assets> Create> Polaris> Grass Prototype Group to create one");
+            public static readonly GUIContent PATCH_GRID_SIZE = new("Patch Grid Size", "Divide grasses into several patches for culling and rendering");
+            public static readonly GUIContent GRASS_SNAP_MODE = new("Snap Mode", "Whether to snap grasses to the terrain or world objects");
+            public static readonly GUIContent GRASS_SNAP_LAYERS = new("Snap Layers", "Game object layers to snap grasses on");
+            public static readonly GUIContent INTERACTIVE_GRASS = new("Interactive Grass", "Toggle grass bending when the player passes by. You also need to add a GInteractiveGrassAgent component to your character");
+            public static readonly GUIContent VECTOR_FIELD_MAP_RESOLUTION = new("Vector Field Map Resolution", "Size of the vector field map in pixel");
+            public static readonly GUIContent BEND_SENSITIVE = new("Bend Sensitive", "How fast the grass bend down when the player passes by");
+            public static readonly GUIContent RESTORE_SENSITIVE = new("Restore Sensive", "How fast the grass get back to its initial shape when the player goes away");
 
-            public static readonly GUIContent GRASS_INSTANCE_COUNT = new GUIContent("Instance Count", "Total grass instance of this terrain");
+            public static readonly GUIContent GRASS_INSTANCE_COUNT = new("Instance Count", "Total grass instance of this terrain");
         }
 
         private void DrawFoliageGUI()
         {
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 GFoliageGUI.CONTEXT_RESET,
                 false,
@@ -824,9 +821,9 @@ namespace Pinwheel.Griffin
             public static readonly string LABEL = "Mask";
             public static readonly string ID = "terrain-data-mask";
 
-            public static readonly GUIContent CONTEXT_RESET = new GUIContent("Reset");
-            public static readonly GUIContent CONTEXT_REMOVE_MASK_MAP = new GUIContent("Advanced/Remove Mask Map");
-            public static readonly GUIContent MASK_RESOLUTION = new GUIContent("Resolution", "Size of the Mask Map in pixel");
+            public static readonly GUIContent CONTEXT_RESET = new("Reset");
+            public static readonly GUIContent CONTEXT_REMOVE_MASK_MAP = new("Advanced/Remove Mask Map");
+            public static readonly GUIContent MASK_RESOLUTION = new("Resolution", "Size of the Mask Map in pixel");
 
             public static readonly string HEADER_MASK_USAGE = "Mask Usage";
             public static readonly string R = "R";
@@ -841,7 +838,7 @@ namespace Pinwheel.Griffin
 
         private void DrawMaskGUI()
         {
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 GMaskGUI.CONTEXT_RESET,
                 false,
@@ -902,12 +899,12 @@ namespace Pinwheel.Griffin
         {
             public static readonly string LABEL = "Data";
             public static readonly string ID = "terrain-data-data";
-            public static readonly GUIContent IMPORT = new GUIContent("Import");
-            public static readonly GUIContent EXPORT = new GUIContent("Export");
+            public static readonly GUIContent IMPORT = new("Import");
+            public static readonly GUIContent EXPORT = new("Export");
 
-            public static readonly GUIContent UNITY_TERRAIN_DATA = new GUIContent("Unity Terrain Data");
-            public static readonly GUIContent RAW = new GUIContent("Raw");
-            public static readonly GUIContent TEXTURES = new GUIContent("Textures");
+            public static readonly GUIContent UNITY_TERRAIN_DATA = new("Unity Terrain Data");
+            public static readonly GUIContent RAW = new("Raw");
+            public static readonly GUIContent TEXTURES = new("Textures");
         }
 
         private void DrawDataGUI()
@@ -929,7 +926,7 @@ namespace Pinwheel.Griffin
 
         private void ShowImportContext()
         {
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 GDataGUI.UNITY_TERRAIN_DATA,
                 false,
@@ -1003,7 +1000,7 @@ namespace Pinwheel.Griffin
 
         private void ShowExportContext()
         {
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 GDataGUI.UNITY_TERRAIN_DATA,
                 false,
@@ -1052,20 +1049,20 @@ namespace Pinwheel.Griffin
             public static readonly string LABEL = "Neighboring";
             public static readonly string ID = "terrain-neighboring";
 
-            public static readonly GUIContent CONTEXT_RESET = new GUIContent("Reset");
-            public static readonly GUIContent CONTEXT_CONNECT = new GUIContent("Connect");
+            public static readonly GUIContent CONTEXT_RESET = new("Reset");
+            public static readonly GUIContent CONTEXT_CONNECT = new("Connect");
 
-            public static readonly GUIContent AUTO_CONNECT = new GUIContent("Auto Connect", "Auto connect this terrain with nearby tiles");
-            public static readonly GUIContent GROUP_ID = new GUIContent("Group Id", "Id of the group which this terrain is belong too. This Id is used for Auto Connect and other terrain tools");
-            public static readonly GUIContent TOP_NEIGHBOR = new GUIContent("Top Neighbor", "The neighbor terrain on +Z direction");
-            public static readonly GUIContent BOTTOM_NEIGHBOR = new GUIContent("Bottom Neighbor", "The neighbor terrain on -Z direction");
-            public static readonly GUIContent LEFT_NEIGHBOR = new GUIContent("Left Neighbor", "The neighbor terrain on -X direction");
-            public static readonly GUIContent RIGHT_NEIGHBOR = new GUIContent("Right Neighbor", "The neighbor terrain on +X direction");
+            public static readonly GUIContent AUTO_CONNECT = new("Auto Connect", "Auto connect this terrain with nearby tiles");
+            public static readonly GUIContent GROUP_ID = new("Group Id", "Id of the group which this terrain is belong too. This Id is used for Auto Connect and other terrain tools");
+            public static readonly GUIContent TOP_NEIGHBOR = new("Top Neighbor", "The neighbor terrain on +Z direction");
+            public static readonly GUIContent BOTTOM_NEIGHBOR = new("Bottom Neighbor", "The neighbor terrain on -Z direction");
+            public static readonly GUIContent LEFT_NEIGHBOR = new("Left Neighbor", "The neighbor terrain on -X direction");
+            public static readonly GUIContent RIGHT_NEIGHBOR = new("Right Neighbor", "The neighbor terrain on +X direction");
         }
 
         private void DrawNeighboringGUI()
         {
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 GNeighboringGUI.CONTEXT_RESET,
                 false,
@@ -1202,7 +1199,7 @@ namespace Pinwheel.Griffin
             {
                 GEditorCommon.Foldout(GProcTerrainGUI.LABEL, true, GProcTerrainGUI.ID, () =>
                 {
-                    EditorGUILayout.LabelField("Vista is an advanced toolset for procedural terrain creation that works perfectly with Polaris.");                    
+                    EditorGUILayout.LabelField("Vista is an advanced toolset for procedural terrain creation that works perfectly with Polaris.");
                     GEditorCommon.DrawAffLinks(
                         "Generate beautiful terrain with Vista",
                         "https://assetstore.unity.com/packages/tools/terrain/vista-advanced-terrain-graph-editor-210496");
@@ -1217,7 +1214,7 @@ namespace Pinwheel.Griffin
 
         private class GSceneViewGUI
         {
-            public static readonly GUIContent MOUSE_MESSAGE = new GUIContent(
+            public static readonly GUIContent MOUSE_MESSAGE = new(
                 "Click on a rectangle to pin.\n" +
                 "Close the Neighboring foldout to disable terrain pinning mode.");
         }
@@ -1231,7 +1228,7 @@ namespace Pinwheel.Griffin
             if (!isNeighboringFoldoutExpanded)
                 return;
 
-            Vector3 terrainSizeXZ = new Vector3(
+            Vector3 terrainSizeXZ = new(
                 terrain.TerrainData.Geometry.Width,
                 0,
                 terrain.TerrainData.Geometry.Length);

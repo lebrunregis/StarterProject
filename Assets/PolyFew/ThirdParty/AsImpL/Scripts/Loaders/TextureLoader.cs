@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.IO;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace BrainFailProductions.PolyFew.AsImpL
 {
@@ -49,7 +47,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
             string ext = Path.GetExtension(fileName).ToLower();
             if (ext == ".png" || ext == ".jpg")
             {
-                Texture2D t2d = new Texture2D(1, 1);
+                Texture2D t2d = new(1, 1);
                 t2d.LoadImage(File.ReadAllBytes(fileName));
                 return t2d;
             }
@@ -121,8 +119,8 @@ namespace BrainFailProductions.PolyFew.AsImpL
                 byte[] dxtBytes = new byte[ddsBytes.Length - DDS_HEADER_SIZE];
                 Buffer.BlockCopy(ddsBytes, DDS_HEADER_SIZE, dxtBytes, 0, ddsBytes.Length - DDS_HEADER_SIZE);
 
-                System.IO.FileInfo finf = new System.IO.FileInfo(ddsPath);
-                Texture2D texture = new Texture2D(width, height, textureFormat, false);
+                System.IO.FileInfo finf = new(ddsPath);
+                Texture2D texture = new(width, height, textureFormat, false);
                 texture.LoadRawTextureData(dxtBytes);
                 texture.Apply();
                 texture.name = finf.Name;
@@ -150,7 +148,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
         {
             try
             {
-                using (BinaryReader r = new BinaryReader(TGAStream))
+                using (BinaryReader r = new(TGAStream))
                 {
                     TgaHeader th = LoadTgaHeader(r);
                     // Skip some header info we don't care about.
@@ -166,7 +164,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
                     //// Skip a byte of header information we don't care about.
                     //r.BaseStream.Seek( 1, SeekOrigin.Current );
 
-                    Texture2D tex = new Texture2D(width, height);
+                    Texture2D tex = new(width, height);
                     Color32[] pulledColors = new Color32[width * height];
                     int length = width * height;
 
@@ -227,7 +225,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
 
         private static TgaHeader LoadTgaHeader(BinaryReader r)
         {
-            TgaHeader th = new TgaHeader();
+            TgaHeader th = new();
 
             r.BaseStream.Seek(0, SeekOrigin.Current);
             //  fread(&th, sizeof(gvImgTGAHeader), 1, fp);

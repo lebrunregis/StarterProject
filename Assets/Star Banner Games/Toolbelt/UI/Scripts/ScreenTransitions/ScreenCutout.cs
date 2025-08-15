@@ -6,8 +6,8 @@ using UnityEngine.UI;
 namespace SBG.Toolbelt.UI
 {
     [Serializable]
-	public class ScreenCutout
-	{
+    public class ScreenCutout
+    {
         [SerializeField] private Image cutoutPanel;
 
 

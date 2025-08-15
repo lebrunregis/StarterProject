@@ -1,7 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -23,7 +22,7 @@ namespace Pinwheel.Griffin
             int count = Textures.Count;
             for (int i = 0; i < TextureArray.Count; ++i)
             {
-                if (TextureArray[i]!=null)
+                if (TextureArray[i] != null)
                 {
                     count += TextureArray[i].depth;
                 }

@@ -1,6 +1,4 @@
 #if GRIFFIN
-using UnityEngine;
-
 namespace Pinwheel.Griffin.TextureTool
 {
     [System.Serializable]

@@ -1,10 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Jobs;
 using Unity.Collections;
-using Unity.Burst;
+using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.Rendering
 {
@@ -29,7 +26,7 @@ namespace Pinwheel.Griffin.Rendering
         public void Execute(int i)
         {
             GGrassInstance grass = instances[i];
-            
+
             float pivotOffset;
             Vector3 size;
             if (grass.prototypeIndex < 0 || grass.prototypeIndex >= prototypePivotOffset.Length)
@@ -43,12 +40,12 @@ namespace Pinwheel.Griffin.Rendering
                 size = prototypeSize[grass.prototypeIndex];
             }
 
-            Vector3 worldPos = new Vector3(
+            Vector3 worldPos = new(
                 grass.position.x * terrainSize.x + terrainPos.x,
                 grass.position.y * terrainSize.y + terrainPos.y + pivotOffset,
                 grass.position.z * terrainSize.z + terrainPos.z);
 
-            Vector3 worldScale = new Vector3(
+            Vector3 worldScale = new(
                 grass.scale.x * size.x,
                 grass.scale.y * size.y,
                 grass.scale.z * size.z);

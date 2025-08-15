@@ -84,7 +84,7 @@ namespace MagicaCloth2
         /// [OK] Runtime changes.
         /// [NG] Export/Import with Presets
         /// </summary>
-        public List<Renderer> cameraCullingRenderers = new List<Renderer>();
+        public List<Renderer> cameraCullingRenderers = new();
 
         /// <summary>
         /// 距離カリングの状態と距離

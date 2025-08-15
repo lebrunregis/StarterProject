@@ -1,12 +1,11 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
- 
+
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
@@ -24,15 +23,15 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
         internal List<BatchObject> listBatchObjects;
         internal BatchObject problematicBatchObject;
 
-        static GameObject objectPicker;
+        private static GameObject objectPicker;
         protected internal int selectedBatchObjectIndex = -1;
 
 
 
-        Vector2 scrollSettings;
-        readonly int objectPickerID = 443101;
+        private Vector2 scrollSettings;
+        private readonly int objectPickerID = 443101;
         internal string lastSavedFilePath;
-        static readonly int windowMinWidth = 650;
+        private static readonly int windowMinWidth = 650;
 
 
         [MenuItem("Window/Amazing Assets/Wireframe Shader/Wireframe Mesh Generator", false, 3101)]
@@ -46,19 +45,19 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
         }
 
 
-        void OnEnable()
+        private void OnEnable()
         {
             active = this;
 
             LoadEditorData();
         }
-        void OnDisable()
+        private void OnDisable()
         {
             active = this;
 
             SaveEditorData();
         }
-        void OnDestroy()
+        private void OnDestroy()
         {
             active = this;
 
@@ -67,22 +66,22 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
 
             SaveEditorData();
-        }        
-        void OnFocus()
+        }
+        private void OnFocus()
         {
             active = this;
 
             LoadEditorData();
 
             UnityEditor.EditorUtility.ClearProgressBar();
-        }        
-        void OnLostFocus()
+        }
+        private void OnLostFocus()
         {
             active = this;
 
             SaveEditorData();
         }
-        void OnGUI()
+        private void OnGUI()
         {
             if (WireframeTextureGenerator.EditorWindow.AreRequiedFilesInstalled() == false)
                 return;
@@ -126,7 +125,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
         }
 
 
-        void DrawBatchObjectsArray()
+        private void DrawBatchObjectsArray()
         {
             GUILayout.Space(5);
 
@@ -186,7 +185,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                 BatchObjectsDrawer.Draw();
             }
         }
-        void DrawRunButton()
+        private void DrawRunButton()
         {
             GUILayout.Space(10);
             Rect controlRect = EditorGUILayout.GetControlRect(false, 70);
@@ -219,7 +218,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             }
         }
 
-        void LoadResources()
+        private void LoadResources()
         {
             active = this;
 
@@ -230,14 +229,14 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             if (editorSettings == null)
                 editorSettings = new EditorSettings();
         }
-        void SaveEditorData()
+        private void SaveEditorData()
         {
             BatchObjectsDrawer.SaveEditorData();
 
             if (editorSettings != null)
                 editorSettings.SaveEditorData();
         }
-        void LoadEditorData()
+        private void LoadEditorData()
         {
             if (editorSettings == null)
                 editorSettings = new EditorSettings();
@@ -246,7 +245,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             BatchObjectsDrawer.LoadEditorData();
         }
 
-        bool IsReadeToGenerate()
+        private bool IsReadeToGenerate()
         {
             if (listBatchObjects == null || listBatchObjects.Count == 0)
                 return false;
@@ -254,7 +253,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             return editorSettings.IsReady();
         }
 
-        void CatchInput()
+        private void CatchInput()
         {
             if (listBatchObjects != null && listBatchObjects.Count > 0 && Event.current != null)
             {
@@ -293,7 +292,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                 }
             }
         }
-        void CatchContextMenu()
+        private void CatchContextMenu()
         {
             var evt = Event.current;
             var contextRect = new Rect(10, 10, this.position.width, this.position.height);
@@ -302,7 +301,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                 var mousePos = evt.mousePosition;
                 if (contextRect.Contains(mousePos))
                 {
-                    GenericMenu menu = new GenericMenu();
+                    GenericMenu menu = new();
 
                     if (listBatchObjects != null && listBatchObjects.Count >= 0)
                     {
@@ -349,7 +348,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                 }
             }
         }
-        void CatchObjectPicker()
+        private void CatchObjectPicker()
         {
             if (Event.current.commandName == "ObjectSelectorUpdated")
             {

@@ -18,7 +18,7 @@ namespace MagicaCloth2
         /// <summary>
         /// 描画データをint型ハンドルで管理する
         /// </summary>
-        Dictionary<int, RenderData> renderDataDict = new Dictionary<int, RenderData>();
+        private readonly Dictionary<int, RenderData> renderDataDict = new();
 
         //=========================================================================================
         // ■RenderData
@@ -92,7 +92,7 @@ namespace MagicaCloth2
         public ExNativeArray<float4> renderMeshTangents;
         public ExNativeArray<BoneWeight> renderMeshBoneWeights;
 
-        bool isValid = false;
+        private bool isValid = false;
 
         //=========================================================================================
         public void Initialize()
@@ -342,12 +342,12 @@ namespace MagicaCloth2
         }
 
         //=========================================================================================
-        static readonly ProfilerMarker writeMeshTimeProfiler = new ProfilerMarker("WriteMesh");
+        private static readonly ProfilerMarker writeMeshTimeProfiler = new("WriteMesh");
 
         /// <summary>
         /// レンダリング前更新
         /// </summary>
-        void PreRenderingUpdate()
+        private void PreRenderingUpdate()
         {
             if (renderDataDict.Count == 0)
                 return;
@@ -362,7 +362,7 @@ namespace MagicaCloth2
         //=========================================================================================
         public void InformationLog(StringBuilder allsb)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine($"========== Render Manager ==========");
             if (IsValid() == false)
             {

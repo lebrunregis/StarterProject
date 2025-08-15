@@ -4,7 +4,6 @@ using UnityEngine;
 #if UNITY_PIPELINE_URP
 using System;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 #endif
 
 namespace Abiogenesis3d
@@ -15,10 +14,10 @@ namespace Abiogenesis3d
         [HideInInspector] public UPixelator uPixelator;
 
         public UPixelatorCameraInfo camInfo;
-        UPixelatorSnappable camSnappable;
+        private UPixelatorSnappable camSnappable;
 
         [Tooltip("UPixelatorSnappables that are visible to this camera")]
-        public List<UPixelatorSnappable> snappables = new List<UPixelatorSnappable>();
+        public List<UPixelatorSnappable> snappables = new();
 
         [HideInInspector] public Quaternion storedCamRotation;
         [HideInInspector] public int storedPixelMultiplier;
@@ -44,13 +43,14 @@ namespace Abiogenesis3d
             HandleTargetTexture();
         }
 
-        void HandleTargetTexture()
+        private void HandleTargetTexture()
         {
             if (camInfo.cam.targetTexture != camInfo.renderTexture)
                 camInfo.cam.targetTexture = camInfo.renderTexture;
 
             // WaitForEndOfFrame is unreliable but for targetTexture seems to not be a problem to call
-            Utils.RunAtEndOfFrameOrdered(() => {
+            Utils.RunAtEndOfFrameOrdered(() =>
+            {
                 // NOTE: this is needed or else the Screen size is set to renderTexture size
                 //  and events like Input.mousePosition that return pixel values are wrong
                 // NOTE: this also prevents other cameras to affect the texture
@@ -58,13 +58,13 @@ namespace Abiogenesis3d
             }, 0, this);
         }
 
-        float GetSnapSize()
+        private float GetSnapSize()
         {
             var mult = (camInfo.cam == uPixelator.uPixelatorCam) ? 1 : uPixelator.pixelMultiplier;
             return mult * (2 * camInfo.cam.orthographicSize) / uPixelator.screenSize.y;
         }
 
-        void EnsureCamSnappable()
+        private void EnsureCamSnappable()
         {
             if (camSnappable) return;
 
@@ -157,14 +157,14 @@ namespace Abiogenesis3d
         //     camSnappable.RestorePosition();
         // }
 
-        Vector3 HandleCamSnap()
+        private Vector3 HandleCamSnap()
         {
             var repeatSize = camInfo.stabilize ? uPixelator.ditherRepeatSize : 1;
             float camSnapSize = repeatSize * GetSnapSize();
             return camSnappable.SnapPosition(camInfo.cam.transform.rotation, camSnapSize, default);
         }
 
-        void UpdateRenderQuadPosition(Vector3 camSnapDiff)
+        private void UpdateRenderQuadPosition(Vector3 camSnapDiff)
         {
             if (!camInfo.stabilize) return;
 
@@ -194,7 +194,7 @@ namespace Abiogenesis3d
             }
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             // NOTE: needed here to immediately resume rendering to texture instead of waiting next LateUpdate
             // TODO: test is this is still needed, like a frame missing one one render making rendertexture blank
@@ -211,7 +211,7 @@ namespace Abiogenesis3d
 #endif
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             if (camInfo != null && camInfo.cam != null)
             {
@@ -236,12 +236,12 @@ namespace Abiogenesis3d
         }
 
 #if UNITY_PIPELINE_URP
-        void OnBeginCameraRendering(ScriptableRenderContext context, Camera camera)
+        private void OnBeginCameraRendering(ScriptableRenderContext context, Camera camera)
         {
             PreRender(camera);
         }
 
-        void OnEndCameraRendering(ScriptableRenderContext context, Camera camera)
+        private void OnEndCameraRendering(ScriptableRenderContext context, Camera camera)
         {
             PostRender(camera);
         }
@@ -283,7 +283,7 @@ namespace Abiogenesis3d
 
         // NOTE: store the Screen size values in LateUpdate like uPixelator.screenSize, otherwise
         // it will differ in PreRender when resizing the screen in the editor
-        void PreRender(Camera camera)
+        private void PreRender(Camera camera)
         {
             if (camera != camInfo.cam) return;
 
@@ -292,7 +292,7 @@ namespace Abiogenesis3d
             if (!Application.isPlaying) uPixelator.HandleSnapping();
         }
 
-        void PostRender(Camera camera)
+        private void PostRender(Camera camera)
         {
             if (camera != camInfo.cam) return;
 

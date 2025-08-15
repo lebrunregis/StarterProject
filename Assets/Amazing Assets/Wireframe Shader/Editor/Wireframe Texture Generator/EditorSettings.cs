@@ -2,9 +2,8 @@
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
 using System.Collections.Generic;
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
@@ -40,10 +39,10 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
         #region PreviewTexture
         public int previewRectSize = 200;
         static public Rect previewTextureDrawRect;
-        static Texture2D[] previewTextures;
-        static Texture2D previewTextureCombined;
-        int previewTexturesIndex = 0;
-        bool previewCombine;
+        private static Texture2D[] previewTextures;
+        private static Texture2D previewTextureCombined;
+        private int previewTexturesIndex = 0;
+        private bool previewCombine;
         #endregion
 
         public EditorSettings()
@@ -211,7 +210,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
                 collumnRect1.y = rect.y + 5;
                 collumnRect2.y = rect.y + 5;
                 collumnRect3.y = rect.y + 5;
-                Rect rectSubmesh = new Rect(collumnRect3.xMin, rect.yMin + 5, collumnRect3.width - (isPreviewValid && previewTextures.Length > 1 ? 26 : 0), 18);
+                Rect rectSubmesh = new(collumnRect3.xMin, rect.yMin + 5, collumnRect3.width - (isPreviewValid && previewTextures.Length > 1 ? 26 : 0), 18);
 
 
 
@@ -278,7 +277,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
                 {
                     EditorGUI.DrawTextureTransparent(previewTextureDrawRect, Texture2D.blackTexture);
 
-                    Rect warningRect = new Rect(collumnRect1.xMin, previewTextureDrawRect.yMin + 20, 300, 40);
+                    Rect warningRect = new(collumnRect1.xMin, previewTextureDrawRect.yMin + 20, 300, 40);
 
                     EditorGUI.DrawRect(warningRect, UnityEditor.EditorGUIUtility.isProSkin ? Color.black : Color.grey);
 
@@ -337,20 +336,20 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
                 {
                     previewTextures[i] = listBatchObjects[EditorWindow.active.selectedBatchObjectIndex].mesh.WireframeShader().GenerateWireframeTexture(1024, solverType, solverReadFrom, i, solverNormalizeEdges, solverTryQuad, solverThickness, solverSmoothness);
 
-                    if(previewTextures[i] != null)
+                    if (previewTextures[i] != null)
                         previewTextures[i].filterMode = FilterMode.Bilinear;
                 }
 
                 if (previewTextures.Length > 1)
                 {
                     previewTextureCombined = listBatchObjects[EditorWindow.active.selectedBatchObjectIndex].mesh.WireframeShader().GenerateWireframeTexture(1024, solverType, solverReadFrom, -1, solverNormalizeEdges, solverTryQuad, solverThickness, solverSmoothness);
-                    
-                    if(previewTextureCombined != null)
+
+                    if (previewTextureCombined != null)
                         previewTextureCombined.filterMode = FilterMode.Bilinear;
                 }
             }
         }
-        void DestroyPreviewTextures()
+        private void DestroyPreviewTextures()
         {
             if (previewTextures != null)
             {
@@ -362,7 +361,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
 
             WireframeShaderUtilities.DestroyUnityObject(previewTextureCombined);
         }
-        bool CanRenderPreviewTexture(Mesh mesh)
+        private bool CanRenderPreviewTexture(Mesh mesh)
         {
             if (mesh.HasVertexAttribute(UnityEngine.Rendering.VertexAttribute.TexCoord0) == false)
                 return false;

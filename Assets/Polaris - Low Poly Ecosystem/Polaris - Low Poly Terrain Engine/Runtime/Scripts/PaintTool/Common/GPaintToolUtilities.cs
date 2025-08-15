@@ -1,10 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using System;
-using Unity.Collections;
-using Unity.Jobs;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.PaintTool
 {

@@ -2,14 +2,19 @@
 using UnityEngine;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
-    public static class SpatializerHelper {
+namespace DarkTonic.MasterAudio
+{
+    public static class SpatializerHelper
+    {
         private const string OculusSpatializer = "OculusSpatializer";
         private const string ResonanceAudioSpatializer = "Resonance Audio";
 
-        public static bool IsSupportedSpatializer {
-            get {
-                switch (SelectedSpatializer) {
+        public static bool IsSupportedSpatializer
+        {
+            get
+            {
+                switch (SelectedSpatializer)
+                {
                     case OculusSpatializer:
                         return true;
                     case ResonanceAudioSpatializer:
@@ -20,42 +25,53 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        public static bool IsOculusAudioSpatializer {
-            get {
+        public static bool IsOculusAudioSpatializer
+        {
+            get
+            {
                 return SelectedSpatializer == OculusSpatializer;
             }
         }
 
-        public static bool IsResonanceAudioSpatializer {
-            get {
+        public static bool IsResonanceAudioSpatializer
+        {
+            get
+            {
                 return SelectedSpatializer == ResonanceAudioSpatializer;
             }
         }
 
-        public static string SelectedSpatializer {
-            get {
+        public static string SelectedSpatializer
+        {
+            get
+            {
                 return AudioSettings.GetSpatializerPluginName();
             }
         }
 
-        public static void TurnOnSpatializerIfEnabled(AudioSource source) {
-            if (MasterAudio.SafeInstance == null) {
+        public static void TurnOnSpatializerIfEnabled(AudioSource source)
+        {
+            if (MasterAudio.SafeInstance == null)
+            {
                 SetSpatializerToggleOnSource(source, false);
                 return;
             }
 
-            if (!MasterAudio.Instance.useSpatializer) {
+            if (!MasterAudio.Instance.useSpatializer)
+            {
                 SetSpatializerToggleOnSource(source, false);
                 return;
             }
 
             SetSpatializerToggleOnSource(source, true);
 
-            if (!ResonanceAudioHelper.ResonanceAudioOptionExists) {
+            if (!ResonanceAudioHelper.ResonanceAudioOptionExists)
+            {
                 return;
             }
 
-            if (!MasterAudio.Instance.useSpatializerPostFX) {
+            if (!MasterAudio.Instance.useSpatializerPostFX)
+            {
                 return;
             }
 
@@ -64,9 +80,10 @@ namespace DarkTonic.MasterAudio {
 
         private static void SetSpatializerToggleOnSource(AudioSource source, bool enabled)
         {
-            if (enabled) {
-				enabled = source.spatialBlend != 0;        
-            }       
+            if (enabled)
+            {
+                enabled = source.spatialBlend != 0;
+            }
 
             source.spatialize = enabled;
         }

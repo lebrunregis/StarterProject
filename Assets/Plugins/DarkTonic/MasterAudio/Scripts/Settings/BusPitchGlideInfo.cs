@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     [Serializable]
     // ReSharper disable once CheckNamespace
-	public class BusPitchGlideInfo {
+    public class BusPitchGlideInfo
+    {
         public string NameOfBus;
         public float CompletionTime;
         public bool IsActive = true;

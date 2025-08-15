@@ -64,7 +64,7 @@ namespace Pinwheel.Griffin
 
         public static GTreeInstance Create(int prototypeIndex)
         {
-            GTreeInstance tree = new GTreeInstance();
+            GTreeInstance tree = new();
             tree.PrototypeIndex = prototypeIndex;
             tree.Position = Vector3.zero;
             tree.Rotation = Quaternion.identity;
@@ -85,7 +85,7 @@ namespace Pinwheel.Griffin
 
         public static explicit operator TreeInstance(GTreeInstance t)
         {
-            TreeInstance tree = new TreeInstance();
+            TreeInstance tree = new();
             tree.prototypeIndex = t.PrototypeIndex;
             tree.position = t.Position;
             tree.widthScale = t.Scale.x;

@@ -21,7 +21,7 @@ namespace Pinwheel.Griffin
         {
             get
             {
-                Rect r = new Rect();
+                Rect r = new();
                 r.size = new Vector2(position.size.x - rightPaneWidth, position.size.y - toolbarHeight - toolbarOverflowY);
                 r.position = new Vector2(0, toolbarHeight + toolbarOverflowY);
                 return r;
@@ -32,7 +32,7 @@ namespace Pinwheel.Griffin
         {
             get
             {
-                Rect r = new Rect();
+                Rect r = new();
                 r.size = new Vector2(rightPaneWidth, position.size.y - toolbarHeight - toolbarOverflowY);
                 r.position = new Vector2(position.size.x - rightPaneWidth, toolbarHeight + toolbarOverflowY);
                 return r;
@@ -43,7 +43,7 @@ namespace Pinwheel.Griffin
         {
             get
             {
-                Rect r = new Rect();
+                Rect r = new();
                 r.position = new Vector2(position.size.x - rightPaneWidth - resizeRectWidth * 0.5f, toolbarHeight + toolbarOverflowY);
                 r.size = new Vector2(resizeRectWidth, position.size.y - toolbarHeight - toolbarOverflowY);
                 return r;
@@ -62,7 +62,7 @@ namespace Pinwheel.Griffin
         private void DrawToolbar()
         {
             Rect r = EditorGUILayout.GetControlRect();
-            RectOffset offset = new RectOffset(toolbarOffsetX, toolbarOffsetX, 0, 0);
+            RectOffset offset = new(toolbarOffsetX, toolbarOffsetX, 0, 0);
             GUI.Box(offset.Add(r), string.Empty, EditorStyles.toolbar);
 
             OnToolbarGUI(r);

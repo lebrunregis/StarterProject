@@ -4,9 +4,9 @@ namespace BrainFailProductions.PolyFew
 {
 
 
-    using UnityEngine;
-    using UnityEditor;
     using System;
+    using UnityEditor;
+    using UnityEngine;
 
     public class PopupToggleTemplate : PopupWindowContent
     {
@@ -94,7 +94,7 @@ namespace BrainFailProductions.PolyFew
                     {
                         //definition.Setter(result);
                     }
-                    
+
 
 
                     EditorGUILayout.EndVertical();

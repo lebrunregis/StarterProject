@@ -13,29 +13,29 @@ namespace Pinwheel.Griffin
             {
                 vertices = new Vector3[]
                 {
-                    new Vector3(-0.5f, 0, 0), new Vector3(-0.5f, 1, 0), new Vector3(0.5f, 1, 0),
-                    new Vector3(-0.5f, 0, 0), new Vector3(0.5f, 1, 0), new Vector3(0.5f, 0, 0)
+                    new(-0.5f, 0, 0), new(-0.5f, 1, 0), new(0.5f, 1, 0),
+                    new(-0.5f, 0, 0), new(0.5f, 1, 0), new(0.5f, 0, 0)
                 };
             }
             else if (shape == GGrassShape.Cross)
             {
                 vertices = new Vector3[]
                 {
-                    new Vector3(-0.5f, 0, 0), new Vector3(-0.5f, 1, 0), new Vector3(0.5f, 1, 0),
-                    new Vector3(-0.5f, 0, 0), new Vector3(0.5f, 1, 0), new Vector3(0.5f, 0, 0),
-                    new Vector3(0, 0, -0.5f), new Vector3(0, 1, -0.5f), new Vector3(0, 1, 0.5f),
-                    new Vector3(0, 0, -0.5f), new Vector3(0, 1, 0.5f), new Vector3(0, 0, 0.5f),
+                    new(-0.5f, 0, 0), new(-0.5f, 1, 0), new(0.5f, 1, 0),
+                    new(-0.5f, 0, 0), new(0.5f, 1, 0), new(0.5f, 0, 0),
+                    new(0, 0, -0.5f), new(0, 1, -0.5f), new(0, 1, 0.5f),
+                    new(0, 0, -0.5f), new(0, 1, 0.5f), new(0, 0, 0.5f),
                 };
             }
             else if (shape == GGrassShape.TriCross)
             {
                 Vector3[] quads = new Vector3[]
                 {
-                    new Vector3(-0.5f, 0, 0), new Vector3(-0.5f, 1, 0), new Vector3(0.5f, 1, 0),
-                    new Vector3(-0.5f, 0, 0), new Vector3(0.5f, 1, 0), new Vector3(0.5f, 0, 0)
+                    new(-0.5f, 0, 0), new(-0.5f, 1, 0), new(0.5f, 1, 0),
+                    new(-0.5f, 0, 0), new(0.5f, 1, 0), new(0.5f, 0, 0)
                 };
 
-                List<Vector3> verts = new List<Vector3>();
+                List<Vector3> verts = new();
                 verts.AddRange(quads);
 
                 Matrix4x4 rotate60 = Matrix4x4.Rotate(Quaternion.Euler(0, -60, 0));

@@ -22,6 +22,6 @@ namespace BrainFailProductions.PolyFew.AsImpL
     /// </summary>
     public class LoadingProgress
     {
-        public List<SingleLoadingProgress> singleProgress = new List<SingleLoadingProgress>();
+        public List<SingleLoadingProgress> singleProgress = new();
     }
 }

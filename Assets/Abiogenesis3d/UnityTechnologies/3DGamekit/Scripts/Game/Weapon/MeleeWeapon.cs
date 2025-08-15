@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +17,7 @@ namespace Gamekit3D
 
 #if UNITY_EDITOR
             //editor only as it's only used in editor to display the path of the attack that is used by the raycast
-            [NonSerialized] public List<Vector3> previousPositions = new List<Vector3>();
+            [NonSerialized] public List<Vector3> previousPositions = new();
 #endif
 
         }
@@ -44,7 +43,7 @@ namespace Gamekit3D
         protected bool m_IsThrowingHit = false;
         protected bool m_InAttack = false;
 
-        const int PARTICLE_COUNT = 10;
+        private const int PARTICLE_COUNT = 10;
         protected ParticleSystem[] m_ParticlesPool = new ParticleSystem[PARTICLE_COUNT];
         protected int m_CurrentParticle = 0;
 
@@ -127,7 +126,7 @@ namespace Gamekit3D
                     }
 
 
-                    Ray r = new Ray(worldPos, attackVector.normalized);
+                    Ray r = new(worldPos, attackVector.normalized);
 
                     int contacts = Physics.SphereCastNonAlloc(r, pts.radius, s_RaycastHitCache, attackVector.magnitude,
                         ~0,

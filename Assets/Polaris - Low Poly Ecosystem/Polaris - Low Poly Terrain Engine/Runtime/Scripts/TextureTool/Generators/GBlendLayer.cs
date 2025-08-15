@@ -118,7 +118,7 @@ namespace Pinwheel.Griffin.TextureTool
 
         public static GBlendLayer Create()
         {
-            GBlendLayer layer = new GBlendLayer();
+            GBlendLayer layer = new();
             layer.dataSource = GBlendDataSource.Texture;
             layer.texture = null;
             layer.number = 1;

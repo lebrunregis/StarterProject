@@ -8,10 +8,10 @@ namespace Pinwheel.Griffin
     {
         public static GCombineInfo Combine(List<GCombineInfo> combines)
         {
-            List<Vector3> vertices = new List<Vector3>();
-            List<Vector2> uvs = new List<Vector2>();
-            List<Color32> colors = new List<Color32>();
-            List<int> triangles = new List<int>();
+            List<Vector3> vertices = new();
+            List<Vector2> uvs = new();
+            List<Color32> colors = new();
+            List<int> triangles = new();
 
             for (int i = 0; i < combines.Count; ++i)
             {
@@ -31,7 +31,7 @@ namespace Pinwheel.Griffin
                 colors.AddRange(c.Colors);
             }
 
-            GCombineInfo result = new GCombineInfo();
+            GCombineInfo result = new();
             result.Vertices = vertices.ToArray();
             result.UVs = uvs.ToArray();
             result.Colors = colors.ToArray();
@@ -70,7 +70,7 @@ namespace Pinwheel.Griffin
                 }
             }
 
-            GCombineInfo result = new GCombineInfo();
+            GCombineInfo result = new();
             result.Vertices = vertices;
             result.UVs = uvs;
             //result.Colors = colors;

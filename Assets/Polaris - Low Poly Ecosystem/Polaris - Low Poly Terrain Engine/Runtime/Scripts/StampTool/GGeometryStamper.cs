@@ -237,7 +237,7 @@ namespace Pinwheel.Griffin.StampTool
             {
                 DrawOnTexture(t);
             }
-            foreach(GStylizedTerrain t in terrains)
+            foreach (GStylizedTerrain t in terrains)
             {
                 UpdateTerrain(t);
             }
@@ -252,7 +252,7 @@ namespace Pinwheel.Griffin.StampTool
             if (t.TerrainData == null)
                 return;
             int heightMapResolution = t.TerrainData.Geometry.HeightMapResolution;
-            RenderTexture rt = new RenderTexture(heightMapResolution, heightMapResolution, 0, GGeometry.HeightMapRTFormat, RenderTextureReadWrite.Linear);
+            RenderTexture rt = new(heightMapResolution, heightMapResolution, 0, GGeometry.HeightMapRTFormat, RenderTextureReadWrite.Linear);
             Internal_DrawOnTexture(t, rt);
 
             Color[] oldHeightMapColors = t.TerrainData.Geometry.HeightMap.GetPixels();
@@ -265,13 +265,13 @@ namespace Pinwheel.Griffin.StampTool
             rt.Release();
             Object.DestroyImmediate(rt);
 
-            List<Rect> dirtyRects = new List<Rect>(GCommon.CompareTerrainTexture(t.TerrainData.Geometry.ChunkGridSize, oldHeightMapColors, newHeightMapColors));
+            List<Rect> dirtyRects = new(GCommon.CompareTerrainTexture(t.TerrainData.Geometry.ChunkGridSize, oldHeightMapColors, newHeightMapColors));
             for (int i = 0; i < dirtyRects.Count; ++i)
             {
                 t.TerrainData.Geometry.SetRegionDirty(dirtyRects[i]);
                 t.TerrainData.Foliage.SetTreeRegionDirty(dirtyRects[i]);
                 t.TerrainData.Foliage.SetGrassRegionDirty(dirtyRects[i]);
-            }            
+            }
         }
 
         private void UpdateTerrain(GStylizedTerrain t)

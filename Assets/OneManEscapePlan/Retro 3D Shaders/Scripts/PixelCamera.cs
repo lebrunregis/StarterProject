@@ -2,9 +2,6 @@
 /// For distribution only on the Unity Asset Store
 /// Terms/EULA: https://unity3d.com/legal/as_terms
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -33,77 +30,90 @@ using UnityEngine.Assertions;
 /// </remarks>
 [ExecuteInEditMode]
 [RequireComponent(typeof(Camera))]
-public class PixelCamera : MonoBehaviour {
-	[Min(32)]
-	[SerializeField] private int verticalResolution = 244;
-	[SerializeField] private bool verboseLogging = false;
-	protected RenderTexture rt;
+public class PixelCamera : MonoBehaviour
+{
+    [Min(32)]
+    [SerializeField] private int verticalResolution = 244;
+    [SerializeField] private bool verboseLogging = false;
+    protected RenderTexture rt;
 
-	protected Camera _camera;
-	virtual protected Camera Camera {
-		get {
-			if (_camera == null) {
-				_camera = GetComponent<Camera>();
-			}
-			return _camera;
-		}
-	}
+    protected Camera _camera;
+    virtual protected Camera Camera
+    {
+        get
+        {
+            if (_camera == null)
+            {
+                _camera = GetComponent<Camera>();
+            }
+            return _camera;
+        }
+    }
 
-	virtual public int VerticalResolution {
-		get => verticalResolution;
-		set {
-			Assert.IsFalse(value < 1, "Vertical resolution must be positive");
-			verticalResolution = value;
-		}
-	}
+    virtual public int VerticalResolution
+    {
+        get => verticalResolution;
+        set
+        {
+            Assert.IsFalse(value < 1, "Vertical resolution must be positive");
+            verticalResolution = value;
+        }
+    }
 
-	// Use this for initialization
-	virtual protected void Start () {
-		UpdateSettings();
-	}
+    // Use this for initialization
+    virtual protected void Start()
+    {
+        UpdateSettings();
+    }
 
-	/// <summary>
-	/// Apply settings from the Render Settings asset
-	/// </summary>
-	virtual protected void UpdateSettings() {
-		if (Screen.width == 0 || Screen.height == 0) {
-			Debug.Log("Screen size is 0; this can happen when the Editor first launches.");
-			return;
-		}
-		float aspect = Screen.width / (float)Screen.height;
-		int targetWidth = Mathf.FloorToInt(verticalResolution * aspect);
-		if (rt == null) {
-			rt = new RenderTexture(targetWidth, verticalResolution, 24);
-			Camera.targetTexture = rt;
-		}
+    /// <summary>
+    /// Apply settings from the Render Settings asset
+    /// </summary>
+    virtual protected void UpdateSettings()
+    {
+        if (Screen.width == 0 || Screen.height == 0)
+        {
+            Debug.Log("Screen size is 0; this can happen when the Editor first launches.");
+            return;
+        }
+        float aspect = Screen.width / (float)Screen.height;
+        int targetWidth = Mathf.FloorToInt(verticalResolution * aspect);
+        if (rt == null)
+        {
+            rt = new RenderTexture(targetWidth, verticalResolution, 24);
+            Camera.targetTexture = rt;
+        }
 
-		if (rt.width != targetWidth || rt.height != verticalResolution) {
-			rt.Release();
-			rt.width = targetWidth;
-			rt.height = verticalResolution;
-			if (verboseLogging) Debug.Log("Set RenderTexture width to " + rt.width + ", aspect " + aspect);
-		}
-	}
+        if (rt.width != targetWidth || rt.height != verticalResolution)
+        {
+            rt.Release();
+            rt.width = targetWidth;
+            rt.height = verticalResolution;
+            if (verboseLogging) Debug.Log("Set RenderTexture width to " + rt.width + ", aspect " + aspect);
+        }
+    }
 
-	virtual protected void OnPreRender() {
-		if (Camera == null) return;
+    virtual protected void OnPreRender()
+    {
+        if (Camera == null) return;
 
-		//constantly check settings in the editor so we can see render-settings changes in real-time
+        //constantly check settings in the editor so we can see render-settings changes in real-time
 #if UNITY_EDITOR
-		UpdateSettings();
+        UpdateSettings();
 #endif
-		//we null the camera's targetTexture in OnRenderImage(), and must re-apply it here
-		Camera.targetTexture = rt;
-	}
+        //we null the camera's targetTexture in OnRenderImage(), and must re-apply it here
+        Camera.targetTexture = rt;
+    }
 
-	//see https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnRenderImage.html
-	virtual protected void OnRenderImage(RenderTexture source, RenderTexture destination) {
-		if (Camera == null) return;
+    //see https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnRenderImage.html
+    virtual protected void OnRenderImage(RenderTexture source, RenderTexture destination)
+    {
+        if (Camera == null) return;
 
-		Camera.targetTexture = null; //this is necessary so that our rendered image actually appears onscreen
-		//copy our rendered image from the RenderTexture to the display backbuffer. this resizes the rendered image without blurring it
-		source.filterMode = FilterMode.Point;
-		Graphics.Blit(source, (RenderTexture)null);
-		RenderTexture.active = rt;
-	}
+        Camera.targetTexture = null; //this is necessary so that our rendered image actually appears onscreen
+                                     //copy our rendered image from the RenderTexture to the display backbuffer. this resizes the rendered image without blurring it
+        source.filterMode = FilterMode.Point;
+        Graphics.Blit(source, (RenderTexture)null);
+        RenderTexture.active = rt;
+    }
 }

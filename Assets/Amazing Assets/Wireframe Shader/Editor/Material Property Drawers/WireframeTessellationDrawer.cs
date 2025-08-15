@@ -2,18 +2,17 @@
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
 using System.Linq;
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor
 {
     public class WireframeTessellationDrawer : WireframeMaterialBasePropertyDrawer
     {
-        static string[] keywords = new string[] { "_", "WIREFRAME_TESSELLATION_DISTANCE_BASED", "WIREFRAME_TESSELLATION_EDGE_LENGTH" };
-        static string[] keywordNames = new string[] { "Fixed", "Distance Based", "Edge Length" };
-        static int[] intValues = new int[] { 0, 1, 2 };
+        private static readonly string[] keywords = new string[] { "_", "WIREFRAME_TESSELLATION_DISTANCE_BASED", "WIREFRAME_TESSELLATION_EDGE_LENGTH" };
+        private static readonly string[] keywordNames = new string[] { "Fixed", "Distance Based", "Edge Length" };
+        private static readonly int[] intValues = new int[] { 0, 1, 2 };
 
         public override void OnGUI(Rect position, MaterialProperty prop, string label, MaterialEditor editor)
         {

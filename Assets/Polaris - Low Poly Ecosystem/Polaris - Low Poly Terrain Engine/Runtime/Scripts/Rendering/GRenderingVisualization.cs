@@ -1,8 +1,5 @@
 #if GRIFFIN
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections;
 
 namespace Pinwheel.Griffin.Rendering
 {

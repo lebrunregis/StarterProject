@@ -1,7 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.ErosionTool
 {
@@ -179,7 +178,7 @@ namespace Pinwheel.Griffin.ErosionTool
 
         public void Initialize()
         {
-            GErosionInitializer initializer = new GErosionInitializer(this);
+            GErosionInitializer initializer = new(this);
             initializer.Init(ref bounds, ref simulationData, ref simulationMask, ref erosionMap);
         }
 
@@ -211,7 +210,7 @@ namespace Pinwheel.Griffin.ErosionTool
 
         public void SimulateHydraulicErosion()
         {
-            GHydraulicEroder eroder = new GHydraulicEroder(this);
+            GHydraulicEroder eroder = new(this);
             eroder.Init();
 
             int iteration = HydraulicConfigs.IterationCount;
@@ -234,7 +233,7 @@ namespace Pinwheel.Griffin.ErosionTool
 
         public void SimulateThermalErosion()
         {
-            GThermalEroder eroder = new GThermalEroder(this);
+            GThermalEroder eroder = new(this);
             eroder.Init();
 
             int iteration = ThermalConfigs.IterationCount;
@@ -254,13 +253,13 @@ namespace Pinwheel.Griffin.ErosionTool
 
         public void ApplyGeometry()
         {
-            GErosionApplier applier = new GErosionApplier(this);
+            GErosionApplier applier = new(this);
             applier.ApplyGeometry();
         }
 
         public void ApplyTexture()
         {
-            GErosionApplier applier = new GErosionApplier(this);
+            GErosionApplier applier = new(this);
             if (TexturingConfigs.TexturingMode == GErosionTexturingConfigs.GMode.Splat)
             {
                 applier.ApplySplat();

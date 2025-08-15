@@ -1,18 +1,10 @@
 #if UNITY_EDITOR
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
-using UnityEditor.ShortcutManagement;
-using System.Reflection;
-using System.Linq;
-using UnityEngine.UIElements;
-using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
-using Type = System.Type;
-using static VHierarchy.VHierarchyCache;
-using static VHierarchy.Libs.VUtils;
+using UnityEngine;
 using static VHierarchy.Libs.VGUI;
+using static VHierarchy.Libs.VUtils;
 // using static VTools.VDebug;
 
 
@@ -129,7 +121,7 @@ namespace VHierarchy
 
 
         [CustomEditor(typeof(VHierarchyData))]
-        class Editor : UnityEditor.Editor
+        private class Editor : UnityEditor.Editor
         {
             public override void OnInspectorGUI()
             {
@@ -215,8 +207,8 @@ namespace VHierarchy
 
         }
 
-        [ContextMenu("Enable Team Mode", isValidateFunction: true, priority: 1)] bool asd() => !teamModeEnabled;
-        [ContextMenu("Disable Team Mode", isValidateFunction: true, priority: 2)] bool ads() => teamModeEnabled;
+        [ContextMenu("Enable Team Mode", isValidateFunction: true, priority: 1)] private bool asd() => !teamModeEnabled;
+        [ContextMenu("Disable Team Mode", isValidateFunction: true, priority: 2)] private bool ads() => teamModeEnabled;
 
 
 

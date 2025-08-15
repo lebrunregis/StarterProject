@@ -11,22 +11,22 @@ namespace Abiogenesis3d
         [HideInInspector]
         public RenderMode renderMode = RenderMode.ScreenSpaceOverlay;
 
-        UPixelator uPixelator;
+        private UPixelator uPixelator;
 
         public Camera ownerCam;
 
-        FitCanvasToScreen fitCanvasToScreen;
+        private FitCanvasToScreen fitCanvasToScreen;
 
         public Canvas parentCanvas;
         public Transform parentTransform;
         public RectTransform rectTransform;
 
-        void OnEnable()
+        private void OnEnable()
         {
             rectTransform = GetComponent<RectTransform>();
         }
 
-        void HandleOwnerCam()
+        private void HandleOwnerCam()
         {
             if (uPixelator)
             {
@@ -39,13 +39,13 @@ namespace Abiogenesis3d
             }
         }
 
-        void HandleParent()
+        private void HandleParent()
         {
             // NOTE: do this every time because parent can change
             parentCanvas = transform.parent.GetComponent<Canvas>();
             if (!parentCanvas)
             {
-                GameObject parentCanvasGO = new GameObject("ParentCanvas");
+                GameObject parentCanvasGO = new("ParentCanvas");
                 parentCanvasGO.transform.SetParent(transform.parent);
                 parentCanvas = parentCanvasGO.AddComponent<Canvas>();
                 transform.SetParent(parentCanvasGO.transform);
@@ -89,7 +89,7 @@ namespace Abiogenesis3d
                 parentTransform = parentTransform.parent;
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             if (!uPixelator) uPixelator = GameObject.FindObjectOfType<UPixelator>();
             HandleOwnerCam();
@@ -111,7 +111,8 @@ namespace Abiogenesis3d
                 // TODO: why, probably camera is destroyed?
                 // Debug.Log("viewportPoint: " + viewportPoint + ", parentTransform.position: " + parentTransform.position);
             }
-            else {
+            else
+            {
                 rectTransform.anchoredPosition = default;
                 // rectTransform.SetPositionAndRotation(viewportPoint, Quaternion.Euler( 0, 0, 0));
                 rectTransform.anchorMin = viewportPoint;

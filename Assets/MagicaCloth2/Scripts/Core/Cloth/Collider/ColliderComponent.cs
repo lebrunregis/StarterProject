@@ -52,7 +52,7 @@ namespace MagicaCloth2
         /// <summary>
         /// 登録チーム
         /// </summary>
-        private HashSet<int> teamIdSet = new HashSet<int>();
+        private readonly HashSet<int> teamIdSet = new();
 
         /// <summary>
         /// 現在登録中のシンメトリーモード
@@ -309,7 +309,7 @@ namespace MagicaCloth2
             }
         }
 
-        bool GetHumanoidSymmetryBone(ref Transform target, Transform parent, Animator ani, HumanBodyBones src, HumanBodyBones dst)
+        private bool GetHumanoidSymmetryBone(ref Transform target, Transform parent, Animator ani, HumanBodyBones src, HumanBodyBones dst)
         {
             var bone = ani.GetBoneTransform(src);
             if (bone && parent == bone)
@@ -331,7 +331,7 @@ namespace MagicaCloth2
         /// <param name="at"></param>
         /// <param name="bt"></param>
         /// <returns></returns>
-        Transform FindCommonParent(Transform at, Transform bt)
+        private Transform FindCommonParent(Transform at, Transform bt)
         {
             if (at == null || bt == null)
                 return null;

@@ -32,38 +32,38 @@ namespace MagicaCloth2
             Motion,
         }
 
-        static PaintMode paintMode = PaintMode.None;
+        private static PaintMode paintMode = PaintMode.None;
 
         /// <summary>
         /// 編集対象のクロスコンポーネント
         /// </summary>
-        static MagicaCloth cloth = null;
+        private static MagicaCloth cloth = null;
 
         /// <summary>
         /// 編集対象のクロスEditorクラス
         /// </summary>
-        static MagicaClothEditor clothEditor = null;
+        private static MagicaClothEditor clothEditor = null;
 
         /// <summary>
         /// 編集対象のエディットメッシュ
         /// </summary>
-        static VirtualMeshContainer editMeshContainer = null;
+        private static VirtualMeshContainer editMeshContainer = null;
 
         /// <summary>
         /// 編集対象のセレクションデータ
         /// </summary>
-        static SelectionData selectionData = null;
+        private static SelectionData selectionData = null;
 
         /// <summary>
         /// 編集開始時のセレクションデータ（コピー）
         /// </summary>
-        static SelectionData initSelectionData = null;
+        private static SelectionData initSelectionData = null;
 
         internal const int WindowWidth = 200;
         internal const int WindowHeight = 200;
 
         //=========================================================================================
-        const int PointFlag_Selecting = 1; // 選択中
+        private const int PointFlag_Selecting = 1; // 選択中
 
         internal struct Point : IComparable<Point>
         {
@@ -81,11 +81,11 @@ namespace MagicaCloth2
                     return 0;
             }
         }
-        static NativeList<Point> dispPointList;
-        static NativeArray<float3> pointWorldPositions;
-        static VirtualMeshRaycastHit rayhit = default;
-        static bool oldShowAll = false;
-        static bool forceUpdate = false;
+        private static NativeList<Point> dispPointList;
+        private static NativeArray<float3> pointWorldPositions;
+        private static VirtualMeshRaycastHit rayhit = default;
+        private static bool oldShowAll = false;
+        private static bool forceUpdate = false;
 
         //=========================================================================================
         static ClothPainter()
@@ -145,7 +145,7 @@ namespace MagicaCloth2
         /// <summary>
         /// Undo/Redo実行後のコールバック
         /// </summary>
-        static void UndoRedoCallback()
+        private static void UndoRedoCallback()
         {
             //Develop.DebugLog($"Undo Redo!");
 
@@ -182,7 +182,7 @@ namespace MagicaCloth2
         }
 
         //=========================================================================================
-        static void OnGUI(SceneView sceneView)
+        private static void OnGUI(SceneView sceneView)
         {
             if (EditorApplication.isPlaying)
                 return;
@@ -378,7 +378,7 @@ namespace MagicaCloth2
         /// <param name="ray"></param>
         /// <param name="showAll"></param>
         /// <param name="brushSize"></param>
-        static void UpdatePoint(bool through, Transform ct, Camera cam, Ray ray, bool showAll, float brushSize, float3 brushPos, float pointSize)
+        private static void UpdatePoint(bool through, Transform ct, Camera cam, Ray ray, bool showAll, float brushSize, float3 brushPos, float pointSize)
         {
             // 表示頂点選別
             CreateDispPointList(through, ct, cam, showAll, brushSize, brushPos).Complete();
@@ -388,7 +388,7 @@ namespace MagicaCloth2
             rayhit = editMeshContainer.shareVirtualMesh.IntersectRayMesh(ray.origin, ray.direction, showAll, pointSize);
         }
 
-        static JobHandle CreateDispPointList(
+        private static JobHandle CreateDispPointList(
             bool through, Transform ct, Camera cam,
             bool showAll, float brushSize, float3 brushPosition, JobHandle jobHandle = default
             )
@@ -441,7 +441,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct CreateDispPointListJob : IJobParallelFor
+        private struct CreateDispPointListJob : IJobParallelFor
         {
             public bool through;
             public float4x4 LtoW;
@@ -535,7 +535,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct SortDispPointJob : IJob
+        private struct SortDispPointJob : IJob
         {
             public NativeList<Point> dispPointList;
 
@@ -581,7 +581,7 @@ namespace MagicaCloth2
 
 
         [BurstCompile]
-        struct CalcCameraDistanceJob : IJobParallelFor
+        private struct CalcCameraDistanceJob : IJobParallelFor
         {
             public float4x4 LtoW;
 
@@ -614,7 +614,7 @@ namespace MagicaCloth2
         /// 選択中ポイントに属性を付与する
         /// </summary>
         /// <param name="attribute"></param>
-        static void ApplyPaint(ClothPainterWindowData windata, NativeList<Point> applyPointList)
+        private static void ApplyPaint(ClothPainterWindowData windata, NativeList<Point> applyPointList)
         {
             int cnt = applyPointList.Length;
             for (int i = 0; i < cnt; i++)
@@ -683,7 +683,7 @@ namespace MagicaCloth2
         /// <summary>
         /// セレクションデータをシリアライズする
         /// </summary>
-        static void ApplySelectionData()
+        private static void ApplySelectionData()
         {
             // セレクションデータデータをシリアライズ化する
             selectionData.userEdit = true; // ユーザー編集フラグを立てる
@@ -697,7 +697,7 @@ namespace MagicaCloth2
         /// 塗りつぶし
         /// </summary>
         /// <param name="windata"></param>
-        static void Fill(ClothPainterWindowData windata)
+        private static void Fill(ClothPainterWindowData windata)
         {
             // 塗りつぶし用のポイントデータを作成する
             //int vcnt = editMesh.VertexCount;
@@ -724,7 +724,7 @@ namespace MagicaCloth2
         }
 
 
-        static void DoWindow(int unusedWindowID)
+        private static void DoWindow(int unusedWindowID)
         {
             var windata = ScriptableSingleton<ClothPainterWindowData>.instance;
 
@@ -895,7 +895,7 @@ namespace MagicaCloth2
         /// <summary>
         /// ウインドウの位置とサイズ
         /// </summary>
-        public Rect windowRect = new Rect(100, 100, ClothPainter.WindowWidth, ClothPainter.WindowHeight);
+        public Rect windowRect = new(100, 100, ClothPainter.WindowWidth, ClothPainter.WindowHeight);
 
         /// <summary>
         /// 表示ポイントサイズ

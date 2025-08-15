@@ -8,7 +8,7 @@ using Unity.Collections.LowLevel.Unsafe;
 
 namespace MagicaCloth2
 {
-    static class NativeReferenceExtensions
+    internal static class NativeReferenceExtensions
     {
         /// <summary>
         /// カウンターにデータ数を追加してその追加前の開始インデックスを返す
@@ -20,7 +20,7 @@ namespace MagicaCloth2
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         unsafe public static int MC2InterlockedStartIndex(ref this NativeReference<int> counter, int dataCount)
         {
-            int* cntPt = (int*)counter.GetUnsafePtr();
+            int* cntPt = counter.GetUnsafePtr();
             int start = Interlocked.Add(ref *cntPt, dataCount) - dataCount;
             return start;
         }

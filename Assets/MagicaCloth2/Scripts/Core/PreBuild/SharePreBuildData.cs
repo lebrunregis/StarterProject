@@ -18,10 +18,10 @@ namespace MagicaCloth2
         public ResultCode buildResult;
         public Vector3 buildScale;
 
-        public List<RenderSetupData.ShareSerializationData> renderSetupDataList = new List<RenderSetupData.ShareSerializationData>();
+        public List<RenderSetupData.ShareSerializationData> renderSetupDataList = new();
 
         public VirtualMesh.ShareSerializationData proxyMesh;
-        public List<VirtualMesh.ShareSerializationData> renderMeshList = new List<VirtualMesh.ShareSerializationData>();
+        public List<VirtualMesh.ShareSerializationData> renderMeshList = new();
 
         public DistanceConstraint.ConstraintData distanceConstraintData;
         public TriangleBendingConstraint.ConstraintData bendingConstraintData;
@@ -52,7 +52,7 @@ namespace MagicaCloth2
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder(1024);
+            StringBuilder sb = new(1024);
 
             sb.AppendLine("<<<<< PreBuildData >>>>>");
             sb.AppendLine($"Version:{version}");

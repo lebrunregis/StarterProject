@@ -78,7 +78,7 @@ namespace Pinwheel.Griffin.GroupTool
             string label = "Geometry Override";
             string id = "geometryoverride" + instance.GetInstanceID();
 
-            GenericMenu context = new GenericMenu();
+            GenericMenu context = new();
             context.AddItem(
                 new GUIContent("Default"),
                 false,
@@ -262,7 +262,7 @@ namespace Pinwheel.Griffin.GroupTool
             string label = "Shading Override";
             string id = "shadingoverride" + instance.GetInstanceID();
 
-            GenericMenu context = new GenericMenu();
+            GenericMenu context = new();
             context.AddItem(
                 new GUIContent("Default"),
                 false,
@@ -340,7 +340,7 @@ namespace Pinwheel.Griffin.GroupTool
                 s.MetallicMapResolution = EditorGUILayout.DelayedIntField("Metallic Map Resolution", s.MetallicMapResolution);
                 EditorGUILayout.EndHorizontal();
 
-                SerializedObject so = new SerializedObject(instance);
+                SerializedObject so = new(instance);
                 SerializedProperty sp = so.FindProperty("shadingOverride");
 
                 EditorGUILayout.BeginHorizontal();
@@ -457,7 +457,7 @@ namespace Pinwheel.Griffin.GroupTool
             string label = "Rendering Override";
             string id = "renderingoverride" + instance.GetInstanceID();
 
-            GenericMenu context = new GenericMenu();
+            GenericMenu context = new();
             context.AddItem(
                 new GUIContent("Default"),
                 false,
@@ -577,7 +577,7 @@ namespace Pinwheel.Griffin.GroupTool
             string label = "Foliage Override";
             string id = "foliageoverride" + instance.GetInstanceID();
 
-            GenericMenu context = new GenericMenu();
+            GenericMenu context = new();
             context.AddItem(
                 new GUIContent("Default"),
                 false,
@@ -786,7 +786,7 @@ namespace Pinwheel.Griffin.GroupTool
             string label = "Mask Override";
             string id = "maskoverride" + instance.GetInstanceID();
 
-            GenericMenu context = new GenericMenu();
+            GenericMenu context = new();
             context.AddItem(
                 new GUIContent("Default"),
                 false,
@@ -824,7 +824,7 @@ namespace Pinwheel.Griffin.GroupTool
                 EditorGUI.BeginChangeCheck();
                 float labelWidth = EditorGUIUtility.labelWidth;
                 EditorGUIUtility.labelWidth = labelWidth - TOGGLE_WIDTH;
-                                
+
                 EditorGUILayout.BeginHorizontal();
                 m.OverrideMaskMapResolution = EditorGUILayout.Toggle(m.OverrideMaskMapResolution, GUILayout.Width(TOGGLE_WIDTH));
                 m.MaskMapResolution = EditorGUILayout.DelayedIntField("Resolution", m.MaskMapResolution);
@@ -866,7 +866,7 @@ namespace Pinwheel.Griffin.GroupTool
 
         private void ShowImportContext()
         {
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 new GUIContent("Unity Terrain Data"),
                 false,
@@ -895,7 +895,7 @@ namespace Pinwheel.Griffin.GroupTool
 
         private void ShowExportContext()
         {
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 new GUIContent("Unity Terrain Data"),
                 false,

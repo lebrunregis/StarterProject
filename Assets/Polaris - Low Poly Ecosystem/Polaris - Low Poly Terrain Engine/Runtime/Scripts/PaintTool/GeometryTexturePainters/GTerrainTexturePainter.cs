@@ -15,7 +15,7 @@ namespace Pinwheel.Griffin.PaintTool
     {
         public const float GEOMETRY_OPACITY_EXPONENT = 3;
 
-        private static readonly List<string> BUILTIN_PAINTER_NAME = new List<string>(new string[]
+        private static readonly List<string> BUILTIN_PAINTER_NAME = new(new string[]
         {
             "GElevationPainter",
             "GHeightSamplingPainter",
@@ -570,7 +570,7 @@ namespace Pinwheel.Griffin.PaintTool
             if (overlappedTerrains.Count == 0)
                 return;
 
-            List<GTerrainResourceFlag> flags = new List<GTerrainResourceFlag>();
+            List<GTerrainResourceFlag> flags = new();
             flags.AddRange(ActivePainter.GetResourceFlagForHistory(args));
 
             if (InitialRecordedTerrains.Count == 0)
@@ -603,10 +603,10 @@ namespace Pinwheel.Griffin.PaintTool
             if (EditedTerrains.Count == 0)
                 return;
 
-            List<GTerrainResourceFlag> flags = new List<GTerrainResourceFlag>();
+            List<GTerrainResourceFlag> flags = new();
             flags.AddRange(ActivePainter.GetResourceFlagForHistory(args));
 
-            List<GStylizedTerrain> terrainList = new List<GStylizedTerrain>(EditedTerrains);
+            List<GStylizedTerrain> terrainList = new(EditedTerrains);
             string backupName = GBackup.TryCreateBackup(ActivePainter.HistoryPrefix, terrainList[0], flags, false);
             if (!string.IsNullOrEmpty(backupName))
             {
@@ -629,7 +629,7 @@ namespace Pinwheel.Griffin.PaintTool
             if (!internal_RenderTextures.ContainsKey(key) ||
                 internal_RenderTextures[key] == null)
             {
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 internal_RenderTextures[key] = rt;
             }
             else if (internal_RenderTextures[key].width != resolution ||
@@ -638,7 +638,7 @@ namespace Pinwheel.Griffin.PaintTool
             {
                 internal_RenderTextures[key].Release();
                 Object.DestroyImmediate(internal_RenderTextures[key]);
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 internal_RenderTextures[key] = rt;
             }
 

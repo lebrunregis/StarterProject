@@ -1,7 +1,5 @@
 #if GRIFFIN
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Pinwheel.Griffin
 {
@@ -84,7 +82,7 @@ namespace Pinwheel.Griffin
         public void ResetFull()
         {
             Reset();
-            if (maskMap!=null)
+            if (maskMap != null)
             {
                 GUtilities.DestroyObject(maskMap);
             }
@@ -99,8 +97,8 @@ namespace Pinwheel.Griffin
         {
             if (maskMap == null)
                 return;
-            Texture2D tmp = new Texture2D(MaskMapResolution, MaskMapResolution, TextureFormat.RGBA32, false);
-            RenderTexture rt = new RenderTexture(MaskMapResolution, MaskMapResolution, 32, RenderTextureFormat.ARGB32);
+            Texture2D tmp = new(MaskMapResolution, MaskMapResolution, TextureFormat.RGBA32, false);
+            RenderTexture rt = new(MaskMapResolution, MaskMapResolution, 32, RenderTextureFormat.ARGB32);
             GCommon.CopyToRT(maskMap, rt);
             GCommon.CopyFromRT(tmp, rt);
             rt.Release();

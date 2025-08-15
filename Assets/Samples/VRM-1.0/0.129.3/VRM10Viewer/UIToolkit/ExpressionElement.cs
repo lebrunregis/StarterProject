@@ -5,8 +5,8 @@ using UniVRM10;
 
 public class ExpressionElement : VisualElement
 {
-    Slider _slider;
-    Toggle _toggle;
+    private Slider _slider;
+    private Toggle _toggle;
 
     public ExpressionElement() { }
 

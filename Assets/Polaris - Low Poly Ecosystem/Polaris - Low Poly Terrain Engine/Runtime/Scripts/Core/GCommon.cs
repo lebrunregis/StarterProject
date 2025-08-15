@@ -332,7 +332,7 @@ namespace Pinwheel.Griffin
 
         public static Texture2D CreateTexture(int resolution, Color fill, TextureFormat format = TextureFormat.RGBA32, bool linear = true)
         {
-            Texture2D t = new Texture2D(resolution, resolution, format, false, linear);
+            Texture2D t = new(resolution, resolution, format, false, linear);
             Color[] colors = new Color[resolution * resolution];
             GUtilities.Fill(colors, fill);
             t.SetPixels(colors);
@@ -342,7 +342,7 @@ namespace Pinwheel.Griffin
 
         public static Texture2D CreateTexture(int width, int height, Color fill, TextureFormat format = TextureFormat.RGBA32, bool linear = true)
         {
-            Texture2D t = new Texture2D(width, height, format, false, linear);
+            Texture2D t = new(width, height, format, false, linear);
             Color[] colors = new Color[width * height];
             GUtilities.Fill(colors, fill);
             t.SetPixels(colors);
@@ -372,10 +372,10 @@ namespace Pinwheel.Griffin
         {
             int endX = startX + width - 1;
             int endY = startY + height - 1;
-            Vector2 startUV = new Vector2(
+            Vector2 startUV = new(
                 GUtilities.InverseLerpUnclamped(0, src.width - 1, startX),
                 GUtilities.InverseLerpUnclamped(0, src.height - 1, startY));
-            Vector2 endUV = new Vector2(
+            Vector2 endUV = new(
                 GUtilities.InverseLerpUnclamped(0, src.width - 1, endX),
                 GUtilities.InverseLerpUnclamped(0, src.height - 1, endY));
             Material mat = GInternalMaterials.CopyTextureMaterial;
@@ -384,11 +384,11 @@ namespace Pinwheel.Griffin
             mat.SetVector("_EndUV", endUV);
             mat.SetColor("_DefaultColor", defaultColor);
             mat.SetPass(0);
-            RenderTexture rt = new RenderTexture(width, height, 32);
+            RenderTexture rt = new(width, height, 32);
             RenderTexture.active = rt;
             Graphics.Blit(src, mat);
 
-            Texture2D tex = new Texture2D(width, height);
+            Texture2D tex = new(width, height);
             tex.ReadPixels(new Rect(0, 0, width, height), 0, 0);
             Color[] colors = tex.GetPixels();
 
@@ -488,7 +488,7 @@ namespace Pinwheel.Griffin
             int height = sample.GetLength(0);
             int width = sample.GetLength(1);
 
-            Rect rect = new Rect();
+            Rect rect = new();
             rect.position = new Vector2(
                 startX < 0 ? -startX : 0,
                 startY < 0 ? -startY : 0);
@@ -504,11 +504,11 @@ namespace Pinwheel.Griffin
                 return;
 
             Color[] colors = GUtilities.To1dArray(sample);
-            Texture2D tex = new Texture2D(width, height);
+            Texture2D tex = new(width, height);
             tex.SetPixels(colors);
             tex.Apply();
 
-            RenderTexture rt = new RenderTexture(width, height, 32);
+            RenderTexture rt = new(width, height, 32);
             if (mat != null)
                 Graphics.Blit(tex, rt, mat);
             else
@@ -560,7 +560,7 @@ namespace Pinwheel.Griffin
 
         public static void CopyTexture(Texture2D src, Texture2D des)
         {
-            RenderTexture rt = new RenderTexture(des.width, des.height, 0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear);
+            RenderTexture rt = new(des.width, des.height, 0, RenderTextureFormat.ARGBFloat, RenderTextureReadWrite.Linear);
             CopyToRT(src, rt);
             CopyFromRT(des, rt);
             rt.Release();
@@ -569,9 +569,9 @@ namespace Pinwheel.Griffin
 
         public static Texture2D CloneTexture(Texture2D t)
         {
-            RenderTexture rt = new RenderTexture(t.width, t.height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture rt = new(t.width, t.height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             CopyToRT(t, rt);
-            Texture2D result = new Texture2D(t.width, t.height, TextureFormat.ARGB32, false, true);
+            Texture2D result = new(t.width, t.height, TextureFormat.ARGB32, false, true);
             result.filterMode = t.filterMode;
             result.wrapMode = t.wrapMode;
             CopyFromRT(result, rt);
@@ -590,7 +590,7 @@ namespace Pinwheel.Griffin
 
         public static void FillTexture(RenderTexture rt, Color c)
         {
-            Texture2D tex = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+            Texture2D tex = new(1, 1, TextureFormat.ARGB32, false);
             tex.SetPixel(0, 0, c);
             tex.Apply();
             CopyToRT(tex, rt);
@@ -599,9 +599,9 @@ namespace Pinwheel.Griffin
 
         public static Texture2D CloneAndResizeTexture(Texture2D t, int width, int height)
         {
-            RenderTexture rt = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32);
+            RenderTexture rt = new(width, height, 0, RenderTextureFormat.ARGB32);
             CopyToRT(t, rt);
-            Texture2D result = new Texture2D(width, height, TextureFormat.ARGB32, false);
+            Texture2D result = new(width, height, TextureFormat.ARGB32, false);
             result.filterMode = t.filterMode;
             result.wrapMode = t.wrapMode;
             CopyFromRT(result, rt);
@@ -614,10 +614,10 @@ namespace Pinwheel.Griffin
         {
             int endX = startX + width - 1;
             int endY = startY + height - 1;
-            Vector2 startUV = new Vector2(
+            Vector2 startUV = new(
                 GUtilities.InverseLerpUnclamped(0, src.width - 1, startX),
                 GUtilities.InverseLerpUnclamped(0, src.height - 1, startY));
-            Vector2 endUV = new Vector2(
+            Vector2 endUV = new(
                 GUtilities.InverseLerpUnclamped(0, src.width - 1, endX),
                 GUtilities.InverseLerpUnclamped(0, src.height - 1, endY));
             Material mat = GInternalMaterials.CopyTextureMaterial;
@@ -626,7 +626,7 @@ namespace Pinwheel.Griffin
             mat.SetVector("_EndUV", endUV);
             mat.SetColor("_DefaultColor", defaultColor);
             mat.SetPass(0);
-            RenderTexture rt = new RenderTexture(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB);
+            RenderTexture rt = new(width, height, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.sRGB);
             RenderTexture.active = rt;
             Graphics.Blit(src, mat);
             RenderTexture.active = null;
@@ -696,8 +696,8 @@ namespace Pinwheel.Griffin
 
         public static List<System.Type> GetAllLoadedTypes()
         {
-            List<System.Type> loadedTypes = new List<System.Type>();
-            List<string> typeName = new List<string>();
+            List<System.Type> loadedTypes = new();
+            List<string> typeName = new();
             foreach (var assembly in System.AppDomain.CurrentDomain.GetAssemblies())
             {
                 foreach (var t in assembly.GetTypes())
@@ -716,7 +716,7 @@ namespace Pinwheel.Griffin
         {
             if (oldValues.LongLength != newValues.LongLength)
             {
-                return new Rect[1] { new Rect(0, 0, 1, 1) };
+                return new Rect[1] { new(0, 0, 1, 1) };
             }
             Rect[] rects = new Rect[gridSize * gridSize];
             for (int x = 0; x < gridSize; ++x)
@@ -727,7 +727,7 @@ namespace Pinwheel.Griffin
                 }
             }
 
-            HashSet<Rect> dirtyRects = new HashSet<Rect>();
+            HashSet<Rect> dirtyRects = new();
 
             int index = 0;
             int resolution = Mathf.RoundToInt(Mathf.Sqrt(newValues.LongLength));
@@ -750,12 +750,12 @@ namespace Pinwheel.Griffin
                             continue;
                         dirtyRects.Add(r);
 
-                        Rect hRect = new Rect();
+                        Rect hRect = new();
                         hRect.size = new Vector2(r.width * 1.2f, r.height);
                         hRect.center = r.center;
                         dirtyRects.Add(hRect);
 
-                        Rect vRect = new Rect();
+                        Rect vRect = new();
                         vRect.size = new Vector2(r.width, r.height * 1.2f);
                         vRect.center = r.center;
                         dirtyRects.Add(vRect);
@@ -773,7 +773,7 @@ namespace Pinwheel.Griffin
         {
             if (oldValues.LongLength != newValues.LongLength)
             {
-                return new Rect[1] { new Rect(0, 0, 1, 1) };
+                return new Rect[1] { new(0, 0, 1, 1) };
             }
             Rect[] rects = new Rect[gridSize * gridSize];
             for (int x = 0; x < gridSize; ++x)
@@ -784,7 +784,7 @@ namespace Pinwheel.Griffin
                 }
             }
 
-            HashSet<Rect> dirtyRects = new HashSet<Rect>();
+            HashSet<Rect> dirtyRects = new();
 
             int index = 0;
             int resolution = Mathf.RoundToInt(Mathf.Sqrt(newValues.LongLength));
@@ -804,12 +804,12 @@ namespace Pinwheel.Griffin
                             continue;
                         dirtyRects.Add(r);
 
-                        Rect hRect = new Rect();
+                        Rect hRect = new();
                         hRect.size = new Vector2(r.width * 1.2f, r.height);
                         hRect.center = r.center;
                         dirtyRects.Add(hRect);
 
-                        Rect vRect = new Rect();
+                        Rect vRect = new();
                         vRect.size = new Vector2(r.width, r.height * 1.2f);
                         vRect.center = r.center;
                         dirtyRects.Add(vRect);
@@ -825,7 +825,7 @@ namespace Pinwheel.Griffin
 
         public static Rect GetUvRange(int gridSize, int x, int z)
         {
-            Vector2 position = new Vector2(x * 1.0f / gridSize, z * 1.0f / gridSize);
+            Vector2 position = new(x * 1.0f / gridSize, z * 1.0f / gridSize);
             Vector2 size = Vector2.one / gridSize;
             return new Rect(position, size);
         }
@@ -839,7 +839,7 @@ namespace Pinwheel.Griffin
             {
                 float f = Mathf.InverseLerp(0, width - 1, x);
                 float value = curve.Evaluate(f);
-                Color c = new Color(value, value, value, value);
+                Color c = new(value, value, value, value);
                 for (int y = 0; y < height; ++y)
                 {
                     colors[GUtilities.To1DIndex(x, y, width)] = c;
@@ -951,7 +951,7 @@ namespace Pinwheel.Griffin
 
         public static GStylizedTerrain CreateTerrain(GTerrainData data)
         {
-            GameObject g = new GameObject("Styllized Terrain");
+            GameObject g = new("Styllized Terrain");
             g.transform.localPosition = Vector3.zero;
             g.transform.localRotation = Quaternion.identity;
             g.transform.localScale = Vector3.one;
@@ -967,7 +967,7 @@ namespace Pinwheel.Griffin
 
         public static GTreeCollider CreateTreeCollider(GStylizedTerrain terrain)
         {
-            GameObject colliderGO = new GameObject("Tree Collider");
+            GameObject colliderGO = new("Tree Collider");
             GUtilities.ResetTransform(colliderGO.transform, terrain.transform);
             colliderGO.transform.localPosition = Vector3.zero;
             colliderGO.transform.localRotation = Quaternion.identity;
@@ -1014,7 +1014,7 @@ namespace Pinwheel.Griffin
 
             Vector3 center = (min + max) * 0.5f;
             Vector3 size = max - min;
-            Bounds bounds = new Bounds(center, size);
+            Bounds bounds = new(center, size);
             return bounds;
         }
 
@@ -1042,7 +1042,7 @@ namespace Pinwheel.Griffin
         public static Vector2 EncodeTerrainHeight(float h)
         {
             h = Mathf.Clamp(h, 0f, 0.99999f);
-            Vector2 kEncodeMul = new Vector2(1.0f, 255.0f);
+            Vector2 kEncodeMul = new(1.0f, 255.0f);
             float kEncodeBit = 1.0f / 255.0f;
             Vector2 enc = kEncodeMul * h;
             enc = Frac(enc);
@@ -1052,7 +1052,7 @@ namespace Pinwheel.Griffin
 
         public static float DecodeTerrainHeight(Vector2 enc)
         {
-            Vector2 kDecodeDot = new Vector2(1.0f, 1f / 255.0f);
+            Vector2 kDecodeDot = new(1.0f, 1f / 255.0f);
             return Vector2.Dot(enc, kDecodeDot);
         }
 
@@ -1070,33 +1070,33 @@ namespace Pinwheel.Griffin
 
         public static List<GOverlapTestResult> OverlapTest(int groupId, Vector3[] corners)
         {
-            List<GOverlapTestResult> results = new List<GOverlapTestResult>();
+            List<GOverlapTestResult> results = new();
 
-            Vector2 p0 = new Vector2(corners[0].x, corners[0].z);
-            Vector2 p1 = new Vector2(corners[1].x, corners[1].z);
-            Vector2 p2 = new Vector2(corners[2].x, corners[2].z);
-            Vector2 p3 = new Vector2(corners[3].x, corners[3].z);
-            GQuad2D quad = new GQuad2D(p0, p1, p2, p3);
+            Vector2 p0 = new(corners[0].x, corners[0].z);
+            Vector2 p1 = new(corners[1].x, corners[1].z);
+            Vector2 p2 = new(corners[2].x, corners[2].z);
+            Vector2 p3 = new(corners[3].x, corners[3].z);
+            GQuad2D quad = new(p0, p1, p2, p3);
 
             GCommon.ForEachTerrain(groupId, t =>
             {
                 if (t.TerrainData == null)
                     return;
-                GOverlapTestResult r = new GOverlapTestResult();
+                GOverlapTestResult r = new();
                 r.Terrain = t;
                 results.Add(r);
             });
 
-            NativeArray<Rect> terrainRects = new NativeArray<Rect>(results.Count, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<Rect> terrainRects = new(results.Count, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
             for (int i = 0; i < terrainRects.Length; ++i)
             {
                 terrainRects[i] = results[i].Terrain.Rect;
             }
 
-            NativeArray<bool> terrainTestResults = new NativeArray<bool>(results.Count, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<bool> terrainTestResults = new(results.Count, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
 
             {
-                GQuadOverlapTestJob job = new GQuadOverlapTestJob()
+                GQuadOverlapTestJob job = new()
                 {
                     rectsToTest = terrainRects,
                     result = terrainTestResults,
@@ -1117,9 +1117,9 @@ namespace Pinwheel.Griffin
             terrainRects.Dispose();
             terrainTestResults.Dispose();
 
-            List<JobHandle> chunkTestHandles = new List<JobHandle>();
-            List<NativeArray<Rect>> chunkRectsHandles = new List<NativeArray<Rect>>();
-            List<NativeArray<bool>> chunkTestResultsHandles = new List<NativeArray<bool>>();
+            List<JobHandle> chunkTestHandles = new();
+            List<NativeArray<Rect>> chunkRectsHandles = new();
+            List<NativeArray<bool>> chunkTestResultsHandles = new();
             for (int i = 0; i < results.Count; ++i)
             {
                 GOverlapTestResult r = results[i];
@@ -1132,8 +1132,8 @@ namespace Pinwheel.Griffin
                 }
 
                 NativeArray<Rect> chunkRects = r.Terrain.GetChunkRectsNA();
-                NativeArray<bool> chunkTestResults = new NativeArray<bool>(chunkRects.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-                GQuadOverlapTestJob job = new GQuadOverlapTestJob()
+                NativeArray<bool> chunkTestResults = new(chunkRects.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+                GQuadOverlapTestJob job = new()
                 {
                     rectsToTest = chunkRects,
                     result = chunkTestResults,

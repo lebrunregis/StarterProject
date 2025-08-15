@@ -1,5 +1,4 @@
 #if GRIFFIN
-using Pinwheel.Griffin.TextureTool;
 using UnityEngine;
 
 namespace Pinwheel.Griffin.StampTool

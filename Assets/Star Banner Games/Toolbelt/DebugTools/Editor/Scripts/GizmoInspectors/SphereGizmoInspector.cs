@@ -1,13 +1,12 @@
-using UnityEngine;
-using UnityEditor;
-using System;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace SBG.Toolbelt.DebugTools.Editor
 {
-	[CustomEditor(typeof(SphereGizmo))]
-	public class SphereGizmoInspector : GizmoDisplayInspector
-	{
+    [CustomEditor(typeof(SphereGizmo))]
+    public class SphereGizmoInspector : GizmoDisplayInspector
+    {
         private SerializedProperty _radius;
 
         private bool _radiusAtr = false;

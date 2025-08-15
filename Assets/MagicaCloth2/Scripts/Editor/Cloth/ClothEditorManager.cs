@@ -25,7 +25,7 @@ namespace MagicaCloth2
         /// <summary>
         /// コンポーネント情報
         /// </summary>
-        class ClothInfo
+        private class ClothInfo
         {
             public ResultCode result = ResultCode.Empty;
             public bool building;
@@ -38,13 +38,13 @@ namespace MagicaCloth2
             public ClothInitSerializeData editInitSerializeData;
         }
 
-        static Dictionary<int, ClothInfo> editClothDict = new Dictionary<int, ClothInfo>();
+        private static readonly Dictionary<int, ClothInfo> editClothDict = new();
 
-        static List<int> destroyList = new List<int>();
-        static List<ClothInfo> drawList = new List<ClothInfo>();
-        static CancellationTokenSource cancelToken = new CancellationTokenSource();
+        private static readonly List<int> destroyList = new();
+        private static readonly List<ClothInfo> drawList = new();
+        private static CancellationTokenSource cancelToken = new();
 
-        static bool isValid = false;
+        private static bool isValid = false;
 
         static internal Action OnEditMeshBuildComplete;
 
@@ -78,7 +78,7 @@ namespace MagicaCloth2
         /// エディタの実行状態が変更された場合に呼び出される
         /// </summary>
         [InitializeOnLoadMethod]
-        static void PlayModeStateChange()
+        private static void PlayModeStateChange()
         {
             EditorApplication.playModeStateChanged += (mode) =>
             {
@@ -102,7 +102,7 @@ namespace MagicaCloth2
         /// スクリプトコンパイル開始
         /// </summary>
         /// <param name="obj"></param>
-        static void OnStartCompile(object obj)
+        private static void OnStartCompile(object obj)
         {
             Develop.DebugLog($"start compile.");
             Dispose();
@@ -115,7 +115,7 @@ namespace MagicaCloth2
         /// <param name="target"></param>
         /// <param name="pathToBuiltProject"></param>
         [PostProcessBuildAttribute(1)]
-        static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
+        private static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
         {
             Develop.DebugLog($"build compile.");
             isValid = true;
@@ -125,7 +125,7 @@ namespace MagicaCloth2
         /// プレハブステージが閉じる時
         /// </summary>
         /// <param name="obj"></param>
-        static void OnPrefabStageClosing(PrefabStage pstage)
+        private static void OnPrefabStageClosing(PrefabStage pstage)
         {
             ForceUpdateAllComponents();
         }
@@ -133,23 +133,23 @@ namespace MagicaCloth2
         /// <summary>
         /// Undo/Redo実行時
         /// </summary>
-        static void OnUndoRedoPerformed()
+        private static void OnUndoRedoPerformed()
         {
             ForceUpdateAllComponents();
         }
 
         //=========================================================================================
-        static bool IsActive(GizmoType gizmoType)
+        private static bool IsActive(GizmoType gizmoType)
         {
             return gizmoType.HasFlag(GizmoType.Active);
         }
 
-        static bool IsActiveOrSelected(GizmoType gizmoType)
+        private static bool IsActiveOrSelected(GizmoType gizmoType)
         {
             return IsActive(gizmoType) || gizmoType.HasFlag(GizmoType.Selected);
         }
 
-        static bool IsSelectionHierarchy(GizmoType gizmoType)
+        private static bool IsSelectionHierarchy(GizmoType gizmoType)
         {
             return IsActiveOrSelected(gizmoType) || gizmoType.HasFlag(GizmoType.InSelectionHierarchy);
         }
@@ -297,7 +297,7 @@ namespace MagicaCloth2
             }
         }
 
-        static void Dispose()
+        private static void Dispose()
         {
             cancelToken.Cancel();
             cancelToken.Dispose();
@@ -318,7 +318,7 @@ namespace MagicaCloth2
         /// <summary>
         /// コンポーネントの削除チェック
         /// </summary>
-        static void DestroyCheck()
+        private static void DestroyCheck()
         {
             lock (editClothDict)
             {
@@ -404,7 +404,7 @@ namespace MagicaCloth2
         /// <summary>
         /// 強制的にすべてのコンポーネントの更新フラグを立てる
         /// </summary>
-        static void ForceUpdateAllComponents()
+        private static void ForceUpdateAllComponents()
         {
             lock (editClothDict)
             {
@@ -431,7 +431,7 @@ namespace MagicaCloth2
         /// <param name="createSelectionData"></param>
         /// <param name="ct"></param>
         /// <returns></returns>
-        static async Task CreateOrUpdateEditMesh(int id, MagicaCloth cloth, CancellationToken ct)
+        private static async Task CreateOrUpdateEditMesh(int id, MagicaCloth cloth, CancellationToken ct)
         {
             // ■メインスレッド
             Develop.DebugLog($"Create and update edit meshes: {cloth.name}");
@@ -439,8 +439,8 @@ namespace MagicaCloth2
             var sdata2 = cloth.GetSerializeData2();
             var setupList = new List<RenderSetupData>();
             VirtualMeshContainer editMeshContainer = null;
-            ClothInitSerializeData editInitSerializeData = new ClothInitSerializeData();
-            ResultCode result = new ResultCode();
+            ClothInitSerializeData editInitSerializeData = new();
+            ResultCode result = new();
 
             try
             {
@@ -940,7 +940,7 @@ namespace MagicaCloth2
         /// シーンビューへのギズモ描画
         /// </summary>
         /// <param name="sceneView"></param>
-        static void OnSceneGUI(SceneView sceneView)
+        private static void OnSceneGUI(SceneView sceneView)
         {
             if (isValid == false)
                 return;
@@ -1055,7 +1055,7 @@ namespace MagicaCloth2
         //=========================================================================================
         public static async Task InformationLog(StringBuilder allsb)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             sb.AppendLine($"========== System Info ==========");
             sb.AppendLine($"Unity Version:{Application.unityVersion}");

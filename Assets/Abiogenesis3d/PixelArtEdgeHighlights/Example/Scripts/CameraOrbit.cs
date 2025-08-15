@@ -12,9 +12,9 @@ namespace Abiogenesis3d
         public float minAngle = 20;
         public float maxAngle = 89;
 
-        Vector3 eulerAngles;
+        private Vector3 eulerAngles;
 
-        void Start()
+        private void Start()
         {
             eulerAngles = transform.rotation.eulerAngles;
         }

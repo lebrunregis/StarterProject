@@ -160,7 +160,7 @@ namespace MagicaCloth2
             float3 axis = math.cross(v1, v2);
             if (math.abs(1.0f + c) < 1e-06f)
             {
-                angle = (float)math.PI;
+                angle = math.PI;
 
                 if (v1.x > v1.y && v1.x > v1.z)
                 {
@@ -202,7 +202,7 @@ namespace MagicaCloth2
 
             if (math.abs(1.0f + c) < 1e-06f)
             {
-                angle = (float)math.PI;
+                angle = math.PI;
 
                 if (v1.x > v1.y && v1.x > v1.z)
                 {
@@ -241,7 +241,7 @@ namespace MagicaCloth2
 
             if (math.abs(1.0f + c) < 1e-06f)
             {
-                angle = (float)math.PI;
+                angle = math.PI;
 
                 if (v1.x > v1.y && v1.x > v1.z)
                 {
@@ -1120,7 +1120,7 @@ namespace MagicaCloth2
             int2 e = GetCommonEdgeFromTrianglePair(tri1, tri2);
             Debug.Assert((e.x > 0 || e.y > 0) && e.x != e.y);
 
-            int4 r = new int4(0, 0, e.x, e.y);
+            int4 r = new(0, 0, e.x, e.y);
             for (int i = 0; i < 3; i++)
             {
                 if (tri1[i] != e.x && tri1[i] != e.y)

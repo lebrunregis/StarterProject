@@ -194,19 +194,19 @@ namespace MagicaCloth2
             return result;
         }
 
-        void InitStep()
+        private void InitStep()
         {
             nowStepIndex = 0;
             nowMergeLength = startMergeLength;
             nowStepScale = 2.0f;
         }
 
-        bool IsEndStep()
+        private bool IsEndStep()
         {
             return nowMergeLength == endMergeLength;
         }
 
-        void NextStep()
+        private void NextStep()
         {
             nowStepScale = math.max(nowStepScale * 0.93f, 1.1f);
             nowMergeLength = math.min(nowMergeLength * nowStepScale, endMergeLength);
@@ -220,7 +220,7 @@ namespace MagicaCloth2
         /// <param name="vertexCount"></param>
         /// <param name="stepIndex"></param>
         /// <returns></returns>
-        void ReductionStep()
+        private void ReductionStep()
         {
             //Debug.Log($"nowMergeLength:{nowMergeLength}");
 
@@ -266,7 +266,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="jobHandle"></param>
         /// <returns></returns>
-        void PreReductionStep()
+        private void PreReductionStep()
         {
             // 作業用バッファクリア
             joinEdgeList.Clear();
@@ -278,7 +278,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="jobHandle"></param>
         /// <returns></returns>
-        void PostReductionStep()
+        private void PostReductionStep()
         {
             // 結合候補をソートする
             SortJoinEdge();
@@ -301,7 +301,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="jobHandle"></param>
         /// <returns></returns>
-        void SortJoinEdge()
+        private void SortJoinEdge()
         {
             // コストの昇順でソートする
             joinEdgeList.Sort();
@@ -314,7 +314,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="jobHandle"></param>
         /// <returns></returns>
-        void DetermineJoinEdge()
+        private void DetermineJoinEdge()
         {
             var reductionJob = new DeterminJoinEdgeJob()
             {
@@ -330,7 +330,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct DeterminJoinEdgeJob : IJob
+        private struct DeterminJoinEdgeJob : IJob
         {
             public int stepIndex;
             public float mergeLength;
@@ -381,7 +381,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="jobHandle"></param>
         /// <returns></returns>
-        void RunJoinEdge()
+        private void RunJoinEdge()
         {
             var organizeJoinEdgeJob = new JoinPairJob()
             {
@@ -398,7 +398,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct JoinPairJob : IJob
+        private struct JoinPairJob : IJob
         {
             public float joinPositionAdjustment;
 
@@ -484,7 +484,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="jobHandle"></param>
         /// <returns></returns>
-        void UpdateJoinAndLink()
+        private void UpdateJoinAndLink()
         {
             // JoinIndexの状態を更新する。現在の最新の生存ポイントを指すように変更する
             var updateJoinIndexJob = new UpdateJoinIndexJob()
@@ -503,7 +503,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct UpdateJoinIndexJob : IJobParallelFor
+        private struct UpdateJoinIndexJob : IJobParallelFor
         {
             [NativeDisableParallelForRestriction]
             public NativeArray<int> joinIndices;
@@ -525,7 +525,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct UpdateLinkIndexJob : IJobParallelFor
+        private struct UpdateLinkIndexJob : IJobParallelFor
         {
             [NativeDisableParallelForRestriction]
             public NativeArray<int> joinIndices;
@@ -574,7 +574,7 @@ namespace MagicaCloth2
         /// <summary>
         /// リダクション後のデータを整える
         /// </summary>
-        void UpdateReductionResultJob()
+        private void UpdateReductionResultJob()
         {
             // 頂点法線の単位化、およびボーンウエイトを１に整える
             var finalVertexJob = new FinalMergeVertexJob()
@@ -587,7 +587,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct FinalMergeVertexJob : IJobParallelFor
+        private struct FinalMergeVertexJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<int> joinIndices;
@@ -670,7 +670,7 @@ namespace MagicaCloth2
                         continue;
                     joinVlink.MC2RemoveItemAtSwapBack(index);
 
-                    foreach (ushort nindex in vertexToVertexMap.GetValuesForKey((ushort)index))
+                    foreach (ushort nindex in vertexToVertexMap.GetValuesForKey(index))
                     {
                         if (joinVlink.Contains(nindex))
                         {

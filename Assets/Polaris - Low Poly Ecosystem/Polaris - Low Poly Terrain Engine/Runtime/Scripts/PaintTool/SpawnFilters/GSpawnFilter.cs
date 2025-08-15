@@ -1,7 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.PaintTool
 {
@@ -10,7 +10,7 @@ namespace Pinwheel.Griffin.PaintTool
     public abstract class GSpawnFilter : MonoBehaviour
     {
         private static List<Type> allFilters;
-        public static List<Type> AllFilters 
+        public static List<Type> AllFilters
         {
             get
             {

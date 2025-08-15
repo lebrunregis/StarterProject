@@ -25,7 +25,7 @@ namespace Pinwheel.Griffin.TextureTool
             GFoliageDistributionMapGeneratorParams param = GTextureToolParams.Instance.TreeDistribution;
             GCommon.FillTexture(targetRt, Color.clear);
 
-            List<Vector2> pos = new List<Vector2>();
+            List<Vector2> pos = new();
             if (param.Terrain != null &&
                 param.Terrain.TerrainData != null &&
                 param.Terrain.TerrainData.Foliage.Trees != null &&
@@ -51,7 +51,7 @@ namespace Pinwheel.Griffin.TextureTool
         private void GetTreePosition(GFoliageDistributionMapGeneratorParams param, List<Vector2> pos)
         {
             pos.Clear();
-            HashSet<int> indices = new HashSet<int>(param.TreePrototypeIndices);
+            HashSet<int> indices = new(param.TreePrototypeIndices);
             List<GTreeInstance> instances = param.Terrain.TerrainData.Foliage.TreeInstances;
 
             for (int i = 0; i < instances.Count; ++i)
@@ -66,7 +66,7 @@ namespace Pinwheel.Griffin.TextureTool
         private void GetGrassPosition(GFoliageDistributionMapGeneratorParams param, GGrassPatch patch, List<Vector2> pos)
         {
             pos.Clear();
-            HashSet<int> indices = new HashSet<int>(param.GrassPrototypeIndices);
+            HashSet<int> indices = new(param.GrassPrototypeIndices);
             List<GGrassInstance> instances = patch.Instances;
 
             for (int i = 0; i < instances.Count; ++i)
@@ -88,8 +88,8 @@ namespace Pinwheel.Griffin.TextureTool
             GL.LoadOrtho();
             GL.Begin(GL.QUADS);
 
-            Rand rand = new Rand(pos.Count);
-            Rect r = new Rect();
+            Rand rand = new(pos.Count);
+            Rect r = new();
             r.size = param.Size * Vector2.one;
             for (int i = 0; i < pos.Count; ++i)
             {

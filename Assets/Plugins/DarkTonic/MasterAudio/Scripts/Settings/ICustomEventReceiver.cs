@@ -2,12 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     // ReSharper disable once CheckNamespace
     /// <summary>
     /// This interface is used by EventSounds and can be implemented on your custom classes to listen for Custom Events that are fired.
     /// </summary>
-    public interface ICustomEventReceiver {
+    public interface ICustomEventReceiver
+    {
         // this interface is used to "listen" to custom events that MasterAudio transmits.
         /// <summary>
         /// This checks for events that are not found in MasterAudio. It's a good idea to call this in Start (Awake is too early), and save yourself some troubleshooting time! Optional

@@ -1,87 +1,86 @@
 using CitrioN.Common;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace CitrioN.SettingsMenuCreator
 {
-  [ExcludeFromMenuSelection]
-  public abstract class Setting_Generic<T> : Setting_CustomOptions
-  {
-    [Tooltip("The default value for this setting.")]
-    public T defaultValue;
-
-    protected Setting_Generic()
+    [ExcludeFromMenuSelection]
+    public abstract class Setting_Generic<T> : Setting_CustomOptions
     {
-      options = new List<StringToStringRelation>();
-      var optionsList = SettingsUtility.GetOptions<T>();
-      if (optionsList != null)
-      {
-        foreach (var option in optionsList)
+        [Tooltip("The default value for this setting.")]
+        public T defaultValue;
+
+        protected Setting_Generic()
         {
-          // Add the default options and make the visible name more readable
-          options.Add(new StringToStringRelation(option, option.SplitCamelCase()));
+            options = new List<StringToStringRelation>();
+            var optionsList = SettingsUtility.GetOptions<T>();
+            if (optionsList != null)
+            {
+                foreach (var option in optionsList)
+                {
+                    // Add the default options and make the visible name more readable
+                    options.Add(new StringToStringRelation(option, option.SplitCamelCase()));
+                }
+            }
+
+            SetDefaultValue();
         }
-      }
 
-      SetDefaultValue();
-    }
-
-    protected virtual void SetDefaultValue()
-    {
-      if (options != null && options.Count > 0)
-      {
-        if (SettingsUtility.ConvertValue<T>(options[0].Key, null, options, out var value))
+        protected virtual void SetDefaultValue()
         {
-          defaultValue = value;
-          return;
+            if (options != null && options.Count > 0)
+            {
+                if (SettingsUtility.ConvertValue<T>(options[0].Key, null, options, out var value))
+                {
+                    defaultValue = value;
+                    return;
+                }
+            }
+
+            defaultValue = default(T);
         }
-      }
 
-      defaultValue = default(T);
-    }
+        public override List<string> ParameterTypes => new() { typeof(T).AssemblyQualifiedName };
 
-    public override List<string> ParameterTypes => new List<string>() { typeof(T).AssemblyQualifiedName };
-
-    public override object ApplySettingChange(SettingsCollection settings, params object[] args)
-    {
-      //TODO Finish implementation
-      if (args?.Length > 0)
-      {
-        if (SettingsUtility.ConvertValue<T>(args[0], settings, options, out var value))
+        public override object ApplySettingChange(SettingsCollection settings, params object[] args)
         {
-          var newValue = ApplySettingChangeWithValue(settings, value);
-          base.ApplySettingChange(settings, newValue);
-          return newValue;
+            //TODO Finish implementation
+            if (args?.Length > 0)
+            {
+                if (SettingsUtility.ConvertValue<T>(args[0], settings, options, out var value))
+                {
+                    var newValue = ApplySettingChangeWithValue(settings, value);
+                    base.ApplySettingChange(settings, newValue);
+                    return newValue;
+                }
+            }
+
+            base.ApplySettingChange(settings, null);
+            return null;
         }
-      }
 
-      base.ApplySettingChange(settings, null);
-      return null;
-    }
-
-    protected virtual object ApplySettingChangeWithValue(SettingsCollection settings, T value)
-    {
-      return value;
-    }
-
-    public override object GetDefaultValue(SettingsCollection settings)
-    {
-      return defaultValue;
-    }
-
-    public override List<object> GetCurrentValues(SettingsCollection settings)
-    {
-      if (settings != null)
-      {
-        var settingHolder = settings.Settings?.Find(s => s.Setting == this);
-        if (settingHolder != null && settings.activeSettingValues != null && 
-            settings.activeSettingValues.TryGetValue(settingHolder.Identifier, out var value))
+        protected virtual object ApplySettingChangeWithValue(SettingsCollection settings, T value)
         {
-          return new List<object> { value };
+            return value;
         }
-      }
-      return new List<object>() { defaultValue };
+
+        public override object GetDefaultValue(SettingsCollection settings)
+        {
+            return defaultValue;
+        }
+
+        public override List<object> GetCurrentValues(SettingsCollection settings)
+        {
+            if (settings != null)
+            {
+                var settingHolder = settings.Settings?.Find(s => s.Setting == this);
+                if (settingHolder != null && settings.activeSettingValues != null &&
+                    settings.activeSettingValues.TryGetValue(settingHolder.Identifier, out var value))
+                {
+                    return new List<object> { value };
+                }
+            }
+            return new List<object>() { defaultValue };
+        }
     }
-  }
 }

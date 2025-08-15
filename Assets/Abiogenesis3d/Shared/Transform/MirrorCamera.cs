@@ -8,7 +8,7 @@ namespace Abiogenesis3d
         public Camera cam;
         public Camera target;
 
-        void Update()
+        private void Update()
         {
             if (!cam || !target) return;
 

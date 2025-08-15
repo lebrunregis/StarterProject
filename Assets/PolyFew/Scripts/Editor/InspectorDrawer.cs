@@ -18,7 +18,6 @@ using static BrainFailProductions.PolyFew.CombiningInformation;
 using System.Threading.Tasks;
 using static BrainFailProductions.PolyFew.DataContainer;
 using UnityEngine.SceneManagement;
-using System.Threading;
 using UnityEditor.Build;
 #if UNITY_2018_1_OR_NEWER
 using UnityEditor.Presets;
@@ -30,9 +29,9 @@ namespace BrainFailProductions.PolyFew
 
     [CanEditMultipleObjects]
     [CustomEditor(typeof(PolyFew))]
-    public class InspectorDrawer: Editor
+    public class InspectorDrawer : Editor
     {
-        
+
         private static bool PreserveBorders { get { return dataContainer.preserveBorders; } set { dataContainer.preserveBorders = value; } }
         private static bool PreserveUVSeams { get { return dataContainer.preserveUVSeams; } set { dataContainer.preserveUVSeams = value; } }
         private static bool PreserveUVFoldover { get { return dataContainer.preserveUVFoldover; } set { dataContainer.preserveUVFoldover = value; } }
@@ -52,7 +51,7 @@ namespace BrainFailProductions.PolyFew
         private static float SphereDefaultDiameter { get { return dataContainer.sphereDiameter; } set { dataContainer.sphereDiameter = value; } }
 
         private static bool isFeasibleTargetForPolyFew;
-        private static string sphereColHex = "#FBFF00C8";
+        private static readonly string sphereColHex = "#FBFF00C8";
         private static Color sphereDefaultColor = UtilityServices.HexToColor(sphereColHex);
 
         private static Texture icon;
@@ -132,7 +131,7 @@ namespace BrainFailProductions.PolyFew
 
             // For multiple selections
             if (Selection.gameObjects != null && Selection.gameObjects.Length > 1)
-            {                
+            {
                 isFeasibleTargetForPolyFew = false;
 
                 foreach (GameObject selected in Selection.gameObjects)
@@ -172,7 +171,7 @@ namespace BrainFailProductions.PolyFew
             }
 
             // For single selection
-            else if(Selection.activeGameObject != null && Selection.activeGameObject.GetComponent<PolyFew>() != null)
+            else if (Selection.activeGameObject != null && Selection.activeGameObject.GetComponent<PolyFew>() != null)
             {
                 isFeasibleTargetForPolyFew = UtilityServices.CheckIfFeasible(Selection.activeTransform);
                 UtilityServices.maxConcurrentThreads = SystemInfo.processorCount * 2;
@@ -207,7 +206,7 @@ namespace BrainFailProductions.PolyFew
                 {
                     ResetTextureArrays();
                 }
-                
+
 
                 #region Restoring persistent data 
 
@@ -216,8 +215,8 @@ namespace BrainFailProductions.PolyFew
                 string hex = EditorPrefs.HasKey("sphereColHex") ? EditorPrefs.GetString("sphereColHex") : SetAndReturnStringPref("sphereColHex", sphereColHex);
                 sphereDefaultColor = UtilityServices.HexToColor(hex);
                 isPlainSkin = EditorPrefs.HasKey("isPlainSkin") ? EditorPrefs.GetBool("isPlainSkin") : SetAndReturnBoolPref("isPlainSkin", false);
-               
-#endregion Restoring persistent data 
+
+                #endregion Restoring persistent data 
 
                 LastDrawer = this;
 
@@ -292,7 +291,7 @@ namespace BrainFailProductions.PolyFew
                 PrevFeasibleTarget = Selection.activeTransform.gameObject;
 
 
-#region Draw custom handles for preservation sphere
+                #region Draw custom handles for preservation sphere
 
 
                 if (dataContainer.toleranceSpheres != null && IsPreservationActive)
@@ -358,7 +357,7 @@ namespace BrainFailProductions.PolyFew
                     }
                 }
 
-#endregion Draw custom handles for preservation sphere
+                #endregion Draw custom handles for preservation sphere
 
 
 
@@ -382,10 +381,10 @@ namespace BrainFailProductions.PolyFew
             }
 
             base.OnInspectorGUI();
-            
+
             if (Selection.activeGameObject == null) { return; }
 
-            if(!Selection.activeGameObject.activeSelf) { return; }
+            if (!Selection.activeGameObject.activeSelf) { return; }
 
             if (Event.current.type == EventType.DragUpdated)
             {
@@ -415,12 +414,12 @@ namespace BrainFailProductions.PolyFew
 
                 GUIStyle oldStyle;
 
-#region Title Header
+                #region Title Header
 
                 EditorGUILayout.BeginHorizontal();
 
                 content = new GUIContent();
-                
+
                 icon = Resources.Load<Texture>($"{ICONS_PATH}icon");
                 if (icon) GUILayout.Label(icon, GUILayout.Width(30), GUILayout.MaxHeight(30));
                 GUILayout.Space(6);
@@ -430,7 +429,7 @@ namespace BrainFailProductions.PolyFew
                 var style = GUI.skin.label;
                 style.richText = true;  // #FF6347ff4
 
-                if(isPlainSkin)
+                if (isPlainSkin)
                 {
                     if (GUILayout.Button("<size=14><b>POLY FEW</b></size> <size=7><b>v7.82</b></size>", style)) { toolMainFoldout = !toolMainFoldout; }
                 }
@@ -516,10 +515,10 @@ namespace BrainFailProductions.PolyFew
                 EditorGUILayout.BeginVertical();
                 GUILayout.Space(5);
 
-#region  Additional options
+                #region  Additional options
 
 
-                
+
 
 
                 if (isPlainSkin) { iconPath = ICONS_PATH + "settings-white"; }
@@ -529,7 +528,7 @@ namespace BrainFailProductions.PolyFew
 
                 content.image = Resources.Load<Texture>(iconPath);
 
-                if (GUILayout.Button(content, GUILayout.Width(24), GUILayout.Height(24)))  
+                if (GUILayout.Button(content, GUILayout.Width(24), GUILayout.Height(24)))
                 {
                     if (lastRect != null)
                     {
@@ -537,9 +536,9 @@ namespace BrainFailProductions.PolyFew
                         lastRect = new Rect(Event.current.mousePosition, lastRect.size);
 
                         var definitions = new List<PopupToggleTemplate.ToggleDefinition>();
-               
+
 #if UNITY_2019_1_OR_NEWER
-                        definitions.Add(new PopupToggleTemplate.ToggleDefinition(content, 190, -4, null, null, true, () => 
+                        definitions.Add(new PopupToggleTemplate.ToggleDefinition(content, 190, -4, null, null, true, () =>
                         {
                             oldStyle = style;
                             style = GUI.skin.button;
@@ -550,7 +549,7 @@ namespace BrainFailProductions.PolyFew
                             //GUI.backgroundColor = UtilityServices.HexToColor("#F5F5DC");
 
                             content = new GUIContent();
-                            content.text = "<size=11><b>Cleanup Missing Scripts</b></size>"; 
+                            content.text = "<size=11><b>Cleanup Missing Scripts</b></size>";
 
                             content.tooltip = "Clean missing script references from all GameObjects in all currently open scenes. Any changes to prefabs must be manually applied.";
 
@@ -577,7 +576,7 @@ namespace BrainFailProductions.PolyFew
 
                             content = new GUIContent();
                             content.text = "<size=11><b>Remove All Scripts</b></size>";
-                            
+
                             content.tooltip = "Remove all Poly Few components/scripts from all GameObjects in all currently open scenes. Any changes to prefabs must be manually applied.";
 
                             didPressButton = GUILayout.Button(content, style, GUILayout.Width(140), GUILayout.Height(20), GUILayout.ExpandWidth(true));
@@ -606,23 +605,23 @@ namespace BrainFailProductions.PolyFew
                 oldStyle = style;
 
 
-#endregion  Additional options
+                #endregion  Additional options
 
                 EditorGUILayout.EndVertical();
 
 
                 EditorGUILayout.EndHorizontal();
 
-#endregion Title Header
+                #endregion Title Header
 
 
                 if (toolMainFoldout)
                 {
-                    
+
                     UtilityServices.DrawHorizontalLine(Color.black, 1, 8);
 
 
-#region Section Header
+                    #region Section Header
 
 
                     GUILayout.Space(10);
@@ -630,7 +629,7 @@ namespace BrainFailProductions.PolyFew
                     EditorGUILayout.BeginHorizontal();
 
 
-#region Go Deep
+                    #region Go Deep
 
                     content = new GUIContent();
                     style = GUI.skin.textField;
@@ -646,9 +645,9 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                     GUILayout.Space(2);
-                    EditorGUILayout.LabelField(content, style, GUILayout.Width(124), GUILayout.Height(20));                
+                    EditorGUILayout.LabelField(content, style, GUILayout.Width(124), GUILayout.Height(20));
 #else
                     EditorGUILayout.LabelField(content, style, GUILayout.Width(126), GUILayout.Height(20));
 
@@ -672,13 +671,13 @@ namespace BrainFailProductions.PolyFew
                     }
 
 
-#endregion Go Deep
+                    #endregion Go Deep
 
 
                     GUILayout.Space(14);
 
 
-#region Undo / Redo buttons
+                    #region Undo / Redo buttons
 
                     content = new GUIContent();
 
@@ -695,7 +694,7 @@ namespace BrainFailProductions.PolyFew
                             || dataContainer.objectsHistory.undoOperations == null
                             || dataContainer.objectsHistory.undoOperations.Count == 0;
 
-                    
+
                     EditorGUI.BeginDisabledGroup(flag1);
                     bool hasLods = false;
 
@@ -774,14 +773,14 @@ namespace BrainFailProductions.PolyFew
 
 
 
-#endregion Undo / Redo buttons
+                    #endregion Undo / Redo buttons
 
 
 
                     GUILayout.Space(10);
 
 
-#region Apply Changes here
+                    #region Apply Changes here
 
 
 
@@ -795,10 +794,10 @@ namespace BrainFailProductions.PolyFew
                     GUI.backgroundColor = UtilityServices.HexToColor("#F5F5DC");
 
                     content = new GUIContent();
-                    if(isPlainSkin) { content.text = "<size=11><b>Reduce</b></size>"; }
+                    if (isPlainSkin) { content.text = "<size=11><b>Reduce</b></size>"; }
                     else { content.text = "<size=11> <b><color=#000000>Reduce</color></b> </size>"; }
                     content.tooltip = "Apply reduction to this object with the current settings. If you don't reduce the object the changes will be lost when this object gets out of focus. Please note that you must save this scene after reducing the object otherwise the reduce operation will be reset on Editor restart.";
-                    
+
 
                     //EditorGUI.BeginDisabledGroup((!ReductionPending || Mathf.Approximately(ReductionStrength, 0)));
                     EditorGUI.BeginDisabledGroup(!ReductionPending && (!ClearBlendshapesComplete && !ClearBlendshapesNormals && !ClearBlendshapesTangents));
@@ -845,13 +844,13 @@ namespace BrainFailProductions.PolyFew
                                         var renderer = go.GetComponent<MeshRenderer>();
                                         var filter = go.GetComponent<MeshFilter>();
 
-                                        if(renderer != null) { rendererId = renderer.GetHashCode(); }
-                                        if(filter != null) { originalMesh = filter.sharedMesh; }
+                                        if (renderer != null) { rendererId = renderer.GetHashCode(); }
+                                        if (filter != null) { originalMesh = filter.sharedMesh; }
                                     }
                                     else
                                     {
                                         var renderer = go.GetComponent<SkinnedMeshRenderer>();
-                                        if(renderer != null)
+                                        if (renderer != null)
                                         {
                                             originalMesh = renderer.sharedMesh;
                                             rendererId = renderer.GetHashCode();
@@ -875,7 +874,7 @@ namespace BrainFailProductions.PolyFew
 
                                     else
                                     {
-                                        
+
                                         Dictionary<String, UnityMeshSimplifier.BlendShapeFrame> blendShapes = new Dictionary<string, UnityMeshSimplifier.BlendShapeFrame>();
 
 
@@ -892,16 +891,16 @@ namespace BrainFailProductions.PolyFew
                                         }
 
                                     }
-                
 
-                                    if(!didNothing)
+
+                                    if (!didNothing)
                                     {
                                         blendSimplified.name = blendSimplified.name.Replace("-BLENDSHAPES_SIMPLIFIED", "");
                                         blendSimplified.name += "-BLENDSHAPES_SIMPLIFIED";
 
-                                        if(!ReductionPending)
+                                        if (!ReductionPending)
                                         {
-                                            if(!blendShapesClearedMeshes.Contains(blendSimplified))
+                                            if (!blendShapesClearedMeshes.Contains(blendSimplified))
                                             {
                                                 blendShapesClearedMeshes.Add(blendSimplified);
                                             }
@@ -922,7 +921,7 @@ namespace BrainFailProductions.PolyFew
                                         DestroyImmediate(blendSimplified);
                                         DestroyImmediate(blendSimplified);
                                     }
-                                    
+
                                 }
 
                             }
@@ -964,12 +963,12 @@ namespace BrainFailProductions.PolyFew
                                         reducedAnyShape = UtilityServices.SimplifyBlendShapes(ref blendSimplified, rendererId, BlendShapeClearType.CLEAR_ALL_DATA);
                                     }
 
-                                    else if(ClearBlendshapesNormals)
+                                    else if (ClearBlendshapesNormals)
                                     {
                                         reducedAnyShape = UtilityServices.SimplifyBlendShapes(ref blendSimplified, rendererId, BlendShapeClearType.CLEAR_NORMALS);
                                     }
 
-                                    else if(ClearBlendshapesTangents)
+                                    else if (ClearBlendshapesTangents)
                                     {
                                         reducedAnyShape = UtilityServices.SimplifyBlendShapes(ref blendSimplified, rendererId, BlendShapeClearType.CLEAR_TANGENTS);
                                     }
@@ -989,20 +988,20 @@ namespace BrainFailProductions.PolyFew
                                         }
                                     }
 
-                                    if(!ReductionPending && !reducedAnyShape && blendSimplified != null)
+                                    if (!ReductionPending && !reducedAnyShape && blendSimplified != null)
                                     {
                                         DestroyImmediate(blendSimplified);
                                     }
                                 }
-                                
+
                             }
                         }
 
-                        if(!ReductionPending && shouldClearBlendshapes && !reducedAnyShape)
+                        if (!ReductionPending && shouldClearBlendshapes && !reducedAnyShape)
                         {
                             // Get out of this if
-                           EditorUtility.DisplayDialog("Operation Failed", "Unable to simplify blendshapes. Not enough feasible meshes found. Are there any blendshapes on this model? You might want to mark the \"Consider Children\" checkbox", "ok");
-                           goto ENDIF;
+                            EditorUtility.DisplayDialog("Operation Failed", "Unable to simplify blendshapes. Not enough feasible meshes found. Are there any blendshapes on this model? You might want to mark the \"Consider Children\" checkbox", "ok");
+                            goto ENDIF;
                         }
 
                         // Must save the meshes as assets before applying reduction operations
@@ -1016,7 +1015,7 @@ namespace BrainFailProductions.PolyFew
 
                             Tuple<HashSet<Mesh>, DataContainer.ObjectMeshPair> unsavedReducedMeshesPairs = UtilityServices.GetUnsavedReducedMeshes(dataContainer.objectMeshPairs);
                             HashSet<Mesh> unsavedReducedMeshes = unsavedReducedMeshesPairs?.Item1;
-                            
+
                             // Contains copies of the original meshes that will be saved in the undo operations for this object
                             DataContainer.ObjectMeshPair originalMeshesClones = new DataContainer.ObjectMeshPair();
 
@@ -1102,7 +1101,7 @@ namespace BrainFailProductions.PolyFew
 
 
                                 fullySucceeded = areMeshesSaved;
-                                
+
                                 // After successfully saving the original meshes copy the modified properties from the modded meshes to the original meshes in the dataContainer list and add the meshes to the objects
                                 if (areMeshesSaved)
                                 {
@@ -1110,7 +1109,7 @@ namespace BrainFailProductions.PolyFew
                                     int toOverwrite = dataContainer.objectMeshPairs.Count;
                                     int done = 0;
 
-                                    
+
                                     //Debug.Log("Original meshes are saved so copying properties");
                                     foreach (var kvp in dataContainer.objectMeshPairs)
                                     {
@@ -1143,7 +1142,7 @@ namespace BrainFailProductions.PolyFew
                                                     DataContainer.MeshRendererPair mRenderPair = new DataContainer.MeshRendererPair(true, prevMeshCopy);
                                                     originalMeshesClones.Add(gameObject, mRenderPair);
                                                     //Debug.Log("Created mesh copy for undo  Triangles count  " + mRenderPair.mesh.triangles.Length / 3 + "  modded tris length  " + moddedMesh.triangles.Length / 3 + "  moddedMesh.HashCode  " + moddedMesh.GetHashCode() + "  created undo mesh hashcode   " + mRenderPair.mesh.GetHashCode());
-                                                    
+
                                                     mRendererPair.mesh = moddedMesh;
                                                 }
                                                 else
@@ -1187,7 +1186,7 @@ namespace BrainFailProductions.PolyFew
                                                     }
 
                                                     //mRendererPair.mesh.MakeSimilarToOtherMesh(moddedMesh);
-                                                    
+
                                                 }
 
                                                 filter.sharedMesh = mRendererPair.mesh;
@@ -1202,10 +1201,10 @@ namespace BrainFailProductions.PolyFew
                                             if (sRenderer != null)
                                             {
                                                 Mesh moddedMesh = sRenderer.sharedMesh;
-             
+
                                                 // Do this for those meshes that are just saved and exclude those that aren't saved now and had their original meshes saved before
                                                 if (savedJustNow && unsavedReducedMeshes.Contains(moddedMesh))
-                                                { 
+                                                {
                                                     Mesh prevMeshCopy = Instantiate(mRendererPair.mesh);
                                                     prevMeshCopy.name = mRendererPair.mesh.name;
                                                     DataContainer.MeshRendererPair mRenderPair = new DataContainer.MeshRendererPair(false, prevMeshCopy);
@@ -1317,7 +1316,7 @@ namespace BrainFailProductions.PolyFew
 
                         }
 
-                        else if(!meshless)
+                        else if (!meshless)
                         {
                             GameObject gameObject = Selection.activeGameObject;
                             // Contains the copy of the original mesh that will be saved in the undo operations for this object
@@ -1375,7 +1374,7 @@ namespace BrainFailProductions.PolyFew
                                                         reducedMeshPair.Add(gameObject, mPair);
                                                         UtilityServices.RestoreMeshesFromPairs(reducedMeshPair);
                                                     }
-                                              
+
                                                 }
 
                                                 break;
@@ -1441,14 +1440,14 @@ namespace BrainFailProductions.PolyFew
                                                     //mRendererPair.mesh.MakeSimilarToOtherMesh(moddedMesh);
 
                                                     //Overwrites the mesh assets and keeps references intact
-                                                    if (UtilityServices.OverwriteAssetWith(originalRendererPair.mesh, moddedMesh, true)) {  }
+                                                    if (UtilityServices.OverwriteAssetWith(originalRendererPair.mesh, moddedMesh, true)) { }
                                                     else
                                                     {
                                                         originalRendererPair.mesh.Clear();
                                                         EditorUtility.CopySerialized(moddedMesh, originalRendererPair.mesh);
                                                         DestroyImmediate(moddedMesh);
                                                     }
-                                                    
+
                                                 }
 
                                                 filter.sharedMesh = originalRendererPair.mesh;
@@ -1548,7 +1547,7 @@ namespace BrainFailProductions.PolyFew
 
                     ENDIF:;
 
-#endregion Apply Changes here
+                    #endregion Apply Changes here
 
 
 
@@ -1566,15 +1565,15 @@ namespace BrainFailProductions.PolyFew
                     EditorGUILayout.EndHorizontal();
 
 
-#endregion Section Header
+                    #endregion Section Header
 
 
-#region Section body
+                    #region Section body
 
                     GUILayout.Space(6);
                     UtilityServices.DrawHorizontalLine(new Color(105 / 255f, 105 / 255f, 105 / 255f), 1, 5);
 
-#region  Reduction options
+                    #region  Reduction options
 
                     GUILayout.Space(8);
                     content = new GUIContent();
@@ -1592,7 +1591,7 @@ namespace BrainFailProductions.PolyFew
                     content.tooltip = "Check this option to preserve UV foldover areas. Usually these are the areas where sharp edges, corners or dents are formed in the mesh or simply the areas where the mesh folds over.";
 
                     width = 130;
-                    
+
                     EditorGUILayout.LabelField(content, style, GUILayout.Width(130));
                     previousValue = PreserveUVFoldover;
                     PreserveUVFoldover = EditorGUILayout.Toggle(PreserveUVFoldover, GUILayout.Width(28), GUILayout.ExpandWidth(false));
@@ -1611,8 +1610,8 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
-                    width = 124;                 
+
+                    width = 124;
 #else
                     width = 120;
 #endif
@@ -1669,8 +1668,8 @@ namespace BrainFailProductions.PolyFew
 
 #if UNITY_2019_1_OR_NEWER
 
-                    width = 124;               
-                
+                    width = 124;
+
 #else
                     width = 120;
 #endif
@@ -1701,7 +1700,7 @@ namespace BrainFailProductions.PolyFew
 
                     EditorGUILayout.BeginHorizontal();
 
-                    
+
                     content.text = "Regard Curvature";
                     content.tooltip = "Check this option to take into account the discrete curvature of mesh surface during simplification. Taking surface curvature into account can result in very good quality mesh simplification, but it can slow the simplification process significantly.";
 
@@ -1729,8 +1728,8 @@ namespace BrainFailProductions.PolyFew
 
 #if UNITY_2019_1_OR_NEWER
 
-                    width = 124;               
-                
+                    width = 124;
+
 #else
                     width = 120;
 #endif
@@ -1765,8 +1764,8 @@ namespace BrainFailProductions.PolyFew
 #if UNITY_2019_1_OR_NEWER
 
                     GUILayout.Space(1);
-                    EditorGUILayout.LabelField(content, GUILayout.Width(129));              
-                
+                    EditorGUILayout.LabelField(content, GUILayout.Width(129));
+
 #else
                     EditorGUILayout.LabelField(content, GUILayout.Width(131));
 #endif
@@ -1806,8 +1805,8 @@ namespace BrainFailProductions.PolyFew
 #if UNITY_2019_1_OR_NEWER
 
                     GUILayout.Space(1);
-                    EditorGUILayout.LabelField(content, GUILayout.Width(129));               
-                
+                    EditorGUILayout.LabelField(content, GUILayout.Width(129));
+
 #else
                     EditorGUILayout.LabelField(content, GUILayout.Width(131));
 #endif
@@ -1835,7 +1834,7 @@ namespace BrainFailProductions.PolyFew
                     GUILayout.Space(10);
 
 
-#region Preservation Sphere
+                    #region Preservation Sphere
 
                     EditorGUILayout.BeginHorizontal();
 
@@ -1859,8 +1858,8 @@ namespace BrainFailProductions.PolyFew
 
 #if UNITY_2019_1_OR_NEWER
 
-                    GUILayout.Space(15);                
-                
+                    GUILayout.Space(15);
+
 #else
                     GUILayout.Space(15);
 #endif
@@ -1869,7 +1868,7 @@ namespace BrainFailProductions.PolyFew
                     EditorGUI.BeginDisabledGroup(!IsPreservationActive);
 
 
-#region LOAD PRESET
+                    #region LOAD PRESET
 
                     originalColor = GUI.backgroundColor;
                     GUI.backgroundColor = UtilityServices.HexToColor("#F5F5DC");
@@ -1887,7 +1886,7 @@ namespace BrainFailProductions.PolyFew
                     {
 
                         string path = EditorUtility.OpenFilePanel("Open Tolerance Spheres Preset", "Assets/", "spp");
-                        
+
                         // User pressed the cancel button
                         if (string.IsNullOrWhiteSpace(path)) { }
 
@@ -1902,12 +1901,12 @@ namespace BrainFailProductions.PolyFew
                                 spheresJsonable = JsonUtilityArrays.FromJson<ToleranceSphereJson>(presetJson);
                             }
 
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 failed = true;
                             }
 
-                            if(spheresJsonable == null || failed)
+                            if (spheresJsonable == null || failed)
                             {
                                 EditorUtility.DisplayDialog("Failed", "Failed to load preset. Please check that the specfied file is a valid tolerance spheres preset file", "Ok");
                                 failed = true;
@@ -1915,10 +1914,10 @@ namespace BrainFailProductions.PolyFew
 
                             if (!failed)
                             {
-        
+
                                 dataContainer.toleranceSpheres = new List<ToleranceSphere>();
 
-                                foreach(var sphere in spheresJsonable)
+                                foreach (var sphere in spheresJsonable)
                                 {
                                     var toleranceSphere = ScriptableObject.CreateInstance(typeof(ToleranceSphere)) as ToleranceSphere;
                                     toleranceSphere.SetProperties(sphere);
@@ -1932,7 +1931,7 @@ namespace BrainFailProductions.PolyFew
                                     {
                                         lodLevel.sphereIntensities = new List<float>();
 
-                                        foreach(var sphere in spheresJsonable)
+                                        foreach (var sphere in spheresJsonable)
                                         {
                                             lodLevel.sphereIntensities.Add(sphere.preservationStrength);
                                         }
@@ -1949,11 +1948,11 @@ namespace BrainFailProductions.PolyFew
 
                     GUI.backgroundColor = originalColor;
 
-#endregion LOAD PRESET
+                    #endregion LOAD PRESET
 
                     GUILayout.Space(4);
 
-#region SAVE PRESET
+                    #region SAVE PRESET
 
                     EditorGUI.BeginDisabledGroup(dataContainer.toleranceSpheres == null || dataContainer.toleranceSpheres.Count == 0);
 
@@ -1974,7 +1973,7 @@ namespace BrainFailProductions.PolyFew
                     {
 
                         string path = EditorUtility.SaveFilePanel("Save Tolerance Spheres Preset", "Assets/", "PRESET_NAME", "spp");
-                        
+
                         // User pressed the cancel button
                         if (string.IsNullOrWhiteSpace(path)) { }
 
@@ -2001,12 +2000,12 @@ namespace BrainFailProductions.PolyFew
 
                     EditorGUI.EndDisabledGroup();
 
-#endregion SAVE PRESET
+                    #endregion SAVE PRESET
 
 
                     GUILayout.Space(30);
 
-#region ADD TOLERANCE SPHERE
+                    #region ADD TOLERANCE SPHERE
 
                     content = new GUIContent();
 
@@ -2032,7 +2031,7 @@ namespace BrainFailProductions.PolyFew
                         sphere.SetProperties(worldPosition, sphereDiameter, sphereDefaultColor, 100f);
 
                         dataContainer.toleranceSpheres.Add(sphere);
-                        
+
                         foreach (var lodLevel in dataContainer.currentLodLevelSettings)
                         {
                             lodLevel.sphereIntensities.Add(100f);
@@ -2042,7 +2041,7 @@ namespace BrainFailProductions.PolyFew
 
 
 
-#endregion ADD TOLERANCE SPHERE
+                    #endregion ADD TOLERANCE SPHERE
 
 
                     EditorGUILayout.EndHorizontal();
@@ -2051,8 +2050,8 @@ namespace BrainFailProductions.PolyFew
                     GUILayout.Space(2);
 
 
-                    
-#region Draw Tolerance Spheres Settings
+
+                    #region Draw Tolerance Spheres Settings
 
 
                     for (int a = 0; a < dataContainer.toleranceSpheres.Count; a++)
@@ -2063,9 +2062,9 @@ namespace BrainFailProductions.PolyFew
                         EditorGUILayout.BeginVertical(EditorStyles.helpBox);
                         EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
                         content = new GUIContent();  //FF6347ff  //006699
-                        if(isPlainSkin) { content.text = String.Format("<b>Sphere {0}</b>", a + 1); }
+                        if (isPlainSkin) { content.text = String.Format("<b>Sphere {0}</b>", a + 1); }
                         else { content.text = String.Format("<b><color=#3e2723>Sphere {0}</color></b>", a + 1); }
-                        
+
 
                         style = GUI.skin.label;
                         style.richText = true;
@@ -2074,7 +2073,7 @@ namespace BrainFailProductions.PolyFew
 
                         GUILayout.Space(190);
 
-#region DUPLICATE TOLERANCE SPHERE
+                        #region DUPLICATE TOLERANCE SPHERE
 
                         style = GUI.skin.button;
                         style.richText = true;
@@ -2084,7 +2083,7 @@ namespace BrainFailProductions.PolyFew
                         content = new GUIContent();
                         if (isPlainSkin) { content.text = "<size=11><b>Duplicate</b></size>"; }
                         else { content.text = "<size=11><color=#006699><b>Duplicate</b></color></size>"; }
-                        
+
                         content.tooltip = $"Creates a duplicate of this tolerance sphere";
 
 
@@ -2099,7 +2098,7 @@ namespace BrainFailProductions.PolyFew
 
                             ToleranceSphere sphere = ScriptableObject.CreateInstance(typeof(ToleranceSphere)) as ToleranceSphere;
                             sphere.SetProperties(toleranceSphere.worldPosition, toleranceSphere.diameter, toleranceSphere.color, toleranceSphere.preservationStrength, toleranceSphere.isHidden);
-                            
+
                             dataContainer.toleranceSpheres.Add(sphere);
 
                             foreach (var lodLevel in dataContainer.currentLodLevelSettings)
@@ -2109,13 +2108,13 @@ namespace BrainFailProductions.PolyFew
 
                         }
 
-#endregion DUPLICATE TOLERANCE SPHERE
+                        #endregion DUPLICATE TOLERANCE SPHERE
 
 
                         GUILayout.Space(10);
 
 
-#region HIDE/UNHIDE SPHERE
+                        #region HIDE/UNHIDE SPHERE
 
                         originalColor = GUI.backgroundColor;
                         //GUI.backgroundColor = UtilityServices.HexToColor("#EEFAFF");
@@ -2140,7 +2139,7 @@ namespace BrainFailProductions.PolyFew
 
                         GUI.backgroundColor = originalColor;
 
-#endregion HIDE/UNHIDE SPHERE
+                        #endregion HIDE/UNHIDE SPHERE
 
                         GUILayout.Space(2);
 
@@ -2158,7 +2157,7 @@ namespace BrainFailProductions.PolyFew
                             {
                                 lodLevel.sphereIntensities.RemoveAt(a);
 
-                                if(lodLevel.sphereIntensities.Count == 0) { lodLevel.intensityFoldout = false; }
+                                if (lodLevel.sphereIntensities.Count == 0) { lodLevel.intensityFoldout = false; }
                             }
 
                             a--;
@@ -2169,7 +2168,7 @@ namespace BrainFailProductions.PolyFew
 
                         EditorGUILayout.EndHorizontal();
 
-                        
+
                         GUILayout.Space(6);
 
 
@@ -2182,20 +2181,20 @@ namespace BrainFailProductions.PolyFew
                         content.text = "Position";
                         content.tooltip = "The current position values of this tolerance sphere in world space.";
 
-                        
+
                         EditorGUILayout.LabelField(content, style, GUILayout.Width(124));
 
                         // the reference to the scriptable object might be null
-                        if(toleranceSphere != null)
+                        if (toleranceSphere != null)
                         {
                             Undo.RecordObject(toleranceSphere, "Tolerance Sphere inspector change");
                         }
-                        
+
 
 
                         toleranceSphere.worldPosition = EditorGUILayout.Vector3Field("", toleranceSphere.worldPosition, GUILayout.Width(140), GUILayout.ExpandWidth(true));
 
-                        
+
 
                         GUILayout.Space(21);
 
@@ -2209,12 +2208,12 @@ namespace BrainFailProductions.PolyFew
                         content.text = "Sphere Size";
                         content.tooltip = "The diameter of this tolerance sphere.";
 
-                        
+
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                         GUILayout.Space(1);
-                        EditorGUILayout.LabelField(content, GUILayout.Width(124));               
+                        EditorGUILayout.LabelField(content, GUILayout.Width(124));
 #else
                         EditorGUILayout.LabelField(content, GUILayout.Width(126));
 
@@ -2226,9 +2225,9 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                         newDiameter = Mathf.Abs(EditorGUILayout.FloatField(content, toleranceSphere.diameter, GUILayout.Width(42), GUILayout.ExpandWidth(true)));
-             
+
 #else
                         newDiameter = Mathf.Abs(EditorGUILayout.FloatField(content, toleranceSphere.diameter, GUILayout.Width(45), GUILayout.ExpandWidth(true)));
 
@@ -2252,9 +2251,9 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                         EditorGUILayout.LabelField(content, style, GUILayout.Width(51));
-             
+
 #else
                         EditorGUILayout.LabelField(content, style, GUILayout.Width(51));
 
@@ -2262,9 +2261,9 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                         GUILayout.Space(3);
-                        toleranceSphere.color = EditorGUILayout.ColorField(toleranceSphere.color, GUILayout.Width(48), GUILayout.ExpandWidth(true));             
+                        toleranceSphere.color = EditorGUILayout.ColorField(toleranceSphere.color, GUILayout.Width(48), GUILayout.ExpandWidth(true));
 #else
                         toleranceSphere.color = EditorGUILayout.ColorField(toleranceSphere.color, GUILayout.Width(52), GUILayout.ExpandWidth(true));
 #endif
@@ -2286,17 +2285,17 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                         GUILayout.Space(2);
-           
+
 #else
                         GUILayout.Space(1);
 #endif
 
-#region Preservation Strength Slider
+                        #region Preservation Strength Slider
 
                         GUILayout.BeginHorizontal();
-                        
+
                         content = new GUIContent();
                         style = GUI.skin.label;
                         style.richText = true;
@@ -2315,7 +2314,7 @@ namespace BrainFailProductions.PolyFew
                         float oldValue = toleranceSphere.preservationStrength;
                         toleranceSphere.preservationStrength = Mathf.Abs(GUILayout.HorizontalSlider(toleranceSphere.preservationStrength, 0, 100, GUILayout.Width(width), GUILayout.ExpandWidth(true)));
                         style = GUI.skin.textField;
-                        
+
                         //if (!Mathf.Approximately(oldValue, toleranceSphere.preservationStrength) && !applyForOptionsChange)
                         //{
                         //    RunOnThreads = CheckOnThreads();
@@ -2330,7 +2329,7 @@ namespace BrainFailProductions.PolyFew
                         oldValue = toleranceSphere.preservationStrength;
                         toleranceSphere.preservationStrength = Mathf.Abs(EditorGUILayout.DelayedFloatField(content, toleranceSphere.preservationStrength, style, GUILayout.Width(10), GUILayout.ExpandWidth(true)));
 
-                        
+
                         if ((int)toleranceSphere.preservationStrength > 100)
                         {
                             toleranceSphere.preservationStrength = GetFirstNDigits((int)toleranceSphere.preservationStrength, 2);
@@ -2345,9 +2344,9 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                         width = 15;
-           
+
 #else
                         width = 20;
 #endif
@@ -2360,7 +2359,7 @@ namespace BrainFailProductions.PolyFew
 
                         GUILayout.EndHorizontal();
 
-#endregion Preservation Strength Slider
+                        #endregion Preservation Strength Slider
 
 
 
@@ -2371,14 +2370,14 @@ namespace BrainFailProductions.PolyFew
 
 
 
-#endregion Draw Tolerance Spheres Settings
+                    #endregion Draw Tolerance Spheres Settings
 
 
-#endregion Reduction options
+                    #endregion Reduction options
 
                     EditorGUI.EndDisabledGroup();
 
-#region Reduction slider section
+                    #region Reduction slider section
 
 
                     GUILayout.Space(8);
@@ -2401,9 +2400,9 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                     GUILayout.Space(2);
-           
+
 #else
                     GUILayout.Space(4);
 #endif
@@ -2419,7 +2418,7 @@ namespace BrainFailProductions.PolyFew
                     hasLods = UtilityServices.HasLODs(Selection.activeGameObject);
 
                     ReductionStrength = Mathf.Abs(GUILayout.HorizontalSlider(ReductionStrength, 0, 100, GUILayout.Width(138), GUILayout.ExpandWidth(true)));
-                    
+
                     if (ReductionPending && Mathf.Approximately(ReductionStrength, 0))
                     {
                         UtilityServices.RestoreMeshesFromPairs(dataContainer.objectMeshPairs);
@@ -2453,7 +2452,7 @@ namespace BrainFailProductions.PolyFew
                     {
 
                         ReductionPending = true;
-                        
+
                         try
                         {
 
@@ -2553,7 +2552,7 @@ namespace BrainFailProductions.PolyFew
                     content.text = "";
 
                     oldStrength = ReductionStrength;
-                    
+
                     ReductionStrength = Mathf.Abs(EditorGUILayout.DelayedFloatField(content, ReductionStrength, style, GUILayout.Width(10), GUILayout.ExpandWidth(true)));
 
                     if ((int)ReductionStrength > 100)
@@ -2563,7 +2562,7 @@ namespace BrainFailProductions.PolyFew
 
                     if (!Mathf.Approximately(oldStrength, ReductionStrength))
                     {
-                        
+
                         if (isMeshless)
                         {
                             EditorUtility.DisplayDialog("Meshless Object", "This object appears to have no feasible mesh for reduction. You might want to enable \"Consider Children\" to consider the nested children for reduction.", "Ok");
@@ -2584,7 +2583,7 @@ namespace BrainFailProductions.PolyFew
                         {
                             UtilityServices.RestoreMeshesFromPairs(dataContainer.objectMeshPairs);
                             TriangleCount = UtilityServices.CountTriangles(ConsiderChildren, dataContainer.objectMeshPairs, Selection.activeGameObject);
-                            ReductionPending = false; 
+                            ReductionPending = false;
                         }
                     }
 
@@ -2619,9 +2618,9 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                     GUILayout.Space(2);
-           
+
 #else
                     GUILayout.Space(4);
 #endif
@@ -2641,30 +2640,30 @@ namespace BrainFailProductions.PolyFew
                     GUILayout.EndHorizontal();
 
 
-#endregion Reduction slider section
+                    #endregion Reduction slider section
 
 
-#endregion Section body
+                    #endregion Section body
 
 
-#endregion Section body
+                    #endregion Section body
 
-#region AUTO LOD
+                    #region AUTO LOD
 
                     GUILayout.Space(12);
 
                     UtilityServices.DrawHorizontalLine(Color.black, 1, 8);
 
-#region TITLE HEADER
+                    #region TITLE HEADER
 
                     GUILayout.Space(4);
 
                     EditorGUILayout.BeginHorizontal();
 
                     content = new GUIContent();
-                    if(isPlainSkin) { content.text = "<size=13><b>AUTOMATIC LOD</b></size>"; }
+                    if (isPlainSkin) { content.text = "<size=13><b>AUTOMATIC LOD</b></size>"; }
                     else { content.text = "<size=13><b><color=#A52A2AFF>AUTOMATIC LOD</color></b></size>"; }
-                    
+
                     content.tooltip = "Expand this section to see options for automatic LOD generation.";
 
                     style = EditorStyles.foldout;
@@ -2683,7 +2682,7 @@ namespace BrainFailProductions.PolyFew
                     EditorGUILayout.EndHorizontal();
 
 
-#endregion TITLE HEADER
+                    #endregion TITLE HEADER
 
 
 
@@ -2693,7 +2692,7 @@ namespace BrainFailProductions.PolyFew
                         UtilityServices.DrawHorizontalLine(Color.black, 1, 8);
                         GUILayout.Space(6);
 
-#region Section Header
+                        #region Section Header
 
 
                         GUILayout.Space(6);
@@ -2701,7 +2700,7 @@ namespace BrainFailProductions.PolyFew
                         EditorGUILayout.BeginHorizontal();
 
 
-#region Change Save Path
+                        #region Change Save Path
 
 
                         style = GUI.skin.button;
@@ -2711,7 +2710,7 @@ namespace BrainFailProductions.PolyFew
                         content = new GUIContent();
                         if (isPlainSkin) { content.text = "<b><size=11>Change Save Path</size></b>"; }
                         else { content.text = "<b><size=11><color=#006699>Change Save Path</color></size></b>"; }
-                        
+
                         content.tooltip = "Change the path where the generated LODs mesh assets will be saved. If you don't select a path the default path will be used. Please note that the chosen path will be used for saving LOD mesh assets in the future, unless changed.";
 
                         if (GUILayout.Button(content, style, GUILayout.Width(134), GUILayout.Height(20), GUILayout.ExpandWidth(false)))
@@ -2720,7 +2719,7 @@ namespace BrainFailProductions.PolyFew
 
                             string folderToOpen = String.IsNullOrWhiteSpace(AutoLODSavePath) ? "Assets/" : AutoLODSavePath;
 
-                            if(!String.IsNullOrWhiteSpace(folderToOpen))
+                            if (!String.IsNullOrWhiteSpace(folderToOpen))
                             {
                                 if (folderToOpen.EndsWith("/")) { folderToOpen.Remove(folderToOpen.Length - 1, 1); }
 
@@ -2758,11 +2757,11 @@ namespace BrainFailProductions.PolyFew
 
                         EditorGUI.EndDisabledGroup();
 
-#endregion Change Save Path
+                        #endregion Change Save Path
 
                         GUILayout.Space(40);
 
-#region Add LOD Level
+                        #region Add LOD Level
 
                         content = new GUIContent();
 
@@ -2784,18 +2783,18 @@ namespace BrainFailProductions.PolyFew
                             //if (dataContainer.currentLodLevelSettings.Count < UtilityServices.MAX_LOD_COUNT)
                             //{
                             List<float> strengths = new List<float>();
-                            foreach(var sphere in dataContainer.toleranceSpheres) { strengths.Add(100f); }
+                            foreach (var sphere in dataContainer.toleranceSpheres) { strengths.Add(100f); }
 
                             dataContainer.currentLodLevelSettings.Add(new DataContainer.LODLevelSettings(0, 0, false, false, false, true, false, 7, 100, false, false, false, false, false, strengths));
                             //}
                         }
 
 
-#endregion Add LOD Level
+                        #endregion Add LOD Level
 
                         GUILayout.Space(2);
 
-#region Generate LODs
+                        #region Generate LODs
 
 
                         style = GUI.skin.button;
@@ -2810,7 +2809,7 @@ namespace BrainFailProductions.PolyFew
                         content = new GUIContent();
                         if (isPlainSkin) { content.text = "<size=11><b>Generate LODS</b> </size>"; }
                         else { content.text = "<size=11> <b><color=#000000>Generate LODS</color></b> </size>"; }
-      
+
                         content.tooltip = "Generate LODs for this GameObject with the settings specified. Please note that you must save the scene after successful generation of LODs and apply changes to any prefabs manually.";
 
                         didPressButton = GUILayout.Button(content, style, GUILayout.Width(120), GUILayout.Height(24), GUILayout.ExpandWidth(true));
@@ -2857,7 +2856,7 @@ namespace BrainFailProductions.PolyFew
                                     dataContainer.currentLodLevelSettings.Remove(toDelete);
                                 }
 
-                                if(dataContainer != null && dataContainer.currentLodLevelSettings != null && dataContainer.currentLodLevelSettings.Count > 1)
+                                if (dataContainer != null && dataContainer.currentLodLevelSettings != null && dataContainer.currentLodLevelSettings.Count > 1)
                                 {
                                     bool isSuccess = UtilityServices.GenerateLODS(Selection.activeGameObject, dataContainer.toleranceSpheres, dataContainer.currentLodLevelSettings, UtilityServices.AutoLODSavePath, null, true);
                                     EditorUtility.ClearProgressBar();
@@ -2881,7 +2880,7 @@ namespace BrainFailProductions.PolyFew
                                     EditorUtility.DisplayDialog("Failed", "Failed to generate LODs. You must have at least one non-base lod level with reduction strength and transition height > 0. Press the \"Add\" button to add more lod levels.", "Ok");
                                 }
 
-                                
+
                             }
 
                             catch (Exception error)
@@ -2894,7 +2893,7 @@ namespace BrainFailProductions.PolyFew
                         }
 
 
-#endregion Generate LODs
+                        #endregion Generate LODs
 
 
                         EditorGUILayout.EndHorizontal();
@@ -2904,14 +2903,14 @@ namespace BrainFailProductions.PolyFew
                         EditorGUILayout.BeginHorizontal();
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                         //GUILayout.Space(177);
-           
+
 #else
                         //GUILayout.Space(174);
 #endif
 
-#region  Additional options
+                        #region  Additional options
 
 
                         style = EditorStyles.toolbarDropDown;
@@ -2930,7 +2929,7 @@ namespace BrainFailProductions.PolyFew
 
                                 lastRect = new Rect(Event.current.mousePosition, lastRect.size);
                                 var definitions = new PopupToggleTemplate.ToggleDefinition[4];
-                                
+
                                 content = new GUIContent();
                                 content.text = "Copy static flags to new objects";
                                 content.tooltip = "Copy the static flags from this object to the newly created LOD objects";
@@ -2995,12 +2994,12 @@ namespace BrainFailProductions.PolyFew
                         if (Event.current.type == EventType.Repaint) lastRect = GUILayoutUtility.GetLastRect();
 
 
-#endregion  Additional options
+                        #endregion  Additional options
 
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                         GUILayout.Space(40);
 #else
                         GUILayout.Space(40);
@@ -3008,7 +3007,7 @@ namespace BrainFailProductions.PolyFew
 
 
 
-#region Copy Preview Settings
+                        #region Copy Preview Settings
 
                         style = GUI.skin.button;
                         style.richText = true;
@@ -3039,9 +3038,9 @@ namespace BrainFailProductions.PolyFew
                                 var lodLevel = dataContainer.currentLodLevelSettings[a];
 
                                 // in Base level don't copy over any settings if reduction is 0
-                                if(a == 0)
+                                if (a == 0)
                                 {
-                                    if(!Mathf.Approximately(lodLevel.reductionStrength, 0))
+                                    if (!Mathf.Approximately(lodLevel.reductionStrength, 0))
                                     {
                                         CopyOverPreviewSettings(lodLevel);
                                     }
@@ -3051,17 +3050,17 @@ namespace BrainFailProductions.PolyFew
                                 {
                                     CopyOverPreviewSettings(lodLevel);
                                 }
-                                
+
                             }
 
                         }
 
-#endregion Copy Preview Settings
+                        #endregion Copy Preview Settings
 
 
                         GUILayout.Space(2);
 
-#region Destroy LODs
+                        #region Destroy LODs
 
 
                         style = GUI.skin.button;
@@ -3077,7 +3076,7 @@ namespace BrainFailProductions.PolyFew
                         if (isPlainSkin) { content.text = "<size=11><b>Destroy LODs</b></size>"; }
                         else { content.text = "<size=11><color=#006699><b>Destroy LODs</b></color></size>"; }
 
-                        
+
                         content.tooltip = $"Destroy the generated LODs for this mesh. This will also delete the \".mesh\" files in the folder \"{UtilityServices.LOD_ASSETS_DEFAULT_SAVE_PATH}\" that were created for this object during the LOD generation process. Please note that you will have to delete the empty folders manually.";
 
                         bool hasLODs = UtilityServices.HasLODs(Selection.activeGameObject);
@@ -3109,20 +3108,20 @@ namespace BrainFailProductions.PolyFew
                         }
 
 
-#endregion Destroy LODs
+                        #endregion Destroy LODs
 
 
                         EditorGUILayout.EndHorizontal();
 
 
-#endregion Section Header
+                        #endregion Section Header
 
 
 
                         GUILayout.Space(14);
 
 
-#region Draw LOD Level
+                        #region Draw LOD Level
 
 
                         for (int a = 0; a < dataContainer.currentLodLevelSettings.Count; a++)
@@ -3137,7 +3136,7 @@ namespace BrainFailProductions.PolyFew
                             if (isPlainSkin) { content.text = String.Format("<b>Level {0}</b>", a + 1); }
                             else { content.text = String.Format("<b><color=#3e2723>Level {0}</color></b>", a + 1); }
 
-                            
+
 
                             if (a == 0)
                             {
@@ -3177,7 +3176,7 @@ namespace BrainFailProductions.PolyFew
                             if (a != 0)
                             {
 
-#region Reduction Strength Slider
+                                #region Reduction Strength Slider
 
                                 GUILayout.BeginHorizontal();
 
@@ -3218,79 +3217,79 @@ namespace BrainFailProductions.PolyFew
 
                                 GUILayout.EndHorizontal();
 
-#endregion   Reduction Strength Slider
+                                #endregion   Reduction Strength Slider
                             }
 
-#region Screen relative transition height
+                            #region Screen relative transition height
 
 
-                                GUILayout.BeginHorizontal();
+                            GUILayout.BeginHorizontal();
 
-                                content = new GUIContent();
-                                style = GUI.skin.label;
-                                style.richText = true;
-                                prevPadding = new RectOffset(style.padding.left, style.padding.right, style.padding.top, style.padding.bottom);
+                            content = new GUIContent();
+                            style = GUI.skin.label;
+                            style.richText = true;
+                            prevPadding = new RectOffset(style.padding.left, style.padding.right, style.padding.top, style.padding.bottom);
 
-                                content.text = "Transition Height";
-                                content.tooltip = "The screen relative height controls how far the viewing camera must be from the object before a transition to the next LOD level is made.";
+                            content.text = "Transition Height";
+                            content.tooltip = "The screen relative height controls how far the viewing camera must be from the object before a transition to the next LOD level is made.";
 
 
-                                GUILayout.Space(16);
+                            GUILayout.Space(16);
 
-                                EditorGUILayout.LabelField(content, style, GUILayout.Width(115));
+                            EditorGUILayout.LabelField(content, style, GUILayout.Width(115));
 
-                                float oldHeight = lodLevel.transitionHeight;
-                                lodLevel.transitionHeight = Mathf.Abs(GUILayout.HorizontalSlider(lodLevel.transitionHeight, 0, 1, GUILayout.Width(130), GUILayout.ExpandWidth(true)));
-                                style = GUI.skin.textField;
+                            float oldHeight = lodLevel.transitionHeight;
+                            lodLevel.transitionHeight = Mathf.Abs(GUILayout.HorizontalSlider(lodLevel.transitionHeight, 0, 1, GUILayout.Width(130), GUILayout.ExpandWidth(true)));
+                            style = GUI.skin.textField;
 
-                                GUILayout.Space(5);
+                            GUILayout.Space(5);
 
-                                content.text = "";
+                            content.text = "";
 
-                                lodLevel.transitionHeight = Mathf.Abs(EditorGUILayout.FloatField(content, lodLevel.transitionHeight, style, GUILayout.Width(10), GUILayout.ExpandWidth(true)));
-                                lodLevel.transitionHeight = Mathf.Clamp01(lodLevel.transitionHeight);
+                            lodLevel.transitionHeight = Mathf.Abs(EditorGUILayout.FloatField(content, lodLevel.transitionHeight, style, GUILayout.Width(10), GUILayout.ExpandWidth(true)));
+                            lodLevel.transitionHeight = Mathf.Clamp01(lodLevel.transitionHeight);
 
-                                if (!Mathf.Approximately(oldHeight, lodLevel.transitionHeight) && a > 0)
+                            if (!Mathf.Approximately(oldHeight, lodLevel.transitionHeight) && a > 0)
+                            {
+                                float lastLevelHeight = dataContainer.currentLodLevelSettings[a - 1].transitionHeight;
+                                float currentLevelHeight = lodLevel.transitionHeight;
+
+                                if ((lastLevelHeight - currentLevelHeight) <= 0.05f)
                                 {
-                                    float lastLevelHeight = dataContainer.currentLodLevelSettings[a - 1].transitionHeight;
-                                    float currentLevelHeight = lodLevel.transitionHeight;
-
-                                    if ((lastLevelHeight - currentLevelHeight) <= 0.05f)
-                                    {
-                                        //Debug.Log($"Last level height  {lastLevelHeight}  currentLevelHeight = {currentLevelHeight}  Mathf.Abs(lastLevelHeight - currentLevelHeight)   " +(Mathf.Abs(lastLevelHeight - currentLevelHeight) + "  a is  " + a));
-                                        lodLevel.transitionHeight = lastLevelHeight - 0.05f;
-                                        lodLevel.transitionHeight = Mathf.Clamp01(lodLevel.transitionHeight);
-                                    }
+                                    //Debug.Log($"Last level height  {lastLevelHeight}  currentLevelHeight = {currentLevelHeight}  Mathf.Abs(lastLevelHeight - currentLevelHeight)   " +(Mathf.Abs(lastLevelHeight - currentLevelHeight) + "  a is  " + a));
+                                    lodLevel.transitionHeight = lastLevelHeight - 0.05f;
+                                    lodLevel.transitionHeight = Mathf.Clamp01(lodLevel.transitionHeight);
                                 }
+                            }
 
 
-                                if (!Mathf.Approximately(oldHeight, lodLevel.transitionHeight) && a != (dataContainer.currentLodLevelSettings.Count - 1))
+                            if (!Mathf.Approximately(oldHeight, lodLevel.transitionHeight) && a != (dataContainer.currentLodLevelSettings.Count - 1))
+                            {
+                                float nextLevelHeight = dataContainer.currentLodLevelSettings[a + 1].transitionHeight;
+                                float currentLevelHeight = lodLevel.transitionHeight;
+
+                                if ((currentLevelHeight - nextLevelHeight) <= 0.05f)
                                 {
-                                    float nextLevelHeight = dataContainer.currentLodLevelSettings[a + 1].transitionHeight;
-                                    float currentLevelHeight = lodLevel.transitionHeight;
-
-                                    if ((currentLevelHeight - nextLevelHeight) <= 0.05f)
-                                    {
-                                        //Debug.Log($"Next level height  {nextLevelHeight}  currentLevelHeight = {currentLevelHeight}  Mathf.Abs(lastLevelHeight - currentLevelHeight)   " +(Mathf.Abs(lastLevelHeight - currentLevelHeight) + "  a is  " + a));
-                                        lodLevel.transitionHeight = nextLevelHeight + 0.05f;
-                                        lodLevel.transitionHeight = Mathf.Clamp01(lodLevel.transitionHeight);
-                                    }
+                                    //Debug.Log($"Next level height  {nextLevelHeight}  currentLevelHeight = {currentLevelHeight}  Mathf.Abs(lastLevelHeight - currentLevelHeight)   " +(Mathf.Abs(lastLevelHeight - currentLevelHeight) + "  a is  " + a));
+                                    lodLevel.transitionHeight = nextLevelHeight + 0.05f;
+                                    lodLevel.transitionHeight = Mathf.Clamp01(lodLevel.transitionHeight);
                                 }
+                            }
 
 
 
-                                GUILayout.Space(24);
+                            GUILayout.Space(24);
 
 
-                                GUILayout.EndHorizontal();
+                            GUILayout.EndHorizontal();
 
 
-#endregion   Screen relative transition height
+                            #endregion   Screen relative transition height
 
                             if (a != 0)
                             {
 
-#region Reduction extra options
+                                #region Reduction extra options
 
                                 GUILayout.Space(2);
 
@@ -3305,7 +3304,7 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                                 GUILayout.Space(1);
 #endif
 
@@ -3329,7 +3328,7 @@ namespace BrainFailProductions.PolyFew
 
                                 if (lodLevel.simplificationOptionsFoldout)
                                 {
-                                    
+
                                     style = GUI.skin.label;
 
                                     content.text = "Preserve UV Foldover";
@@ -3339,7 +3338,7 @@ namespace BrainFailProductions.PolyFew
                                     lodLevel.preserveUVFoldover = EditorGUILayout.Toggle(lodLevel.preserveUVFoldover, GUILayout.Width(18), GUILayout.ExpandWidth(false));
 
                                     GUILayout.Space(8);
-                                    
+
                                     content.text = "Preserve UV Seams";
                                     content.tooltip = "Preserve the mesh areas where the UV seams are made.These are the areas where different UV islands are formed (usually the shallow polygon conjested areas).";
 
@@ -3399,7 +3398,7 @@ namespace BrainFailProductions.PolyFew
 
                                     lodLevel.regardCurvature = EditorGUILayout.Toggle(lodLevel.regardCurvature, GUILayout.Width(15));
 
-                                
+
                                     GUILayout.Space(11);
 
                                     content.text = "Recalculate Normals";
@@ -3420,9 +3419,9 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                                     GUILayout.Space(17);
-              
+
 #else
                                     GUILayout.Space(16);
 
@@ -3435,9 +3434,9 @@ namespace BrainFailProductions.PolyFew
                                     EditorGUI.BeginDisabledGroup(lodLevel.useEdgeSort);
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                                     EditorGUILayout.LabelField(content, GUILayout.Width(134));
-              
+
 #else
                                     EditorGUILayout.LabelField(content, GUILayout.Width(134));
                                     GUILayout.Space(2);
@@ -3470,10 +3469,10 @@ namespace BrainFailProductions.PolyFew
                                     EditorGUI.BeginDisabledGroup(lodLevel.useEdgeSort);
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                                     GUILayout.Space(1);
                                     EditorGUILayout.LabelField(content, GUILayout.Width(134));
-              
+
 #else
                                     EditorGUILayout.LabelField(content, GUILayout.Width(136));
 
@@ -3485,10 +3484,10 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                                     lodLevel.maxIterations = Mathf.Abs(EditorGUILayout.IntField(content, lodLevel.maxIterations, GUILayout.Width(168), GUILayout.ExpandWidth(true)));
 
-              
+
 #else
                                     lodLevel.maxIterations = Mathf.Abs(EditorGUILayout.IntField(content, lodLevel.maxIterations, GUILayout.Width(168), GUILayout.ExpandWidth(true)));
 
@@ -3503,10 +3502,10 @@ namespace BrainFailProductions.PolyFew
                                 GUILayout.EndHorizontal();
 
 
-#endregion Reduction extra options
+                                #endregion Reduction extra options
 
 
-#region Regard Tolerance Sphere And Combine Meshes
+                                #region Regard Tolerance Sphere And Combine Meshes
 
                                 if (lodLevel.simplificationOptionsFoldout)
                                 {
@@ -3530,10 +3529,10 @@ namespace BrainFailProductions.PolyFew
                                 lodLevel.regardTolerance = EditorGUILayout.Toggle(lodLevel.regardTolerance, GUILayout.Width(28), GUILayout.ExpandWidth(false));
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                                 width = 108;
 
-              
+
 #else
                                 GUILayout.Space(2);
                                 width = 109;
@@ -3553,13 +3552,13 @@ namespace BrainFailProductions.PolyFew
                                 EditorGUILayout.EndHorizontal();
 
 
-#endregion Regard Tolerance Sphere And Combine Meshes
+                                #endregion Regard Tolerance Sphere And Combine Meshes
 
 
-                                if(lodLevel.regardTolerance)
+                                if (lodLevel.regardTolerance)
                                 {
 
-#region Tolerance Spheres Intensities
+                                    #region Tolerance Spheres Intensities
 
                                     GUILayout.Space(2);
 
@@ -3572,10 +3571,10 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                                     GUILayout.Space(1);
                                     lodLevel.intensityFoldout = EditorGUILayout.Foldout(lodLevel.intensityFoldout, content, true);
-   
+
 #else
                                     lodLevel.intensityFoldout = EditorGUILayout.Foldout(lodLevel.intensityFoldout, content, true);
 
@@ -3604,7 +3603,7 @@ namespace BrainFailProductions.PolyFew
                                             content = new GUIContent();  //FF6347ff  //006699 // 3e2723 //006699
                                             if (isPlainSkin) { content.text = String.Format("Sphere {0} Intensity", b + 1); }
                                             else { content.text = String.Format("<color=#006699>Sphere {0} Intensity</color>", b + 1); }
-                                        
+
                                             content.tooltip = "The percentage of triangles to preserve in the region enclosed by this preservation sphere, for this LOD level.";
 
                                             style = GUI.skin.label;
@@ -3636,9 +3635,9 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                                             width = 16;
-   
+
 #else
                                             width = 20;
 #endif
@@ -3658,7 +3657,7 @@ namespace BrainFailProductions.PolyFew
                                     }
 
 
-#endregion Tolerance Spheres Intensities
+                                    #endregion Tolerance Spheres Intensities
 
                                 }
 
@@ -3670,319 +3669,319 @@ namespace BrainFailProductions.PolyFew
 
 
 
-#endregion Draw LOD Level
+                        #endregion Draw LOD Level
 
 
                     }
 
 
-#endregion AUTO LOD
+                    #endregion AUTO LOD
 
 
-#region BATCH FEW
+                    #region BATCH FEW
 
                     DrawBatchFewUI();
 
-#endregion BATCH FEW
+                    #endregion BATCH FEW
 
                 }
 
-                
+
                 EditorGUILayout.EndVertical();
 
             }
 
-           
+
             else if (Selection.gameObjects != null && Selection.gameObjects.Length > 1)
             {
-           
-
-#region AUTO LOD
 
 
-                    EditorGUILayout.BeginVertical("GroupBox");
+                #region AUTO LOD
 
 
-#region TITLE HEADER
+                EditorGUILayout.BeginVertical("GroupBox");
 
-                    GUILayout.Space(4);
-                
+
+                #region TITLE HEADER
+
+                GUILayout.Space(4);
+
+                EditorGUILayout.BeginHorizontal();
+
+                content = new GUIContent();
+                if (isPlainSkin) { content.text = "<size=13><b>AUTOMATIC LOD</b></size>"; }
+                else { content.text = "<size=13><b><color=#A52A2AFF>AUTOMATIC LOD</color></b></size>"; }
+
+
+                content.tooltip = "Expand this section to see options for automatic LOD generation.";
+
+                style = EditorStyles.foldout;
+                style.richText = true;  // #FF6347ff  //A52A2AFF
+                prevPadding = new RectOffset(style.padding.left, style.padding.right, style.padding.top, style.padding.bottom);
+                style.padding = new RectOffset(20, 0, -1, 0);
+
+                GUILayout.Space(19);
+                FoldAutoLODMultiple = !EditorGUILayout.Foldout(!FoldAutoLODMultiple, content, true, style);
+
+                style.padding = prevPadding;
+
+                style = new GUIStyle();
+                style.richText = true;
+
+                EditorGUILayout.EndHorizontal();
+
+
+                #endregion TITLE HEADER
+
+
+                if (!FoldAutoLODMultiple)
+                {
+                    UtilityServices.DrawHorizontalLine(Color.black, 1, 8);
+                    GUILayout.Space(6);
+
+                    #region Section Header
+
+
+                    GUILayout.Space(6);
+
                     EditorGUILayout.BeginHorizontal();
 
-                    content = new GUIContent();
-                    if(isPlainSkin) { content.text = "<size=13><b>AUTOMATIC LOD</b></size>"; }
-                    else { content.text = "<size=13><b><color=#A52A2AFF>AUTOMATIC LOD</color></b></size>"; }
-                    
-                    
-                    content.tooltip = "Expand this section to see options for automatic LOD generation.";
 
-                    style = EditorStyles.foldout;
-                    style.richText = true;  // #FF6347ff  //A52A2AFF
-                    prevPadding = new RectOffset(style.padding.left, style.padding.right, style.padding.top, style.padding.bottom);
-                    style.padding = new RectOffset(20, 0, -1, 0);
+                    #region Change Save Path
 
-                    GUILayout.Space(19);
-                    FoldAutoLODMultiple = !EditorGUILayout.Foldout(!FoldAutoLODMultiple, content, true, style);
 
-                    style.padding = prevPadding;
-
-                    style = new GUIStyle();
+                    style = GUI.skin.button;
                     style.richText = true;
 
-                    EditorGUILayout.EndHorizontal();
 
+                    content = new GUIContent();
+                    if (isPlainSkin) { content.text = "<b><size=11>Change Save Path</size></b>"; }
+                    else { content.text = "<b><size=11><color=#006699>Change Save Path</color></size></b>"; }
 
-#endregion TITLE HEADER
+                    content.tooltip = "Change the path where the generated LODs mesh assets will be saved. If you don't select a path the default path will be used. Please note that the chosen path will be used for saving LOD mesh assets in the future, unless changed.";
 
-
-                    if (!FoldAutoLODMultiple)
+                    if (GUILayout.Button(content, style, GUILayout.Width(134), GUILayout.Height(20), GUILayout.ExpandWidth(false)))
                     {
-                        UtilityServices.DrawHorizontalLine(Color.black, 1, 8);
-                        GUILayout.Space(6);
 
-#region Section Header
+                        string toOpen = String.IsNullOrWhiteSpace(AutoLODSavePath) ? "Assets/" : AutoLODSavePath;
 
-
-                        GUILayout.Space(6);
-
-                        EditorGUILayout.BeginHorizontal();
-
-
-#region Change Save Path
-
-
-                        style = GUI.skin.button;
-                        style.richText = true;
-
-
-                        content = new GUIContent();
-                        if(isPlainSkin) { content.text = "<b><size=11>Change Save Path</size></b>"; }
-                        else { content.text = "<b><size=11><color=#006699>Change Save Path</color></size></b>"; }
-                         
-                        content.tooltip = "Change the path where the generated LODs mesh assets will be saved. If you don't select a path the default path will be used. Please note that the chosen path will be used for saving LOD mesh assets in the future, unless changed.";
-
-                        if (GUILayout.Button(content, style, GUILayout.Width(134), GUILayout.Height(20), GUILayout.ExpandWidth(false)))
+                        if (!String.IsNullOrWhiteSpace(toOpen))
                         {
+                            if (toOpen.EndsWith("/")) { toOpen.Remove(toOpen.Length - 1, 1); }
 
-                            string toOpen = String.IsNullOrWhiteSpace(AutoLODSavePath) ? "Assets/" : AutoLODSavePath;
-
-                            if (!String.IsNullOrWhiteSpace(toOpen))
+                            if (!AssetDatabase.IsValidFolder(toOpen))
                             {
-                                if (toOpen.EndsWith("/")) { toOpen.Remove(toOpen.Length - 1, 1); }
-
-                                if (!AssetDatabase.IsValidFolder(toOpen))
-                                {
-                                    toOpen = "Assets/";
-                                }
+                                toOpen = "Assets/";
                             }
-
-
-                            string path = EditorUtility.OpenFolderPanel("Choose LOD Assets Save path", toOpen, "");
-
-
-                            //Validate the save path. It might be outside the assets folder   
-
-                            // User pressed the cancel button
-                            if (string.IsNullOrWhiteSpace(path)) { }
-
-                            else if (!UtilityServices.IsPathInAssetsDir(path))
-                            {
-                                EditorUtility.DisplayDialog("Invalid Path", "The path you chose is not valid.Please choose a path that points to a directory that exists in the project's Assets folder.", "Ok");
-                            }
-
-                            else
-                            {
-                                path = UtilityServices.GetValidFolderPath(path);
-
-                                if (!string.IsNullOrWhiteSpace(path))
-                                {
-                                    UtilityServices.AutoLODSavePath = UtilityServices.SetAndReturnStringPref("autoLODSavePath", path);
-                                }
-                            }
-
                         }
 
-                        EditorGUI.EndDisabledGroup();
 
-#endregion Change Save Path
+                        string path = EditorUtility.OpenFolderPanel("Choose LOD Assets Save path", toOpen, "");
 
 
-                        GUILayout.Space(40);
+                        //Validate the save path. It might be outside the assets folder   
 
-#region Add LOD Level
+                        // User pressed the cancel button
+                        if (string.IsNullOrWhiteSpace(path)) { }
 
-                        content = new GUIContent();
+                        else if (!UtilityServices.IsPathInAssetsDir(path))
+                        {
+                            EditorUtility.DisplayDialog("Invalid Path", "The path you chose is not valid.Please choose a path that points to a directory that exists in the project's Assets folder.", "Ok");
+                        }
 
-                        //GUILayout.FlexibleSpace();
-                        content.tooltip = "Add an LOD level.";
+                        else
+                        {
+                            path = UtilityServices.GetValidFolderPath(path);
 
-                        content.text = "<b>Add</b>";
+                            if (!string.IsNullOrWhiteSpace(path))
+                            {
+                                UtilityServices.AutoLODSavePath = UtilityServices.SetAndReturnStringPref("autoLODSavePath", path);
+                            }
+                        }
+
+                    }
+
+                    EditorGUI.EndDisabledGroup();
+
+                    #endregion Change Save Path
+
+
+                    GUILayout.Space(40);
+
+                    #region Add LOD Level
+
+                    content = new GUIContent();
+
+                    //GUILayout.FlexibleSpace();
+                    content.tooltip = "Add an LOD level.";
+
+                    content.text = "<b>Add</b>";
 
 #if UNITY_2019_1_OR_NEWER
 
-                        width = 55;
+                    width = 55;
 
 #else
                         width = 40;
 #endif
 
-                        if (GUILayout.Button(content, style, GUILayout.Width(width), GUILayout.MaxHeight(24), GUILayout.ExpandWidth(true)))
+                    if (GUILayout.Button(content, style, GUILayout.Width(width), GUILayout.MaxHeight(24), GUILayout.ExpandWidth(true)))
+                    {
+
+                        if (dataContainer.currentLodLevelSettings == null)
                         {
-
-                            if (dataContainer.currentLodLevelSettings == null)
-                            {
-                                dataContainer.currentLodLevelSettings = new List<DataContainer.LODLevelSettings>();
-                            }
-
-
-                            List<float> strengths = new List<float>();
-                            foreach (var sphere in dataContainer.toleranceSpheres) { strengths.Add(100f); }
-
-
-                            dataContainer.currentLodLevelSettings.Add(new DataContainer.LODLevelSettings(0, 0, false, false, false, true, false, 7, 100, false, false, false, false, false, strengths));
-                        }
-                        
-
-#endregion Add LOD Level
-
-                        GUILayout.Space(2);
-
-#region Generate LODs
-
-
-                        style = GUI.skin.button;
-                        style.richText = true;
-
-                        originalColor = new Color(GUI.backgroundColor.r, GUI.backgroundColor.g, GUI.backgroundColor.b);
-                        //# ffc14d   60%
-                        //# F0FFFF   73%
-                        //# F5F5DC   75%
-                        GUI.backgroundColor = UtilityServices.HexToColor("#F5F5DC");
-
-                        content = new GUIContent();
-                        if (isPlainSkin) { content.text = "<size=11><b>Generate LODS</b> </size>"; }
-                        else { content.text = "<size=11> <b><color=#000000>Generate LODS</color></b> </size>"; }
-
-                        
-                        content.tooltip = "Generate LODs for the selected GameObjects with the common settings specified. Please note that you must save the scene after successful generation of LODs and apply changes to any prefabs manually. Any errors will be silently ignored.";
-
-                        didPressButton = GUILayout.Button(content, style, GUILayout.Width(120), GUILayout.Height(24), GUILayout.ExpandWidth(true));
-
-                        GUI.backgroundColor = originalColor;
-
-
-                        if (didPressButton)
-                        {
-
-                            bool anySuccess = false;
-
-                            // Delete LOD levels that have 0 screen relative height and 0 reduction strength(Excluding the 1st one)
-
-                            List<DataContainer.LODLevelSettings> levelsToDelete = new List<DataContainer.LODLevelSettings>();
-
-                            if (dataContainer.currentLodLevelSettings.Count > 1)
-                            {
-
-                                for (int a = 1; a < dataContainer.currentLodLevelSettings.Count; a++)
-                                {
-                                    var lodLevel = dataContainer.currentLodLevelSettings[a];
-
-                                    if (Mathf.Approximately(lodLevel.transitionHeight, 0))
-                                    {
-                                        levelsToDelete.Add(lodLevel);
-                                    }
-
-                                    if (Mathf.Approximately(lodLevel.reductionStrength, 0))
-                                    {
-                                        levelsToDelete.Add(lodLevel);
-                                    }
-                                }
-                            }
-
-                            foreach (var toDelete in levelsToDelete)
-                            {
-                                dataContainer.currentLodLevelSettings.Remove(toDelete);
-                            }
-
-                            if (dataContainer != null && dataContainer.currentLodLevelSettings != null && dataContainer.currentLodLevelSettings.Count > 1)
-                            {
-                                foreach (GameObject selected in Selection.gameObjects)
-                                {
-
-                                    dataContainer.objectMeshPairs = UtilityServices.GetObjectMeshPairs(selected, true, true);
-                                    ReductionPending = false;
-                                    ReductionStrength = 0;
-
-                                    try
-                                    {
-                                        string error = "";
-
-                                        bool isSuccess = UtilityServices.GenerateLODS(selected, dataContainer.toleranceSpheres, dataContainer.currentLodLevelSettings, UtilityServices.AutoLODSavePath, (string err) =>
-                                        {
-                                            error = err;
-
-                                        }, false);
-
-                                        EditorUtility.ClearProgressBar();
-
-                                        if (isSuccess)
-                                        {
-                                            anySuccess = true;
-
-                                            ApplyExtraOptionsForLOD(selected);
-                                        }
-
-                                        else
-                                        {
-                                            Debug.LogWarning($"Failed to generate LODs for GameObject \"{selected.name}\". {error}");
-                                        }
-
-                                    }
-
-                                    catch (Exception error)
-                                    {
-                                        EditorUtility.ClearProgressBar();
-                                        Debug.LogWarning($"Failed to generate LODs for GameObject \"{selected.name}\". The LODs for this object might be partially generated. {error.ToString()}");
-                                    }
-
-                                }
-                        
-                                if (anySuccess)
-                                {
-                                    EditorSceneManager.MarkSceneDirty(Selection.activeGameObject.scene);
-                                    EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
-                                }
-                            }
-
-                            else
-                            {
-                                    EditorUtility.DisplayDialog("Failed", "Failed to generate LODs. You must have at least one non-base lod level with reduction strength and transition height > 0. Press the \"Add\" button to add more lod levels.", "Ok");
-                            }
-
-                            GUIUtility.ExitGUI();
+                            dataContainer.currentLodLevelSettings = new List<DataContainer.LODLevelSettings>();
                         }
 
 
-#endregion Generate LODs
+                        List<float> strengths = new List<float>();
+                        foreach (var sphere in dataContainer.toleranceSpheres) { strengths.Add(100f); }
 
 
-                        EditorGUILayout.EndHorizontal();
+                        dataContainer.currentLodLevelSettings.Add(new DataContainer.LODLevelSettings(0, 0, false, false, false, true, false, 7, 100, false, false, false, false, false, strengths));
+                    }
 
-                        GUILayout.Space(2);
 
-                        EditorGUILayout.BeginHorizontal();
+                    #endregion Add LOD Level
+
+                    GUILayout.Space(2);
+
+                    #region Generate LODs
+
+
+                    style = GUI.skin.button;
+                    style.richText = true;
+
+                    originalColor = new Color(GUI.backgroundColor.r, GUI.backgroundColor.g, GUI.backgroundColor.b);
+                    //# ffc14d   60%
+                    //# F0FFFF   73%
+                    //# F5F5DC   75%
+                    GUI.backgroundColor = UtilityServices.HexToColor("#F5F5DC");
+
+                    content = new GUIContent();
+                    if (isPlainSkin) { content.text = "<size=11><b>Generate LODS</b> </size>"; }
+                    else { content.text = "<size=11> <b><color=#000000>Generate LODS</color></b> </size>"; }
+
+
+                    content.tooltip = "Generate LODs for the selected GameObjects with the common settings specified. Please note that you must save the scene after successful generation of LODs and apply changes to any prefabs manually. Any errors will be silently ignored.";
+
+                    didPressButton = GUILayout.Button(content, style, GUILayout.Width(120), GUILayout.Height(24), GUILayout.ExpandWidth(true));
+
+                    GUI.backgroundColor = originalColor;
+
+
+                    if (didPressButton)
+                    {
+
+                        bool anySuccess = false;
+
+                        // Delete LOD levels that have 0 screen relative height and 0 reduction strength(Excluding the 1st one)
+
+                        List<DataContainer.LODLevelSettings> levelsToDelete = new List<DataContainer.LODLevelSettings>();
+
+                        if (dataContainer.currentLodLevelSettings.Count > 1)
+                        {
+
+                            for (int a = 1; a < dataContainer.currentLodLevelSettings.Count; a++)
+                            {
+                                var lodLevel = dataContainer.currentLodLevelSettings[a];
+
+                                if (Mathf.Approximately(lodLevel.transitionHeight, 0))
+                                {
+                                    levelsToDelete.Add(lodLevel);
+                                }
+
+                                if (Mathf.Approximately(lodLevel.reductionStrength, 0))
+                                {
+                                    levelsToDelete.Add(lodLevel);
+                                }
+                            }
+                        }
+
+                        foreach (var toDelete in levelsToDelete)
+                        {
+                            dataContainer.currentLodLevelSettings.Remove(toDelete);
+                        }
+
+                        if (dataContainer != null && dataContainer.currentLodLevelSettings != null && dataContainer.currentLodLevelSettings.Count > 1)
+                        {
+                            foreach (GameObject selected in Selection.gameObjects)
+                            {
+
+                                dataContainer.objectMeshPairs = UtilityServices.GetObjectMeshPairs(selected, true, true);
+                                ReductionPending = false;
+                                ReductionStrength = 0;
+
+                                try
+                                {
+                                    string error = "";
+
+                                    bool isSuccess = UtilityServices.GenerateLODS(selected, dataContainer.toleranceSpheres, dataContainer.currentLodLevelSettings, UtilityServices.AutoLODSavePath, (string err) =>
+                                    {
+                                        error = err;
+
+                                    }, false);
+
+                                    EditorUtility.ClearProgressBar();
+
+                                    if (isSuccess)
+                                    {
+                                        anySuccess = true;
+
+                                        ApplyExtraOptionsForLOD(selected);
+                                    }
+
+                                    else
+                                    {
+                                        Debug.LogWarning($"Failed to generate LODs for GameObject \"{selected.name}\". {error}");
+                                    }
+
+                                }
+
+                                catch (Exception error)
+                                {
+                                    EditorUtility.ClearProgressBar();
+                                    Debug.LogWarning($"Failed to generate LODs for GameObject \"{selected.name}\". The LODs for this object might be partially generated. {error.ToString()}");
+                                }
+
+                            }
+
+                            if (anySuccess)
+                            {
+                                EditorSceneManager.MarkSceneDirty(Selection.activeGameObject.scene);
+                                EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
+                            }
+                        }
+
+                        else
+                        {
+                            EditorUtility.DisplayDialog("Failed", "Failed to generate LODs. You must have at least one non-base lod level with reduction strength and transition height > 0. Press the \"Add\" button to add more lod levels.", "Ok");
+                        }
+
+                        GUIUtility.ExitGUI();
+                    }
+
+
+                    #endregion Generate LODs
+
+
+                    EditorGUILayout.EndHorizontal();
+
+                    GUILayout.Space(2);
+
+                    EditorGUILayout.BeginHorizontal();
 
 
 #if UNITY_2019_1_OR_NEWER
-                
-                        //GUILayout.Space(177);
-   
+
+                    //GUILayout.Space(177);
+
 #else
                     //GUILayout.Space(178);
 #endif
 
 
-#region  Additional options
+                    #region  Additional options
 
 
                     style = EditorStyles.toolbarDropDown;
@@ -4065,12 +4064,12 @@ namespace BrainFailProductions.PolyFew
                     if (Event.current.type == EventType.Repaint) lastRect = GUILayoutUtility.GetLastRect();
 
 
-#endregion  Additional options
+                    #endregion  Additional options
 
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                     GUILayout.Space(40);
 #else
                     GUILayout.Space(40);
@@ -4078,184 +4077,184 @@ namespace BrainFailProductions.PolyFew
 
 
 
-#region Copy Preview Settings
+                    #region Copy Preview Settings
 
-                        style = GUI.skin.button;
-                        style.richText = true;
+                    style = GUI.skin.button;
+                    style.richText = true;
 
-                        originalColor = new Color(GUI.backgroundColor.r, GUI.backgroundColor.g, GUI.backgroundColor.b);
-                        //# ffc14d   60%
-                        //# F0FFFF   73%
-                        //# F5F5DC   75%
-                        //GUI.backgroundColor = UtilityServices.HexToColor("#f9f5f5");
+                    originalColor = new Color(GUI.backgroundColor.r, GUI.backgroundColor.g, GUI.backgroundColor.b);
+                    //# ffc14d   60%
+                    //# F0FFFF   73%
+                    //# F5F5DC   75%
+                    //GUI.backgroundColor = UtilityServices.HexToColor("#f9f5f5");
 
-                        content = new GUIContent();
-                        if (isPlainSkin) { content.text = "<size=11><b>Copy Preview</b></size>"; }
-                        else { content.text = "<size=11><color=#006699><b>Copy Preview</b></color></size>"; }
-                        
-                        content.tooltip = $"Copies all the settings from the preview above into each LOD level";
+                    content = new GUIContent();
+                    if (isPlainSkin) { content.text = "<size=11><b>Copy Preview</b></size>"; }
+                    else { content.text = "<size=11><color=#006699><b>Copy Preview</b></color></size>"; }
 
-
-                        didPressButton = GUILayout.Button(content, style, GUILayout.Width(20), GUILayout.Height(17), GUILayout.ExpandWidth(true));
-
-                        GUI.backgroundColor = originalColor;
+                    content.tooltip = $"Copies all the settings from the preview above into each LOD level";
 
 
-                        if (didPressButton)
+                    didPressButton = GUILayout.Button(content, style, GUILayout.Width(20), GUILayout.Height(17), GUILayout.ExpandWidth(true));
+
+                    GUI.backgroundColor = originalColor;
+
+
+                    if (didPressButton)
+                    {
+
+                        for (int a = 0; a < dataContainer.currentLodLevelSettings.Count; a++)
                         {
+                            var lodLevel = dataContainer.currentLodLevelSettings[a];
 
-                            for (int a = 0; a < dataContainer.currentLodLevelSettings.Count; a++)
+                            // in Base level don't copy over any settings if reduction is 0
+                            if (a == 0)
                             {
-                                var lodLevel = dataContainer.currentLodLevelSettings[a];
-
-                                // in Base level don't copy over any settings if reduction is 0
-                                if(a == 0)
-                                {
-                                    if(!Mathf.Approximately(lodLevel.reductionStrength, 0))
-                                    {
-                                        CopyOverPreviewSettings(lodLevel);
-                                    }
-                                }
-
-                                
-                                else
+                                if (!Mathf.Approximately(lodLevel.reductionStrength, 0))
                                 {
                                     CopyOverPreviewSettings(lodLevel);
                                 }
+                            }
 
+
+                            else
+                            {
+                                CopyOverPreviewSettings(lodLevel);
                             }
 
                         }
 
-#endregion Copy Preview Settings
+                    }
+
+                    #endregion Copy Preview Settings
 
 
-                        GUILayout.Space(2);
+                    GUILayout.Space(2);
 
 
-#region Destroy LODs
+                    #region Destroy LODs
 
+                    style = GUI.skin.button;
+                    style.richText = true;
+
+                    originalColor = new Color(GUI.backgroundColor.r, GUI.backgroundColor.g, GUI.backgroundColor.b);
+
+                    content = new GUIContent();
+                    if (isPlainSkin) { content.text = "<size=11><b>Destroy LODs</b></size>"; }
+                    else { content.text = "<size=11><color=#006699><b>Destroy LODs</b></color></size>"; }
+
+                    content.tooltip = $"Destroy the generated LODs for all the selected objects. This will also delete the \".mesh\" files in the folder \"{UtilityServices.LOD_ASSETS_DEFAULT_SAVE_PATH}\" that were created for these objects during the LOD generation process. Please note that you will have to delete the empty folders manually.";
+
+
+                    didPressButton = GUILayout.Button(content, style, GUILayout.Height(17), GUILayout.ExpandWidth(true));
+
+
+                    GUI.backgroundColor = originalColor;
+                    bool didAnySucceed = false;
+
+                    if (didPressButton)
+                    {
+
+                        foreach (GameObject selected in Selection.gameObjects)
+                        {
+                            if (UtilityServices.HasLODs(selected))
+                            {
+                                try
+                                {
+                                    didAnySucceed = UtilityServices.DestroyLODs(selected);
+
+                                    if (!didAnySucceed)
+                                    {
+                                        Debug.LogWarning($"Failed to delete LODs on GameObject \"{selected.name}\"");
+                                    }
+                                }
+
+                                catch (Exception ex)
+                                {
+                                    Debug.LogWarning($"Failed to delete LODs on GameObject \"{selected.name}\". {ex.ToString()}");
+                                }
+
+                            }
+                        }
+
+                        if (didAnySucceed)
+                        {
+                            EditorSceneManager.MarkSceneDirty(Selection.activeGameObject.scene);
+                            EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
+                        }
+
+                        GUIUtility.ExitGUI();
+                    }
+
+
+                    #endregion Destroy LODs
+
+
+                    EditorGUILayout.EndHorizontal();
+
+
+
+                    #endregion Section Header
+
+
+                    GUILayout.Space(14);
+
+
+
+                    #region Draw LOD Level
+
+
+                    for (int a = 0; a < dataContainer.currentLodLevelSettings.Count; a++)
+                    {
+
+                        var lodLevel = dataContainer.currentLodLevelSettings[a];
+
+                        EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+
+                        EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
+
+                        content = new GUIContent();  //FF6347ff  //006699
+
+                        if (isPlainSkin) { content.text = String.Format("<b>Level {0}</b>", a + 1); }
+                        else { content.text = String.Format("<b><color=#3e2723>Level {0}</color></b>", a + 1); }
+
+                        if (a == 0)
+                        {
+                            content.tooltip = $"This is the base lod level or LOD 0 as unity calls it. This would be the actual renderers of the current object. So, in this level the object renders at the highest quality";
+                            if (isPlainSkin) { content.text = String.Format("<b>Level {0} (Base)</b>", a + 1); }
+                            else { content.text = String.Format("<b><color=#3e2723>Level {0} (Base)</color></b>", a + 1); }
+                        }
+
+                        style = GUI.skin.label;
+                        style.richText = true;
+
+                        GUILayout.Label(content, style);
+
+                        var previousBackgroundColor = GUI.backgroundColor;
+                        GUI.backgroundColor = new Color(Color.gray.r, Color.gray.g, Color.gray.b, 0.8f);
+                        GUIContent deleteLevelButtonContent = new GUIContent("<b><color=#FFFFFFD2>X</color></b>", "Delete this LOD level.");
                         style = GUI.skin.button;
                         style.richText = true;
 
-                        originalColor = new Color(GUI.backgroundColor.r, GUI.backgroundColor.g, GUI.backgroundColor.b);
-
-                        content = new GUIContent();
-                        if (isPlainSkin) { content.text = "<size=11><b>Destroy LODs</b></size>"; }
-                        else { content.text = "<size=11><color=#006699><b>Destroy LODs</b></color></size>"; }
-
-                        content.tooltip = $"Destroy the generated LODs for all the selected objects. This will also delete the \".mesh\" files in the folder \"{UtilityServices.LOD_ASSETS_DEFAULT_SAVE_PATH}\" that were created for these objects during the LOD generation process. Please note that you will have to delete the empty folders manually.";
-
-
-                        didPressButton = GUILayout.Button(content, style, GUILayout.Height(17), GUILayout.ExpandWidth(true));
-
-
-                        GUI.backgroundColor = originalColor;
-                        bool didAnySucceed = false;
-
-                        if (didPressButton)
+                        if (a != 0 && GUILayout.Button(deleteLevelButtonContent, GUILayout.Width(20)))
                         {
-
-                            foreach (GameObject selected in Selection.gameObjects)
+                            if (dataContainer.currentLodLevelSettings.Count > 1)
                             {
-                                if (UtilityServices.HasLODs(selected))
-                                {
-                                    try
-                                    {
-                                        didAnySucceed = UtilityServices.DestroyLODs(selected);
-
-                                        if (!didAnySucceed)
-                                        {
-                                            Debug.LogWarning($"Failed to delete LODs on GameObject \"{selected.name}\"");
-                                        }
-                                    }
-
-                                    catch (Exception ex)
-                                    {
-                                        Debug.LogWarning($"Failed to delete LODs on GameObject \"{selected.name}\". {ex.ToString()}");
-                                    }
-
-                                }
+                                dataContainer.currentLodLevelSettings.RemoveAt(a);
+                                a--;
                             }
-
-                            if (didAnySucceed)
-                            {
-                                EditorSceneManager.MarkSceneDirty(Selection.activeGameObject.scene);
-                                EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
-                            }
-
-                            GUIUtility.ExitGUI();
                         }
 
-
-#endregion Destroy LODs
-
+                        GUI.backgroundColor = previousBackgroundColor;
 
                         EditorGUILayout.EndHorizontal();
 
 
+                        GUILayout.Space(6);
 
-#endregion Section Header
-
-
-                        GUILayout.Space(14);
-
-
-
-#region Draw LOD Level
-
-
-                        for (int a = 0; a < dataContainer.currentLodLevelSettings.Count; a++)
+                        if (a != 0)
                         {
-
-                            var lodLevel = dataContainer.currentLodLevelSettings[a];
-
-                            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-
-                            EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                            content = new GUIContent();  //FF6347ff  //006699
-
-                            if(isPlainSkin) { content.text = String.Format("<b>Level {0}</b>", a + 1); }
-                            else { content.text = String.Format("<b><color=#3e2723>Level {0}</color></b>", a + 1); }
-
-                            if (a == 0)
-                            {
-                                content.tooltip = $"This is the base lod level or LOD 0 as unity calls it. This would be the actual renderers of the current object. So, in this level the object renders at the highest quality";
-                                if (isPlainSkin) { content.text = String.Format("<b>Level {0} (Base)</b>", a + 1); }
-                                else { content.text = String.Format("<b><color=#3e2723>Level {0} (Base)</color></b>", a + 1); }   
-                            }
-
-                            style = GUI.skin.label;
-                            style.richText = true;
-
-                            GUILayout.Label(content, style);
-
-                            var previousBackgroundColor = GUI.backgroundColor;
-                            GUI.backgroundColor = new Color(Color.gray.r, Color.gray.g, Color.gray.b, 0.8f);
-                            GUIContent deleteLevelButtonContent = new GUIContent("<b><color=#FFFFFFD2>X</color></b>", "Delete this LOD level.");
-                            style = GUI.skin.button;
-                            style.richText = true;
-
-                            if (a != 0 && GUILayout.Button(deleteLevelButtonContent, GUILayout.Width(20)))
-                            {
-                                if (dataContainer.currentLodLevelSettings.Count > 1)
-                                {
-                                    dataContainer.currentLodLevelSettings.RemoveAt(a);
-                                    a--;
-                                }
-                            }
-
-                            GUI.backgroundColor = previousBackgroundColor;
-
-                            EditorGUILayout.EndHorizontal();
-
-
-                            GUILayout.Space(6);
-
-                            if (a != 0)
-                            {
-#region Reduction Strength Slider
+                            #region Reduction Strength Slider
 
                             GUILayout.BeginHorizontal();
 
@@ -4296,250 +4295,250 @@ namespace BrainFailProductions.PolyFew
 
                             GUILayout.EndHorizontal();
 
-#endregion   Reduction Strength Slider
+                            #endregion   Reduction Strength Slider
+                        }
+
+                        #region Screen relative transition height
+
+
+                        GUILayout.BeginHorizontal();
+
+                        content = new GUIContent();
+                        style = GUI.skin.label;
+                        style.richText = true;
+                        prevPadding = new RectOffset(style.padding.left, style.padding.right, style.padding.top, style.padding.bottom);
+
+                        content.text = "Transition Height";
+                        content.tooltip = "The screen relative height controls how far the viewing camera must be from an object before a transition to the next LOD level is made.";
+
+
+                        GUILayout.Space(16);
+
+                        EditorGUILayout.LabelField(content, style, GUILayout.Width(115));
+
+                        float oldHeight = lodLevel.transitionHeight;
+                        lodLevel.transitionHeight = Mathf.Abs(GUILayout.HorizontalSlider(lodLevel.transitionHeight, 0, 1, GUILayout.Width(130), GUILayout.ExpandWidth(true)));
+                        style = GUI.skin.textField;
+
+                        GUILayout.Space(5);
+
+                        content.text = "";
+
+                        lodLevel.transitionHeight = Mathf.Abs(EditorGUILayout.FloatField(content, lodLevel.transitionHeight, style, GUILayout.Width(10), GUILayout.ExpandWidth(true)));
+                        lodLevel.transitionHeight = Mathf.Clamp01(lodLevel.transitionHeight);
+
+                        if (!Mathf.Approximately(oldHeight, lodLevel.transitionHeight) && a > 0)
+                        {
+                            float lastLevelHeight = dataContainer.currentLodLevelSettings[a - 1].transitionHeight;
+                            float currentLevelHeight = lodLevel.transitionHeight;
+
+                            if ((lastLevelHeight - currentLevelHeight) <= 0.05f)
+                            {
+                                //Debug.Log($"Last level height  {lastLevelHeight}  currentLevelHeight = {currentLevelHeight}  Mathf.Abs(lastLevelHeight - currentLevelHeight)   " +(Mathf.Abs(lastLevelHeight - currentLevelHeight) + "  a is  " + a));
+                                lodLevel.transitionHeight = lastLevelHeight - 0.05f;
+                                lodLevel.transitionHeight = Mathf.Clamp01(lodLevel.transitionHeight);
                             }
+                        }
 
-#region Screen relative transition height
+
+                        if (!Mathf.Approximately(oldHeight, lodLevel.transitionHeight) && a != (dataContainer.currentLodLevelSettings.Count - 1))
+                        {
+                            float nextLevelHeight = dataContainer.currentLodLevelSettings[a + 1].transitionHeight;
+                            float currentLevelHeight = lodLevel.transitionHeight;
+
+                            if ((currentLevelHeight - nextLevelHeight) <= 0.05f)
+                            {
+                                //Debug.Log($"Next level height  {nextLevelHeight}  currentLevelHeight = {currentLevelHeight}  Mathf.Abs(lastLevelHeight - currentLevelHeight)   " +(Mathf.Abs(lastLevelHeight - currentLevelHeight) + "  a is  " + a));
+                                lodLevel.transitionHeight = nextLevelHeight + 0.05f;
+                                lodLevel.transitionHeight = Mathf.Clamp01(lodLevel.transitionHeight);
+                            }
+                        }
 
 
-                            GUILayout.BeginHorizontal();
 
-                            content = new GUIContent();
-                            style = GUI.skin.label;
-                            style.richText = true;
-                            prevPadding = new RectOffset(style.padding.left, style.padding.right, style.padding.top, style.padding.bottom);
+                        GUILayout.Space(24);
 
-                            content.text = "Transition Height";
-                            content.tooltip = "The screen relative height controls how far the viewing camera must be from an object before a transition to the next LOD level is made.";
+
+                        GUILayout.EndHorizontal();
+
+
+                        #endregion   Screen relative transition height
+
+                        if (a != 0)
+                        {
+
+                            GUILayout.Space(2);
+
+                            EditorGUILayout.BeginHorizontal();
 
 
                             GUILayout.Space(16);
-
-                            EditorGUILayout.LabelField(content, style, GUILayout.Width(115));
-
-                            float oldHeight = lodLevel.transitionHeight;
-                            lodLevel.transitionHeight = Mathf.Abs(GUILayout.HorizontalSlider(lodLevel.transitionHeight, 0, 1, GUILayout.Width(130), GUILayout.ExpandWidth(true)));
-                            style = GUI.skin.textField;
-
-                            GUILayout.Space(5);
-
-                            content.text = "";
-
-                            lodLevel.transitionHeight = Mathf.Abs(EditorGUILayout.FloatField(content, lodLevel.transitionHeight, style, GUILayout.Width(10), GUILayout.ExpandWidth(true)));
-                            lodLevel.transitionHeight = Mathf.Clamp01(lodLevel.transitionHeight);
-
-                            if (!Mathf.Approximately(oldHeight, lodLevel.transitionHeight) && a > 0)
-                            {
-                                float lastLevelHeight = dataContainer.currentLodLevelSettings[a - 1].transitionHeight;
-                                float currentLevelHeight = lodLevel.transitionHeight;
-
-                                if ((lastLevelHeight - currentLevelHeight) <= 0.05f)
-                                {
-                                    //Debug.Log($"Last level height  {lastLevelHeight}  currentLevelHeight = {currentLevelHeight}  Mathf.Abs(lastLevelHeight - currentLevelHeight)   " +(Mathf.Abs(lastLevelHeight - currentLevelHeight) + "  a is  " + a));
-                                    lodLevel.transitionHeight = lastLevelHeight - 0.05f;
-                                    lodLevel.transitionHeight = Mathf.Clamp01(lodLevel.transitionHeight);
-                                }
-                            }
-
-
-                            if (!Mathf.Approximately(oldHeight, lodLevel.transitionHeight) && a != (dataContainer.currentLodLevelSettings.Count - 1))
-                            {
-                                float nextLevelHeight = dataContainer.currentLodLevelSettings[a + 1].transitionHeight;
-                                float currentLevelHeight = lodLevel.transitionHeight;
-
-                                if ((currentLevelHeight - nextLevelHeight) <= 0.05f)
-                                {
-                                    //Debug.Log($"Next level height  {nextLevelHeight}  currentLevelHeight = {currentLevelHeight}  Mathf.Abs(lastLevelHeight - currentLevelHeight)   " +(Mathf.Abs(lastLevelHeight - currentLevelHeight) + "  a is  " + a));
-                                    lodLevel.transitionHeight = nextLevelHeight + 0.05f;
-                                    lodLevel.transitionHeight = Mathf.Clamp01(lodLevel.transitionHeight);
-                                }
-                            }
-
-
-
-                            GUILayout.Space(24);
-
-
-                            GUILayout.EndHorizontal();
-
-
-#endregion   Screen relative transition height
-
-                            if (a != 0)
-                            {
-
-                                GUILayout.Space(2);
-
-                                EditorGUILayout.BeginHorizontal();
-
-
-                                GUILayout.Space(16);
-                                content = new GUIContent();
-                                content.text = "Reduction Options";
-                                content.tooltip = "Expand this section to see options for mesh simplification for this LOD level.";
+                            content = new GUIContent();
+                            content.text = "Reduction Options";
+                            content.tooltip = "Expand this section to see options for mesh simplification for this LOD level.";
 
 
 #if UNITY_2019_1_OR_NEWER
-                
-                                GUILayout.Space(1);
-                                lodLevel.simplificationOptionsFoldout = EditorGUILayout.Foldout(lodLevel.simplificationOptionsFoldout, content, true);
-   
+
+                            GUILayout.Space(1);
+                            lodLevel.simplificationOptionsFoldout = EditorGUILayout.Foldout(lodLevel.simplificationOptionsFoldout, content, true);
+
 #else
                                 lodLevel.simplificationOptionsFoldout = EditorGUILayout.Foldout(lodLevel.simplificationOptionsFoldout, content, true);
 #endif
 
 
-#region Combine Meshes
+                            #region Combine Meshes
 
 
 
 #if UNITY_2019_1_OR_NEWER
-                
-                                GUILayout.Space(66);
+
+                            GUILayout.Space(66);
 
 #else
                                 GUILayout.Space(40);
 #endif
 
-                                EditorGUILayout.BeginHorizontal();
+                            EditorGUILayout.BeginHorizontal();
 
-                                /*  [DEPRECATED. USE BATCH FEW TO COMBINE MESHES]
+                            /*  [DEPRECATED. USE BATCH FEW TO COMBINE MESHES]
+                            style = GUI.skin.label;
+                            content.text = "Combine Meshes";
+                            content.tooltip = "[Deprecated] Combine all renderers and meshes under this level into one, where possible. Please note that this option is present just in case if someone has any special use case where they need to generate LODs with some levels having combined meshes and some having uncombined meshes. You can now use BatchFew to combine meshes exclusively.";
+
+                            // Added it to Batch few
+                            EditorGUILayout.LabelField(content, style, GUILayout.Width(109));
+
+                            lodLevel.combineMeshes = EditorGUILayout.Toggle(lodLevel.combineMeshes, GUILayout.Width(28), GUILayout.ExpandWidth(false));
+                            */
+
+                            EditorGUILayout.EndHorizontal();
+
+                            #endregion Combine Meshes
+
+
+                            EditorGUILayout.EndHorizontal();
+
+
+
+                            if (lodLevel.simplificationOptionsFoldout)
+                            {
+                                EditorGUILayout.BeginHorizontal();
+                                GUILayout.Space(6);
+                                UtilityServices.DrawHorizontalLine(Color.black, 1, 8, 14);
+                                EditorGUILayout.EndHorizontal();
+                            }
+
+                            EditorGUILayout.BeginHorizontal();
+
+                            #region Reduction extra options
+
+                            GUILayout.Space(16);
+
+
+                            if (lodLevel.simplificationOptionsFoldout)
+                            {
+
                                 style = GUI.skin.label;
-                                content.text = "Combine Meshes";
-                                content.tooltip = "[Deprecated] Combine all renderers and meshes under this level into one, where possible. Please note that this option is present just in case if someone has any special use case where they need to generate LODs with some levels having combined meshes and some having uncombined meshes. You can now use BatchFew to combine meshes exclusively.";
 
-                                // Added it to Batch few
-                                EditorGUILayout.LabelField(content, style, GUILayout.Width(109));
+                                content.text = "Preserve UV Foldover";
+                                content.tooltip = "Check this option to preserve UV foldover for this LOD level.";
 
-                                lodLevel.combineMeshes = EditorGUILayout.Toggle(lodLevel.combineMeshes, GUILayout.Width(28), GUILayout.ExpandWidth(false));
-                                */
+                                EditorGUILayout.LabelField(content, style, GUILayout.Width(135));
+                                lodLevel.preserveUVFoldover = EditorGUILayout.Toggle(lodLevel.preserveUVFoldover, GUILayout.Width(18), GUILayout.ExpandWidth(false));
+
+                                GUILayout.Space(8);
+
+                                content.text = "Preserve UV Seams";
+                                content.tooltip = "Preserve the mesh areas where the UV seams are made.These are the areas where different UV islands are formed (usually the shallow polygon conjested areas).";
+
+                                EditorGUILayout.LabelField(content, style, GUILayout.Width(135));
+                                lodLevel.preserveUVSeams = EditorGUILayout.Toggle(lodLevel.preserveUVSeams, GUILayout.Width(20), GUILayout.ExpandWidth(false));
+
+                                GUILayout.Space(8);
+
+                                content.text = "Clear Blendshapes";
+                                content.tooltip = "Clear all blendshapes data in the simplified meshes for this LOD level.";
+
+                                EditorGUILayout.LabelField(content, style, GUILayout.Width(110));
+                                lodLevel.clearBlendshapesComplete = EditorGUILayout.Toggle(lodLevel.clearBlendshapesComplete, GUILayout.Width(20), GUILayout.ExpandWidth(false));
+
 
                                 EditorGUILayout.EndHorizontal();
 
-#endregion Combine Meshes
 
-
-                                EditorGUILayout.EndHorizontal();
-
-
-
-                                if (lodLevel.simplificationOptionsFoldout)
-                                {
-                                    EditorGUILayout.BeginHorizontal();
-                                    GUILayout.Space(6);
-                                    UtilityServices.DrawHorizontalLine(Color.black, 1, 8, 14);
-                                    EditorGUILayout.EndHorizontal();
-                                }
 
                                 EditorGUILayout.BeginHorizontal();
 
-#region Reduction extra options
 
                                 GUILayout.Space(16);
 
-
-                                if (lodLevel.simplificationOptionsFoldout)
-                                {
-
-                                    style = GUI.skin.label;
-
-                                    content.text = "Preserve UV Foldover";
-                                    content.tooltip = "Check this option to preserve UV foldover for this LOD level.";
-
-                                    EditorGUILayout.LabelField(content, style, GUILayout.Width(135));
-                                    lodLevel.preserveUVFoldover = EditorGUILayout.Toggle(lodLevel.preserveUVFoldover, GUILayout.Width(18), GUILayout.ExpandWidth(false));
-
-                                    GUILayout.Space(8);
-
-                                    content.text = "Preserve UV Seams";
-                                    content.tooltip = "Preserve the mesh areas where the UV seams are made.These are the areas where different UV islands are formed (usually the shallow polygon conjested areas).";
-
-                                    EditorGUILayout.LabelField(content, style, GUILayout.Width(135));
-                                    lodLevel.preserveUVSeams = EditorGUILayout.Toggle(lodLevel.preserveUVSeams, GUILayout.Width(20), GUILayout.ExpandWidth(false));
-   
-                                    GUILayout.Space(8);
-
-                                    content.text = "Clear Blendshapes";
-                                    content.tooltip = "Clear all blendshapes data in the simplified meshes for this LOD level.";
-
-                                    EditorGUILayout.LabelField(content, style, GUILayout.Width(110));
-                                    lodLevel.clearBlendshapesComplete = EditorGUILayout.Toggle(lodLevel.clearBlendshapesComplete, GUILayout.Width(20), GUILayout.ExpandWidth(false));
+                                content.text = "Preserve Borders";
+                                content.tooltip = "Check this option to preserve border edges for this LOD level. Border edges are the edges that are unconnected and open. Preserving border edges might lead to lesser polygon reduction but can be helpful where you see serious mesh and texture distortions.";
 
 
-                                    EditorGUILayout.EndHorizontal();
+                                EditorGUILayout.LabelField(content, style, GUILayout.Width(114));
+                                GUILayout.Space(21);
+
+
+                                lodLevel.preserveBorders = EditorGUILayout.Toggle(lodLevel.preserveBorders, GUILayout.Width(15), GUILayout.ExpandWidth(false));
+
+                                GUILayout.Space(11);
+
+                                content.text = "Use Edge Sort";
+                                content.tooltip = "Using edge sort can result in very good quality mesh simplification in some cases but can be a little slow to run.";
+
+                                EditorGUILayout.LabelField(content, style, GUILayout.Width(135));
+                                lodLevel.useEdgeSort = EditorGUILayout.Toggle(lodLevel.useEdgeSort, GUILayout.Width(20), GUILayout.ExpandWidth(false));
+
+                                GUILayout.Space(8);
+
+                                content.text = "Generate UV2";
+                                content.tooltip = "Should we generate uv2 with default settings for each mesh in this LOD level and fill them in?";
+
+                                EditorGUILayout.LabelField(content, style, GUILayout.Width(110));
+                                lodLevel.generateUV2 = EditorGUILayout.Toggle(lodLevel.generateUV2, GUILayout.Width(20), GUILayout.ExpandWidth(false));
+
+
+                                EditorGUILayout.EndHorizontal();
 
 
 
-                                    EditorGUILayout.BeginHorizontal();
+                                EditorGUILayout.BeginHorizontal();
 
 
-                                    GUILayout.Space(16);
+                                content.text = "Regard Curvature";
+                                content.tooltip = "Check this option to take into account the discrete curvature of mesh surface during simplification. Taking surface curvature into account can result in very good quality mesh simplification, but it can slow the simplification process significantly.";
 
-                                    content.text = "Preserve Borders";
-                                    content.tooltip = "Check this option to preserve border edges for this LOD level. Border edges are the edges that are unconnected and open. Preserving border edges might lead to lesser polygon reduction but can be helpful where you see serious mesh and texture distortions.";
+                                GUILayout.Space(16);
+                                EditorGUILayout.LabelField(content, style, GUILayout.Width(135));
 
-
-                                    EditorGUILayout.LabelField(content, style, GUILayout.Width(114));
-                                    GUILayout.Space(21);
-
-
-                                    lodLevel.preserveBorders = EditorGUILayout.Toggle(lodLevel.preserveBorders, GUILayout.Width(15), GUILayout.ExpandWidth(false));
-
-                                    GUILayout.Space(11);
-
-                                    content.text = "Use Edge Sort";
-                                    content.tooltip = "Using edge sort can result in very good quality mesh simplification in some cases but can be a little slow to run.";
-
-                                    EditorGUILayout.LabelField(content, style, GUILayout.Width(135));
-                                    lodLevel.useEdgeSort = EditorGUILayout.Toggle(lodLevel.useEdgeSort, GUILayout.Width(20), GUILayout.ExpandWidth(false));
-
-                                    GUILayout.Space(8);
-
-                                    content.text = "Generate UV2";
-                                    content.tooltip = "Should we generate uv2 with default settings for each mesh in this LOD level and fill them in?";
-
-                                    EditorGUILayout.LabelField(content, style, GUILayout.Width(110));
-                                    lodLevel.generateUV2 = EditorGUILayout.Toggle(lodLevel.generateUV2, GUILayout.Width(20), GUILayout.ExpandWidth(false));
+                                lodLevel.regardCurvature = EditorGUILayout.Toggle(lodLevel.regardCurvature, GUILayout.Width(50));
 
 
-                                    EditorGUILayout.EndHorizontal();
+                                EditorGUILayout.EndHorizontal();
 
 
-
-                                    EditorGUILayout.BeginHorizontal();
-
-
-                                    content.text = "Regard Curvature";
-                                    content.tooltip = "Check this option to take into account the discrete curvature of mesh surface during simplification. Taking surface curvature into account can result in very good quality mesh simplification, but it can slow the simplification process significantly.";
-
-                                    GUILayout.Space(16);
-                                    EditorGUILayout.LabelField(content, style, GUILayout.Width(135));
-
-                                    lodLevel.regardCurvature = EditorGUILayout.Toggle(lodLevel.regardCurvature, GUILayout.Width(50));
-
-
-                                    EditorGUILayout.EndHorizontal();
-
-
-                                    GUILayout.BeginHorizontal();
+                                GUILayout.BeginHorizontal();
 
 
 
 #if UNITY_2019_1_OR_NEWER
-                
-                                    GUILayout.Space(17);
+
+                                GUILayout.Space(17);
 
 #else
                                     GUILayout.Space(16);
 #endif
 
-                                    content.text = "Aggressiveness";
-                                    content.tooltip = "The agressiveness of the reduction algorithm to use for this LOD level. Higher number equals higher quality, but more expensive to run. Lowest value is 7.";
+                                content.text = "Aggressiveness";
+                                content.tooltip = "The agressiveness of the reduction algorithm to use for this LOD level. Higher number equals higher quality, but more expensive to run. Lowest value is 7.";
 
 
 #if UNITY_2019_1_OR_NEWER
-                
-                                    EditorGUILayout.LabelField(content, GUILayout.Width(134));
+
+                                EditorGUILayout.LabelField(content, GUILayout.Width(134));
 
 #else
                                     EditorGUILayout.LabelField(content, GUILayout.Width(134));
@@ -4547,32 +4546,32 @@ namespace BrainFailProductions.PolyFew
 #endif
 
 
-                                    content.text = "";
+                                content.text = "";
 
-                                    lodLevel.aggressiveness = Mathf.Abs(EditorGUILayout.FloatField(content, lodLevel.aggressiveness, GUILayout.Width(168), GUILayout.ExpandWidth(true)));
+                                lodLevel.aggressiveness = Mathf.Abs(EditorGUILayout.FloatField(content, lodLevel.aggressiveness, GUILayout.Width(168), GUILayout.ExpandWidth(true)));
 
-                                    if (lodLevel.aggressiveness < 7) { lodLevel.aggressiveness = 7; }
-
-
-                                    GUILayout.EndHorizontal();
+                                if (lodLevel.aggressiveness < 7) { lodLevel.aggressiveness = 7; }
 
 
-
-                                    GUILayout.BeginHorizontal();
+                                GUILayout.EndHorizontal();
 
 
 
-                                    GUILayout.Space(16);
+                                GUILayout.BeginHorizontal();
 
-                                    content.text = "Max Iterations";
-                                    content.tooltip = "The maximum passes the reduction algorithm does for this LOD level. Higher number is more expensive but can bring you closer to your target quality. 100 is the lowest allowed value.";
+
+
+                                GUILayout.Space(16);
+
+                                content.text = "Max Iterations";
+                                content.tooltip = "The maximum passes the reduction algorithm does for this LOD level. Higher number is more expensive but can bring you closer to your target quality. 100 is the lowest allowed value.";
 
 
 
 #if UNITY_2019_1_OR_NEWER
-                
-                                    GUILayout.Space(1);
-                                    EditorGUILayout.LabelField(content, GUILayout.Width(134));
+
+                                GUILayout.Space(1);
+                                EditorGUILayout.LabelField(content, GUILayout.Width(134));
 
 #else
                                     EditorGUILayout.LabelField(content, GUILayout.Width(136));
@@ -4580,12 +4579,12 @@ namespace BrainFailProductions.PolyFew
 #endif
 
 
-                                    content.text = "";
+                                content.text = "";
 
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                                 lodLevel.maxIterations = Mathf.Abs(EditorGUILayout.IntField(content, lodLevel.maxIterations, GUILayout.Width(168), GUILayout.ExpandWidth(true)));
 
 
@@ -4594,52 +4593,52 @@ namespace BrainFailProductions.PolyFew
 
 #endif
 
-                                    if (lodLevel.maxIterations < 100) { lodLevel.maxIterations = 100; }
+                                if (lodLevel.maxIterations < 100) { lodLevel.maxIterations = 100; }
 
-                                }
-
-
-#endregion Reduction extra options
-
-                                EditorGUILayout.EndHorizontal();
                             }
 
-                            EditorGUILayout.EndVertical();
 
+                            #endregion Reduction extra options
+
+                            EditorGUILayout.EndHorizontal();
                         }
 
-
-
-#endregion Draw LOD Level
-
+                        EditorGUILayout.EndVertical();
 
                     }
 
 
-#endregion AUTO LOD
-                
 
-#region BATCH FEW
+                    #endregion Draw LOD Level
+
+
+                }
+
+
+                #endregion AUTO LOD
+
+
+                #region BATCH FEW
 
                 DrawBatchFewUI();
 
-#endregion BATCH FEW
+                #endregion BATCH FEW
 
 
                 EditorGUILayout.EndVertical();
             }
 
 
-            else if(!isFeasibleTargetForPolyFew && !areMultiObjectsSelected)
+            else if (!isFeasibleTargetForPolyFew && !areMultiObjectsSelected)
             {
 
                 EditorGUILayout.BeginVertical("GroupBox");
 
-#region BATCH FEW
+                #region BATCH FEW
 
                 DrawBatchFewUI(true);
 
-#endregion BATCH FEW
+                #endregion BATCH FEW
 
                 EditorGUILayout.EndVertical();
             }
@@ -4659,7 +4658,7 @@ namespace BrainFailProductions.PolyFew
             }
 
 
-#region TITLE HEADER
+            #region TITLE HEADER
 
             if (!boxDrawnAlready)
             {
@@ -4673,7 +4672,7 @@ namespace BrainFailProductions.PolyFew
             content = new GUIContent();
             if (isPlainSkin) { content.text = "<size=13><b>BATCH FEW</b></size> <size=7><b>v2.51</b></size>"; }
             else { content.text = "<size=13><b><color=#A52A2AFF>BATCH FEW</color></b></size> <size=7><b><color=#A52A2AFF>v2.51</color></b></size>"; }
-            
+
             content.tooltip = "Expand this section to see options for combining materials and meshes and for generating texture atlasses (Texture Arrays).";
 
             style = EditorStyles.foldout;
@@ -4692,7 +4691,7 @@ namespace BrainFailProductions.PolyFew
             EditorGUILayout.EndHorizontal();
 
 
-#endregion TITLE HEADER
+            #endregion TITLE HEADER
 
 
             if (FoldoutBatchFew)
@@ -4700,7 +4699,7 @@ namespace BrainFailProductions.PolyFew
                 UtilityServices.DrawHorizontalLine(Color.black, 1, 8);
                 GUILayout.Space(6);
 
-#region Section Header
+                #region Section Header
 
 
                 GUILayout.Space(6);
@@ -4708,7 +4707,7 @@ namespace BrainFailProductions.PolyFew
                 EditorGUILayout.BeginHorizontal();
 
 
-#region Change Save Path
+                #region Change Save Path
 
 
                 style = GUI.skin.button;
@@ -4719,7 +4718,7 @@ namespace BrainFailProductions.PolyFew
                 if (isPlainSkin) { content.text = "<b><size=11>Change Save Path</size></b>"; }
                 else { content.text = "<b><size=11><color=#006699>Change Save Path</color></size></b>"; }
 
-                
+
                 content.tooltip = "Change the path where the new combined meshes, texture atlases and materials will be saved. If you don't select a path the default path will be used. Please note that the chosen path will be used for saving such assets in the future, unless changed.";
 
                 if (GUILayout.Button(content, style, GUILayout.Width(134), GUILayout.Height(20), GUILayout.ExpandWidth(false)))
@@ -4764,14 +4763,14 @@ namespace BrainFailProductions.PolyFew
 
                 EditorGUI.EndDisabledGroup();
 
-#endregion Change Save Path
+                #endregion Change Save Path
 
 
                 GUILayout.Space(40);
 
                 GUILayout.Space(2);
 
-#region Combine Materials
+                #region Combine Materials
 
                 style = GUI.skin.button;
                 style.richText = true;
@@ -4787,7 +4786,7 @@ namespace BrainFailProductions.PolyFew
                 if (isPlainSkin) { content.text = "<size=11> <b>Combine Materials</b> </size>"; }
                 else { content.text = "<size=11> <b><color=#000000>Combine Materials</color></b> </size>"; }
 
-                
+
                 content.tooltip = "Combine all the materials in the selected objects and generate Texture Atlases with the settings specified. Materials that don't use the Standard Shader or it's variants (Standard Specular etc) will be ignored. Please note that you must save the scene after successful operations and apply changes to any prefabs manually.";
 
                 didPressButton = GUILayout.Button(content, style, GUILayout.Width(120), GUILayout.Height(24), GUILayout.ExpandWidth(true));
@@ -4817,7 +4816,7 @@ namespace BrainFailProductions.PolyFew
                             EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
                         }
                     }
-                    
+
                     catch (Exception ex)
                     {
 
@@ -4840,7 +4839,7 @@ namespace BrainFailProductions.PolyFew
                 }
 
 
-#endregion Combine Materials
+                #endregion Combine Materials
 
                 EditorGUILayout.EndHorizontal();
 
@@ -4849,7 +4848,7 @@ namespace BrainFailProductions.PolyFew
                 EditorGUILayout.BeginHorizontal();
 
 
-#region  Additional options batch few
+                #region  Additional options batch few
 
 
                 style = EditorStyles.toolbarDropDown;
@@ -4926,7 +4925,7 @@ namespace BrainFailProductions.PolyFew
                         });
 
 
-                        PopupWindow.Show(lastRect, new PopupToggleTemplate(definitions, new Vector2(240, 104), null, null));        
+                        PopupWindow.Show(lastRect, new PopupToggleTemplate(definitions, new Vector2(240, 104), null, null));
                     }
 
                 }
@@ -4934,14 +4933,14 @@ namespace BrainFailProductions.PolyFew
                 if (Event.current.type == EventType.Repaint) lastRect = GUILayoutUtility.GetLastRect();
 
 
-#endregion  Additional options batch few
+                #endregion  Additional options batch few
 
 
                 GUILayout.Space(42);
 
 
 
-#region CONVERT SKINNED MESHES
+                #region CONVERT SKINNED MESHES
 
 
 
@@ -4956,17 +4955,17 @@ namespace BrainFailProductions.PolyFew
                 if (isPlainSkin) { content.text = "<size=11><b>Convert Skinned Meshes</b></size>"; }
                 else { content.text = "<size=11><color=#000000><b>Convert Skinned Meshes</b></color></size>"; }
 
-                
+
                 content.tooltip = "Convert skinned meshes to non skinned/static meshes in the selected object. Please note that all animation data and bones hierarchy from the skinned mesh(es) will be lost. If \"Consider Children\" option in \"Set Extra Options\" is checked then all the deep nested skinned meshes under this object will also be converted, otherwise only the skinned mesh renderer if any attached to this particular object is considered.";
 
 
                 didPressButton = GUILayout.Button(content, style, GUILayout.Width(170), GUILayout.Height(20), GUILayout.ExpandWidth(true));
 
-                if(didPressButton && ReductionPending)
+                if (didPressButton && ReductionPending)
                 {
                     didPressButton = EditorUtility.DisplayDialog("Warning", "You have a reduction applied in preview mode. If you continue with this the converted skinned meshes will be simplified as seen in the preview mode. You can move the reduction strength slider to 0 if you don't want this.", "Continue", "No");
                 }
-                
+
                 GUI.backgroundColor = originalColor;
 
 
@@ -5168,13 +5167,13 @@ namespace BrainFailProductions.PolyFew
                 }
 
 
-#endregion CONVERT SKINNED MESHES
+                #endregion CONVERT SKINNED MESHES
 
 
                 GUILayout.Space(2);
 
 
-#region COMBINE MESHES
+                #region COMBINE MESHES
 
 
                 bool canCombineMeshes = false;
@@ -5196,9 +5195,9 @@ namespace BrainFailProductions.PolyFew
                 if (isPlainSkin) { content.text = "<size=11><b>Combine Meshes</b></size>"; }
                 else { content.text = "<size=11><color=#000000><b>Combine Meshes</b></color></size>"; }
 
-                
+
                 content.tooltip = "Combine all renderers and meshes nested under the selected object(s). Select a top level parent root object to begin with.";
-                
+
                 didPressButton = GUILayout.Button(content, style, GUILayout.Width(120), GUILayout.Height(20), GUILayout.ExpandWidth(true));
 
                 GUI.backgroundColor = originalColor;
@@ -5237,7 +5236,7 @@ namespace BrainFailProductions.PolyFew
 
                     if (Selection.gameObjects.Length == 1)
                     {
-                        
+
                         bool didSucceed = true;
                         GameObject toDuplicate = Selection.activeGameObject;
                         var duplicated = GameObject.Instantiate(toDuplicate);
@@ -5253,12 +5252,12 @@ namespace BrainFailProductions.PolyFew
 
                         try
                         {
-                           UtilityServices.CombineMeshes(duplicated, duplicated.name, BatchFewSavePath, (errorTitle, error) => 
-                           {
-                               didSucceed = false;
-                               EditorUtility.DisplayDialog(errorTitle, error, "Ok");
+                            UtilityServices.CombineMeshes(duplicated, duplicated.name, BatchFewSavePath, (errorTitle, error) =>
+                            {
+                                didSucceed = false;
+                                EditorUtility.DisplayDialog(errorTitle, error, "Ok");
 
-                           }, combineTarget, GenerateUV2batchfew);
+                            }, combineTarget, GenerateUV2batchfew);
                         }
 
                         catch (Exception ex)
@@ -5272,11 +5271,11 @@ namespace BrainFailProductions.PolyFew
                         {
                             string message = "";
 
-                            if(CreateAsChildren)
+                            if (CreateAsChildren)
                             {
                                 message = $"All renderers in the target GameObject have been disabled. A copy of the original object \"{duplicated.name}\" with combined mesh(es) has been created as a children to the target object. Please note that the root bones for the combined skinned mesh renderers should not be deleted in the new object. Any changes to prefabs must be manually applied.";
                             }
-                            
+
                             else
                             {
                                 message = $"The original GameObject has been disabled. A copy of the original object \"{duplicated.name}\" with combined mesh(es) has been created. Please note that the root bones for the combined skinned mesh renderers should not be deleted in the new object. Any changes to prefabs must be manually applied.";
@@ -5326,7 +5325,7 @@ namespace BrainFailProductions.PolyFew
                             DestroyImmediate(UtilityServices.dummyStatic);
                         }
 
-                        if(UtilityServices.dummySkinned != null)
+                        if (UtilityServices.dummySkinned != null)
                         {
                             DestroyImmediate(UtilityServices.dummySkinned);
                         }
@@ -5340,19 +5339,19 @@ namespace BrainFailProductions.PolyFew
                 EditorGUI.EndDisabledGroup();
 
 
-#endregion COMBINE MESHES
+                #endregion COMBINE MESHES
 
 
                 EditorGUILayout.EndHorizontal();
 
 
-#endregion Section Header
+                #endregion Section Header
 
 
                 GUILayout.Space(10);
 
 
-#region DRAW TEXTURE ARRAY SETTINGS
+                #region DRAW TEXTURE ARRAY SETTINGS
 
 
                 EditorGUILayout.BeginVertical(EditorStyles.helpBox);
@@ -5363,7 +5362,7 @@ namespace BrainFailProductions.PolyFew
                 content = new GUIContent();//TEXTURE ARRAYS SETTINGS //2F4F4F //008080 //191970 //006699
                 if (isPlainSkin) { content.text = "<b>Texture Arrays Settings</b>"; }
                 else { content.text = "<b><color=#006699>Texture Arrays Settings</color></b>"; }
-                
+
                 content.tooltip = "Settings for the generated Texture Arrays.";
 
                 style = GUI.skin.label;
@@ -5384,7 +5383,7 @@ namespace BrainFailProductions.PolyFew
 
                 if (isPlainSkin) { content.text = "<b>Texture Map Array :</b>"; }
                 else { content.text = "<b><color=#2F4F4F>Texture Map Array :</color></b>"; }
-                
+
                 content.tooltip = "Choose a Texture map to adjust its generated Texture Array's settings.";
 
 
@@ -5402,7 +5401,7 @@ namespace BrainFailProductions.PolyFew
                 content = new GUIContent();
                 if (isPlainSkin) { content.text = "<b><size=11>Reset</size></b>"; }
                 else { content.text = "<b><size=11><color=#D2691E>Reset</color></size></b>"; }
-                
+
                 content.tooltip = "Reset all settings to default.";
 
                 if (GUILayout.Button(content, style, GUILayout.Width(80), GUILayout.Height(20)))
@@ -5419,7 +5418,7 @@ namespace BrainFailProductions.PolyFew
 
                 var selectedTextureArraySettings = GetTexArrSettingsFromName(dataContainer.textureMapsChoices[dataContainer.choiceTextureMap]);
 
-#region TEXTURES RESOLUTION
+                #region TEXTURES RESOLUTION
                 GUILayout.BeginHorizontal();
 
 
@@ -5434,7 +5433,7 @@ namespace BrainFailProductions.PolyFew
 
                 GUILayout.Space(12);
 
-                EditorGUILayout.LabelField(content, style, GUILayout.Width(130)); 
+                EditorGUILayout.LabelField(content, style, GUILayout.Width(130));
                 selectedTextureArraySettings.choiceResolutionW = EditorGUILayout.Popup("", selectedTextureArraySettings.choiceResolutionW, dataContainer.resolutionsChoices, GUILayout.Width(60), GUILayout.ExpandWidth(true));
                 //Debug.Log("After  " + selectedTextureArraySettings.choiceResolutionW);
                 content.text = "<b>x</b>";
@@ -5453,10 +5452,10 @@ namespace BrainFailProductions.PolyFew
                 EditorGUILayout.LabelField("", style, GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                 GUILayout.EndHorizontal();
-#endregion TEXTURES RESOLUTION
+                #endregion TEXTURES RESOLUTION
 
 
-#region FILTERING MODE
+                #region FILTERING MODE
                 GUILayout.BeginHorizontal();
 
                 content.text = "Filtering Mode";
@@ -5481,10 +5480,10 @@ namespace BrainFailProductions.PolyFew
                 EditorGUILayout.LabelField("", style, GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                 GUILayout.EndHorizontal();
-#endregion FILTERING MODE
+                #endregion FILTERING MODE
 
 
-#region ANISOTROPIC FILTERING
+                #region ANISOTROPIC FILTERING
                 GUILayout.Space(-2);
 
                 GUILayout.BeginHorizontal();
@@ -5513,10 +5512,10 @@ namespace BrainFailProductions.PolyFew
                 EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                 GUILayout.EndHorizontal();
-#endregion ANISOTROPIC FILTERING
+                #endregion ANISOTROPIC FILTERING
 
 
-#region COMPRESSION QUALITY
+                #region COMPRESSION QUALITY
                 GUILayout.Space(1);
 
                 GUILayout.BeginHorizontal();
@@ -5545,10 +5544,10 @@ namespace BrainFailProductions.PolyFew
                 EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                 GUILayout.EndHorizontal();
-#endregion COMPRESSION QUALITY
+                #endregion COMPRESSION QUALITY
 
 
-#region COMPRESSION TYPE
+                #region COMPRESSION TYPE
 
                 GUILayout.BeginHorizontal();
 
@@ -5569,10 +5568,10 @@ namespace BrainFailProductions.PolyFew
                 EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                 GUILayout.EndHorizontal();
-#endregion COMPRESSION TYPE
+                #endregion COMPRESSION TYPE
 
 
-#region DIFFUSE COLOR SPACE
+                #region DIFFUSE COLOR SPACE
 
                 GUILayout.BeginHorizontal();
 
@@ -5589,7 +5588,7 @@ namespace BrainFailProductions.PolyFew
                 EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                 GUILayout.EndHorizontal();
-#endregion DIFFUSE COLOR SPACE
+                #endregion DIFFUSE COLOR SPACE
 
 
                 GUILayout.Space(6);
@@ -5600,12 +5599,12 @@ namespace BrainFailProductions.PolyFew
 
 
 
-#endregion RAW TEXTURE ARRAY SETTINGS
+                #endregion RAW TEXTURE ARRAY SETTINGS
 
 
 
 
-#region DRAW MATERIALS PROPERTIES
+                #region DRAW MATERIALS PROPERTIES
 
 
                 if (Selection.gameObjects != null && Selection.gameObjects.Length == 1)
@@ -5624,7 +5623,7 @@ namespace BrainFailProductions.PolyFew
                         {
                             a++;
 
-#region INITIALIZATION AND PRECHECKS
+                            #region INITIALIZATION AND PRECHECKS
 
                             bool isFeasible = false;
                             Texture2D attrImg = null;
@@ -5666,8 +5665,8 @@ namespace BrainFailProductions.PolyFew
 
                                 }
                             }
-                            
-#endregion INITIALIZATION AND PRECHECKS
+
+                            #endregion INITIALIZATION AND PRECHECKS
 
 
                             // Only the first time
@@ -5677,14 +5676,14 @@ namespace BrainFailProductions.PolyFew
 
                                 EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
-#region SECTION HEADER
+                                #region SECTION HEADER
 
                                 UtilityServices.DrawHorizontalLine(Color.black, 1, 2, 7, 4);
 
                                 content = new GUIContent(); //2F4F4F //008080 //191970 //006699
                                 if (isPlainSkin) { content.text = "<b>Materials Properties</b>"; }
                                 else { content.text = "<b><color=#006699>Materials Properties</color></b>"; }
-                                
+
                                 content.tooltip = "Adjust the materials properties for this GameObject. This won't change the old materials properties but it will allow you to adjust properties of the combined material exclusively for each object.";
 
                                 style = GUI.skin.label;
@@ -5698,7 +5697,7 @@ namespace BrainFailProductions.PolyFew
 
                                 UtilityServices.DrawHorizontalLine(Color.black, 1, 1, 7, 4);
 
-#endregion SECTION HEADER
+                                #endregion SECTION HEADER
                             }
 
                             int matIndex = -1;
@@ -5713,14 +5712,14 @@ namespace BrainFailProductions.PolyFew
                             for (int b = 0; (isFeasible && b < combinedMats.Count); b++, matIndex++)
                             {
                                 GUILayout.Space(6);
-                                
+
                                 MaterialProperties originalMatProps = combinedMats[b].materialProperties;
                                 MaterialProperties tempMatProps = combinedMats[b].tempMaterialProperties;
 
                                 originalMatProps.matIndex = tempMatProps.matIndex = matIndex;
 
 
-#region MATERIAL NAME AND APPLY CHANGES
+                                #region MATERIAL NAME AND APPLY CHANGES
                                 EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                                 GUILayout.Space(12);
@@ -5745,7 +5744,7 @@ namespace BrainFailProductions.PolyFew
                                 if (isPlainSkin) { content.text = "<b><size=11>Reset</size></b>"; }
                                 else { content.text = "<b><size=11><color=#D2691E>Reset</color></size></b>"; }
 
-                                
+
                                 content.tooltip = "Reset this material's properties to the ones after the last apply operation";
 
                                 if (GUILayout.Button(content, style, GUILayout.Width(60), GUILayout.Height(20)))
@@ -5790,7 +5789,7 @@ namespace BrainFailProductions.PolyFew
                                 if (isPlainSkin) { content.text = "<b><size=11>Apply</size></b>"; }
                                 else { content.text = "<b><size=11><color=#D2691E>Apply</color></size></b>"; }
 
-                                
+
                                 content.tooltip = "Apply all property changes on this material. This is important if you want to keep the changes persistent. Please do save the scene after applying the changes and before existing the editor, otherwise you will get data inconsistencies";
 
                                 if (GUILayout.Button(content, style, GUILayout.Width(80), GUILayout.Height(20)))
@@ -5834,7 +5833,7 @@ namespace BrainFailProductions.PolyFew
                                 }
 
                                 EditorGUILayout.EndHorizontal();
-#endregion MATERIAL NAME AND APPLY CHANGES
+                                #endregion MATERIAL NAME AND APPLY CHANGES
 
                                 GUILayout.Space(6);
 
@@ -5842,7 +5841,7 @@ namespace BrainFailProductions.PolyFew
                                 {
                                     EditorGUI.BeginChangeCheck();
 
-#region ALBEDO TINT COLOR
+                                    #region ALBEDO TINT COLOR
                                     GUILayout.BeginHorizontal();
 
                                     content = new GUIContent();
@@ -5861,10 +5860,10 @@ namespace BrainFailProductions.PolyFew
                                     EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                                     GUILayout.EndHorizontal();
-#endregion ALBEDO TINT COLOR
+                                    #endregion ALBEDO TINT COLOR
 
 
-#region METALLIC INTENSITY
+                                    #region METALLIC INTENSITY
 
                                     GUILayout.BeginHorizontal();
 
@@ -5891,9 +5890,9 @@ namespace BrainFailProductions.PolyFew
                                     EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                                     GUILayout.EndHorizontal();
-#endregion METALLIC INTENSITY
+                                    #endregion METALLIC INTENSITY
 
-#region SMOOTHNESS INTENSITY
+                                    #region SMOOTHNESS INTENSITY
 
                                     GUILayout.BeginHorizontal();
 
@@ -5921,9 +5920,9 @@ namespace BrainFailProductions.PolyFew
                                     EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                                     GUILayout.EndHorizontal();
-#endregion SMOOTHNESS INTENSITY
+                                    #endregion SMOOTHNESS INTENSITY
 
-#region NORMAL INTENSITY
+                                    #region NORMAL INTENSITY
 
                                     GUILayout.BeginHorizontal();
 
@@ -5951,9 +5950,9 @@ namespace BrainFailProductions.PolyFew
                                     EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                                     GUILayout.EndHorizontal();
-#endregion NORMAL INTENSITY
+                                    #endregion NORMAL INTENSITY
 
-#region HEIGHT INTENSITY
+                                    #region HEIGHT INTENSITY
 
                                     GUILayout.BeginHorizontal();
 
@@ -5981,9 +5980,9 @@ namespace BrainFailProductions.PolyFew
                                     EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                                     GUILayout.EndHorizontal();
-#endregion HEIGHT INTENSITY
+                                    #endregion HEIGHT INTENSITY
 
-#region OCCLUSION INTENSITY
+                                    #region OCCLUSION INTENSITY
 
                                     GUILayout.BeginHorizontal();
 
@@ -6011,9 +6010,9 @@ namespace BrainFailProductions.PolyFew
                                     EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                                     GUILayout.EndHorizontal();
-#endregion OCCLUSION INTENSITY
+                                    #endregion OCCLUSION INTENSITY
 
-#region DETAIL NORMAL INTENSITY
+                                    #region DETAIL NORMAL INTENSITY
 
                                     GUILayout.BeginHorizontal();
 
@@ -6041,9 +6040,9 @@ namespace BrainFailProductions.PolyFew
                                     EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                                     GUILayout.EndHorizontal();
-#endregion DETAIL NORMAL INTENSITY
+                                    #endregion DETAIL NORMAL INTENSITY
 
-#region GLOSS INTENSITY
+                                    #region GLOSS INTENSITY
 
                                     GUILayout.BeginHorizontal();
 
@@ -6071,7 +6070,7 @@ namespace BrainFailProductions.PolyFew
                                     EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                                     GUILayout.EndHorizontal();
-#endregion GLOSS INTENSITY
+                                    #endregion GLOSS INTENSITY
 
                                     /*
 #region ALPHA CUTOFF
@@ -6105,7 +6104,7 @@ namespace BrainFailProductions.PolyFew
 #endregion ALPHA CUTOFF
 
                                     */
-#region SPECULAR COLOR
+                                    #region SPECULAR COLOR
                                     GUILayout.BeginHorizontal();
 
                                     style = GUI.skin.label;
@@ -6120,9 +6119,9 @@ namespace BrainFailProductions.PolyFew
                                     EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                                     GUILayout.EndHorizontal();
-#endregion SPECULAR COLOR
+                                    #endregion SPECULAR COLOR
 
-#region EMISSION COLOR
+                                    #region EMISSION COLOR
                                     GUILayout.BeginHorizontal();
 
                                     style = GUI.skin.label;
@@ -6137,10 +6136,10 @@ namespace BrainFailProductions.PolyFew
                                     EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                                     GUILayout.EndHorizontal();
-#endregion EMISSION COLOR
+                                    #endregion EMISSION COLOR
 
 
-#region UV TILE OFFSET
+                                    #region UV TILE OFFSET
 
                                     GUILayout.BeginHorizontal();
 
@@ -6162,9 +6161,9 @@ namespace BrainFailProductions.PolyFew
 
                                     GUILayout.EndHorizontal();
 
-#endregion UV TILE OFFSET
+                                    #endregion UV TILE OFFSET
 
-#region DETAIL UV TILE OFFSET
+                                    #region DETAIL UV TILE OFFSET
 
                                     GUILayout.BeginHorizontal();
 
@@ -6186,7 +6185,7 @@ namespace BrainFailProductions.PolyFew
 
                                     GUILayout.EndHorizontal();
 
-#endregion DETAIL UV TILE OFFSET
+                                    #endregion DETAIL UV TILE OFFSET
 
 
                                     if (EditorGUI.EndChangeCheck())
@@ -6215,17 +6214,17 @@ namespace BrainFailProductions.PolyFew
                         }
 
                         if (wasFeasible) { EditorGUILayout.EndVertical(); }
-                        
+
                         dataContainer.reInitializeTempMatProps = false;
                     }
-                    
+
                 }
 
-#endregion DRAW MATERIALS PROPERTIES
+                #endregion DRAW MATERIALS PROPERTIES
 
 
 
-#region REGENERATE TEXTURE ARRAYS
+                #region REGENERATE TEXTURE ARRAYS
 
 
                 Rect drop_area = EditorGUILayout.BeginVertical(EditorStyles.helpBox, GUILayout.Height(50), GUILayout.ExpandWidth(true));
@@ -6236,7 +6235,7 @@ namespace BrainFailProductions.PolyFew
                 if (isPlainSkin) { content.text = "<b>Alter Texture Arrays</b>"; }
                 else { content.text = "<b><color=#006699>Alter Texture Arrays</color></b>"; }
 
-                
+
                 content.tooltip = "Change properties of existing texture arrays.";
 
                 style = GUI.skin.label;
@@ -6260,8 +6259,8 @@ namespace BrainFailProductions.PolyFew
 
 #if UNITY_2019_1_OR_NEWER
 
-                GUILayout.Space(17);                
-                
+                GUILayout.Space(17);
+
 #else
                 GUILayout.Space(16);
 #endif
@@ -6330,7 +6329,7 @@ namespace BrainFailProductions.PolyFew
                 content = new GUIContent();
                 if (isPlainSkin) { content.text = "<b><size=11>Regenerate</size></b>"; }
                 else { content.text = "<b><size=11><color=#D2691E>Regenerate</color></size></b>"; }
-                
+
                 content.tooltip = "Regenerate the added texture arrays with the new properties.";
 
                 if (GUILayout.Button(content, style, GUILayout.Width(100), GUILayout.Height(20)))
@@ -6623,9 +6622,9 @@ namespace BrainFailProductions.PolyFew
 
 
 #if UNITY_2019_1_OR_NEWER
-                
+
                     GUILayout.Space(17);
-               
+
 #else
                     GUILayout.Space(16);
 
@@ -6674,10 +6673,10 @@ namespace BrainFailProductions.PolyFew
                         GUILayout.Space(4);
 
 
-#region PROPERTIES
+                        #region PROPERTIES
 
 
-#region FILTERING MODE
+                        #region FILTERING MODE
                         GUILayout.BeginHorizontal();
 
                         content.text = "Filtering Mode";
@@ -6702,10 +6701,10 @@ namespace BrainFailProductions.PolyFew
                         EditorGUILayout.LabelField("", style, GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                         GUILayout.EndHorizontal();
-#endregion FILTERING MODE
+                        #endregion FILTERING MODE
 
 
-#region ANISOTROPIC FILTERING
+                        #region ANISOTROPIC FILTERING
                         GUILayout.Space(-2);
 
                         GUILayout.BeginHorizontal();
@@ -6734,10 +6733,10 @@ namespace BrainFailProductions.PolyFew
                         EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                         GUILayout.EndHorizontal();
-#endregion ANISOTROPIC FILTERING
+                        #endregion ANISOTROPIC FILTERING
 
 
-#region COMPRESSION QUALITY
+                        #region COMPRESSION QUALITY
                         GUILayout.Space(1);
 
                         GUILayout.BeginHorizontal();
@@ -6766,10 +6765,10 @@ namespace BrainFailProductions.PolyFew
                         EditorGUILayout.LabelField("", GUILayout.Width(0)); // Blank label to stop UI field from bleeding ro getting too close to the edge
 
                         GUILayout.EndHorizontal();
-#endregion COMPRESSION QUALITY
+                        #endregion COMPRESSION QUALITY
 
 
-#region COMPRESSION TYPE
+                        #region COMPRESSION TYPE
 
                         GUILayout.BeginHorizontal();
 
@@ -6791,10 +6790,10 @@ namespace BrainFailProductions.PolyFew
 
                         GUILayout.EndHorizontal();
 
-#endregion COMPRESSION TYPE
+                        #endregion COMPRESSION TYPE
 
 
-#region COLOR SPACE
+                        #region COLOR SPACE
 
                         GUILayout.BeginHorizontal();
 
@@ -6813,10 +6812,10 @@ namespace BrainFailProductions.PolyFew
 
                         GUILayout.EndHorizontal();
 
-#endregion COLOR SPACE
+                        #endregion COLOR SPACE
 
 
-#endregion PROPERTIES
+                        #endregion PROPERTIES
 
                     }
 
@@ -6828,7 +6827,7 @@ namespace BrainFailProductions.PolyFew
 
 
 
-#endregion REGENERATE TEXTURE ARRAYS
+                #endregion REGENERATE TEXTURE ARRAYS
 
 
             }
@@ -6856,14 +6855,14 @@ namespace BrainFailProductions.PolyFew
                     dataContainer.currentLodLevelSettings.Add(new DataContainer.LODLevelSettings(30, 0.4f, false, false, false, true, false, 7, 100, false, false, false, false, false, new List<float>()));
                     dataContainer.currentLodLevelSettings.Add(new DataContainer.LODLevelSettings(60, 0.15f, false, false, false, true, false, 7, 100, false, false, false, false, false, new List<float>()));
                 }
-                
+
                 //FoldoutAutoLOD = false;
-                
+
             }
 
             if (Selection.gameObjects != null && Selection.gameObjects.Length > 1)
             {
-                if(lastMultiSelectedObjects == null)
+                if (lastMultiSelectedObjects == null)
                 {
                     lastMultiSelectedObjects = new List<GameObject>();
 
@@ -6886,9 +6885,9 @@ namespace BrainFailProductions.PolyFew
 
             //if (dataContainer.objectMeshPairs == null || dataContainer.objectMeshPairs.Count == 0 || !dataContainer.objectMeshPairs.ContainsKey(Selection.activeGameObject))
             //{
-                dataContainer.objectMeshPairs = UtilityServices.GetObjectMeshPairs(Selection.activeGameObject, true, true);
-                TriangleCount = UtilityServices.CountTriangles(ConsiderChildren, dataContainer.objectMeshPairs, Selection.activeGameObject);
-                RunOnThreads = CheckOnThreads();
+            dataContainer.objectMeshPairs = UtilityServices.GetObjectMeshPairs(Selection.activeGameObject, true, true);
+            TriangleCount = UtilityServices.CountTriangles(ConsiderChildren, dataContainer.objectMeshPairs, Selection.activeGameObject);
+            RunOnThreads = CheckOnThreads();
             //}
         }
 
@@ -6929,7 +6928,7 @@ namespace BrainFailProductions.PolyFew
                 {
                     Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneAt(a);
 
-                    if(!scene.isLoaded) { continue; }
+                    if (!scene.isLoaded) { continue; }
 
                     GameObject[] rootGameObjects = scene.GetRootGameObjects();
 
@@ -6980,7 +6979,7 @@ namespace BrainFailProductions.PolyFew
                     }
                 }
 
-                if(dirtyLoadedScenesPaths.Count == 0)
+                if (dirtyLoadedScenesPaths.Count == 0)
                 {
                     return paths;
                 }
@@ -6995,7 +6994,7 @@ namespace BrainFailProductions.PolyFew
 
                         Scene scene = UnityEngine.SceneManagement.SceneManager.GetSceneByPath(path);
                         GameObject[] rootGameObjects = scene.GetRootGameObjects();
-                       
+
                         if (rootGameObjects != null && rootGameObjects.Length > 0)
                         {
                             List<GameObject> allObjectsinScene = new List<GameObject>();
@@ -7004,7 +7003,7 @@ namespace BrainFailProductions.PolyFew
                         }
                     }
 
-                    if(totalScenesProcessed == dirtyLoadedScenesPaths.Count)
+                    if (totalScenesProcessed == dirtyLoadedScenesPaths.Count)
                     {
                         return paths;
                     }
@@ -7015,14 +7014,14 @@ namespace BrainFailProductions.PolyFew
 
             static void OnWillCreateAsset(string assetPath)
             {
-                #if UNITY_2018_1_OR_NEWER
+#if UNITY_2018_1_OR_NEWER
                 string extension = Path.GetExtension(assetPath);
-            
+
                 // We only care about preset files
                 if (extension != ".preset") { return; }
 
                 NormalizePolyFewPreset(assetPath, Selection.activeGameObject.GetComponent<PolyFew>());
-                #endif
+#endif
             }
         }
 
@@ -7031,11 +7030,11 @@ namespace BrainFailProductions.PolyFew
 
         private static async Task NormalizePolyFewPreset(string presetPath, PolyFew targetPolyfew)
         {
-            if(targetPolyfew == null) { return; }
+            if (targetPolyfew == null) { return; }
 
             DataContainer targetContainer = targetPolyfew.dataContainer;
 
-            if(targetContainer == null) { return; }
+            if (targetContainer == null) { return; }
 
             bool timeout = false;
             long timeoutPeriodMillis = 3600; // If file isn't created in 1 minute timeout
@@ -7043,7 +7042,7 @@ namespace BrainFailProductions.PolyFew
 
             while (true)
             {
-                if(elapsedTimeMillis >= timeoutPeriodMillis)
+                if (elapsedTimeMillis >= timeoutPeriodMillis)
                 {
                     timeout = true;
                     break;
@@ -7113,11 +7112,11 @@ namespace BrainFailProductions.PolyFew
             else if (name.ToLower().Equals("normal")) { return dataContainer.textureArraysSettings.normalArraySettings; }
             else if (name.ToLower().Equals("height")) { return dataContainer.textureArraysSettings.heightArraySettings; }
             else if (name.ToLower().Equals("occlusion")) { return dataContainer.textureArraysSettings.occlusionArraySettings; }
-            else if (name.ToLower().Equals("emission")) {  return dataContainer.textureArraysSettings.emissiveArraySettings; }
+            else if (name.ToLower().Equals("emission")) { return dataContainer.textureArraysSettings.emissiveArraySettings; }
             else if (name.ToLower().Equals("detail mask")) { return dataContainer.textureArraysSettings.detailMaskArraySettings; }
             else if (name.ToLower().Equals("detail albedo")) { return dataContainer.textureArraysSettings.detailAlbedoArraySettings; }
             else if (name.ToLower().Equals("detail normal")) { return dataContainer.textureArraysSettings.detailNormalArraySettings; }
-            
+
             return null;
         }
 
@@ -7188,10 +7187,10 @@ namespace BrainFailProductions.PolyFew
 
             foreach (Transform child in applyTo.GetComponentsInChildren<Transform>(true))
             {
-                
-                if(CopyParentLayer)       { child.gameObject.layer = lodObject.layer; }
-                if(CopyParentTag)         { child.gameObject.tag = lodObject.tag; }
-                if(CopyParentStaticFlags) { GameObjectUtility.SetStaticEditorFlags(child.gameObject, GameObjectUtility.GetStaticEditorFlags(lodObject)); }
+
+                if (CopyParentLayer) { child.gameObject.layer = lodObject.layer; }
+                if (CopyParentTag) { child.gameObject.tag = lodObject.tag; }
+                if (CopyParentStaticFlags) { GameObjectUtility.SetStaticEditorFlags(child.gameObject, GameObjectUtility.GetStaticEditorFlags(lodObject)); }
             }
         }
 

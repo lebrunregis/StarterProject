@@ -1,11 +1,9 @@
 #if GRIFFIN
-using System.Collections.Generic;
-using UnityEngine;
-using Unity.Collections;
-using Pinwheel.Griffin.Rendering;
 using Pinwheel.Griffin.Compression;
 using System;
-using UnityEngine.Serialization;
+using System.Collections.Generic;
+using Unity.Collections;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -164,9 +162,9 @@ namespace Pinwheel.Griffin
             if (Instances.Count == 0)
             {
                 Rect r = GetUvRange();
-                Vector3 center = new Vector3(r.x, 0, r.y);
+                Vector3 center = new(r.x, 0, r.y);
                 Vector3 size = Vector3.zero;
-                Bounds b = new Bounds();
+                Bounds b = new();
                 b.center = center;
                 b.size = size;
                 Bounds = b;
@@ -202,7 +200,7 @@ namespace Pinwheel.Griffin
                     new Vector3(minX, minY, minZ),
                     new Vector3(maxX, maxY, maxZ),
                     0.5f);
-                Vector3 s = new Vector3(
+                Vector3 s = new(
                     maxX - minX,
                     Mathf.Max(0.001f, maxY - minY),
                     maxZ - minZ);
@@ -343,7 +341,7 @@ namespace Pinwheel.Griffin
         {
             int instanceCount = InstanceCount;
             List<GGrassInstance> instances = Instances;
-            NativeArray<Vector2> positions = new NativeArray<Vector2>(instanceCount, allocator, NativeArrayOptions.UninitializedMemory);
+            NativeArray<Vector2> positions = new(instanceCount, allocator, NativeArrayOptions.UninitializedMemory);
             Vector2 pos = Vector2.zero;
 
             for (int i = 0; i < instanceCount; ++i)

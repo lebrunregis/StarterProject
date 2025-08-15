@@ -1,9 +1,9 @@
 ﻿
 using System;
-using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using UnityEngine;
 
 
@@ -16,23 +16,23 @@ namespace BrainFailProductions.PolyFew
     public class SerializableDictionary<TKey, TValue> : IDictionary<TKey, TValue>
     {
         [SerializeField, HideInInspector]
-        int[] _Buckets;
+        private int[] _Buckets;
         [SerializeField, HideInInspector]
-        int[] _HashCodes;
+        private int[] _HashCodes;
         [SerializeField, HideInInspector]
-        int[] _Next;
+        private int[] _Next;
         [SerializeField, HideInInspector]
-        int _Count;
+        private int _Count;
         [SerializeField, HideInInspector]
-        int _Version;
+        private int _Version;
         [SerializeField, HideInInspector]
-        int _FreeList;
+        private int _FreeList;
         [SerializeField, HideInInspector]
-        int _FreeCount;
+        private int _FreeCount;
         [SerializeField, HideInInspector]
-        TKey[] _Keys;
+        private TKey[] _Keys;
         [SerializeField, HideInInspector]
-        TValue[] _Values;
+        private TValue[] _Values;
 
         private IEqualityComparer<TKey> _Comparer;
 
@@ -420,7 +420,7 @@ namespace BrainFailProductions.PolyFew
             {
                 if ((candidate & 1) != 0)
                 {
-                    int num = (int)Math.Sqrt((double)candidate);
+                    int num = (int)Math.Sqrt(candidate);
                     for (int i = 3; i <= num; i += 2)
                     {
                         if (candidate % i == 0)
@@ -531,7 +531,7 @@ namespace BrainFailProductions.PolyFew
         public struct Enumerator : IEnumerator<KeyValuePair<TKey, TValue>>
         {
             private readonly SerializableDictionary<TKey, TValue> _Dictionary;
-            private int _Version;
+            private readonly int _Version;
             private int _Index;
             private KeyValuePair<TKey, TValue> _Current;
 

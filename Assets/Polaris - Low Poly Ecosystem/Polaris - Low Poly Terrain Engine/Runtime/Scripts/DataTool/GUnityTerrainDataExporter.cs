@@ -89,8 +89,8 @@ namespace Pinwheel.Griffin.DataTool
                 if (group != null)
                 {
                     List<GSplatPrototype> prototypes = group.Prototypes;
-                    List<TerrainLayer> newLayers = new List<TerrainLayer>();
-                    List<TerrainLayer> layerToSave = new List<TerrainLayer>();
+                    List<TerrainLayer> newLayers = new();
+                    List<TerrainLayer> layerToSave = new();
                     for (int i = 0; i < prototypes.Count; ++i)
                     {
                         if (i < layers.Length && layers[i] != null && OverwriteSplatLayers)

@@ -7,7 +7,7 @@ namespace MagicaCloth2
     /// <summary>
     /// 対象データの検証を行うインターフェース
     /// </summary>
-    interface IDataValidate
+    internal interface IDataValidate
     {
         void DataValidate();
     }

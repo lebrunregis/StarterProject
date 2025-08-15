@@ -87,7 +87,7 @@ namespace Abiogenesis3d
         // maybe use this for excluding from post process on upixelator cam with urp render objects?
         // public LayerMask layerMaskQuads = 1 << 30;
 
-        const float camSliceGap = 0.05f;
+        private const float camSliceGap = 0.05f;
 
         // NOTE: this is wip, need to multiply ui positions with this
         // [Range(0.1f, 1)] public float uPixelatorZoom = 1;
@@ -98,36 +98,37 @@ namespace Abiogenesis3d
 
         [Header("To ignore a camera add UPixelatorCameraIgnore component to it.")]
         public bool autoDetectCameras = false;
-        public List<UPixelatorCameraInfo> cameraInfos = new List<UPixelatorCameraInfo>();
+        public List<UPixelatorCameraInfo> cameraInfos = new();
 
         public Material renderQuadTransparentMat;
         public Material renderQuadOpaqueMat;
 
-        float lastHandleInits;
-        float handleInitsEvery = 1;
+        private float lastHandleInits;
+        private readonly float handleInitsEvery = 1;
 
         [NonSerialized] public bool isSnappablesDirty = true;
         [NonSerialized] public bool isCamerasDirty = true;
         [NonSerialized] public bool isScreenSizeDirty = true;
 
         [Tooltip("For some reason when entering play mode LateUpdate is called twice so skip first snap and let it be called from OnPostRender.")]
-        bool skippedFirstSnapInLateUpdate;
+        private bool skippedFirstSnapInLateUpdate;
 
-        enum SnapState {Unsnapped, Snapped};
-        SnapState snapState = SnapState.Unsnapped;
+        private enum SnapState
+        { Unsnapped, Snapped };
+        private SnapState snapState = SnapState.Unsnapped;
 
         [Header("Experimental")]
         [Tooltip("When set does not render UI and is kept far above the scene.")]
         public bool dontMirrorCamera;
 
-        void OnValidate()
+        private void OnValidate()
         {
             if (ditherRepeatSize % 2 != 0) ditherRepeatSize += 1;
 
             Refresh();
         }
 
-        void EnforceUniqueInstance()
+        private void EnforceUniqueInstance()
         {
             var existingInstances = FindObjectsOfType<UPixelator>();
             if (existingInstances.Length > 1)
@@ -144,7 +145,7 @@ namespace Abiogenesis3d
             HandleInits();
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             Refresh();
 
@@ -153,14 +154,14 @@ namespace Abiogenesis3d
             if (uPixelatorCam) uPixelatorCam.enabled = true;
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             if (uPixelatorCam) uPixelatorCam.enabled = false;
             foreach (var camInfo in cameraInfos)
                 if (camInfo.renderHandler) camInfo.renderHandler.enabled = false;
         }
 
-        void HandleScreenResize()
+        private void HandleScreenResize()
         {
             // NOTE: never use Screen class directly, use stored screenSize as it can change between PreRender/PostRender calls
             screenSize = new Vector2Int(Screen.width, Screen.height);
@@ -175,7 +176,7 @@ namespace Abiogenesis3d
         // System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
 
 
-        void Update()
+        private void Update()
         {
             foreach (var camInfo in cameraInfos)
             {
@@ -204,7 +205,7 @@ namespace Abiogenesis3d
             }
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             // stopwatch.Start();
 #if UNITY_EDITOR
@@ -268,7 +269,7 @@ namespace Abiogenesis3d
             // stopwatch.Reset();
         }
 
-        void HandleMirrorCameraSync()
+        private void HandleMirrorCameraSync()
         {
             if (dontMirrorCamera || !mirroredCamera) return;
 
@@ -276,7 +277,7 @@ namespace Abiogenesis3d
                 mirroredCamera.transform.position, mirroredCamera.transform.rotation);
         }
 
-        void HandleCamInfosSync()
+        private void HandleCamInfosSync()
         {
             foreach (var camInfo in cameraInfos)
             {
@@ -310,7 +311,7 @@ namespace Abiogenesis3d
             }
         }
 
-        void HandleCamInfos()
+        private void HandleCamInfos()
         {
             foreach (var camInfo in cameraInfos)
             {
@@ -344,7 +345,7 @@ namespace Abiogenesis3d
                     // need to remove handler gameobjects that are not in cameraInfos
                     if (cameraInfos.All(c => c.renderHandler != handler))
                         DestroyImmediate(handler.gameObject);
-            }
+                }
 
                 for (int i = 0; i < cameraInfos.Count; i++)
                 {
@@ -446,25 +447,25 @@ namespace Abiogenesis3d
                 .FirstOrDefault()?.cam;
         }
 
-        Type GetIgnoredType()
+        private Type GetIgnoredType()
         {
             return typeof(UPixelatorCameraIgnore);
         }
 
-        void HandleGetCameras()
+        private void HandleGetCameras()
         {
             List<Camera> cameras;
             if (autoDetectCameras) cameras = FindObjectsOfType<Camera>().ToList();
             else
             {
-                cameras = new List<Camera> {};
+                cameras = new List<Camera> { };
                 if (mirroredCamera) cameras.Add(mirroredCamera);
                 cameras.Add(uPixelatorCam);
                 cameras.AddRange(cameraInfos.Select(c => c.cam));
             }
 
             var camerasToRemove = cameras.Where(c => c && c.GetComponent(GetIgnoredType())).ToArray();
-            foreach(var cam in camerasToRemove)
+            foreach (var cam in camerasToRemove)
             {
                 var match = cameraInfos.FirstOrDefault(c => c.cam == cam);
                 if (match != default) cameraInfos.Remove(match);
@@ -491,7 +492,7 @@ namespace Abiogenesis3d
                 }
                 else
                 {
-                    camInfo = new UPixelatorCameraInfo {cam = cam};
+                    camInfo = new UPixelatorCameraInfo { cam = cam };
                     cameraInfos.Add(camInfo);
                 }
             }
@@ -513,16 +514,16 @@ namespace Abiogenesis3d
             }
         }
 
-        Vector2Int GetRenderTextureSize()
+        private Vector2Int GetRenderTextureSize()
         {
             // TODO: move to handler and allow each camera to have a separate texture size, rect, pixelMultiplier etc.
             return screenSize / pixelMultiplier + GetRenderTexturePadding();
 
-// #if UNITY_EDITOR
-//             // NOTE: prevent Unity from irreversibly breaking the camera component...
-//             size.x = Mathf.Clamp(size.x, 1, screenSize.x + ditherRepeatSize);
-//             size.y = Mathf.Clamp(size.y, 1, screenSize.y + ditherRepeatSize);
-// #endif
+            // #if UNITY_EDITOR
+            //             // NOTE: prevent Unity from irreversibly breaking the camera component...
+            //             size.x = Mathf.Clamp(size.x, 1, screenSize.x + ditherRepeatSize);
+            //             size.y = Mathf.Clamp(size.y, 1, screenSize.y + ditherRepeatSize);
+            // #endif
             // return size;
         }
 
@@ -535,7 +536,7 @@ namespace Abiogenesis3d
         }
 
         // TODO: cleanup unreferenced quads
-        void EnsureRenderQuad(UPixelatorCameraInfo camInfo)
+        private void EnsureRenderQuad(UPixelatorCameraInfo camInfo)
         {
             if (camInfo.renderQuad) return;
             camInfo.renderQuad = GameObject.CreatePrimitive(PrimitiveType.Quad).transform;
@@ -543,7 +544,7 @@ namespace Abiogenesis3d
             camInfo.renderQuad.SetParent(camInfo.parent, false);
         }
 
-        void EnsureRenderTexture(UPixelatorCameraInfo camInfo)
+        private void EnsureRenderTexture(UPixelatorCameraInfo camInfo)
         {
             if (camInfo.renderTexture)
             {
@@ -558,13 +559,13 @@ namespace Abiogenesis3d
             camInfo.renderTexture.Create();
         }
 
-        void EnsureRenderQuadRenderer(UPixelatorCameraInfo camInfo)
+        private void EnsureRenderQuadRenderer(UPixelatorCameraInfo camInfo)
         {
             if (camInfo.renderQuadRenderer) return;
             camInfo.renderQuadRenderer = camInfo.renderQuad.GetComponent<Renderer>();
         }
 
-        void HandleRenderQuadMaterial(UPixelatorCameraInfo camInfo)
+        private void HandleRenderQuadMaterial(UPixelatorCameraInfo camInfo)
         {
             EnsureRenderQuadRenderer(camInfo);
 
@@ -609,7 +610,7 @@ namespace Abiogenesis3d
             r.allowOcclusionWhenDynamic = false;
         }
 
-        GraphicsFormat GetGraphicsFormat(Camera cam)
+        private GraphicsFormat GetGraphicsFormat(Camera cam)
         {
 #if UNITY_PIPELINE_URP
             // auto detect
@@ -623,10 +624,10 @@ namespace Abiogenesis3d
                 graphicsFormat = GraphicsFormatSubset.RGBA8_UNorm;
             }
 #endif
-            return (GraphicsFormat) graphicsFormat;
+            return (GraphicsFormat)graphicsFormat;
         }
 
-        bool IsHDR(Camera cam)
+        private bool IsHDR(Camera cam)
         {
             var isHDR = cam.allowHDR;
 #if UNITY_PIPELINE_URP
@@ -635,7 +636,7 @@ namespace Abiogenesis3d
             return isHDR;
         }
 
-        void HandleResizeTexture(UPixelatorCameraInfo camInfo)
+        private void HandleResizeTexture(UPixelatorCameraInfo camInfo)
         {
             EnsureRenderTexture(camInfo);
 
@@ -658,24 +659,24 @@ namespace Abiogenesis3d
             }
         }
 
-        float GetCamDepthOr0(Camera cam)
+        private float GetCamDepthOr0(Camera cam)
         {
             if (cam) return cam.depth;
             return 0;
         }
 
-        void HandleRenderQuad(UPixelatorCameraInfo camInfo)
+        private void HandleRenderQuad(UPixelatorCameraInfo camInfo)
         {
             EnsureRenderQuad(camInfo);
 
             // camInfo.renderQuad.gameObject.layer = (int) Math.Log(layerMaskQuads, 2);
             // camInfo.parent.gameObject.layer = (int) Math.Log(layerMaskQuads, 2);
-            camInfo.renderQuad.gameObject.layer = (int) Math.Log(layerMaskUI, 2);
-            camInfo.parent.gameObject.layer = (int) Math.Log(layerMaskUI, 2);
+            camInfo.renderQuad.gameObject.layer = (int)Math.Log(layerMaskUI, 2);
+            camInfo.parent.gameObject.layer = (int)Math.Log(layerMaskUI, 2);
             camInfo.renderQuad.name = "RenderQuad - " + camInfo.cam.name;
         }
 
-        void EnsureUPixelatorRenderHandler(UPixelatorCameraInfo camInfo)
+        private void EnsureUPixelatorRenderHandler(UPixelatorCameraInfo camInfo)
         {
             if (camInfo.renderHandler) return;
 
@@ -685,7 +686,7 @@ namespace Abiogenesis3d
             camInfo.renderHandler.name = "UPixelator - " + camInfo.cam.name;
         }
 
-        void HandleUPixelatorRenderHandler(UPixelatorCameraInfo camInfo)
+        private void HandleUPixelatorRenderHandler(UPixelatorCameraInfo camInfo)
         {
             EnsureUPixelatorRenderHandler(camInfo);
 
@@ -694,14 +695,14 @@ namespace Abiogenesis3d
             camInfo.renderHandler.enabled = camInfo.cam.enabled;
         }
 
-        void EnsureParent(UPixelatorCameraInfo camInfo)
+        private void EnsureParent(UPixelatorCameraInfo camInfo)
         {
             if (camInfo.parent) return;
             camInfo.parent = new GameObject().transform;
             camInfo.parent.transform.SetParent(transform, false);
         }
 
-        void UpdateCamInfo(UPixelatorCameraInfo camInfo)
+        private void UpdateCamInfo(UPixelatorCameraInfo camInfo)
         {
             // CalculateParallax(camInfo);
 
@@ -718,7 +719,7 @@ namespace Abiogenesis3d
             HandleUPixelatorRenderHandler(camInfo);
         }
 
-        void EnsureUPixelatorCam()
+        private void EnsureUPixelatorCam()
         {
             if (uPixelatorCam) return;
             uPixelatorCam = GetComponent<Camera>();
@@ -726,7 +727,7 @@ namespace Abiogenesis3d
             uPixelatorCam.enabled = true;
         }
 
-        void HandleUPixelatorCam()
+        private void HandleUPixelatorCam()
         {
             // TODO: why extra distance is needed?
             const float farClipPlaneExtraDistance = 1;
@@ -744,7 +745,7 @@ namespace Abiogenesis3d
                 uPixelatorCam.farClipPlane = cameraInfos.Count * camSliceGap + farClipPlaneExtraDistance;
                 // TODO: -0.2 needed for TMPro Text to be shown
                 // TODO: but at least -0.17 is needed for pixelMultiplier==1 to not clip?
-                uPixelatorCam.nearClipPlane = - 0.2f;
+                uPixelatorCam.nearClipPlane = -0.2f;
             }
 
             uPixelatorCam.clearFlags = CameraClearFlags.SolidColor;
@@ -774,7 +775,7 @@ namespace Abiogenesis3d
             return (c.cullingMask & l) != 0;
         }
 
-        bool BelongsToCamera(UPixelatorSnappable s, Camera c)
+        private bool BelongsToCamera(UPixelatorSnappable s, Camera c)
         {
             // NOTE: since upixelatorCam mirrors mirroredCamera it sees the same gameObjects but should not own them here,
             //  upixelatorCam should only own the rectTransform elements that it sees as it doubles as the ui/overlay camera
@@ -788,7 +789,7 @@ namespace Abiogenesis3d
             float offsetX = offsetInPixels / (float)Screen.width;
             float offsetY = offsetInPixels / (float)Screen.height;
             Vector3 viewportPoint = c.WorldToViewportPoint(s.transform.position);
-            Rect extendedViewport = new Rect(-offsetX, -offsetY, 1 + 2 * offsetX, 1 + 2 * offsetY);
+            Rect extendedViewport = new(-offsetX, -offsetY, 1 + 2 * offsetX, 1 + 2 * offsetY);
 
             return (
                 extendedViewport.Contains(viewportPoint) && // isInViewport
@@ -823,7 +824,7 @@ namespace Abiogenesis3d
             }
         }
 
-        void HandleSnappables()
+        private void HandleSnappables()
         {
             var snappables = FillSnappablesList();
 
@@ -853,7 +854,7 @@ namespace Abiogenesis3d
             }
         }
 
-        List<UPixelatorSnappable> FillSnappablesList()
+        private List<UPixelatorSnappable> FillSnappablesList()
         {
             var snappableArray = GameObject.FindObjectsOfType<UPixelatorSnappable>();
 
@@ -870,7 +871,8 @@ namespace Abiogenesis3d
 
             var flattened = new List<UPixelatorSnappable>();
             Action<UPixelatorSnappable> flatten = null;
-            flatten = s => {
+            flatten = s =>
+            {
                 flattened.Add(s);
                 s.nested.ForEach(c => flatten(c));
             };

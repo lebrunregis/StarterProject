@@ -5,9 +5,11 @@
 
 /*! \cond PRIVATE */
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     // ReSharper disable once CheckNamespace
-    public class MechanimStateCustomEvents : StateMachineBehaviour {
+    public class MechanimStateCustomEvents : StateMachineBehaviour
+    {
         [Tooltip("Select for event to re-fire each time animation loops without exiting state")]
         [Header("Retrigger Events Each Time Anim Loops w/o Exiting State")]
         public bool RetriggerWhenStateLoops = false;
@@ -75,16 +77,19 @@ namespace DarkTonic.MasterAudio {
         private int _lastRepetition = -1;
 
         // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
-        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+        public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
             _lastRepetition = 0;
 
             _actorTrans = ActorTrans(animator);
 
-            if (!fireEnterEvent) {
+            if (!fireEnterEvent)
+            {
                 return;
             }
 
-            if (enterCustomEvent == MasterAudio.NoGroupName || string.IsNullOrEmpty(enterCustomEvent)) {
+            if (enterCustomEvent == MasterAudio.NoGroupName || string.IsNullOrEmpty(enterCustomEvent))
+            {
                 return;
             }
 
@@ -100,25 +105,31 @@ namespace DarkTonic.MasterAudio {
         }
 
         // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-        override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
+        override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
             var animRepetition = (int)stateInfo.normalizedTime;
             var animTime = stateInfo.normalizedTime - animRepetition;
 
-            if (!fireAnimTimeEvent) {
+            if (!fireAnimTimeEvent)
+            {
                 goto multievent;
             }
 
-#region Timed to Anim
-            if (!_fireTimedEvent && RetriggerWhenStateLoops) {
+            #region Timed to Anim
+            if (!_fireTimedEvent && RetriggerWhenStateLoops)
+            {
                 // change back to true if "re-trigger" checked and anim has looped.
 
-                if (_lastRepetition >= 0 && animRepetition > _lastRepetition) {
+                if (_lastRepetition >= 0 && animRepetition > _lastRepetition)
+                {
                     _fireTimedEvent = true;
                 }
             }
 
-            if (_fireTimedEvent) {
-                if (animTime > whenToFireEvent) {
+            if (_fireTimedEvent)
+            {
+                if (animTime > whenToFireEvent)
+                {
                     _fireTimedEvent = false;
 
 #if MULTIPLAYER_ENABLED
@@ -133,47 +144,59 @@ namespace DarkTonic.MasterAudio {
                 }
             }
 
-#endregion
+            #endregion
 
             multievent:
 
-            if (!fireMultiAnimTimeEvent) {
+            if (!fireMultiAnimTimeEvent)
+            {
                 goto afterMulti;
             }
 
-#region Fire Multiple Events Timed To Anim
+            #region Fire Multiple Events Timed To Anim
 
-            if (RetriggerWhenStateLoops) {
-                if (!_playMultiEvent1) {
+            if (RetriggerWhenStateLoops)
+            {
+                if (!_playMultiEvent1)
+                {
                     // change back to true if "re-trigger" checked and anim has looped.
-                    if (_lastRepetition >= 0 && animRepetition > _lastRepetition) {
+                    if (_lastRepetition >= 0 && animRepetition > _lastRepetition)
+                    {
                         _playMultiEvent1 = true;
                     }
                 }
-                if (!_playMultiEvent2) {
+                if (!_playMultiEvent2)
+                {
                     // change back to true if "re-trigger" checked and anim has looped.
-                    if (_lastRepetition >= 0 && animRepetition > _lastRepetition) {
+                    if (_lastRepetition >= 0 && animRepetition > _lastRepetition)
+                    {
                         _playMultiEvent2 = true;
                     }
                 }
-                if (!_playMultiEvent3) {
+                if (!_playMultiEvent3)
+                {
                     // change back to true if "re-trigger" checked and anim has looped.
-                    if (_lastRepetition >= 0 && animRepetition > _lastRepetition) {
+                    if (_lastRepetition >= 0 && animRepetition > _lastRepetition)
+                    {
                         _playMultiEvent3 = true;
                     }
                 }
-                if (!_playMultiEvent4) {
+                if (!_playMultiEvent4)
+                {
                     // change back to true if "re-trigger" checked and anim has looped.
-                    if (_lastRepetition >= 0 && animRepetition > _lastRepetition) {
+                    if (_lastRepetition >= 0 && animRepetition > _lastRepetition)
+                    {
                         _playMultiEvent4 = true;
                     }
                 }
             }
 
-            if (!_playMultiEvent1) {
+            if (!_playMultiEvent1)
+            {
                 goto decideMulti2;
             }
-            if (animTime < whenToFireMultiEvent1 || numOfMultiEventsToFire < 1) {
+            if (animTime < whenToFireMultiEvent1 || numOfMultiEventsToFire < 1)
+            {
                 goto decideMulti2;
             }
 
@@ -190,11 +213,13 @@ namespace DarkTonic.MasterAudio {
 
             decideMulti2:
 
-            if (!_playMultiEvent2) {
+            if (!_playMultiEvent2)
+            {
                 goto decideMulti3;
             }
 
-            if (animTime < whenToFireMultiEvent2 || numOfMultiEventsToFire < 2) {
+            if (animTime < whenToFireMultiEvent2 || numOfMultiEventsToFire < 2)
+            {
                 goto decideMulti3;
             }
 
@@ -211,11 +236,13 @@ namespace DarkTonic.MasterAudio {
 
             decideMulti3:
 
-            if (!_playMultiEvent3) {
+            if (!_playMultiEvent3)
+            {
                 goto decideMulti4;
             }
 
-            if (animTime < whenToFireMultiEvent3 || numOfMultiEventsToFire < 3) {
+            if (animTime < whenToFireMultiEvent3 || numOfMultiEventsToFire < 3)
+            {
                 goto decideMulti4;
             }
 
@@ -232,11 +259,13 @@ namespace DarkTonic.MasterAudio {
 
             decideMulti4:
 
-            if (!_playMultiEvent4) {
+            if (!_playMultiEvent4)
+            {
                 goto afterMulti;
             }
 
-            if (animTime < whenToFireMultiEvent4 || numOfMultiEventsToFire < 4) {
+            if (animTime < whenToFireMultiEvent4 || numOfMultiEventsToFire < 4)
+            {
                 goto afterMulti;
             }
 
@@ -259,8 +288,10 @@ namespace DarkTonic.MasterAudio {
         }
 
         // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
-            if (fireExitEvent && exitCustomEvent != MasterAudio.NoGroupName && !string.IsNullOrEmpty(exitCustomEvent)) {
+        public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+        {
+            if (fireExitEvent && exitCustomEvent != MasterAudio.NoGroupName && !string.IsNullOrEmpty(exitCustomEvent))
+            {
 #if MULTIPLAYER_ENABLED
                 if (CanTransmitToOtherPlayers) {
                     MasterAudioMultiplayerAdapter.FireCustomEvent(exitCustomEvent, _actorTrans, true);
@@ -272,14 +303,16 @@ namespace DarkTonic.MasterAudio {
 #endif
             }
 
-            if (fireMultiAnimTimeEvent) {
+            if (fireMultiAnimTimeEvent)
+            {
                 _playMultiEvent1 = true;
                 _playMultiEvent2 = true;
                 _playMultiEvent3 = true;
                 _playMultiEvent4 = true;
             }
 
-            if (fireAnimTimeEvent) {
+            if (fireAnimTimeEvent)
+            {
                 _fireTimedEvent = true;
             }
         }
@@ -294,8 +327,10 @@ namespace DarkTonic.MasterAudio {
         //
         //}
 
-        private Transform ActorTrans(Animator anim) {
-            if (_actorTrans != null) {
+        private Transform ActorTrans(Animator anim)
+        {
+            if (_actorTrans != null)
+            {
                 return _actorTrans;
             }
 

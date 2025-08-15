@@ -1,29 +1,30 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
- 
+
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 {
     internal class BatchObjectsDrawer
     {
-        enum SortBy { None, ObjectData, MeshCount, AssetFormat, SubmeshCount, VertexAndTriangleCountOfOriginalMesh, VertexCountOfWireframeMesh, IndexFormat }
-        enum ScrollViewItemVisibility { Visible, AboveDrawArea, BelowDrawArea }
+        private enum SortBy
+        { None, ObjectData, MeshCount, AssetFormat, SubmeshCount, VertexAndTriangleCountOfOriginalMesh, VertexCountOfWireframeMesh, IndexFormat }
+        private enum ScrollViewItemVisibility
+        { Visible, AboveDrawArea, BelowDrawArea }
 
 
-        static SortBy sortBy = SortBy.None;
-        static Vector2 scrollBatchObjects;
-        static bool sortByAscending = true;    //true - OrderBy, false - OrderByDescending
+        private static SortBy sortBy = SortBy.None;
+        private static Vector2 scrollBatchObjects;
+        private static bool sortByAscending = true;    //true - OrderBy, false - OrderByDescending
 
 
-        static int singleLineHeight = 20;
+        private static readonly int singleLineHeight = 20;
 
 
         internal static void Draw()
@@ -35,16 +36,16 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             EditorSettings editorSettings = EditorWindow.active.editorSettings;
 
 
-            Rect rectObjectData = new Rect();
-            Rect rectMeshCount = new Rect();
-            Rect rectAssetFormat = new Rect();      bool needRectAssetFormat = false;
-            Rect rectSubmeshCount = new Rect();
-            Rect rectVertexAndTriangleCountOfOriginalMesh = new Rect();
-            Rect rectVertexCountOfWireframeMesh = new Rect();
-            Rect rectIndexFormat = new Rect();
-            Rect rectRefresh = new Rect();
+            Rect rectObjectData = new();
+            Rect rectMeshCount = new();
+            Rect rectAssetFormat = new(); bool needRectAssetFormat = false;
+            Rect rectSubmeshCount = new();
+            Rect rectVertexAndTriangleCountOfOriginalMesh = new();
+            Rect rectVertexCountOfWireframeMesh = new();
+            Rect rectIndexFormat = new();
+            Rect rectRefresh = new();
 
-            
+
             bool needRepaint = false;
             Rect toolbarRect;
 
@@ -166,7 +167,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                                 //.asset format
                                 if (needRectAssetFormat)
                                 {
-                                    Rect assetFormatDrawRect = new Rect(rectAssetFormat.xMin + rectAssetFormat.width / 2 - 6, currentRowRect.yMin + 2, 12, 12);
+                                    Rect assetFormatDrawRect = new(rectAssetFormat.xMin + rectAssetFormat.width / 2 - 6, currentRowRect.yMin + 2, 12, 12);
                                     switch (currentBatchObject.isMeshAssetFormat)
                                     {
                                         case BatchObject.OptionsState.Yes: GUI.DrawTexture(assetFormatDrawRect, EditorResources.IconYes); break;
@@ -285,7 +286,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                                                 EditorGUI.LabelField(new Rect(rectSubmeshCount.xMin, currentRowRect.yMin, rectSubmeshCount.width, currentRowRect.height), "0", EditorResources.GUIStyleCenteredGreyMiniLabel);
                                             else
                                                 EditorGUI.LabelField(new Rect(rectSubmeshCount.xMin, currentRowRect.yMin, rectSubmeshCount.width, currentRowRect.height), meshInfo.mesh.subMeshCount.ToString(), EditorResources.GUIStyleCenteredGreyMiniLabel);
-                                                                                                                                 
+
 
                                             //Vertex Count
                                             EditorGUI.LabelField(new Rect(rectVertexAndTriangleCountOfOriginalMesh.xMin, currentRowRect.yMin, rectVertexAndTriangleCountOfOriginalMesh.width, currentRowRect.height), meshInfo.vertexAndTriangleCountOfOriginalMesh, EditorResources.GUIStyleCenteredGreyMiniLabel);
@@ -356,7 +357,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             }
         }
 
-        static int GetScrolViewHeight()
+        private static int GetScrolViewHeight()
         {
             int renderObjectsCount = EditorWindow.active.listBatchObjects.Count + 1;
             for (int i = 0; i < EditorWindow.active.listBatchObjects.Count; i++)
@@ -432,13 +433,13 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                 SortBatchObjects();
             }
         }
-        static string GetEditorPreferencesPath()
+        private static string GetEditorPreferencesPath()
         {
             return WireframeShaderAbout.name.RemoveWhiteSpace() + "WireframeMeshGenerator_ObjectsID_" + Application.dataPath.GetHashCode();
         }
 
 
-        static void SplitControlRect(Rect controlRect, out Rect rectObjectData, out Rect rectMeshCount, out bool needRectAssetFormat, out Rect rectAssetFormat, out Rect rectSubmeshCount, out Rect rectVertexAndTriangleCountOfOriginalMesh, out Rect rectVertexCountOfWireframeMesh, out Rect rectIndexFormat, out Rect rectRefresh)
+        private static void SplitControlRect(Rect controlRect, out Rect rectObjectData, out Rect rectMeshCount, out bool needRectAssetFormat, out Rect rectAssetFormat, out Rect rectSubmeshCount, out Rect rectVertexAndTriangleCountOfOriginalMesh, out Rect rectVertexCountOfWireframeMesh, out Rect rectIndexFormat, out Rect rectRefresh)
         {
             EditorSettings editorSettings = EditorWindow.active.editorSettings;
 
@@ -510,7 +511,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
             return;
         }
-        static void DrawSortByButton(Rect rect, string label, SortBy sortByOnClickEvent)
+        private static void DrawSortByButton(Rect rect, string label, SortBy sortByOnClickEvent)
         {
             using (new EditorGUIHelper.GUIColor(sortBy == sortByOnClickEvent ? Color.gray : Color.white))
             {
@@ -561,7 +562,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                     break;
             }
         }
-        static void SortBatchObjects(Func<BatchObject, System.Object> orderRoot, Func<BatchObject, System.Object> orderRootThen, Func<BatchObjectMeshInfo, System.Object> orderChild, Func<BatchObjectMeshInfo, System.Object> orderChildThen)
+        private static void SortBatchObjects(Func<BatchObject, System.Object> orderRoot, Func<BatchObject, System.Object> orderRootThen, Func<BatchObjectMeshInfo, System.Object> orderChild, Func<BatchObjectMeshInfo, System.Object> orderChildThen)
         {
             if (EditorWindow.active.listBatchObjects == null)
                 return;
@@ -624,7 +625,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             }
         }
 
-        static ScrollViewItemVisibility IsRectVisibleInsideScrollView(Rect topMostRect, Rect localRect, Vector2 scrollPosition)
+        private static ScrollViewItemVisibility IsRectVisibleInsideScrollView(Rect topMostRect, Rect localRect, Vector2 scrollPosition)
         {
             float windowSpacePositionY = topMostRect.y + localRect.y - scrollPosition.y;
 
@@ -698,7 +699,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                 if (string.IsNullOrEmpty(savePath) == true ||
                     EditorWindow.active.listBatchObjects.Any(x => x.savePath == savePath) == false)
                 {
-                    BatchObject batchObject = new BatchObject(gameObject, expand);
+                    BatchObject batchObject = new(gameObject, expand);
 
                     if (batchObject.meshInfo.Count > 0)
                     {
@@ -807,7 +808,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
         }
         internal static void CatchDragAndDrop()
         {
-            Rect drop_area = new Rect(0, 0, EditorWindow.active.position.width, EditorWindow.active.position.height);
+            Rect drop_area = new(0, 0, EditorWindow.active.position.width, EditorWindow.active.position.height);
 
             Event evt = Event.current;
             switch (evt.type)

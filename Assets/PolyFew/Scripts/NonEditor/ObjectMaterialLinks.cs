@@ -68,9 +68,9 @@ namespace BrainFailProductions.PolyFew
 
         public Texture2D linkedAttrImg;
 
-        void Start()
+        private void Start()
         {
-            
+
             var mr = GetComponent<MeshRenderer>();
             var smr = GetComponent<SkinnedMeshRenderer>();
             Material[] materials;

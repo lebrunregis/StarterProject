@@ -1,17 +1,15 @@
 using CitrioN.Common;
-using UnityEngine;
-using UnityEngine.Rendering;
 #if UNITY_HDRP
 using UnityEngine.Rendering.HighDefinition;
 #endif
 
 namespace CitrioN.SettingsMenuCreator.SRP
 {
-  [MenuOrder(600)]
-  [ExcludeFromMenuSelection]
-  [MenuPath("Render Pipeline/Dynamic Resolution")]
-  public abstract class Setting_HDPR_DynamicResolutionSettings<T1> : Setting_Generic_Unity<T1>
-  {
+    [MenuOrder(600)]
+    [ExcludeFromMenuSelection]
+    [MenuPath("Render Pipeline/Dynamic Resolution")]
+    public abstract class Setting_HDPR_DynamicResolutionSettings<T1> : Setting_Generic_Unity<T1>
+    {
 #if UNITY_HDRP
     [SerializeField]
     [Tooltip("The HDRP Asset to apply the setting to.\n" +
@@ -19,7 +17,7 @@ namespace CitrioN.SettingsMenuCreator.SRP
     protected HDRenderPipelineAsset renderPipelineAssetOverride; 
 #endif
 
-    public override bool StoreValueInternally => true;
+        public override bool StoreValueInternally => true;
 
 #if UNITY_HDRP
     public HDRenderPipelineAsset HDRP
@@ -48,5 +46,5 @@ namespace CitrioN.SettingsMenuCreator.SRP
       }
     }
 #endif
-  }
+    }
 }

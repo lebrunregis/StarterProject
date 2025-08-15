@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace SBG.Toolbelt
 {
-	[RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(Collider))]
     public class Trigger3D : Trigger
-	{
+    {
         private void OnTriggerEnter(Collider other)
         {
             ProcessEvent(TriggerEvent.OnTriggerEnter, other.gameObject);

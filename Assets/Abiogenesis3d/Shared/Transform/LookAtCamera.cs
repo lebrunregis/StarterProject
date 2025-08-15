@@ -8,7 +8,7 @@ namespace Abiogenesis3d
     {
         public Camera cam;
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             if (cam == null) cam = Camera.main;
 

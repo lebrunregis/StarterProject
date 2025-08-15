@@ -7,7 +7,7 @@ namespace Pinwheel.Griffin
 {
     public class GSplatPrototypeGroupInspectorDrawer
     {
-        private GSplatPrototypeGroup instance;
+        private readonly GSplatPrototypeGroup instance;
 
         public GSplatPrototypeGroupInspectorDrawer(GSplatPrototypeGroup group)
         {
@@ -46,7 +46,7 @@ namespace Pinwheel.Griffin
                 string id = "splat" + i + instance.GetInstanceID().ToString();
 
                 int index = i;
-                GenericMenu menu = new GenericMenu();
+                GenericMenu menu = new();
                 menu.AddItem(
                     new GUIContent("Remove"),
                     false,
@@ -84,7 +84,7 @@ namespace Pinwheel.Griffin
             Texture2D t = GEditorCommon.ObjectSelectorDragDrop<Texture2D>(r, "Drop a texture here!", "t:Texture2D");
             if (t != null)
             {
-                GSplatPrototype p = new GSplatPrototype();
+                GSplatPrototype p = new();
                 p.Texture = t;
                 instance.Prototypes.Add(p);
             }

@@ -1,14 +1,11 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using Pinwheel.Griffin;
+using Pinwheel.Griffin.ErosionTool;
+using Pinwheel.Griffin.GroupTool;
 using Pinwheel.Griffin.PaintTool;
 using Pinwheel.Griffin.SplineTool;
 using Pinwheel.Griffin.StampTool;
-using Pinwheel.Griffin.GroupTool;
-using Pinwheel.Griffin.ErosionTool;
+using UnityEditor;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.Wizard
 {
@@ -19,7 +16,7 @@ namespace Pinwheel.Griffin.Wizard
 
         private class GBaseGUI
         {
-            public static readonly GUIContent INSTRUCTION = new GUIContent("Follow the steps below to create your level. Hover on labels for instruction.");
+            public static readonly GUIContent INSTRUCTION = new("Follow the steps below to create your level. Hover on labels for instruction.");
         }
 
         internal static void Draw()
@@ -72,10 +69,10 @@ namespace Pinwheel.Griffin.Wizard
         {
             public static readonly string LABEL = "0. Universal Render Pipeline Setup";
             public static readonly string ID = "wizard-rp-setup";
-            public static readonly GUIContent INSTRUCTION = new GUIContent("Install additional package for Universal Render Pipeline");
-            public static readonly GUIContent STATUS_INSTALLED = new GUIContent("Status: INSTALLED");
-            public static readonly GUIContent STATUS_NOT_INSTALLED = new GUIContent("Status: NOT INSTALLED");
-            public static readonly GUIContent INSTALL_BTN = new GUIContent("Install");
+            public static readonly GUIContent INSTRUCTION = new("Install additional package for Universal Render Pipeline");
+            public static readonly GUIContent STATUS_INSTALLED = new("Status: INSTALLED");
+            public static readonly GUIContent STATUS_NOT_INSTALLED = new("Status: NOT INSTALLED");
+            public static readonly GUIContent INSTALL_BTN = new("Install");
         }
 
 
@@ -104,21 +101,21 @@ namespace Pinwheel.Griffin.Wizard
             public static readonly string ID = "wizard-create-terrains";
 
             public static readonly string PHYSICAL_HEADER = "Physical";
-            public static readonly GUIContent ORIGIN = new GUIContent("Origin", "Position of the first terrain in the grid.");
-            public static readonly GUIContent TILE_SIZE = new GUIContent("Tile Size", "Size of each terrain tile in world space.");
-            public static readonly GUIContent TILE_X = new GUIContent("Tile Count X", "Number of tiles along X-axis.");
-            public static readonly GUIContent TILE_Z = new GUIContent("Tile Count Z", "Number of tiles along Z-axis.");
+            public static readonly GUIContent ORIGIN = new("Origin", "Position of the first terrain in the grid.");
+            public static readonly GUIContent TILE_SIZE = new("Tile Size", "Size of each terrain tile in world space.");
+            public static readonly GUIContent TILE_X = new("Tile Count X", "Number of tiles along X-axis.");
+            public static readonly GUIContent TILE_Z = new("Tile Count Z", "Number of tiles along Z-axis.");
 
-            public static readonly GUIContent WORLD_SIZE = new GUIContent("World Size", "Size of the terrain grid in world space.");
+            public static readonly GUIContent WORLD_SIZE = new("World Size", "Size of the terrain grid in world space.");
 
             public static readonly string MATERIAL_HEADER = "Material";
             public static readonly string UTILITIES_HEADER = "Utilities";
-            public static readonly GUIContent NAME_PREFIX = new GUIContent("Name Prefix", "The beginning of each terrain's name. Useful for some level streaming system.");
-            public static readonly GUIContent GROUP_ID = new GUIContent("Group Id", "An integer for grouping and connecting adjacent terrain tiles.");
+            public static readonly GUIContent NAME_PREFIX = new("Name Prefix", "The beginning of each terrain's name. Useful for some level streaming system.");
+            public static readonly GUIContent GROUP_ID = new("Group Id", "An integer for grouping and connecting adjacent terrain tiles.");
 
             public static readonly string DATA_HEADER = "Data";
-            public static readonly GUIContent DIRECTORY = new GUIContent("Directory", "Where to store created terrain data. A sub-folder of Assets/ is recommended.");
-            public static readonly GUIContent CREATE_BTN = new GUIContent("Create");
+            public static readonly GUIContent DIRECTORY = new("Directory", "Where to store created terrain data. A sub-folder of Assets/ is recommended.");
+            public static readonly GUIContent CREATE_BTN = new("Create");
         }
 
         private static void DrawCreateTerrainsGUI()
@@ -145,7 +142,7 @@ namespace Pinwheel.Griffin.Wizard
                 float worldSizeX = settings.tileCountX * settings.tileSize.x;
                 float worldSizeY = settings.tileSize.y;
                 float worldSizeZ = settings.tileCountZ * settings.tileSize.z;
-                GUIContent worldSizeContent = new GUIContent($"{worldSizeX}m x {worldSizeY}m x {worldSizeZ}m");
+                GUIContent worldSizeContent = new($"{worldSizeX}m x {worldSizeY}m x {worldSizeZ}m");
                 EditorGUILayout.LabelField(GCreateTerrainGUI.WORLD_SIZE, worldSizeContent);
 
                 GEditorCommon.Header(GCreateTerrainGUI.MATERIAL_HEADER);
@@ -190,7 +187,7 @@ namespace Pinwheel.Griffin.Wizard
             public static readonly string INSTRUCTION_1 = "Edit properties of an individual terrain by selecting it and use the Inspector.";
             public static readonly string INSTRUCTION_2 = string.Format("Use context menus ({0}) in the terrain Inspector to perform additional tasks.", GEditorCommon.contextIconText);
             public static readonly string INSTRUCTION_3 = "Use the Group Tool to edit properties of multiple terrains at once.";
-            public static readonly GUIContent CREATE_BTN = new GUIContent("Create Group Tool");
+            public static readonly GUIContent CREATE_BTN = new("Create Group Tool");
         }
 
         private static void DrawTerrainsManagementGUI()
@@ -219,15 +216,15 @@ namespace Pinwheel.Griffin.Wizard
         {
             public static readonly string LABEL = "3. Sculpting";
             public static readonly string ID = "wizard-sculpting";
-            public static readonly GUIContent SELECT_WORKFLOW = new GUIContent("Select the workflow you prefer.");
+            public static readonly GUIContent SELECT_WORKFLOW = new("Select the workflow you prefer.");
 
             public static readonly string PAINTING_HEADER = "Painting";
-            public static readonly GUIContent PAINTING_INSTRUCTION = new GUIContent("Use a set of painters for hand sculpting terrain shape.");
-            public static readonly GUIContent CREATE_PAINTER_BTN = new GUIContent("Create Geometry - Texture Painter");
+            public static readonly GUIContent PAINTING_INSTRUCTION = new("Use a set of painters for hand sculpting terrain shape.");
+            public static readonly GUIContent CREATE_PAINTER_BTN = new("Create Geometry - Texture Painter");
 
             public static readonly string STAMPING_HEADER = "Stamping";
-            public static readonly GUIContent STAMPING_INSTRUCTION = new GUIContent("Use grayscale textures to stamp mountains, plateaus, rivers, etc. and blend using some math operations.");
-            public static readonly GUIContent CREATE_STAMPER_BTN = new GUIContent("Create Geometry Stamper");
+            public static readonly GUIContent STAMPING_INSTRUCTION = new("Use grayscale textures to stamp mountains, plateaus, rivers, etc. and blend using some math operations.");
+            public static readonly GUIContent CREATE_STAMPER_BTN = new("Create Geometry Stamper");
         }
 
         private static void DrawSculptingGUI()
@@ -260,15 +257,15 @@ namespace Pinwheel.Griffin.Wizard
         {
             public static readonly string LABEL = "4. Texturing";
             public static readonly string ID = "wizard-texturing";
-            public static readonly GUIContent SELECT_WORKFLOW = new GUIContent("Select the workflow you prefer.");
+            public static readonly GUIContent SELECT_WORKFLOW = new("Select the workflow you prefer.");
 
             public static readonly string PAINTING_HEADER = "Painting";
-            public static readonly GUIContent PAINTING_INSTRUCTION = new GUIContent("Use a set of painters for hand painting terrain color.");
-            public static readonly GUIContent CREATE_PAINTER_BTN = new GUIContent("Create Geometry - Texture Painter");
+            public static readonly GUIContent PAINTING_INSTRUCTION = new("Use a set of painters for hand painting terrain color.");
+            public static readonly GUIContent CREATE_PAINTER_BTN = new("Create Geometry - Texture Painter");
 
             public static readonly string STAMPING_HEADER = "Stamping";
-            public static readonly GUIContent STAMPING_INSTRUCTION = new GUIContent("Use stamper to color the terrain procedurally with some rules such as height, normal vector and noise.");
-            public static readonly GUIContent CREATE_STAMPER_BTN = new GUIContent("Create Texture Stamper");
+            public static readonly GUIContent STAMPING_INSTRUCTION = new("Use stamper to color the terrain procedurally with some rules such as height, normal vector and noise.");
+            public static readonly GUIContent CREATE_STAMPER_BTN = new("Create Texture Stamper");
         }
 
         private static void DrawTexturingGUI()
@@ -302,10 +299,10 @@ namespace Pinwheel.Griffin.Wizard
             public static readonly string LABEL = "4.1. Vertex Color Texturing";
             public static readonly string ID = "wizard-vertex-color-texturing";
 
-            public static readonly GUIContent INSTRUCTION_1 = new GUIContent("To enable vertex coloring, do the following steps.");
-            public static readonly GUIContent INSTRUCTION_2 = new GUIContent("Set <i>terrain> Geometry> Albedo To Vertex Color</i> to Sharp or Smooth");
-            public static readonly GUIContent INSTRUCTION_3 = new GUIContent("For Painting workflow: Select the Geometry - Texture Painter and enable <i>Force Update Geometry</i>, then use Albedo mode to paint.");
-            public static readonly GUIContent INSTRUCTION_4 = new GUIContent("For Stamping workflow: Stamp to Albedo map and regenerate terrain meshes by select <i>terrain> Geometry> CONTEXT (≡)> Update</i>");
+            public static readonly GUIContent INSTRUCTION_1 = new("To enable vertex coloring, do the following steps.");
+            public static readonly GUIContent INSTRUCTION_2 = new("Set <i>terrain> Geometry> Albedo To Vertex Color</i> to Sharp or Smooth");
+            public static readonly GUIContent INSTRUCTION_3 = new("For Painting workflow: Select the Geometry - Texture Painter and enable <i>Force Update Geometry</i>, then use Albedo mode to paint.");
+            public static readonly GUIContent INSTRUCTION_4 = new("For Stamping workflow: Stamp to Albedo map and regenerate terrain meshes by select <i>terrain> Geometry> CONTEXT (≡)> Update</i>");
         }
 
         private static void DrawVertexColorTexturingGUI()
@@ -349,15 +346,15 @@ namespace Pinwheel.Griffin.Wizard
         {
             public static readonly string LABEL = "6. Foliage & Object Spawning";
             public static readonly string ID = "wizard-foliage-object-spawning";
-            public static readonly GUIContent SELECT_WORKFLOW = new GUIContent("Select the workflow you prefer.");
+            public static readonly GUIContent SELECT_WORKFLOW = new("Select the workflow you prefer.");
 
             public static readonly string PAINTING_HEADER = "Painting";
-            public static readonly GUIContent PAINTING_INSTRUCTION = new GUIContent("Place trees, grasses and game objects by painting.");
-            public static readonly GUIContent CREATE_PAINTER_BTN = new GUIContent("Create Foliage Painter & Object Painter");
+            public static readonly GUIContent PAINTING_INSTRUCTION = new("Place trees, grasses and game objects by painting.");
+            public static readonly GUIContent CREATE_PAINTER_BTN = new("Create Foliage Painter & Object Painter");
 
             public static readonly string STAMPING_HEADER = "Stamping";
-            public static readonly GUIContent STAMPING_INSTRUCTION = new GUIContent("Procedurally spawn trees, grasses and game objects using some rules such as height, normal vector and noise.");
-            public static readonly GUIContent CREATE_STAMPER_BTN = new GUIContent("Create Foliage Stamper & Object Stamper");
+            public static readonly GUIContent STAMPING_INSTRUCTION = new("Procedurally spawn trees, grasses and game objects using some rules such as height, normal vector and noise.");
+            public static readonly GUIContent CREATE_STAMPER_BTN = new("Create Foliage Stamper & Object Stamper");
         }
 
         private static void DrawFoliageAndObjectSpawningGUI()
@@ -395,8 +392,8 @@ namespace Pinwheel.Griffin.Wizard
             public static readonly string LABEL = "7. Create Roads, Ramps, Rivers, etc.";
             public static readonly string ID = "wizard-spline";
 
-            public static readonly GUIContent INSTRUCTION = new GUIContent("Use Spline Tool to paint roads, make ramps and riverbeds, etc.");
-            public static readonly GUIContent CREATE_BTN = new GUIContent("Create Spline Tool");
+            public static readonly GUIContent INSTRUCTION = new("Use Spline Tool to paint roads, make ramps and riverbeds, etc.");
+            public static readonly GUIContent CREATE_BTN = new("Create Spline Tool");
         }
 
         private static void DrawCreateSplineGUI()
@@ -419,12 +416,12 @@ namespace Pinwheel.Griffin.Wizard
             public static readonly string ID = "wizard-id";
 
             public static readonly string WATER_HEADER = "Water";
-            public static readonly GUIContent WATER_INSTRUCTION = new GUIContent("Poseidon is a low poly water system with high visual quality and performance.");
-            public static readonly GUIContent GET_POSEIDON_BTN = new GUIContent("Get Poseidon");
+            public static readonly GUIContent WATER_INSTRUCTION = new("Poseidon is a low poly water system with high visual quality and performance.");
+            public static readonly GUIContent GET_POSEIDON_BTN = new("Get Poseidon");
 
             public static readonly string SKY_HEADER = "Sky";
-            public static readonly GUIContent SKY_INSTRUCTION = new GUIContent("Jupiter is a single pass sky shader with day night cycle support.");
-            public static readonly GUIContent GET_JUPITER_BTN = new GUIContent("Get Jupiter");
+            public static readonly GUIContent SKY_INSTRUCTION = new("Jupiter is a single pass sky shader with day night cycle support.");
+            public static readonly GUIContent GET_JUPITER_BTN = new("Get Jupiter");
         }
 
         private static void DrawWaterSkyGUI()
@@ -454,8 +451,8 @@ namespace Pinwheel.Griffin.Wizard
             public static readonly string ID = "wizard-utilities";
 
             public static readonly string WIND_ZONE_HEADER = "Wind Zone";
-            public static readonly GUIContent WIND_ZONE_INSTRUCTION = new GUIContent("Adding Wind Zone to customize how grass react to wind in this level.");
-            public static readonly GUIContent CREATE_WIND_ZONE_BTN = new GUIContent("Create Wind Zone");
+            public static readonly GUIContent WIND_ZONE_INSTRUCTION = new("Adding Wind Zone to customize how grass react to wind in this level.");
+            public static readonly GUIContent CREATE_WIND_ZONE_BTN = new("Create Wind Zone");
         }
 
         private static void DrawUtilitiesGUI()

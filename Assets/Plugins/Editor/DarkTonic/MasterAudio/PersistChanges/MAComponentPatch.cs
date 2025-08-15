@@ -22,18 +22,23 @@ namespace DarkTonic.MasterAudio.EditorScripts
         }
         private bool _isComponentObjectNull = true;
         private Component _componentObject;
-        private Component ComponentObject {
-            get {
+        private Component ComponentObject
+        {
+            get
+            {
                 return _componentObject;
             }
-            set {
+            set
+            {
                 _componentObject = value;
                 _isComponentObjectNull = _componentObject == null;
             }
         }
 
-        public string ComponentName {
-            get {
+        public string ComponentName
+        {
+            get
+            {
                 var parts = ComponentObject.GetType().ToString().Split(new[] { "." }, StringSplitOptions.RemoveEmptyEntries);
                 return parts[parts.Length - 1];
             }

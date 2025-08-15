@@ -26,8 +26,8 @@ SOFTWARE.
 
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 namespace BrainFailProductions.PolyFew.UnityMeshSimplifier.Editor
 {
@@ -65,16 +65,16 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier.Editor
         private bool[] settingsExpanded = null;
         private LODGeneratorHelper lodGeneratorHelper = null;
 
-        private static readonly GUIContent createLevelButtonContent = new GUIContent("Create Level", "Creates a new LOD level.");
-        private static readonly GUIContent deleteLevelButtonContent = new GUIContent("X", "Deletes this LOD level.");
-        private static readonly GUIContent generateLODButtonContent = new GUIContent("Generate LODs", "Generates the LOD levels.");
-        private static readonly GUIContent destroyLODButtonContent = new GUIContent("Destroy LODs", "Destroys the LOD levels.");
-        private static readonly GUIContent settingsContent = new GUIContent("Settings", "The settings for the LOD level.");
-        private static readonly GUIContent renderersHeaderContent = new GUIContent("Renderers:", "The renderers used for this LOD level.");
-        private static readonly GUIContent removeRendererButtonContent = new GUIContent("X", "Removes this renderer.");
-        private static readonly GUIContent addRendererButtonContent = new GUIContent("Add", "Adds a renderer to this LOD level.");
-        private static readonly GUIContent overrideSaveAssetsPathContent = new GUIContent("Override Save Assets Path", "If you want to override the path where the generated assets are saved.");
-        private static readonly Color removeColor = new Color(1f, 0.6f, 0.6f, 1f);
+        private static readonly GUIContent createLevelButtonContent = new("Create Level", "Creates a new LOD level.");
+        private static readonly GUIContent deleteLevelButtonContent = new("X", "Deletes this LOD level.");
+        private static readonly GUIContent generateLODButtonContent = new("Generate LODs", "Generates the LOD levels.");
+        private static readonly GUIContent destroyLODButtonContent = new("Destroy LODs", "Destroys the LOD levels.");
+        private static readonly GUIContent settingsContent = new("Settings", "The settings for the LOD level.");
+        private static readonly GUIContent renderersHeaderContent = new("Renderers:", "The renderers used for this LOD level.");
+        private static readonly GUIContent removeRendererButtonContent = new("X", "Removes this renderer.");
+        private static readonly GUIContent addRendererButtonContent = new("Add", "Adds a renderer to this LOD level.");
+        private static readonly GUIContent overrideSaveAssetsPathContent = new("Override Save Assets Path", "If you want to override the path where the generated assets are saved.");
+        private static readonly Color removeColor = new(1f, 0.6f, 0.6f, 1f);
 
         private static readonly int ObjectPickerControlID = "LODGeneratorSelector".GetHashCode();
 
@@ -119,7 +119,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier.Editor
 
         private void DrawNotGeneratedView()
         {
-           
+
             EditorGUILayout.PropertyField(fadeModeProperty);
             var fadeMode = (LODFadeMode)fadeModeProperty.intValue;
 
@@ -281,13 +281,13 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier.Editor
 
             int rendererCount = renderersProperty.arraySize;
             int renderersPerRow = Mathf.Max(1, Mathf.FloorToInt(availableWidth / RendererButtonWidth));
-            int rendererRowCount = Mathf.CeilToInt((float)(rendererCount + 1) / (float)renderersPerRow);
+            int rendererRowCount = Mathf.CeilToInt((rendererCount + 1) / (float)renderersPerRow);
 
             var listPosition = GUILayoutUtility.GetRect(0f, rendererRowCount * RendererButtonWidth, GUILayout.ExpandWidth(true));
             GUI.Box(listPosition, GUIContent.none, EditorStyles.helpBox);
 
             var listInnerPosition = new Rect(listPosition.x + 3f, listPosition.y, listPosition.width - 6f, listPosition.height);
-            float buttonWidth = listInnerPosition.width / (float)renderersPerRow;
+            float buttonWidth = listInnerPosition.width / renderersPerRow;
             for (int rendererIndex = 0; rendererIndex < renderersProperty.arraySize; rendererIndex++)
             {
                 int rowIndex = rendererIndex / renderersPerRow;
@@ -551,8 +551,8 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier.Editor
             // Filter out game objects that aren't children of the generator
             var ourTransform = lodGeneratorHelper.transform;
             var childGameObjects = from go in gameObjects
-                          where go.transform.IsChildOf(ourTransform)
-                          select go;
+                                   where go.transform.IsChildOf(ourTransform)
+                                   select go;
 
             var notChildGameObjects = from go in gameObjects
                                       where !go.transform.IsChildOf(ourTransform)

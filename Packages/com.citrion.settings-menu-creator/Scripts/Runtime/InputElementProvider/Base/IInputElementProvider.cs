@@ -2,12 +2,12 @@ using System;
 
 namespace CitrioN.SettingsMenuCreator
 {
-  public interface IInputElementProvider
-  {
-    public string Name { get; }
+    public interface IInputElementProvider
+    {
+        string Name { get; }
 
-    public Type GetInputFieldParameterType(SettingsCollection settings);
+        Type GetInputFieldParameterType(SettingsCollection settings);
 
-    public Type GetInputFieldType(SettingsCollection settings);
-  }
+        Type GetInputFieldType(SettingsCollection settings);
+    }
 }

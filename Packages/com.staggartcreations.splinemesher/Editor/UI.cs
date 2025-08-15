@@ -7,20 +7,20 @@ namespace sc.modeling.splines.editor
 {
     public class UI
     {
-        public static readonly Color RedColor = new Color(1f, 0.31f, 0.34f);
-        public static readonly Color OrangeColor= new Color(1f, 0.68f, 0f);
-        public static readonly Color GreenColor = new Color(0.33f, 1f, 0f);
-        
+        public static readonly Color RedColor = new(1f, 0.31f, 0.34f);
+        public static readonly Color OrangeColor = new(1f, 0.68f, 0f);
+        public static readonly Color GreenColor = new(0.33f, 1f, 0f);
+
         public static Texture CreateIcon(string data)
         {
             byte[] bytes = System.Convert.FromBase64String(data);
 
-            Texture2D icon = new Texture2D(32, 32, TextureFormat.RGBA32, false, false);
+            Texture2D icon = new(32, 32, TextureFormat.RGBA32, false, false);
             icon.LoadImage(bytes, true);
-            
+
             return icon;
         }
-        
+
         public class Section
         {
             public bool Expanded
@@ -43,19 +43,19 @@ namespace sc.modeling.splines.editor
                 anim.speed = 12f;
                 anim.target = Expanded;
             }
-                
+
             public void DrawHeader(Action clickAction)
             {
                 UI.DrawHeader(title, Expanded, clickAction);
                 anim.target = Expanded;
             }
         }
-        
+
         public static void DrawH2(string text)
         {
             Rect backgroundRect = EditorGUILayout.GetControlRect();
             backgroundRect.height = 25f;
-            
+
             var labelRect = backgroundRect;
 
             // Background rect should be full-width
@@ -67,7 +67,7 @@ namespace sc.modeling.splines.editor
 
             // Title
             EditorGUI.LabelField(labelRect, new GUIContent(text), Styles.H2);
-            
+
             EditorGUILayout.Space(backgroundRect.height * 0.5f);
         }
 
@@ -79,7 +79,7 @@ namespace sc.modeling.splines.editor
             // Splitter rect should be full-width
             rect.xMin = 0f;
             rect.width += 4f;
-            
+
             if (isBoxed)
             {
                 rect.xMin = xMin == 7.0f ? 4.0f : EditorGUIUtility.singleLineHeight;
@@ -100,7 +100,7 @@ namespace sc.modeling.splines.editor
             DrawSplitter();
 
             Rect backgroundRect = GUILayoutUtility.GetRect(1f, HeaderHeight);
-            
+
             var labelRect = backgroundRect;
             labelRect.xMin += 8f;
             labelRect.xMax -= 20f + 16 + 5;
@@ -118,7 +118,7 @@ namespace sc.modeling.splines.editor
             // Background
             float backgroundTint = (EditorGUIUtility.isProSkin ? 0.1f : 1f);
             if (backgroundRect.Contains(Event.current.mousePosition)) backgroundTint *= EditorGUIUtility.isProSkin ? 1.5f : 0.9f;
-            
+
             EditorGUI.DrawRect(backgroundRect, new Color(backgroundTint, backgroundTint, backgroundTint, 0.2f));
 
             // Title
@@ -126,7 +126,7 @@ namespace sc.modeling.splines.editor
 
             // Foldout
             GUI.Label(foldoutRect, new GUIContent(isExpanded ? "−" : "≡"), EditorStyles.boldLabel);
-            
+
             // Handle events
             var e = Event.current;
 
@@ -137,13 +137,13 @@ namespace sc.modeling.splines.editor
                     if (e.button == 0)
                     {
                         isExpanded = !isExpanded;
-                        if(clickAction != null) clickAction.Invoke();
+                        if (clickAction != null) clickAction.Invoke();
                     }
 
                     e.Use();
                 }
             }
-            
+
             return isExpanded;
         }
 
@@ -167,7 +167,7 @@ namespace sc.modeling.splines.editor
                     return _Section;
                 }
             }
-            
+
             private static GUIStyle _H2;
             public static GUIStyle H2
             {
@@ -189,7 +189,7 @@ namespace sc.modeling.splines.editor
                     return _H2;
                 }
             }
-            
+
             private static GUIStyle _Button;
             public static GUIStyle Button
             {
@@ -216,7 +216,7 @@ namespace sc.modeling.splines.editor
                     return _Button;
                 }
             }
-            
+
             private static GUIStyle _UpdateText;
             public static GUIStyle UpdateText
             {
@@ -256,7 +256,7 @@ namespace sc.modeling.splines.editor
                     return _Header;
                 }
             }
-            
+
             private static GUIStyle _Footer;
             public static GUIStyle Footer
             {

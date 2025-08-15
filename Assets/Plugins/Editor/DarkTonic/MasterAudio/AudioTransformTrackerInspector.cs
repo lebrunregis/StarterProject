@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEditor;
+﻿using UnityEditor;
+using UnityEngine;
 
 namespace DarkTonic.MasterAudio.EditorScripts
 {
@@ -138,7 +138,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
                     case DTGUIHelper.DTFunctionButtons.Stop:
                         variation.Stop();
                         break;
-                    case DTGUIHelper.DTFunctionButtons.Pause: 
+                    case DTGUIHelper.DTFunctionButtons.Pause:
                         variation.Pause();
                         break;
                     case DTGUIHelper.DTFunctionButtons.Play:

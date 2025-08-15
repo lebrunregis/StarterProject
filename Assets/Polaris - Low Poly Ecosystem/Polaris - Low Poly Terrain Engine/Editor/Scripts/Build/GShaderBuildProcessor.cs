@@ -1,13 +1,8 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Build;
-using UnityEditor.Build.Reporting;
-using TerrainRenderingSettings = Pinwheel.Griffin.GRuntimeSettings.TerrainRenderingSettings;
-using TerrainMaterialTemplate = Pinwheel.Griffin.GRuntimeSettings.TerrainRenderingSettings.TerrainMaterialTemplate;
-using FoliageRenderingSettings = Pinwheel.Griffin.GRuntimeSettings.FoliageRenderingSettings;
 using UnityEditor.Rendering;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.Build
 {

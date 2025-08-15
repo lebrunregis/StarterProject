@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     [Serializable]
     // ReSharper disable once CheckNamespace
-    public class CustomEvent {
+    public class CustomEvent
+    {
         public string EventName;
         public string ProspectiveName;
         public bool IsEditing;
@@ -16,14 +18,15 @@ namespace DarkTonic.MasterAudio {
         public float distanceThreshold = 1f;
         public MasterAudio.EventReceiveFilter eventRcvFilterMode = MasterAudio.EventReceiveFilter.All;
         public int filterModeQty = 1;
-		public bool isTemporary = false;
-		public int frameLastFired = -1;
+        public bool isTemporary = false;
+        public int frameLastFired = -1;
         public string categoryName = MasterAudio.NoCategory;
         // ReSharper restore InconsistentNaming
 
-        private readonly List<int> _actorInstanceIds = new List<int>();
+        private readonly List<int> _actorInstanceIds = new();
 
-        public CustomEvent(string eventName) {
+        public CustomEvent(string eventName)
+        {
             EventName = eventName;
             ProspectiveName = eventName;
         }
@@ -43,8 +46,10 @@ namespace DarkTonic.MasterAudio {
             _actorInstanceIds.Remove(instanceId);
         }
 
-        public bool HasLiveActors {
-            get {
+        public bool HasLiveActors
+        {
+            get
+            {
                 return _actorInstanceIds.Count > 0;
             }
         }

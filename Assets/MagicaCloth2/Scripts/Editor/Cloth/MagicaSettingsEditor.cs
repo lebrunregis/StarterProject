@@ -23,7 +23,7 @@ namespace MagicaCloth2
             serializedObject.ApplyModifiedProperties();
         }
 
-        void SettingsInspector()
+        private void SettingsInspector()
         {
             EditorGUILayout.PropertyField(serializedObject.FindProperty("refreshMode"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("simulationFrequency"));

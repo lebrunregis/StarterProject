@@ -1,8 +1,8 @@
 #if GRIFFIN
 using System.Collections.Generic;
-using UnityEngine;
 using Unity.Collections;
 using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.StampTool
 {
@@ -156,8 +156,8 @@ namespace Pinwheel.Griffin.StampTool
 
         private Texture2D falloffTexture;
 
-        private Vector3[] worldPoints = new Vector3[4];
-        private Vector2[] uvPoints = new Vector2[4];
+        private readonly Vector3[] worldPoints = new Vector3[4];
+        private readonly Vector2[] uvPoints = new Vector2[4];
 
         private Dictionary<string, RenderTexture> tempRt;
         private Dictionary<string, RenderTexture> TempRt
@@ -325,12 +325,12 @@ namespace Pinwheel.Griffin.StampTool
 #endif
 
             int sampleCount = layer.TreeInstanceCount;
-            NativeArray<bool> cullResult = new NativeArray<bool>(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<GPrototypeInstanceInfo> foliageInfo = new NativeArray<GPrototypeInstanceInfo>(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<int> selectedPrototypeIndices = new NativeArray<int>(layer.TreeIndices.ToArray(), Allocator.TempJob);
-            GTextureNativeDataDescriptor<Color32> maskHandle = new GTextureNativeDataDescriptor<Color32>(layerMask);
+            NativeArray<bool> cullResult = new(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<GPrototypeInstanceInfo> foliageInfo = new(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<int> selectedPrototypeIndices = new(layer.TreeIndices.ToArray(), Allocator.TempJob);
+            GTextureNativeDataDescriptor<Color32> maskHandle = new(layerMask);
 
-            GSampleInstanceJob job = new GSampleInstanceJob()
+            GSampleInstanceJob job = new()
             {
                 cullResult = cullResult,
                 instanceInfo = foliageInfo,
@@ -349,7 +349,7 @@ namespace Pinwheel.Griffin.StampTool
             JobHandle jHandle = job.Schedule(sampleCount, 100);
             jHandle.Complete();
 
-            List<GTreeInstance> instances = new List<GTreeInstance>();
+            List<GTreeInstance> instances = new();
             for (int i = 0; i < sampleCount; ++i)
             {
 #if UNITY_EDITOR
@@ -386,12 +386,12 @@ namespace Pinwheel.Griffin.StampTool
 #endif
 
             int sampleCount = layer.GrassInstanceCount;
-            NativeArray<bool> cullResultNA = new NativeArray<bool>(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<GPrototypeInstanceInfo> foliageInfoNA = new NativeArray<GPrototypeInstanceInfo>(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<int> selectedPrototypeIndicesNA = new NativeArray<int>(layer.GrassIndices.ToArray(), Allocator.TempJob);
-            GTextureNativeDataDescriptor<Color32> maskHandleNA = new GTextureNativeDataDescriptor<Color32>(layerMask);
+            NativeArray<bool> cullResultNA = new(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<GPrototypeInstanceInfo> foliageInfoNA = new(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<int> selectedPrototypeIndicesNA = new(layer.GrassIndices.ToArray(), Allocator.TempJob);
+            GTextureNativeDataDescriptor<Color32> maskHandleNA = new(layerMask);
 
-            GSampleInstanceJob job = new GSampleInstanceJob()
+            GSampleInstanceJob job = new()
             {
                 cullResult = cullResultNA,
                 instanceInfo = foliageInfoNA,
@@ -501,7 +501,7 @@ namespace Pinwheel.Griffin.StampTool
             if (!TempRt.ContainsKey(key) ||
                 TempRt[key] == null)
             {
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 rt.wrapMode = TextureWrapMode.Clamp;
                 TempRt[key] = rt;
             }
@@ -509,7 +509,7 @@ namespace Pinwheel.Griffin.StampTool
             {
                 TempRt[key].Release();
                 Object.DestroyImmediate(TempRt[key]);
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 rt.wrapMode = TextureWrapMode.Clamp;
                 TempRt[key] = rt;
             }
@@ -532,11 +532,11 @@ namespace Pinwheel.Griffin.StampTool
                 return;
             if (t.TerrainData.Foliage.Trees == null)
                 return;
-            Vector3 terrainSize = new Vector3(
+            Vector3 terrainSize = new(
                 t.TerrainData.Geometry.Width,
                 t.TerrainData.Geometry.Height,
                 t.TerrainData.Geometry.Length);
-            Vector3 scale = new Vector3(
+            Vector3 scale = new(
                 GUtilities.InverseLerpUnclamped(0, terrainSize.x, Scale.x),
                 GUtilities.InverseLerpUnclamped(0, terrainSize.y, Scale.y),
                 GUtilities.InverseLerpUnclamped(0, terrainSize.z, Scale.z));
@@ -573,11 +573,11 @@ namespace Pinwheel.Griffin.StampTool
                 return;
             if (t.TerrainData.Foliage.Grasses == null)
                 return;
-            Vector3 terrainSize = new Vector3(
+            Vector3 terrainSize = new(
                 t.TerrainData.Geometry.Width,
                 t.TerrainData.Geometry.Height,
                 t.TerrainData.Geometry.Length);
-            Vector3 scale = new Vector3(
+            Vector3 scale = new(
                 GUtilities.InverseLerpUnclamped(0, terrainSize.x, Scale.x),
                 GUtilities.InverseLerpUnclamped(0, terrainSize.y, Scale.y),
                 GUtilities.InverseLerpUnclamped(0, terrainSize.z, Scale.z));

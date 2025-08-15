@@ -1,8 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using System;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.ErosionTool
 {
@@ -23,7 +21,7 @@ namespace Pinwheel.Griffin.ErosionTool
         private RenderTexture velocityData;
 
         private static readonly int EROSION_MAP = Shader.PropertyToID("_ErosionMap");
-        private static readonly int MASK_MAP =  Shader.PropertyToID("_MaskMap");
+        private static readonly int MASK_MAP = Shader.PropertyToID("_MaskMap");
         private static readonly int MASK_MAP_RESOLUTION = Shader.PropertyToID("_MaskMapResolution");
         private static readonly int WATER_SOURCE_AMOUNT = Shader.PropertyToID("_WaterSourceAmount");
         private static readonly int RAIN_RATE = Shader.PropertyToID("_RainRate");
@@ -32,7 +30,7 @@ namespace Pinwheel.Griffin.ErosionTool
         private static readonly int DEPOSITION_RATE = Shader.PropertyToID("_DepositionRate");
         private static readonly int EVAPORATION_RATE = Shader.PropertyToID("_EvaporationRate");
         private static readonly int BOUNDS = Shader.PropertyToID("_Bounds");
-        
+
         private static readonly int SIMULATION_DATA = Shader.PropertyToID("_SimulationData");
         private static readonly int OUTFLOW_VH_DATA = Shader.PropertyToID("_OutflowVHData");
         private static readonly int OUTFLOW_DIAG_DATA = Shader.PropertyToID("_OutflowDiagData");

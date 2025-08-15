@@ -10,7 +10,7 @@ namespace Pinwheel.Griffin
         private Mesh targetMesh;
         private int resolution;
 
-        static Material lineMaterial;
+        private static Material lineMaterial;
 
         //[MenuItem("Window/Griffin/Internal/UV Layout Exporter")]
         public static void ShowWindow()
@@ -40,7 +40,7 @@ namespace Pinwheel.Griffin
 
         private void Export()
         {
-            RenderTexture rt = new RenderTexture(resolution, resolution, 24, RenderTextureFormat.ARGB32);
+            RenderTexture rt = new(resolution, resolution, 24, RenderTextureFormat.ARGB32);
             GCommon.FillTexture(rt, Color.clear);
 
             Vector2[] uv = targetMesh.uv;
@@ -75,7 +75,7 @@ namespace Pinwheel.Griffin
             GL.End();
             GL.PopMatrix();
 
-            Texture2D tex = new Texture2D(resolution, resolution, TextureFormat.ARGB32, false);
+            Texture2D tex = new(resolution, resolution, TextureFormat.ARGB32, false);
             tex.ReadPixels(new Rect(0, 0, resolution, resolution), 0, 0);
             tex.Apply();
 
@@ -88,7 +88,7 @@ namespace Pinwheel.Griffin
             GUtilities.DestroyObject(rt);
         }
 
-        static void CreateLineMaterial()
+        private static void CreateLineMaterial()
         {
             if (!lineMaterial)
             {

@@ -1,5 +1,4 @@
 #if GRIFFIN
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Pinwheel.Griffin.TextureTool

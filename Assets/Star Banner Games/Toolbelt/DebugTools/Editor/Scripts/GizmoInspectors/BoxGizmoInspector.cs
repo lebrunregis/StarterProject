@@ -1,13 +1,12 @@
-using UnityEngine;
-using UnityEditor;
-using System;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace SBG.Toolbelt.DebugTools.Editor
 {
-	[CustomEditor(typeof(BoxGizmo))]
-	public class BoxGizmoInspector : GizmoDisplayInspector
-	{
+    [CustomEditor(typeof(BoxGizmo))]
+    public class BoxGizmoInspector : GizmoDisplayInspector
+    {
         private SerializedProperty _applyRot;
         private SerializedProperty _rotOffset;
         private SerializedProperty _size;

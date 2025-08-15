@@ -1,10 +1,4 @@
-﻿using System;
-using MoreMountains.Feedbacks;
-using System.Collections;
-using System.Collections.Generic;
-using MoreMountains.Tools;
-using UnityEngine;
-#if MM_UI
+﻿#if MM_UI
 using UnityEngine.UI;
 
 namespace MoreMountains.Feel

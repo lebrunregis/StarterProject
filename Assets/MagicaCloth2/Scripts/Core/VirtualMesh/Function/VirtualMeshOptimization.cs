@@ -32,7 +32,7 @@ namespace MagicaCloth2
         /// <summary>
         /// 重複するトライアングルを除去する
         /// </summary>
-        void RemoveDuplicateTriangles()
+        private void RemoveDuplicateTriangles()
         {
             if (TriangleCount < 2)
                 return;
@@ -66,7 +66,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Optimize_EdgeToTrianlgeJob : IJob
+        private struct Optimize_EdgeToTrianlgeJob : IJob
         {
             public int tcnt;
             [Unity.Collections.ReadOnly]
@@ -87,7 +87,7 @@ namespace MagicaCloth2
                 for (int i = 0; i < tcnt; i++)
                 {
                     int3 tri = triangles[i];
-                    int2x3 edges = new int2x3(tri.xy, tri.yz, tri.zx);
+                    int2x3 edges = new(tri.xy, tri.yz, tri.zx);
                     for (int j = 0; j < 3; j++)
                     {
                         int2 edge = DataUtility.PackInt2(edges[j]);
@@ -201,7 +201,7 @@ namespace MagicaCloth2
         /// <param name="tri2"></param>
         /// <param name="edge"></param>
         /// <returns></returns>
-        bool CheckTwoTriangleOpen(in int3 tri1, in int3 tri2, in int2 edge, in float3 tri1n)
+        private bool CheckTwoTriangleOpen(in int3 tri1, in int3 tri2, in int2 edge, in float3 tri1n)
         {
             var sv0 = DataUtility.RemainingData(tri2, edge);
             var v = math.normalize(localPositions[sv0] - localPositions[edge.x]);
@@ -215,7 +215,7 @@ namespace MagicaCloth2
         /// <param name="tri2"></param>
         /// <param name="edge"></param>
         /// <returns></returns>
-        float CalcTwoTriangleAngle(in int3 tri1, in int3 tri2, in int2 edge)
+        private float CalcTwoTriangleAngle(in int3 tri1, in int3 tri2, in int2 edge)
         {
             var sv1 = DataUtility.RemainingData(tri1, edge);
             var sv2 = DataUtility.RemainingData(tri2, edge);

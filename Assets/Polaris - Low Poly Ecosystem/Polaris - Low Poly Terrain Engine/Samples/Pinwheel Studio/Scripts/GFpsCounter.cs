@@ -20,14 +20,14 @@ namespace Pinwheel.Griffin
         public static float minFps = Mathf.Infinity;
         public bool showFPS;
         public Text text;
-        float deltaTime = 0.0f;
+        private float deltaTime = 0.0f;
 
         public void Awake()
         {
             StartCoroutine(ResetCounter(3));
         }
 
-        void Update()
+        private void Update()
         {
             deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
             msec = deltaTime * 1000.0f;

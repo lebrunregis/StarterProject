@@ -1,8 +1,8 @@
 ﻿namespace CitrioN.Common
 {
-  public enum ObjectPlacementMethod
-  {
-    CenterOfBounds,
-    ObjectPivot,
-  }
+    public enum ObjectPlacementMethod
+    {
+        CenterOfBounds,
+        ObjectPivot,
+    }
 }

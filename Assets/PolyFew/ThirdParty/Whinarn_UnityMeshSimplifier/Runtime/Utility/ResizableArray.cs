@@ -35,7 +35,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
         private T[] items = null;
         private int length = 0;
 
-        private static T[] emptyArr = new T[0];
+        private static readonly T[] emptyArr = new T[0];
         #endregion
 
         #region Properties
@@ -112,7 +112,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
                 throw new ArgumentNullException(nameof(initialArray));
 
             if (initialArray.Length > 0)
-            {             
+            {
                 items = new T[initialArray.Length];
                 length = initialArray.Length;
                 Array.Copy(initialArray, 0, items, 0, initialArray.Length);

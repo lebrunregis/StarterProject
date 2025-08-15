@@ -13,8 +13,8 @@ namespace MagicaCloth2
     /// </summary>
     public static class ClothPresetUtility
     {
-        const string prefix = "MC2_Preset";
-        const string configName = "MC2 preset folder";
+        private const string prefix = "MC2_Preset";
+        private const string configName = "MC2 preset folder";
 
         public static void DrawPresetButton(MagicaCloth cloth, ClothSerializeData sdata)
         {
@@ -52,7 +52,7 @@ namespace MagicaCloth2
                 LoadPreset(cloth, sdata);
         }
 
-        static string GetComponentTypeName(ClothSerializeData sdata)
+        private static string GetComponentTypeName(ClothSerializeData sdata)
         {
             //if (sdata.clothType == ClothProcess.ClothType.BoneCloth)
             //    return prefix + "BoneCloth";
@@ -64,7 +64,7 @@ namespace MagicaCloth2
         }
 
 
-        class PresetInfo
+        private class PresetInfo
         {
             public string presetPath;
             public string presetName;
@@ -77,7 +77,7 @@ namespace MagicaCloth2
             if (guidArray == null)
                 return;
 
-            Dictionary<string, List<PresetInfo>> dict = new Dictionary<string, List<PresetInfo>>();
+            Dictionary<string, List<PresetInfo>> dict = new();
             foreach (var guid in guidArray)
             {
                 var filePath = AssetDatabase.GUIDToAssetPath(guid);

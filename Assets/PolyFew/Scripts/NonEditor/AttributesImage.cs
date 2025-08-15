@@ -30,7 +30,7 @@ namespace BrainFailProductions.PolyFew
         {
             Attributes attributes = JsonUtility.FromJson<Attributes>(File.ReadAllText(impContext.assetPath));
 
-            Texture2D texture = new Texture2D(attributes.width, attributes.height, attributes.tFormat, attributes.mips, true);
+            Texture2D texture = new(attributes.width, attributes.height, attributes.tFormat, attributes.mips, true);
             texture.SetPixels(attributes.colors);
             texture.Apply();
             texture.wrapMode = TextureWrapMode.Clamp;
@@ -47,7 +47,7 @@ namespace BrainFailProductions.PolyFew
 
         public static void BurnToAttributesImg(Texture2D texture, string path)
         {
-            Attributes data = new Attributes();
+            Attributes data = new();
             data.width = texture.width;
             data.height = texture.height;
             data.tFormat = texture.format;

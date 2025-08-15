@@ -1,8 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace Pinwheel.Griffin.Wizard
@@ -11,10 +9,10 @@ namespace Pinwheel.Griffin.Wizard
     {
         private class GSetShaderTabGUI
         {
-            public static readonly GUIContent GROUP_ID = new GUIContent("Group Id", "Id of the terrain group to change the material");
-            public static readonly GUIContent TERRAIN = new GUIContent("Terrain", "The terrain to change its material");
+            public static readonly GUIContent GROUP_ID = new("Group Id", "Id of the terrain group to change the material");
+            public static readonly GUIContent TERRAIN = new("Terrain", "The terrain to change its material");
 
-            public static readonly GUIContent SET_BTN = new GUIContent("Set");
+            public static readonly GUIContent SET_BTN = new("Set");
         }
 
         internal static bool bulkSetShader = true;

@@ -18,7 +18,7 @@ namespace AmazingAssets.WireframeShader
 
     public class WireframeShader
     {
-        Mesh mesh;
+        private readonly Mesh mesh;
 
 
         public WireframeShader(Mesh mesh)
@@ -128,7 +128,7 @@ namespace AmazingAssets.WireframeShader
             RenderTexture.active = renderTexture;
 
 
-            Material material = new Material(shader);
+            Material material = new(shader);
             if (solver == WireframeShaderEnum.Solver.Dynamic)
             {
                 material.EnableKeyword("WIREFRAME_CALCULATE_USING_GEOMETRY_SHADER");
@@ -152,7 +152,7 @@ namespace AmazingAssets.WireframeShader
 
 
             //Create texture
-            Texture2D texture = new Texture2D(textureResolution, textureResolution);
+            Texture2D texture = new(textureResolution, textureResolution);
             texture.wrapMode = TextureWrapMode.Clamp;
             texture.name = mesh.name;
 
@@ -177,7 +177,7 @@ namespace AmazingAssets.WireframeShader
             return texture;
         }
 
-        static Mesh ExplodeMesh(Mesh sourceMesh)
+        private static Mesh ExplodeMesh(Mesh sourceMesh)
         {
             Vector3[] mVertices = sourceMesh.vertices;
             List<Vector4> mUV0 = null;
@@ -194,8 +194,8 @@ namespace AmazingAssets.WireframeShader
             BoneWeight[] mBW = null;
 
 
-            List<Vector3> newVertices = new List<Vector3>();
-            List<List<int>> subMeshIndeces = new List<List<int>>();
+            List<Vector3> newVertices = new();
+            List<List<int>> subMeshIndeces = new();
             List<Vector4> newUV0 = null;
             List<Vector4> newUV1 = null;
             List<Vector4> newUV2 = null;
@@ -414,7 +414,7 @@ namespace AmazingAssets.WireframeShader
 
 
 
-            Mesh explodedMesh = new Mesh();
+            Mesh explodedMesh = new();
             explodedMesh.name = string.IsNullOrEmpty(sourceMesh.name) ? sourceMesh.GetInstanceID().ToString() : sourceMesh.name;
 
             //Set indexFormat before subMeshCount!
@@ -462,7 +462,7 @@ namespace AmazingAssets.WireframeShader
             #region BlendShape
             if (sourceMesh.blendShapeCount > 0)
             {
-                Dictionary<int, int> blensShapesIndexMap = new Dictionary<int, int>();
+                Dictionary<int, int> blensShapesIndexMap = new();
 
 
                 int dataIndex = -1;
@@ -517,7 +517,7 @@ namespace AmazingAssets.WireframeShader
 
             return explodedMesh;
         }
-        static void GenerateWireframeData(ref Mesh mesh, bool normalizeEdges, bool tryQuad, WireframeShaderEnum.VertexAttribute saveIn)
+        private static void GenerateWireframeData(ref Mesh mesh, bool normalizeEdges, bool tryQuad, WireframeShaderEnum.VertexAttribute saveIn)
         {
             Vector3[] vertices = mesh.vertices;
             Vector4[] wireframeData = new Vector4[mesh.vertexCount];
@@ -553,7 +553,7 @@ namespace AmazingAssets.WireframeShader
                     break;
             }
         }
-        static void GenerateWireframeData(Vector3 vertex1, Vector3 vertex2, Vector3 vertex3, bool normalizeEdges, bool tryQuad, out Vector4 uv1, out Vector4 uv2, out Vector4 uv3)
+        private static void GenerateWireframeData(Vector3 vertex1, Vector3 vertex2, Vector3 vertex3, bool normalizeEdges, bool tryQuad, out Vector4 uv1, out Vector4 uv2, out Vector4 uv3)
         {
             if (normalizeEdges)
             {
@@ -561,7 +561,7 @@ namespace AmazingAssets.WireframeShader
                 float d2 = Vector3.Distance(vertex2, vertex3);
                 float d3 = Vector3.Distance(vertex3, vertex1);
 
-                Vector4 b = new Vector4(0, DistanceToEdge(vertex3, vertex1, vertex2) / d1, DistanceToEdge(vertex1, vertex2, vertex3) / d2, DistanceToEdge(vertex2, vertex1, vertex3) / d3);
+                Vector4 b = new(0, DistanceToEdge(vertex3, vertex1, vertex2) / d1, DistanceToEdge(vertex1, vertex2, vertex3) / d2, DistanceToEdge(vertex2, vertex1, vertex3) / d3);
                 b /= Mathf.Min(b.y, b.z, b.w);
 
 
@@ -604,7 +604,7 @@ namespace AmazingAssets.WireframeShader
                 }
             }
         }
-        static float DistanceToEdge(Vector3 a, Vector3 b, Vector3 c)
+        private static float DistanceToEdge(Vector3 a, Vector3 b, Vector3 c)
         {
             return Vector3.Magnitude(Vector3.Cross(a - b, a - c));
         }

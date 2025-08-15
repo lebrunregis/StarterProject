@@ -169,14 +169,14 @@ namespace Pinwheel.Griffin
         {
             InitRtSize(heightMap, ref rt);
             CopyTo(heightMap, rt);
-            GTextureFilterParams param = new GTextureFilterParams();
+            GTextureFilterParams param = new();
             if (UseBlur)
             {
                 GBlurParams blurParam = GBlurParams.Create();
                 blurParam.Radius = BlurRadius;
                 param.Blur = blurParam;
 
-                GBlurFilter blurFilter = new GBlurFilter();
+                GBlurFilter blurFilter = new();
                 blurFilter.Apply(rt, param);
             }
             if (UseStep)
@@ -185,7 +185,7 @@ namespace Pinwheel.Griffin
                 stepParam.Count = StepCount;
                 param.Step = stepParam;
 
-                GStepFilter stepFilter = new GStepFilter();
+                GStepFilter stepFilter = new();
                 stepFilter.Apply(rt, param);
             }
             CopyTo(rt, heightMap);

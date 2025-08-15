@@ -55,7 +55,7 @@ namespace MagicaCloth2
             /// [OK] Runtime changes.
             /// [NG] Export/Import with Presets
             /// </summary>
-            public List<ColliderComponent> colliderList = new List<ColliderComponent>();
+            public List<ColliderComponent> colliderList = new();
 
             /// <summary>
             /// List of Transforms that perform collision detection with BoneSpring.
@@ -63,7 +63,7 @@ namespace MagicaCloth2
             /// [OK] Runtime changes.
             /// [NG] Export/Import with Presets
             /// </summary>
-            public List<Transform> collisionBones = new List<Transform>();
+            public List<Transform> collisionBones = new();
 
             /// <summary>
             /// The maximum distance from the origin that a vertex will be pushed by the collider. Currently used only with BoneSpring.
@@ -71,7 +71,7 @@ namespace MagicaCloth2
             /// [OK] Runtime changes.
             /// [OK] Export/Import with Presets
             /// </summary>
-            public CurveSerializeData limitDistance = new CurveSerializeData(0.05f);
+            public CurveSerializeData limitDistance = new(0.05f);
 
 
             public SerializeData()
@@ -204,7 +204,7 @@ namespace MagicaCloth2
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine($"[ColliderCollisionConstraint]");
             return sb.ToString();
         }
@@ -396,7 +396,7 @@ namespace MagicaCloth2
             }
         }
 
-        static float PointSphereColliderDetection(
+        private static float PointSphereColliderDetection(
             ref float3 nextpos,
             in float3 basePos,
             float radius,
@@ -463,7 +463,7 @@ namespace MagicaCloth2
             return dist;
         }
 
-        static float PointPlaneColliderDetction(
+        private static float PointPlaneColliderDetction(
             ref float3 nextpos,
             float radius,
             in ColliderManager.WorkData cwork,
@@ -486,7 +486,7 @@ namespace MagicaCloth2
             return MathUtility.IntersectPointPlaneDist(cpos + n * radius, n, nextpos, out nextpos);
         }
 
-        static float PointCapsuleColliderDetection(
+        private static float PointCapsuleColliderDetection(
             ref float3 nextpos,
             float radius,
             in AABB aabb,
@@ -594,9 +594,9 @@ namespace MagicaCloth2
                     continue;
                 int pstart = tdata.particleChunk.startIndex;
                 int2 pE = edge + pstart;
-                float3x2 nextPosE = new float3x2(nextPosArray[pE.x], nextPosArray[pE.y]);
-                float2 depthE = new float2(vertexDepths[vE.x], vertexDepths[vE.y]);
-                float2 radiusE = new float2(param.radiusCurveData.MC2EvaluateCurve(depthE.x), param.radiusCurveData.MC2EvaluateCurve(depthE.y));
+                float3x2 nextPosE = new(nextPosArray[pE.x], nextPosArray[pE.y]);
+                float2 depthE = new(vertexDepths[vE.x], vertexDepths[vE.y]);
+                float2 radiusE = new(param.radiusCurveData.MC2EvaluateCurve(depthE.x), param.radiusCurveData.MC2EvaluateCurve(depthE.y));
 
                 // チームスケール倍率
                 radiusE *= tdata.scaleRatio;
@@ -790,7 +790,7 @@ namespace MagicaCloth2
             }
         }
 
-        static float EdgeSphereColliderDetection(
+        private static float EdgeSphereColliderDetection(
             ref float3x2 nextPosE,
             in float2 radiusE,
             in AABB aabbE,
@@ -866,11 +866,11 @@ namespace MagicaCloth2
             // エッジのみを引き離す
             //float b0 = 1.0f - t;
             //float b1 = t;
-            float2 b = new float2(1.0f - s, s);
+            float2 b = new(1.0f - s, s);
 
             //float3 grad0 = n * b0;
             //float3 grad1 = n * b1;
-            float3x2 grad = new float3x2(n * b.x, n * b.y);
+            float3x2 grad = new(n * b.x, n * b.y);
 
             //float S = b0 * b0 + b1 * b1;
             float S = math.dot(b, b);
@@ -892,7 +892,7 @@ namespace MagicaCloth2
             return -C;
         }
 
-        static float EdgeCapsuleColliderDetection(
+        private static float EdgeCapsuleColliderDetection(
             ref float3x2 nextPosE,
             in float2 radiusE,
             in AABB aabbE,
@@ -1005,11 +1005,11 @@ namespace MagicaCloth2
             // エッジのみを引き離す
             //float b0 = 1.0f - s;
             //float b1 = s;
-            float2 b = new float2(1.0f - s, s);
+            float2 b = new(1.0f - s, s);
 
             //float3 grad0 = n * b0;
             //float3 grad1 = n * b1;
-            float3x2 grad = new float3x2(n * b.x, n * b.y);
+            float3x2 grad = new(n * b.x, n * b.y);
 
             //float S = invMass0 * b0 * b0 + invMass1 * b1 * b1;
             float S = math.dot(b, b);
@@ -1031,7 +1031,7 @@ namespace MagicaCloth2
             return -C;
         }
 
-        static float EdgePlaneColliderDetection(
+        private static float EdgePlaneColliderDetection(
             ref float3x2 nextPosE,
             in float2 radiusE,
             in ColliderManager.WorkData cwork,

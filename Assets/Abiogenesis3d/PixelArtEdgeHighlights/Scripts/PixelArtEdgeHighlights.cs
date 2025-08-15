@@ -39,18 +39,18 @@ namespace Abiogenesis3d
 
         [Header("To ignore a camera add PixelArtEdgeHighlightsIgnore component to it.")]
         public bool autoDetectCameras = true;
-        public List<PixelArtEdgeHighlightsCameraInfo> cameraInfos = new List<PixelArtEdgeHighlightsCameraInfo>();
+        public List<PixelArtEdgeHighlightsCameraInfo> cameraInfos = new();
 
-    #if UNITY_PIPELINE_URP
-    #else
+#if UNITY_PIPELINE_URP
+#else
         Material material;
         public Shader shader;
-    #endif
+#endif
 
         // in URP effect is a renderer feature and not a blit
-    #if UNITY_PIPELINE_URP
+#if UNITY_PIPELINE_URP
         public List<PixelArtEdgeHighlightsFeature> rendererFeatures;
-    #else
+#else
         void UpdateMaterialProperties()
         {
             var _ConvexHighlight = convexHighlight;
@@ -70,25 +70,25 @@ namespace Abiogenesis3d
             material.SetInt("_DebugEffect", (int)debugEffect);
             // material.SetVector("_Test1", test1);
         }
-    #endif
+#endif
 
-        float GetCamDepthOr0(Camera cam)
+        private float GetCamDepthOr0(Camera cam)
         {
             if (cam != null) return cam.depth;
             return 0;
         }
 
-        Type GetIgnoredType()
+        private Type GetIgnoredType()
         {
             return typeof(PixelArtEdgeHighlightsIgnore);
         }
 
         // TODO: export this into helper file
-        void AutoDetectCameras()
+        private void AutoDetectCameras()
         {
             var allCameras = FindObjectsOfType<Camera>();
 
-            foreach(var cam in allCameras)
+            foreach (var cam in allCameras)
             {
                 var ignoreTag = cam.GetComponent(GetIgnoredType());
                 var camInfo = cameraInfos.FirstOrDefault(c => c.cam == cam);
@@ -97,8 +97,8 @@ namespace Abiogenesis3d
                 {
                     if (ignoreTag == null)
                     {
-                        camInfo = new PixelArtEdgeHighlightsCameraInfo {cam = cam};
-                        cameraInfos = cameraInfos.Concat(new[] {camInfo}).ToList();
+                        camInfo = new PixelArtEdgeHighlightsCameraInfo { cam = cam };
+                        cameraInfos = cameraInfos.Concat(new[] { camInfo }).ToList();
                     }
                 }
                 else
@@ -110,7 +110,7 @@ namespace Abiogenesis3d
             cameraInfos = cameraInfos.OrderBy(c => GetCamDepthOr0(c.cam)).ToList();
         }
 
-        void CheckForInstances()
+        private void CheckForInstances()
         {
             var existingInstances = FindObjectsOfType<PixelArtEdgeHighlights>();
             if (existingInstances.Length > 1)
@@ -120,16 +120,17 @@ namespace Abiogenesis3d
                 return;
             }
         }
-        void OnEnable()
+        private void OnEnable()
         {
             CheckForInstances();
         }
 
-        void Update()
+        private void Update()
         {
             if (autoDetectCameras) AutoDetectCameras();
 
-            cameraInfos.ForEach(camInfo => {
+            cameraInfos.ForEach(camInfo =>
+            {
                 if (!camInfo.cam)
                 {
                     // no camera, cleanup mirror
@@ -145,25 +146,25 @@ namespace Abiogenesis3d
 
                 HandleCam(camInfo);
 
-            #if UNITY_PIPELINE_URP
+#if UNITY_PIPELINE_URP
                 if (camInfo.mirrorOnRenderImageOpaque) DestroyImmediate(camInfo.mirrorOnRenderImageOpaque);
-            #else
+#else
                 EnsureMirrorOnRenderImage(camInfo);
                 camInfo.mirrorOnRenderImageOpaque.renderImageCallback -= RenderImage;
                 camInfo.mirrorOnRenderImageOpaque.renderImageCallback += RenderImage;
-            #endif
+#endif
 
                 camInfo.lastCam = camInfo.cam;
             });
 
-        #if UNITY_PIPELINE_URP
-        #if UNITY_EDITOR
+#if UNITY_PIPELINE_URP
+#if UNITY_EDITOR
             // TODO: call less frequently
             var urpAssets = PipelineAssets.GetUrpAssets();
-            foreach(var urpAsset in urpAssets)
+            foreach (var urpAsset in urpAssets)
                 SetupRenderFeatures.SetDownsamplingToNone(urpAsset);
             rendererFeatures = SetupRenderFeatures.AddAndGetRendererFeatures<PixelArtEdgeHighlightsFeature>(urpAssets);
-        #endif
+#endif
             if (rendererFeatures.Count == 0)
             {
                 Debug.Log("Renderer Features could not be added.");
@@ -194,11 +195,11 @@ namespace Abiogenesis3d
 
                 feature.SetActive(true);
             }
-        #else
-        #endif
+#else
+#endif
         }
 
-        void HandleCam(PixelArtEdgeHighlightsCameraInfo camInfo)
+        private void HandleCam(PixelArtEdgeHighlightsCameraInfo camInfo)
         {
             camInfo.cam.depthTextureMode = DepthTextureMode.Depth | DepthTextureMode.DepthNormals;
             camInfo.cam.allowMSAA = false;
@@ -214,8 +215,8 @@ namespace Abiogenesis3d
             }
         }
 
-    #if UNITY_PIPELINE_URP
-    #else
+#if UNITY_PIPELINE_URP
+#else
         void EnsureMirrorOnRenderImage(PixelArtEdgeHighlightsCameraInfo camInfo)
         {
             if (camInfo.mirrorOnRenderImageOpaque) return;
@@ -242,17 +243,17 @@ namespace Abiogenesis3d
             material.SetTexture("_MainTex", source);
             Graphics.Blit(source, destination, material);
         }
-    #endif
+#endif
 
-        void OnDisable()
+        private void OnDisable()
         {
-        #if UNITY_PIPELINE_URP
+#if UNITY_PIPELINE_URP
             foreach (var feature in rendererFeatures)
             {
                 if (!feature) continue;
                 feature.SetActive(false);
             }
-        #else
+#else
             cameraInfos.ForEach(camInfo => {
                 if (!camInfo.cam) return;
 
@@ -266,7 +267,7 @@ namespace Abiogenesis3d
                 }
                 if (camInfo.mirrorOnRenderImageOpaque) DestroyImmediate(camInfo.mirrorOnRenderImageOpaque);
             });
-        #endif
+#endif
         }
     }
 }

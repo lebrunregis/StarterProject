@@ -2,10 +2,12 @@
 using System;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     [Serializable]
     // ReSharper disable once CheckNamespace
-    public class BusFadeInfo {
+    public class BusFadeInfo
+    {
         public string NameOfBus;
         public GroupBus ActingBus;
         public float StartVolume;
@@ -13,9 +15,9 @@ namespace DarkTonic.MasterAudio {
         public float StartTime;
         public float CompletionTime;
         public bool IsActive = true;
-		public bool WillStopGroupAfterFade = false;
-		public bool WillResetVolumeAfterFade = false;
-			// ReSharper disable once InconsistentNaming
+        public bool WillStopGroupAfterFade = false;
+        public bool WillResetVolumeAfterFade = false;
+        // ReSharper disable once InconsistentNaming
         // ReSharper disable once RedundantNameQualifier
         public System.Action completionAction;
     }

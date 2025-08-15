@@ -7,7 +7,7 @@ namespace MagicaCloth2
 {
     public class AutoRotate : MonoBehaviour
     {
-        public Vector3 eulers = new Vector3(0, 90, 0);
+        public Vector3 eulers = new(0, 90, 0);
         public Space space = Space.World;
         public enum UpdateMode
         {
@@ -32,13 +32,13 @@ namespace MagicaCloth2
                 UpdatePosition(Time.fixedDeltaTime);
         }
 
-        void Update()
+        private void Update()
         {
             if (updateMode == UpdateMode.Update)
                 UpdatePosition(Time.deltaTime);
         }
 
-        void UpdatePosition(float dtime)
+        private void UpdatePosition(float dtime)
         {
             if (useSin)
             {

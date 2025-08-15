@@ -1,8 +1,8 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates. 
 
 using System;
-using UnityEngine;
 using System.Globalization;
+using UnityEngine;
 
 namespace Lofelt.NiceVibrations
 {
@@ -22,10 +22,10 @@ namespace Lofelt.NiceVibrations
 
     public static class HapticPatterns
     {
-        static String emphasisTemplate;
-        static String constantTemplate;
-        static NumberFormatInfo numberFormat;
-        static private float[] constantPatternTime = new float[] { 0.0f, 0.0f };
+        private static readonly String emphasisTemplate;
+        private static readonly String constantTemplate;
+        private static readonly NumberFormatInfo numberFormat;
+        private static readonly float[] constantPatternTime = new float[] { 0.0f, 0.0f };
 
         /// <summary>
         /// Enum that represents all the types of haptic presets available
@@ -49,12 +49,12 @@ namespace Lofelt.NiceVibrations
         /// </summary>
         ///
         /// \ref time values have be incremental to be compatible with Preset.
-        struct Pattern
+        private struct Pattern
         {
             public float[] time;
             public float[] amplitude;
 
-            static String clipJsonTemplate;
+            private static readonly String clipJsonTemplate;
 
             static Pattern()
             {
@@ -72,7 +72,7 @@ namespace Lofelt.NiceVibrations
             // Each pair of adjacent entries in the Pattern create one entry in the GamepadRumble.
             public GamepadRumble ToRumble()
             {
-                GamepadRumble result = new GamepadRumble();
+                GamepadRumble result = new();
                 if (time.Length <= 1)
                 {
                     return result;
@@ -149,7 +149,7 @@ namespace Lofelt.NiceVibrations
             public Preset(PresetType type, float[] time, float[] amplitude)
             {
                 Debug.Assert(type != PresetType.None);
-                Pattern pattern = new Pattern(time, amplitude);
+                Pattern pattern = new(time, amplitude);
                 this.type = type;
                 this.maximumAmplitudePattern = pattern.time;
 #if ((!UNITY_ANDROID && !UNITY_IOS) || UNITY_EDITOR) && NICE_VIBRATIONS_INPUTSYSTEM_INSTALLED && ENABLE_INPUT_SYSTEM && !NICE_VIBRATIONS_DISABLE_GAMEPAD_SUPPORT
@@ -287,7 +287,7 @@ namespace Lofelt.NiceVibrations
                     .Replace("{duration}", duration.ToString(numberFormat));
 
                 // This preprocessor section will only run for non-mobile platforms
-                GamepadRumble rumble = new GamepadRumble();
+                GamepadRumble rumble = new();
 #if ((!UNITY_ANDROID && !UNITY_IOS) || UNITY_EDITOR) && NICE_VIBRATIONS_INPUTSYSTEM_INSTALLED && ENABLE_INPUT_SYSTEM && !NICE_VIBRATIONS_DISABLE_GAMEPAD_SUPPORT
                 rumble.durationsMs = new int[] { (int)(duration * 1000) };
                 rumble.lowFrequencyMotorSpeeds = new float[] { clampedAmplitude };
@@ -316,7 +316,7 @@ namespace Lofelt.NiceVibrations
         /// </summary>
         ///
         /// <param name="amplitude">The amplitude of the emphasis, from 0.0 to 1.0</param>
-        static PresetType presetTypeForEmphasis(float amplitude)
+        private static PresetType presetTypeForEmphasis(float amplitude)
         {
             if (amplitude > 0.5f)
             {
@@ -367,7 +367,7 @@ namespace Lofelt.NiceVibrations
                 .Replace("{duration}", clampedDurationSecs.ToString(numberFormat));
 
             // This preprocessor section will only run for non-mobile platforms
-            GamepadRumble rumble = new GamepadRumble();
+            GamepadRumble rumble = new();
 #if ((!UNITY_ANDROID && !UNITY_IOS) || UNITY_EDITOR) && NICE_VIBRATIONS_INPUTSYSTEM_INSTALLED && ENABLE_INPUT_SYSTEM && !NICE_VIBRATIONS_DISABLE_GAMEPAD_SUPPORT
             int rumbleDurationMs = (int)(clampedDurationSecs * 1000);
             const int rumbleEntryDurationMs = 16; // One rumble entry per frame at 60 FPS, which is the limit of what GamepadRumbler can play
@@ -406,7 +406,7 @@ namespace Lofelt.NiceVibrations
             }
         }
 
-        static Preset GetPresetForType(PresetType type)
+        private static Preset GetPresetForType(PresetType type)
         {
             Debug.Assert(type != PresetType.None);
 

@@ -182,7 +182,7 @@ namespace Pinwheel.Griffin.DataTool
                     if (t == null || t.TerrainData == null)
                         return;
 
-                    GUnityTerrainDataExporter exporter = new GUnityTerrainDataExporter();
+                    GUnityTerrainDataExporter exporter = new();
                     exporter.SrcData = t.TerrainData;
                     exporter.DesData = null;
                     exporter.CreateNewAsset = true;
@@ -200,7 +200,7 @@ namespace Pinwheel.Griffin.DataTool
 
         private void DoExport()
         {
-            GUnityTerrainDataExporter exporter = new GUnityTerrainDataExporter();
+            GUnityTerrainDataExporter exporter = new();
             exporter.SrcData = SrcData;
             exporter.DesData = DesData;
             exporter.CreateNewAsset = CreateNewAsset;

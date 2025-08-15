@@ -197,7 +197,7 @@ namespace MagicaCloth2
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine($"[AngleConstraint]");
             return sb.ToString();
         }

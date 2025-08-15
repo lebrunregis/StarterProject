@@ -10,7 +10,7 @@ namespace Gamekit3D
 
         protected float m_RandomNormTime;
 
-        readonly int m_HashRandomIdle = Animator.StringToHash("RandomIdle");
+        private readonly int m_HashRandomIdle = Animator.StringToHash("RandomIdle");
 
         public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
@@ -32,5 +32,5 @@ namespace Gamekit3D
                 animator.SetInteger(m_HashRandomIdle, Random.Range(0, numberOfStates));
             }
         }
-    } 
+    }
 }

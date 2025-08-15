@@ -1,20 +1,12 @@
 #if UNITY_EDITOR
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using UnityEditor.ShortcutManagement;
-using System.Reflection;
 using System.Linq;
-using UnityEngine.UIElements;
-using UnityEngine.SceneManagement;
-using UnityEditor.SceneManagement;
-using Type = System.Type;
-using static VHierarchy.VHierarchy;
+using UnityEditor;
+using UnityEngine;
+using static VHierarchy.Libs.VGUI;
+using static VHierarchy.Libs.VUtils;
 using static VHierarchy.VHierarchyData;
 using static VHierarchy.VHierarchyPalette;
-using static VHierarchy.Libs.VUtils;
-using static VHierarchy.Libs.VGUI;
 // using static VTools.VDebug;
 
 
@@ -24,7 +16,7 @@ namespace VHierarchy
     public class VHierarchyPaletteWindow : EditorWindow
     {
 
-        void OnGUI()
+        private void OnGUI()
         {
             if (!palette) { Close(); return; }
 
@@ -435,30 +427,30 @@ namespace VHierarchy
 
         }
 
-        static float iconSize => 14;
-        static float iconSpacing => 6;
-        static float cellSize => iconSize + iconSpacing;
-        static float spaceAfterColors => 13;
+        private static float iconSize => 14;
+        private static float iconSpacing => 6;
+        private static float cellSize => iconSize + iconSpacing;
+        private static float spaceAfterColors => 13;
         public float rowSpacing = 1;
-        static float paddingX => 12;
-        static float paddingY => 12;
+        private static float paddingX => 12;
+        private static float paddingY => 12;
 
-        Color windowBackground => isDarkTheme ? Greyscale(.23f) : Greyscale(.75f);
-        Color selectedBackground => isDarkTheme ? new Color(.3f, .5f, .7f, .8f) : new Color(.3f, .5f, .7f, .6f) * 1.25f;
-        Color hoveredBackground => isDarkTheme ? Greyscale(1, .3f) : Greyscale(0, .1f);
+        private Color windowBackground => isDarkTheme ? Greyscale(.23f) : Greyscale(.75f);
+        private Color selectedBackground => isDarkTheme ? new Color(.3f, .5f, .7f, .8f) : new Color(.3f, .5f, .7f, .6f) * 1.25f;
+        private Color hoveredBackground => isDarkTheme ? Greyscale(1, .3f) : Greyscale(0, .1f);
 
         public Vector2 targetPosition;
         public Vector2 currentPosition;
-        Vector2 positionDeriv;
-        float deltaTime;
-        double lastLayoutTime;
+        private Vector2 positionDeriv;
+        private float deltaTime;
+        private double lastLayoutTime;
 
 
 
 
 
 
-        void SetIcon(string iconNameOrGuid, bool isRecursive)
+        private void SetIcon(string iconNameOrGuid, bool isRecursive)
         {
             foreach (var r in goDatas)
             {
@@ -466,7 +458,7 @@ namespace VHierarchy
                 r.iconNameOrGuid = iconNameOrGuid;
             }
         }
-        void SetColor(int colorIndex, bool isRecursive)
+        private void SetColor(int colorIndex, bool isRecursive)
         {
             foreach (var r in goDatas)
             {
@@ -475,7 +467,7 @@ namespace VHierarchy
             }
         }
 
-        void SetInitialIcons()
+        private void SetInitialIcons()
         {
             for (int i = 0; i < goDatas.Count; i++)
             {
@@ -483,7 +475,7 @@ namespace VHierarchy
                 goDatas[i].iconNameOrGuid = iconNamesOrGuids_initial[i];
             }
         }
-        void SetInitialColors()
+        private void SetInitialColors()
         {
             for (int i = 0; i < goDatas.Count; i++)
             {
@@ -492,7 +484,7 @@ namespace VHierarchy
             }
         }
 
-        void RemoveEmptyGoDatas()
+        private void RemoveEmptyGoDatas()
         {
             var toRemove = goDatas.Where(r => r.iconNameOrGuid == "" && r.colorIndex == 0);
 
@@ -504,7 +496,7 @@ namespace VHierarchy
 
         }
 
-        void RecordUndoOnDatas()
+        private void RecordUndoOnDatas()
         {
             if (usingDataSO)
                 if (data)
@@ -514,7 +506,7 @@ namespace VHierarchy
                 r.RecordUndo();
 
         }
-        void MarkDatasDirty()
+        private void MarkDatasDirty()
         {
             if (usingDataSO)
                 if (data)
@@ -523,14 +515,14 @@ namespace VHierarchy
             foreach (var r in usedDataComponents)
                 r.Dirty();
         }
-        void SaveData()
+        private void SaveData()
         {
             // if (usingDataSO)
             // data.Save();
         }
 
-        bool usingDataSO => !gameObjects.Select(r => r.scene).All(r => VHierarchy.dataComponents_byScene.GetValueOrDefault(r) != null);
-        IEnumerable<VHierarchyDataComponent> usedDataComponents => VHierarchy.dataComponents_byScene.Where(kvp => kvp.Value && gameObjects.Select(r => r.scene).Contains(kvp.Key)).Select(kvp => kvp.Value);
+        private bool usingDataSO => !gameObjects.Select(r => r.scene).All(r => VHierarchy.dataComponents_byScene.GetValueOrDefault(r) != null);
+        private IEnumerable<VHierarchyDataComponent> usedDataComponents => VHierarchy.dataComponents_byScene.Where(kvp => kvp.Value && gameObjects.Select(r => r.scene).Contains(kvp.Key)).Select(kvp => kvp.Value);
 
 
 
@@ -538,7 +530,7 @@ namespace VHierarchy
 
 
 
-        void OnLostFocus()
+        private void OnLostFocus()
         {
             if (curEvent.holdingAlt && EditorWindow.focusedWindow?.GetType().Name == "SceneHierarchyWindow")
                 CloseNextFrameIfNotRefocused();
@@ -547,7 +539,7 @@ namespace VHierarchy
 
         }
 
-        void CloseNextFrameIfNotRefocused()
+        private void CloseNextFrameIfNotRefocused()
         {
             EditorApplication.delayCall += () => { if (EditorWindow.focusedWindow != this) Close(); };
         }
@@ -555,7 +547,7 @@ namespace VHierarchy
 
 
 
-        static void RepaintOnAlt() // Update 
+        private static void RepaintOnAlt() // Update 
         {
             if (curEvent.holdingAlt != wasHoldingAlt)
                 if (EditorWindow.mouseOverWindow is VHierarchyPaletteWindow paletteWindow)
@@ -565,7 +557,7 @@ namespace VHierarchy
 
         }
 
-        static bool wasHoldingAlt;
+        private static bool wasHoldingAlt;
 
 
 
@@ -665,7 +657,7 @@ namespace VHierarchy
 
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
             RemoveEmptyGoDatas();
             MarkDatasDirty();
@@ -684,8 +676,8 @@ namespace VHierarchy
         public List<bool> isIconRecursives_initial = new();
         public List<bool> isColorRecursives_initial = new();
 
-        static VHierarchyPalette palette => VHierarchy.palette;
-        static VHierarchyData data => VHierarchy.data;
+        private static VHierarchyPalette palette => VHierarchy.palette;
+        private static VHierarchyData data => VHierarchy.data;
 
 
 

@@ -17,7 +17,7 @@ namespace DarkTonic.MasterAudio.Examples
 
         // Use this for initialization
         // ReSharper disable once UnusedMember.Local
-        void Awake()
+        private void Awake()
         {
             useGUILayout = false;
             _trans = transform;
@@ -37,22 +37,22 @@ namespace DarkTonic.MasterAudio.Examples
 #endif
 
         // ReSharper disable UnusedMember.Local
-        void OnDisable()
+        private void OnDisable()
         {
         }
 
-        void OnBecameInvisible()
+        private void OnBecameInvisible()
         {
         }
 
-        void OnBecameVisible()
+        private void OnBecameVisible()
         {
         }
         // ReSharper restore UnusedMember.Local
 
         // Update is called once per frame 
         // ReSharper disable once UnusedMember.Local
-        void Update()
+        private void Update()
         {
             var moveAmt = Input.GetAxis("Horizontal") * MoveSpeed * AudioUtil.FrameTime;
 

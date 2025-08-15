@@ -1,7 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.SplineTool
 {
@@ -22,7 +21,7 @@ namespace Pinwheel.Griffin.SplineTool
 
         public static List<GStylizedTerrain> OverlapTest(int groupId, GSplineCreator spline)
         {
-            List<GStylizedTerrain> terrains = new List<GStylizedTerrain>();
+            List<GStylizedTerrain> terrains = new();
             GCommon.ForEachTerrain(groupId, (t) =>
             {
                 if (spline.OverlapTest(t))

@@ -73,7 +73,7 @@ namespace MagicaCloth2
 
 
         [BurstCompile]
-        struct FillJob<T> : IJobParallelFor where T : unmanaged
+        private struct FillJob<T> : IJobParallelFor where T : unmanaged
         {
             public T value;
 
@@ -104,7 +104,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct FillJob2<T> : IJobParallelFor where T : unmanaged
+        private struct FillJob2<T> : IJobParallelFor where T : unmanaged
         {
             public T value;
             public int startIndex;
@@ -126,7 +126,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct FillRefJob<T> : IJob where T : unmanaged
+        private struct FillRefJob<T> : IJob where T : unmanaged
         {
             public T value;
 
@@ -167,7 +167,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct SerialNumberJob : IJobParallelFor
+        private struct SerialNumberJob : IJobParallelFor
         {
             [Unity.Collections.WriteOnly]
             public NativeArray<int> array;
@@ -195,7 +195,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct ConvertHashSetToListJob<T> : IJob where T : unmanaged, IEquatable<T>
+        private struct ConvertHashSetToListJob<T> : IJob where T : unmanaged, IEquatable<T>
         {
             [Unity.Collections.ReadOnly]
             public NativeParallelHashSet<T> hashSet;
@@ -287,7 +287,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct ConvertHashSetKeyToListJob<T> : IJob where T : unmanaged, IEquatable<T>
+        private struct ConvertHashSetKeyToListJob<T> : IJob where T : unmanaged, IEquatable<T>
         {
             [Unity.Collections.ReadOnly]
             public NativeParallelHashSet<T> hashSet;
@@ -361,7 +361,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct CalcAABBJob : IJob
+        private struct CalcAABBJob : IJob
         {
             public int length;
 
@@ -377,7 +377,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct CalcAABBDeferJob : IJob
+        private struct CalcAABBDeferJob : IJob
         {
             [Unity.Collections.ReadOnly]
             public NativeList<float3> positions;
@@ -390,7 +390,7 @@ namespace MagicaCloth2
             }
         }
 
-        static AABB CalcAABBInternal(in NativeArray<float3> positions, int length)
+        private static AABB CalcAABBInternal(in NativeArray<float3> positions, int length)
         {
             if (positions.Length == 0)
             {
@@ -447,7 +447,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct CalcUVJob : IJobParallelFor
+        private struct CalcUVJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<float3> positions;
@@ -470,7 +470,7 @@ namespace MagicaCloth2
                 v = math.clamp(math.unlerp(1.0f, -1.0f, v), 0.0f, 1.0f);
 
                 //float2 uv = new float2(u, v); // こちらは横方向ベースになる
-                float2 uv = new float2(v, u); // こちらは縦方向ベースになる
+                float2 uv = new(v, u); // こちらは縦方向ベースになる
 
 #if false
                 float len = math.length(lv);
@@ -661,7 +661,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct ConvertArrayToMapJob<TData> : IJob where TData : unmanaged
+        private struct ConvertArrayToMapJob<TData> : IJob where TData : unmanaged
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<uint> indexArray;
@@ -704,7 +704,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct ClearReferenceJob : IJob
+        private struct ClearReferenceJob : IJob
         {
             public NativeReference<int> reference;
 

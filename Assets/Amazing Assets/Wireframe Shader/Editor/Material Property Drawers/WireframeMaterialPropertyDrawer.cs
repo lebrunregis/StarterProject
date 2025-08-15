@@ -1,8 +1,8 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor
@@ -48,7 +48,7 @@ namespace AmazingAssets.WireframeShader.Editor
             return keywordID;
         }
 
-        int KeywordIndex(string[] array)
+        private int KeywordIndex(string[] array)
         {
             for (int i = 0; i < keywords.Length; i++)
             {

@@ -16,7 +16,7 @@ namespace Pinwheel.Griffin.BuiltinRP
                 Debug.Log("Unable to load Griffin BuiltinRP Resources.");
             }
 
-            List<TerrainMaterialTemplate> terrainMaterialTemplates = new List<TerrainMaterialTemplate>();
+            List<TerrainMaterialTemplate> terrainMaterialTemplates = new();
             #region PBR materials
             terrainMaterialTemplates.Add(new TerrainMaterialTemplate()
             {

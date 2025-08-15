@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace BrainFailProductions.PolyFew.AsImpL
 {
@@ -14,10 +12,10 @@ namespace BrainFailProductions.PolyFew.AsImpL
         public bool autoLoadOnStart = false;
 
         [Tooltip("Models to load on startup")]
-        public List<ModelImportInfo> objectsList = new List<ModelImportInfo>();
+        public List<ModelImportInfo> objectsList = new();
 
         [Tooltip("Default import options")]
-        public ImportOptions defaultImportOptions = new ImportOptions();
+        public ImportOptions defaultImportOptions = new();
 
         [SerializeField]
         private PathSettings pathSettings = null;

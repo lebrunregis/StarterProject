@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace UniVRM10.VRM10Viewer
 {
     [Serializable]
-    class EmotionFields
+    internal class EmotionFields
     {
         public Slider m_expression;
         public Toggle m_binary;
@@ -26,7 +26,7 @@ namespace UniVRM10.VRM10Viewer
             }
         }
 
-        static int GetOverrideIndex(UniGLTF.Extensions.VRMC_vrm.ExpressionOverrideType value)
+        private static int GetOverrideIndex(UniGLTF.Extensions.VRMC_vrm.ExpressionOverrideType value)
         {
             switch (value)
             {
@@ -37,7 +37,7 @@ namespace UniVRM10.VRM10Viewer
             }
         }
 
-        static UniGLTF.Extensions.VRMC_vrm.ExpressionOverrideType ToOverrideType(int index)
+        private static UniGLTF.Extensions.VRMC_vrm.ExpressionOverrideType ToOverrideType(int index)
         {
             switch (index)
             {

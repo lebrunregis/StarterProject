@@ -242,7 +242,7 @@ namespace Pinwheel.Griffin
                 if (Painter == null)
                     return;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit = new RaycastHit();
+                RaycastHit hit = new();
                 if (GStylizedTerrain.Raycast(ray, out hit, 1000, Painter.GroupId))
                 {
                     DrawCursor(hit, true);
@@ -268,7 +268,7 @@ namespace Pinwheel.Griffin
             Painter.BrushRadius = RadiusSlider.value;
             Painter.BrushOpacity = OpacitySlider.value;
 
-            Color c = new Color(
+            Color c = new(
                 RedSlider.value, GreenSlider.value, BlueSlider.value, AlphaSlider.value);
             ColorImage.color = c;
             Painter.BrushColor = c;
@@ -302,7 +302,7 @@ namespace Pinwheel.Griffin
             if (!Input.GetMouseButton(0))
                 return;
 
-            GTexturePainterArgs args = new GTexturePainterArgs();
+            GTexturePainterArgs args = new();
             args.HitPoint = hit.point;
 
             args.MouseEventType =

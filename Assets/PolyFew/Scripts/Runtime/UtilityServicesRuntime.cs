@@ -17,7 +17,7 @@ namespace BrainFailProductions.PolyFewRuntime
 {
 
 
-    public class UtilityServicesRuntime:MonoBehaviour
+    public class UtilityServicesRuntime : MonoBehaviour
     {
 
 
@@ -35,7 +35,7 @@ namespace BrainFailProductions.PolyFewRuntime
             Graphics.Blit(source, renderTex);
             RenderTexture previous = RenderTexture.active;
             RenderTexture.active = renderTex;
-            Texture2D readableText = new Texture2D(source.width, source.height);
+            Texture2D readableText = new(source.width, source.height);
             readableText.ReadPixels(new Rect(0, 0, renderTex.width, renderTex.height), 0, 0);
             readableText.Apply();
             RenderTexture.active = previous;
@@ -312,12 +312,12 @@ namespace BrainFailProductions.PolyFewRuntime
 
 
 
-            Vector3 RotateAroundPoint(Vector3 point, Vector3 pivot, Quaternion angle)
+            private Vector3 RotateAroundPoint(Vector3 point, Vector3 pivot, Quaternion angle)
             {
                 return angle * (point - pivot) + pivot;
             }
 
-            Vector3 MultiplyVec3s(Vector3 v1, Vector3 v2)
+            private Vector3 MultiplyVec3s(Vector3 v1, Vector3 v2)
             {
                 return new Vector3(v1.x * v2.x, v1.y * v2.y, v1.z * v2.z);
             }
@@ -335,7 +335,7 @@ namespace BrainFailProductions.PolyFewRuntime
                 }
 
                 //init stuff
-                Dictionary<string, bool> materialCache = new Dictionary<string, bool>();
+                Dictionary<string, bool> materialCache = new();
 
                 //Debug.Log("Exporting OBJ. Please wait.. Starting to export.");
 
@@ -350,8 +350,8 @@ namespace BrainFailProductions.PolyFewRuntime
 
 
                 //work on export
-                StringBuilder sb = new StringBuilder();
-                StringBuilder sbMaterials = new StringBuilder();
+                StringBuilder sb = new();
+                StringBuilder sbMaterials = new();
 
 
                 if (generateMaterials)
@@ -489,7 +489,7 @@ namespace BrainFailProductions.PolyFewRuntime
                 InitializeExporter(mesh, exportPath);
 
                 string objectName = meshToExport.name;
-                StringBuilder sb = new StringBuilder();
+                StringBuilder sb = new();
                 int lastIndex = 0;
                 int faceOrder = 1;
 
@@ -565,7 +565,7 @@ namespace BrainFailProductions.PolyFewRuntime
 
 
 
-            string TryExportTexture(string propertyName, Material m, string exportPath)
+            private string TryExportTexture(string propertyName, Material m, string exportPath)
             {
                 if (m.HasProperty(propertyName))
                 {
@@ -581,7 +581,7 @@ namespace BrainFailProductions.PolyFewRuntime
             }
 
 
-            string ExportTexture(Texture2D t, string exportPath)
+            private string ExportTexture(Texture2D t, string exportPath)
             {
                 //Debug.Log($"Exporting texture:  {t.name} to path: {exportPath}");
 
@@ -795,7 +795,7 @@ namespace BrainFailProductions.PolyFewRuntime
                     Debug.LogWarning("Cannot download from empty URL. Please provide a direct URL to the accompanying material file.");
                 }
 
-                if(downloadProgress == null)
+                if (downloadProgress == null)
                 {
                     throw new ArgumentNullException("downloadProgress", "You must pass a reference to the Download Progress object.");
                 }
@@ -812,7 +812,7 @@ namespace BrainFailProductions.PolyFewRuntime
 
 
                 try
-                {                    
+                {
                     GameObject toReturn = await objImporter.ImportModelFromNetwork(objURL, objName, diffuseTexURL, bumpTexURL, specularTexURL, opacityTexURL, materialURL, downloadProgress, importOptions);
                     Destroy(objImporter);
                     OnSuccess(toReturn);
@@ -852,7 +852,7 @@ namespace BrainFailProductions.PolyFewRuntime
                     OnError(new ArgumentNullException("downloadProgress", "You must pass a reference to the Download Progress object."));
                     return;
                 }
-                
+
                 GameObject objectToPopulate = new GameObject();
                 objectToPopulate.AddComponent<ObjectImporter>();
                 ObjectImporter objImporter = objectToPopulate.GetComponent<ObjectImporter>();
@@ -864,12 +864,12 @@ namespace BrainFailProductions.PolyFewRuntime
                 }
 
 
-               
+
                 objImporter.ImportModelFromNetworkWebGL(objURL, objName, diffuseTexURL, bumpTexURL, specularTexURL, opacityTexURL, materialURL, downloadProgress, importOptions, (GameObject imported) =>
                 {
                     Destroy(objImporter);
                     OnSuccess(imported);
-                }, 
+                },
                 (exception) =>
                 {
                     DestroyImmediate(objectToPopulate);

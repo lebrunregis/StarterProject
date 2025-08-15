@@ -1,18 +1,15 @@
-using MoreMountains.Feedbacks;
-using MoreMountains.Tools;
 using UnityEngine;
 #if MM_POSTPROCESSING
 using UnityEngine.Rendering.PostProcessing;
 #endif
 #if UNITY_EDITOR
-using UnityEditor;
 #endif
 
 namespace MoreMountains.FeedbacksForThirdParty
 {
-	public class MMPostProcessingHelpers : MonoBehaviour
-	{
-		#if UNITY_EDITOR && MM_POSTPROCESSING
+    public class MMPostProcessingHelpers : MonoBehaviour
+    {
+#if UNITY_EDITOR && MM_POSTPROCESSING
 		public static void GetOrCreateVolume<T, U>(MMF_Player owner, string feedbackName) where T:PostProcessEffectSettings where U:MMShaker
 		{
 			string additions = owner.name + " "+feedbackName+" feedback automatic shaker setup : ";
@@ -62,6 +59,6 @@ namespace MoreMountains.FeedbacksForThirdParty
 			
 			MMDebug.DebugLogInfo( additions + "You're all set.");
 		}
-		#endif
-	}
+#endif
+    }
 }

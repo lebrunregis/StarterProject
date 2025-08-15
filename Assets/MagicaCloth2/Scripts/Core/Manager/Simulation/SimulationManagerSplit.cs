@@ -21,7 +21,7 @@ namespace MagicaCloth2
         /// プロキシメッシュをスキニングし基本姿勢を求める
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitPre_A_Job : IJobParallelFor
+        private unsafe struct SplitPre_A_Job : IJobParallelFor
         {
             public int workerCount;
 
@@ -112,7 +112,7 @@ namespace MagicaCloth2
         /// チームのセンター姿勢の決定と慣性用の移動量計算
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitPre_B_Job : IJobParallelFor
+        private unsafe struct SplitPre_B_Job : IJobParallelFor
         {
             public float simulationDeltaTime;
 
@@ -210,7 +210,7 @@ namespace MagicaCloth2
         /// コライダーのローカル姿勢を求める、および全体慣性とリセットの適用
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitPre_C_Job : IJobParallelFor
+        private unsafe struct SplitPre_C_Job : IJobParallelFor
         {
             public int workerCount;
 
@@ -423,7 +423,7 @@ namespace MagicaCloth2
         /// コライダーの更新
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitStep_A_Job : IJobParallelFor
+        private unsafe struct SplitStep_A_Job : IJobParallelFor
         {
             public int updateIndex;
             public float4 simulationPower;
@@ -539,7 +539,7 @@ namespace MagicaCloth2
         /// 速度更新、外力の影響、慣性シフト
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitStep_B_Job : IJobParallelFor
+        private unsafe struct SplitStep_B_Job : IJobParallelFor
         {
             public int workerCount;
             public int updateIndex;
@@ -679,7 +679,7 @@ namespace MagicaCloth2
         /// ベースラインの基準姿勢を計算
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitStep_C_Job : IJobParallelFor
+        private unsafe struct SplitStep_C_Job : IJobParallelFor
         {
             public int workerCount;
             public int updateIndex;
@@ -778,7 +778,7 @@ namespace MagicaCloth2
         /// 距離
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitStep_D_Job : IJobParallelFor
+        private unsafe struct SplitStep_D_Job : IJobParallelFor
         {
             public int workerCount;
             public int updateIndex;
@@ -901,7 +901,7 @@ namespace MagicaCloth2
         /// アングル
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitStep_Angle_Job : IJobParallelFor
+        private unsafe struct SplitStep_Angle_Job : IJobParallelFor
         {
             public int workerCount;
             public int updateIndex;
@@ -1034,7 +1034,7 @@ namespace MagicaCloth2
         /// トライアングルベンド
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitStep_Triangle_Job : IJobParallelFor
+        private unsafe struct SplitStep_Triangle_Job : IJobParallelFor
         {
             public int workerCount;
             public int updateIndex;
@@ -1133,7 +1133,7 @@ namespace MagicaCloth2
         /// コライダーコリジョンPoint
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitStep_E_Job : IJobParallelFor
+        private unsafe struct SplitStep_E_Job : IJobParallelFor
         {
             public int workerCount;
             public int updateIndex;
@@ -1257,7 +1257,7 @@ namespace MagicaCloth2
         /// コライダーコリジョンEdge
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitStep_Edge_Job : IJobParallelFor
+        private unsafe struct SplitStep_Edge_Job : IJobParallelFor
         {
             public int workerCount;
             public int updateIndex;
@@ -1368,7 +1368,7 @@ namespace MagicaCloth2
         /// モーション
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitStep_F_Self_Job : IJobParallelFor
+        private unsafe struct SplitStep_F_Self_Job : IJobParallelFor
         {
             public int workerCount;
             public int updateIndex;
@@ -1528,7 +1528,7 @@ namespace MagicaCloth2
         /// コライダーの後更新
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitStep_G_Self_Job : IJobParallelFor
+        private unsafe struct SplitStep_G_Self_Job : IJobParallelFor
         {
             public int workerCount;
             public int updateIndex;
@@ -1665,7 +1665,7 @@ namespace MagicaCloth2
         /// コライダーの後更新
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitStep_FG_NoSelf_Job : IJobParallelFor
+        private unsafe struct SplitStep_FG_NoSelf_Job : IJobParallelFor
         {
             public int workerCount;
             public int updateIndex;
@@ -1891,7 +1891,7 @@ namespace MagicaCloth2
         /// 表示位置の計算
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitPost_DisplayPos_Job : IJobParallelFor
+        private unsafe struct SplitPost_DisplayPos_Job : IJobParallelFor
         {
             public int workerCount;
             public float simulationDeltaTime;
@@ -1981,7 +1981,7 @@ namespace MagicaCloth2
         /// ラインがある場合はベースラインごとに姿勢を整える
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitPost_CalcProxy_Job : IJobParallelFor
+        private unsafe struct SplitPost_CalcProxy_Job : IJobParallelFor
         {
             public int workerCount;
 
@@ -2071,7 +2071,7 @@ namespace MagicaCloth2
         /// トライアングルの法線接線を求める
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitPost_CalcProxyTriangle_Job : IJobParallelFor
+        private unsafe struct SplitPost_CalcProxyTriangle_Job : IJobParallelFor
         {
             public int workerCount;
 
@@ -2140,7 +2140,7 @@ namespace MagicaCloth2
         /// BoneClothの場合は頂点姿勢から連動するトランスフォームのワールド姿勢を計算する
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitPost_SumProxyTriangleAndTransform_Job : IJobParallelFor
+        private unsafe struct SplitPost_SumProxyTriangleAndTransform_Job : IJobParallelFor
         {
             public int workerCount;
 
@@ -2234,7 +2234,7 @@ namespace MagicaCloth2
         /// コライダー更新後処理
         /// </summary>
         [BurstCompile]
-        unsafe struct SplitPost_TeamCollider_Job : IJobParallelFor
+        private unsafe struct SplitPost_TeamCollider_Job : IJobParallelFor
         {
             public float simulationDeltaTime;
 

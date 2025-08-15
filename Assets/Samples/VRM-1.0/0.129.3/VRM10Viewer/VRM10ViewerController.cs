@@ -15,10 +15,10 @@ using static UniVRM10.Vrm10;
 namespace UniVRM10.VRM10Viewer
 {
     [Serializable]
-    class VRM10ViewerController : IDisposable
+    internal class VRM10ViewerController : IDisposable
     {
         [SerializeField]
-        TextAsset m_motion;
+        private TextAsset m_motion;
 
         [SerializeField]
         public RenderTexture m_faceCameraTarget = default;
@@ -30,13 +30,13 @@ namespace UniVRM10.VRM10Viewer
 
         [Header("Material")]
         [SerializeField]
-        Material m_pbrOpaqueMaterial = default;
+        private Material m_pbrOpaqueMaterial = default;
         [SerializeField]
-        Material m_pbrAlphaBlendMaterial = default;
+        private Material m_pbrAlphaBlendMaterial = default;
         [SerializeField]
-        Material m_mtoonMaterialOpaque = default;
+        private Material m_mtoonMaterialOpaque = default;
         [SerializeField]
-        Material m_mtoonMaterialAlphaBlend = default;
+        private Material m_mtoonMaterialAlphaBlend = default;
 
         private CancellationTokenSource _cancellationTokenSource;
         public void Dispose()
@@ -55,7 +55,7 @@ namespace UniVRM10.VRM10Viewer
         private TinyPbrMaterialImporter m_pbrImporter;
 
         private Loaded m_loaded;
-        Loaded Loaded
+        private Loaded Loaded
         {
             get
             {
@@ -77,7 +77,7 @@ namespace UniVRM10.VRM10Viewer
         }
         public event Action<Loaded> OnLoaded;
 
-        IVrm10Animation m_src = default;
+        private IVrm10Animation m_src = default;
         public IVrm10Animation TPose;
         public IVrm10Animation Motion
         {
@@ -95,7 +95,7 @@ namespace UniVRM10.VRM10Viewer
         }
 
         public event VrmMetaInformationCallback OnUpdateMeta;
-        void RaiseUpdateMeta(Texture2D thumbnail, UniGLTF.Extensions.VRMC_vrm.Meta vrm10Meta, Migration.Vrm0Meta vrm0Meta)
+        private void RaiseUpdateMeta(Texture2D thumbnail, UniGLTF.Extensions.VRMC_vrm.Meta vrm10Meta, Migration.Vrm0Meta vrm0Meta)
         {
             if (OnUpdateMeta != null)
             {
@@ -139,7 +139,7 @@ namespace UniVRM10.VRM10Viewer
         [DllImport("__Internal")]
         public static extern void WebGL_VRM10_VRM10Viewer_FileDialog(string target, string message);
 
-        string FileDialog(string messageTarget, string messageName)
+        private string FileDialog(string messageTarget, string messageName)
         {
 #if UNITY_EDITOR 
             return UnityEditor.EditorUtility.OpenFilePanel("Open VRM", "", "vrm,glb,gltf,zip");
@@ -249,7 +249,7 @@ namespace UniVRM10.VRM10Viewer
             await LoadModelBytes(path, bytes, opts);
         }
 
-        IMaterialDescriptorGenerator GetMaterialDescriptorGenerator(LoadOptions opts)
+        private IMaterialDescriptorGenerator GetMaterialDescriptorGenerator(LoadOptions opts)
         {
             var useCustomPbr = opts.UseCustomPbrMaterial && m_pbrImporter != null;
             var useCustomMToon = opts.UseCustomMToonMaterial && m_mtoonImporter != null;
@@ -264,7 +264,7 @@ namespace UniVRM10.VRM10Viewer
                 useCustomMToon ? m_mtoonImporter : null);
         }
 
-        IAwaitCaller GetIAwaitCaller(bool useAsync)
+        private IAwaitCaller GetIAwaitCaller(bool useAsync)
         {
             if (useAsync)
             {

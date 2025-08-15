@@ -1,9 +1,9 @@
 ﻿//#if UNITY_EDITOR
 /*! \cond PRIVATE */
-using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
+using UnityEngine;
 
 namespace DarkTonic.MasterAudio
 {
@@ -11,12 +11,14 @@ namespace DarkTonic.MasterAudio
     {
         protected static string AssetNameToLoad;
         protected static string ResourceNameToLoad;
-        protected static List<string> FoldersToCreate = new List<string>();
+        protected static List<string> FoldersToCreate = new();
 
 #if UNITY_EDITOR
-        static InstanceType _Instance;
-        public static InstanceType Instance {
-            get {
+        private static InstanceType _Instance;
+        public static InstanceType Instance
+        {
+            get
+            {
                 if (_Instance == null)
                 {
                     // Unity (or .Net, or Mono I don't know) doesn't trigger the static constructor before this property getter call.

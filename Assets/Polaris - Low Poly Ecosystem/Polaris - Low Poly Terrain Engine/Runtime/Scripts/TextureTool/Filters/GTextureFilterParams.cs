@@ -10,7 +10,7 @@ namespace Pinwheel.Griffin.TextureTool
         {
             get
             {
-                GTextureFilterParams param = new GTextureFilterParams();
+                GTextureFilterParams param = new();
                 param.Blur = GBlurParams.Create();
                 param.Curve = GCurveParams.Create();
                 param.Invert = GInvertParams.Create();

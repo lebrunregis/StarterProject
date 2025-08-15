@@ -2,9 +2,8 @@
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
 using System.Linq;
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
@@ -42,7 +41,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
         public WireframeShaderEnum.VertexAttribute solverStoreInsideVertexAttribute = WireframeShaderEnum.VertexAttribute.UV3;
 
         public Enum.AssetSaveType generateAssetSaveType = Enum.AssetSaveType.Prefab;
-        public Enum.MeshCombineType generateMeshCombineType = Enum.MeshCombineType.Nothing;        
+        public Enum.MeshCombineType generateMeshCombineType = Enum.MeshCombineType.Nothing;
         public bool generateReplaceMeshColliders = false;
         public bool generateLightmapUVs = false;
         public Enum.MaterialType generateMaterialType = Enum.MaterialType.CreateNew;
@@ -55,13 +54,13 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
         public bool saveUseStaticEditorFlags = false;
         public StaticEditorFlags saveStaticEditorFlags = 0;
-        public bool saveUseStaticEditorFlagsForHierarchy = true;        
+        public bool saveUseStaticEditorFlagsForHierarchy = true;
         public bool saveUseTag = false;
         public string saveTag = "Untagged";
-        public bool saveUseTagForHierarchy = true;        
+        public bool saveUseTagForHierarchy = true;
         public bool saveUseLayer = false;
         public int saveLayer;
-        public bool saveUseLayerForHierarchy = true;                
+        public bool saveUseLayerForHierarchy = true;
         #endregion
 
 
@@ -116,7 +115,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
             DrawAdditionalSettings(collumnRect1, collumnRect2, collumnRect3, collumnRect4);
         }
-        void DrawAdditionalSettings(Rect collumnRect1, Rect collumnRect2, Rect collumnRect3, Rect collumnRect4)
+        private void DrawAdditionalSettings(Rect collumnRect1, Rect collumnRect2, Rect collumnRect3, Rect collumnRect4)
         {
             GUILayout.Space(5);
             using (new EditorGUIHelper.EditorGUILayoutBeginVertical(EditorStyles.helpBox))
@@ -178,7 +177,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
                                 if (GUI.Button(new Rect(collumnRect3.xMin + (collumnRect3.width - 25), collumnRect3.yMin, 25, collumnRect3.height), "..."))
                                 {
-                                    ShaderSelectionDropdown shaderSelection = new ShaderSelectionDropdown(CallbackDefaultShaderSelection, generateDefaultShader == null ? string.Empty : generateDefaultShader.name);
+                                    ShaderSelectionDropdown shaderSelection = new(CallbackDefaultShaderSelection, generateDefaultShader == null ? string.Empty : generateDefaultShader.name);
                                     shaderSelection.Show(collumnRect3);
                                 }
                             }
@@ -316,8 +315,8 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
         public override void LoadEditorData()
         {
             base.LoadEditorData();
-            
-            
+
+
             if (generateDefaultShader == null || generateDefaultShader.GetType().Equals(typeof(Shader)) == false)
                 generateDefaultShader = Shader.Find(defaultShaderName);
             else
@@ -391,7 +390,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                 return false;
             }
         }
-        void CallbackDefaultShaderSelection(object obj)
+        private void CallbackDefaultShaderSelection(object obj)
         {
             if (obj == null)
                 return;

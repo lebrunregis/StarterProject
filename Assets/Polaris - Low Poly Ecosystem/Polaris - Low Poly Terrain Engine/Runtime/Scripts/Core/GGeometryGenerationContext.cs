@@ -5,10 +5,10 @@ namespace Pinwheel.Griffin
 {
     public class GGeometryGenerationContext
     {
-        private Color[] heightMapData;
-        private int heightMapResolution;
-        private Color[] subDivMapData;
-        private int subDivMapResolution;
+        private readonly Color[] heightMapData;
+        private readonly int heightMapResolution;
+        private readonly Color[] subDivMapData;
+        private readonly int subDivMapResolution;
 
         public GGeometryGenerationContext(GStylizedTerrain terrain, GTerrainData data)
         {

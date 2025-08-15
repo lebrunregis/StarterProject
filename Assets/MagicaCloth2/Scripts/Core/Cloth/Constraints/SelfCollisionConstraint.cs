@@ -45,7 +45,7 @@ namespace MagicaCloth2
             /// [OK] Runtime changes.
             /// [OK] Export/Import with Presets
             /// </summary>
-            public CurveSerializeData surfaceThickness = new CurveSerializeData(0.005f, 0.5f, 1.0f, false);
+            public CurveSerializeData surfaceThickness = new(0.005f, 0.5f, 1.0f, false);
 
             /// <summary>
             /// mutual collision mode.
@@ -361,7 +361,7 @@ namespace MagicaCloth2
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine($"[SelfCollisionConstraint]");
             sb.AppendLine($"  -intersectFlagArray:{(intersectFlagArray.IsCreated ? intersectFlagArray.Length : 0)}");
 
@@ -649,7 +649,7 @@ namespace MagicaCloth2
         /// <param name="kind"></param>
         /// <param name="startPrimitive"></param>
         /// <param name="length"></param>
-        void InitPrimitive(int teamId, TeamManager.TeamData tdata, uint kind, int startPrimitive, int length)
+        private void InitPrimitive(int teamId, TeamManager.TeamData tdata, uint kind, int startPrimitive, int length)
         {
             var vm = MagicaManager.VMesh;
 
@@ -672,7 +672,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct InitPrimitiveJob : IJobParallelFor
+        private struct InitPrimitiveJob : IJobParallelFor
         {
             public int teamId;
             public TeamManager.TeamData tdata;
@@ -858,7 +858,7 @@ namespace MagicaCloth2
         /// ブロードフェーズ
         /// プリミティブ更新
         /// </summary>
-        unsafe static void UpdatePrimitive(
+        private static unsafe void UpdatePrimitive(
             int k,
             // team
             int teamId,
@@ -1012,7 +1012,7 @@ namespace MagicaCloth2
             }
         }
 
-        unsafe static void UpdateGrid(
+        private static unsafe void UpdateGrid(
             int k,
             // team
             int teamId,
@@ -1127,7 +1127,7 @@ namespace MagicaCloth2
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static int3 GetGrid(float3 pos, float gridSize)
+        private static int3 GetGrid(float3 pos, float gridSize)
         {
             //Debug.Assert(gridSize > 0.0f);
             return new int3(math.floor(pos / gridSize));
@@ -1273,7 +1273,7 @@ namespace MagicaCloth2
             }
         }
 
-        unsafe static void DetectionContacts(
+        private static unsafe void DetectionContacts(
             int workerCount,
             int workerIndex,
             // my
@@ -1347,7 +1347,7 @@ namespace MagicaCloth2
             }
 
             // プリミティブごと
-            GridInfo searchGridInfo = new GridInfo();
+            GridInfo searchGridInfo = new();
             int priIndex = myPriChunk.startIndex;
             for (int i = 0; i < myPriChunk.dataLength; i++, priIndex++)
             {
@@ -1498,7 +1498,7 @@ namespace MagicaCloth2
             public void Execute(int index)
             {
                 Primitive* pt = (Primitive*)primitiveArrayB.GetUnsafeReadOnlyPtr();
-                ContactInfo* ct = (ContactInfo*)contactList.GetUnsafePtr();
+                ContactInfo* ct = contactList.GetUnsafePtr();
 
                 ref ContactInfo contact = ref *(ct + index);
 
@@ -1514,7 +1514,7 @@ namespace MagicaCloth2
             }
         }
 
-        unsafe static void UpdateContactInfo(
+        private static unsafe void UpdateContactInfo(
             ref ContactInfo contact,
             Primitive* pt,
             ref NativeArray<float3> nextPosArray,
@@ -1665,7 +1665,7 @@ namespace MagicaCloth2
             // コンタクトごと
             public void Execute(int index)
             {
-                ContactInfo* ct = (ContactInfo*)contactList.GetUnsafeReadOnlyPtr();
+                ContactInfo* ct = contactList.GetUnsafeReadOnlyPtr();
                 Primitive* pt = (Primitive*)primitiveArrayB.GetUnsafeReadOnlyPtr();
                 int* cntPt = (int*)tempCountBuffer.GetUnsafePtr();
                 int* sumPt = (int*)tempVectorBufferA.GetUnsafePtr();
@@ -1876,7 +1876,7 @@ namespace MagicaCloth2
                         int cnt = cntPt[pindex];
                         if (cnt > 0)
                         {
-                            float3 add = new float3(sumPt[pindex2], sumPt[pindex2 + 1], sumPt[pindex2 + 2]);
+                            float3 add = new(sumPt[pindex2], sumPt[pindex2 + 1], sumPt[pindex2 + 2]);
                             add /= cnt;
                             // データは固定小数点なので戻す
                             add *= InterlockUtility.ToFloat;
@@ -2019,7 +2019,7 @@ namespace MagicaCloth2
             }
         }
 
-        unsafe static void DetectionIntersect(
+        private static unsafe void DetectionIntersect(
             int workerCount,
             int workerIndex,
             // 0 ~ (Define.System.SelfCollisionIntersectDiv-1)
@@ -2088,7 +2088,7 @@ namespace MagicaCloth2
                 return;
 
             // プリミティブごと
-            GridInfo searchGridInfo = new GridInfo();
+            GridInfo searchGridInfo = new();
             int priIndex = myPriChunk.startIndex + chunk.startIndex;
             for (int i = 0; i < chunk.dataLength; i++, priIndex++)
             {
@@ -2252,7 +2252,7 @@ namespace MagicaCloth2
 
             public void Execute(int index)
             {
-                IntersectInfo* it = (IntersectInfo*)intersectList.GetUnsafeReadOnlyPtr();
+                IntersectInfo* it = intersectList.GetUnsafeReadOnlyPtr();
 
                 ref var intersect = ref *(it + index);
 

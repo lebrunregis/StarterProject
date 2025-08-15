@@ -9,7 +9,7 @@ namespace UniGLTF.GltfViewer
 {
     public static class FileDialogForWindows
     {
-#region GetOpenFileName
+        #region GetOpenFileName
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
         public class OpenFileName
         {
@@ -50,18 +50,18 @@ namespace UniGLTF.GltfViewer
         [DllImport("Comdlg32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         private static extern bool GetSaveFileName([In, Out] OpenFileName ofn);
 
-        static string Filter(params string[] filters)
+        private static string Filter(params string[] filters)
         {
             return string.Join("\0", filters) + "\0";
         }
         public static string FileDialog(string title, params string[] extensions)
         {
-            OpenFileName ofn = new OpenFileName();
+            OpenFileName ofn = new();
             ofn.structSize = Marshal.SizeOf(ofn);
 
             var filters = new List<string>();
             filters.Add("All Files"); filters.Add("*.*");
-            foreach(var ext in extensions)
+            foreach (var ext in extensions)
             {
                 filters.Add(ext); filters.Add("*" + ext);
             }
@@ -85,7 +85,7 @@ namespace UniGLTF.GltfViewer
         public static string SaveDialog(string title, string path)
         {
             var extension = Path.GetExtension(path);
-            OpenFileName ofn = new OpenFileName();
+            OpenFileName ofn = new();
             ofn.structSize = Marshal.SizeOf(ofn);
             ofn.filter = Filter("All Files", "*.*", extension, "*" + extension);
             ofn.filterIndex = 2;
@@ -110,7 +110,7 @@ namespace UniGLTF.GltfViewer
 
             return ofn.file;
         }
-#endregion
+        #endregion
     }
 }
 #endif

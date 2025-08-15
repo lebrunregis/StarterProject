@@ -1,6 +1,5 @@
 #if GRIFFIN
 using UnityEditor;
-using UnityEngine;
 
 namespace Pinwheel.Griffin
 {

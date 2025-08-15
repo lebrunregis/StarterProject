@@ -2,9 +2,8 @@
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
 using System;
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor

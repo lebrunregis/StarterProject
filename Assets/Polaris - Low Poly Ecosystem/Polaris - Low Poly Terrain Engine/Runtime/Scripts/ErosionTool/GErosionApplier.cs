@@ -1,7 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.ErosionTool
 {
@@ -96,7 +95,7 @@ namespace Pinwheel.Griffin.ErosionTool
                 return;
 
             int resolution = t.TerrainData.Geometry.HeightMapResolution;
-            RenderTexture rt = new RenderTexture(resolution, resolution, 0, GGeometry.HeightMapRTFormat, RenderTextureReadWrite.Linear);
+            RenderTexture rt = new(resolution, resolution, 0, GGeometry.HeightMapRTFormat, RenderTextureReadWrite.Linear);
             GCommon.CopyToRT(t.TerrainData.Geometry.HeightMap, rt);
 
             ApplyGeometryMaterial.SetTexture(HEIGHT_MAP, t.TerrainData.Geometry.HeightMap);
@@ -116,7 +115,7 @@ namespace Pinwheel.Griffin.ErosionTool
             rt.Release();
             GUtilities.DestroyObject(rt);
 
-            List<Rect> dirtyRects = new List<Rect>(GCommon.CompareTerrainTexture(t.TerrainData.Geometry.ChunkGridSize, oldHeightMapColors, newHeightMapColors));
+            List<Rect> dirtyRects = new(GCommon.CompareTerrainTexture(t.TerrainData.Geometry.ChunkGridSize, oldHeightMapColors, newHeightMapColors));
             for (int i = 0; i < dirtyRects.Count; ++i)
             {
                 t.TerrainData.Geometry.SetRegionDirty(dirtyRects[i]);
@@ -246,10 +245,10 @@ namespace Pinwheel.Griffin.ErosionTool
         private void ApplyAMS(GStylizedTerrain t)
         {
             int albedoResolution = t.TerrainData.Shading.AlbedoMapResolution;
-            RenderTexture rtAlbedo = new RenderTexture(albedoResolution, albedoResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture rtAlbedo = new(albedoResolution, albedoResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
 
             int metallicResolution = t.TerrainData.Shading.MetallicMapResolution;
-            RenderTexture rtMetallic = new RenderTexture(metallicResolution, metallicResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture rtMetallic = new(metallicResolution, metallicResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
 
             if (!Internal_ApplyAMS(t, rtAlbedo, rtMetallic))
             {

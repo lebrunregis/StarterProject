@@ -10,10 +10,10 @@ namespace MagicaCloth2
     /// </summary>
     public class UnityTimeSpan
     {
-        string name = string.Empty;
-        float stime;
-        float etime;
-        bool isFinish;
+        private readonly string name = string.Empty;
+        private readonly float stime;
+        private float etime;
+        private bool isFinish;
 
         public UnityTimeSpan(string name)
         {

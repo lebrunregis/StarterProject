@@ -174,11 +174,12 @@ namespace DarkTonic.MasterAudio.EditorScripts
             }
 
 #if ADDRESSABLES_ENABLED
-        var newDelay = EditorGUILayout.IntSlider(new GUIContent("Unused Addressable Life (sec)", "To avoid reloading frequently used Addressables, you can keep them loaded when not in use for up to X seconds. Playing the Addressable again will reset the stopwatch back to zero when its finished playing."), _group.addressableUnusedSecondsLifespan, 0, 1800);
-        if (newDelay != _group.addressableUnusedSecondsLifespan) {
-            AudioUndoHelper.RecordObjectPropertyForUndo(ref isDirty, _group, "Change Unused Addressable Life (sec)");
-            _group.addressableUnusedSecondsLifespan = newDelay;
-        }
+            var newDelay = EditorGUILayout.IntSlider(new GUIContent("Unused Addressable Life (sec)", "To avoid reloading frequently used Addressables, you can keep them loaded when not in use for up to X seconds. Playing the Addressable again will reset the stopwatch back to zero when its finished playing."), _group.addressableUnusedSecondsLifespan, 0, 1800);
+            if (newDelay != _group.addressableUnusedSecondsLifespan)
+            {
+                AudioUndoHelper.RecordObjectPropertyForUndo(ref isDirty, _group, "Change Unused Addressable Life (sec)");
+                _group.addressableUnusedSecondsLifespan = newDelay;
+            }
 #endif
 
             if (_group.targetDespawnedBehavior == MasterAudioGroup.TargetDespawnedBehavior.FadeOut)
@@ -1137,7 +1138,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
             else if (Application.isPlaying)
             {
                 DTGUIHelper.ShowLargeBarAlert("You are running and cannot create Variations.");
-            } else { 
+            }
+            else
+            {
                 // new variation settings
                 EditorGUILayout.BeginVertical();
                 var anEvent = Event.current;
@@ -1254,7 +1257,8 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
                     if (!Application.isPlaying)
                     {
-                        if (GUILayout.Button(new GUIContent(MasterAudioInspectorResources.CopyTexture, "Click to clone Variation"), EditorStyles.toolbarButton, GUILayout.Height(16), GUILayout.Width(40))) {
+                        if (GUILayout.Button(new GUIContent(MasterAudioInspectorResources.CopyTexture, "Click to clone Variation"), EditorStyles.toolbarButton, GUILayout.Height(16), GUILayout.Width(40)))
+                        {
                             CloneVariation(i);
                         }
                     }
@@ -1323,9 +1327,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                                     }
                                     break;
 #if ADDRESSABLES_ENABLED
-                            case MasterAudio.AudioLocation.Addressable:
-                                DTGUIHelper.PreviewAddressable(variation.audioClipAddressable, previewer, calcVolume);
-                                break;
+                                case MasterAudio.AudioLocation.Addressable:
+                                    DTGUIHelper.PreviewAddressable(variation.audioClipAddressable, previewer, calcVolume);
+                                    break;
 #endif
                             }
 
@@ -1394,17 +1398,18 @@ namespace DarkTonic.MasterAudio.EditorScripts
                             }
                             break;
 #if ADDRESSABLES_ENABLED
-                    case MasterAudio.AudioLocation.Addressable:
-                        var varSerialized = new SerializedObject(variation);
-                        varSerialized.Update();
-                        EditorGUILayout.PropertyField(varSerialized.FindProperty(nameof(DynamicGroupVariation.audioClipAddressable)), true);
-                        varSerialized.ApplyModifiedProperties();
+                        case MasterAudio.AudioLocation.Addressable:
+                            var varSerialized = new SerializedObject(variation);
+                            varSerialized.Update();
+                            EditorGUILayout.PropertyField(varSerialized.FindProperty(nameof(DynamicGroupVariation.audioClipAddressable)), true);
+                            varSerialized.ApplyModifiedProperties();
 
-                        if (!DTGUIHelper.IsAddressableTypeValid(variation.audioClipAddressable, variation.name)) {
-                            variation.audioClipAddressable = null;
-                            varIsDirty = true;
-                        }
-                        break;
+                            if (!DTGUIHelper.IsAddressableTypeValid(variation.audioClipAddressable, variation.name))
+                            {
+                                variation.audioClipAddressable = null;
+                                varIsDirty = true;
+                            }
+                            break;
 #endif
                         case MasterAudio.AudioLocation.ResourceFile:
                             EditorGUILayout.BeginVertical();
@@ -2000,26 +2005,30 @@ namespace DarkTonic.MasterAudio.EditorScripts
                 {
                     var wasDestroyed = false;
 
-                    if (PrefabUtility.IsPartOfPrefabInstance(_group)) {
+                    if (PrefabUtility.IsPartOfPrefabInstance(_group))
+                    {
                         var prefabPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(_group);
                         GameObject prefabRoot = PrefabUtility.LoadPrefabContents(prefabPath);
 
                         var groupParent = prefabRoot.transform.Find(_group.name);
-                        if (groupParent != null) {
+                        if (groupParent != null)
+                        {
                             var deadTrans = groupParent.Find(deadVar.name);
 
-                            if (groupParent != null) {
+                            if (groupParent != null)
+                            {
                                 // Destroy child objects or components on rootGO
                                 DestroyImmediate(deadTrans.gameObject); // can't undo
                                 wasDestroyed = true;
-                            } 
-                        } 
+                            }
+                        }
 
                         PrefabUtility.SaveAsPrefabAsset(prefabRoot, prefabPath);
                         PrefabUtility.UnloadPrefabContents(prefabRoot);
-                    } 
-                
-                    if (!wasDestroyed) {
+                    }
+
+                    if (!wasDestroyed)
+                    {
                         AudioUndoHelper.DestroyForUndo(deadVar.gameObject);
                     }
 
@@ -2114,9 +2123,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                         ac = setting.VarAudio.clip;
                         break;
 #if ADDRESSABLES_ENABLED
-                case MasterAudio.AudioLocation.Addressable:
-                    ac = DTGUIHelper.EditModeLoadAddressable(setting.audioClipAddressable);
-                    break;
+                    case MasterAudio.AudioLocation.Addressable:
+                        ac = DTGUIHelper.EditModeLoadAddressable(setting.audioClipAddressable);
+                        break;
 #endif
                     case MasterAudio.AudioLocation.ResourceFile:
                         if (string.IsNullOrEmpty(setting.resourceFileName))
@@ -2197,7 +2206,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
                 DTGUIHelper.ShowAlert("You already have a Variation for this Group named '" + clipName + "'. \n\nPlease rename these Variations when finished to be unique, or you may not be able to play them by name if you have a need to.");
             }
 
-            var newVar = (GameObject)Instantiate(_group.variationTemplate, _group.transform.position, Quaternion.identity);
+            var newVar = Instantiate(_group.variationTemplate, _group.transform.position, Quaternion.identity);
             AudioUndoHelper.CreateObjectForUndo(newVar, "create Variation");
 
             newVar.transform.name = clipName;
@@ -2221,9 +2230,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                     variation.useLocalization = useLocalization;
                     break;
 #if ADDRESSABLES_ENABLED
-            case MasterAudio.AudioLocation.Addressable:
-                variation.audioClipAddressable = AddressableEditorHelper.CreateAssetReferenceFromObject(clip);
-                break;
+                case MasterAudio.AudioLocation.Addressable:
+                    variation.audioClipAddressable = AddressableEditorHelper.CreateAssetReferenceFromObject(clip);
+                    break;
 #endif
             }
 
@@ -2807,18 +2816,22 @@ namespace DarkTonic.MasterAudio.EditorScripts
             Debug.LogWarning(changed + " Use Custom Fade(s) changed.");
         }
 
-        private void CloneVariation(int index) {
+        private void CloneVariation(int index)
+        {
             var gameObj = _group.groupVariations[index].gameObject;
 
-            if (PrefabUtility.IsPartOfPrefabInstance(_group)) {
+            if (PrefabUtility.IsPartOfPrefabInstance(_group))
+            {
                 var prefabPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(_group);
                 GameObject prefabRoot = PrefabUtility.LoadPrefabContents(prefabPath);
 
                 var groupParent = prefabRoot.transform.Find(_group.name);
-                if (groupParent != null) {
+                if (groupParent != null)
+                {
                     var varTrans = groupParent.Find(gameObj.name);
 
-                    if (varTrans != null) {
+                    if (varTrans != null)
+                    {
                         // Destroy child objects or components on rootGO
                         var newVar = DTGUIHelper.DuplicateGameObject(varTrans.gameObject, groupParent.name, _group.groupVariations.Count + 1);
                         newVar.transform.parent = groupParent;
@@ -2827,10 +2840,13 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
                 PrefabUtility.SaveAsPrefabAsset(prefabRoot, prefabPath);
                 PrefabUtility.UnloadPrefabContents(prefabRoot);
-            } else {
+            }
+            else
+            {
                 var dupe = DTGUIHelper.DuplicateGameObject(gameObj, _group.name, _group.groupVariations.Count + 1);
 
-                if (dupe == null) {
+                if (dupe == null)
+                {
                     return;
                 }
 

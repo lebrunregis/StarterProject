@@ -8,7 +8,7 @@ namespace Abiogenesis3d
         public GameObject target;
         public float radius;
 
-        void Update()
+        private void Update()
         {
             target.SetActive(Vector3.Distance(transform.position, distanceTarget.position) < radius);
         }

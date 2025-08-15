@@ -1,7 +1,6 @@
 #if GRIFFIN
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace Pinwheel.Griffin.SplineTool
 {
@@ -145,7 +144,7 @@ namespace Pinwheel.Griffin.SplineTool
                 return;
             if (Prototypes.Count == 0)
                 return;
-            RenderTexture rt = new RenderTexture(MaskResolution, MaskResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture rt = new(MaskResolution, MaskResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             Internal_Apply(t, rt);
             Texture2D mask = GCommon.CreateTexture(MaskResolution, Color.clear);
             GCommon.CopyFromRT(mask, rt);

@@ -1,26 +1,25 @@
 // Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
- 
+
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
 {
     internal static class Run
     {
-        static List<BatchObject> listBatchObjects;
-        static EditorSettings editorSettings;
+        private static List<BatchObject> listBatchObjects;
+        private static EditorSettings editorSettings;
 
 
-        static int progressBarTotalMeshCount;
-        static int progressBarCurrentMeshIndex;
-        static bool progressBarCanceled;
+        private static int progressBarTotalMeshCount;
+        private static int progressBarCurrentMeshIndex;
+        private static bool progressBarCanceled;
 
 
         static public void RunConverter()
@@ -77,7 +76,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
 
             AssetDatabase.Refresh();
         }
-        static void RunLoopConverter(int loopIndex)
+        private static void RunLoopConverter(int loopIndex)
         {
             if (listBatchObjects[loopIndex] == null || listBatchObjects[loopIndex].mesh == null)
                 return;
@@ -92,7 +91,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
 
 
             //Save list of all generated assets
-            List<string> generatedAssetsPath = new List<string>();
+            List<string> generatedAssetsPath = new();
 
             int resolution = (int)Mathf.Pow(2, (int)editorSettings.saveFileResolution + 4);
 
@@ -109,7 +108,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
                 GeneratedAssetsImporter.ReimportTextures(generatedAssetsPath.ToArray(), resolution);
             }
         }
-        static bool GetPrefabNameAndSaveDirectory(Mesh currentMesh, out string prefabName, out string prefabSaveDirectory)
+        private static bool GetPrefabNameAndSaveDirectory(Mesh currentMesh, out string prefabName, out string prefabSaveDirectory)
         {
             prefabName = editorSettings.GetSaveAssetName(currentMesh, true);
             prefabSaveDirectory = editorSettings.GetAssetSaveDirectory(currentMesh, false, true);
@@ -136,7 +135,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
         {
             List<BatchObject> listBatchObjects = EditorWindow.active.listBatchObjects;
 
-            List<ModelImporter> modelImporters = new List<ModelImporter>();
+            List<ModelImporter> modelImporters = new();
 
 
             for (int i = 0; i < listBatchObjects.Count; i++)
@@ -161,7 +160,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
             UnityEditor.EditorUtility.ClearProgressBar();
         }
 
-        static void ExportTexture(Mesh mesh, int resolution, string saveDirectory, string prefabName, ref List<string> generatedAssetsPath)
+        private static void ExportTexture(Mesh mesh, int resolution, string saveDirectory, string prefabName, ref List<string> generatedAssetsPath)
         {
             if (editorSettings.combineSubmesh)
             {
@@ -170,13 +169,13 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
                 progressBarCanceled = UnityEditor.EditorUtility.DisplayCancelableProgressBar("Hold On", mesh.name, (float)progressBarCurrentMeshIndex / progressBarTotalMeshCount);
 
 
-                Texture2D texture = mesh.WireframeShader().GenerateWireframeTexture(resolution, editorSettings.solverType, editorSettings.solverReadFrom , - 1, editorSettings.solverNormalizeEdges, editorSettings.solverTryQuad, editorSettings.solverThickness, editorSettings.solverSmoothness);
+                Texture2D texture = mesh.WireframeShader().GenerateWireframeTexture(resolution, editorSettings.solverType, editorSettings.solverReadFrom, -1, editorSettings.solverNormalizeEdges, editorSettings.solverTryQuad, editorSettings.solverThickness, editorSettings.solverSmoothness);
 
                 SaveTexture(texture, editorSettings.saveFileFormat, saveDirectory, prefabName, ref generatedAssetsPath);
 
 
                 if (progressBarCanceled)
-                    return; 
+                    return;
             }
             else
             {
@@ -185,7 +184,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
                     ++progressBarCurrentMeshIndex;
 
                     progressBarCanceled = UnityEditor.EditorUtility.DisplayCancelableProgressBar("Hold On", mesh.name, (float)progressBarCurrentMeshIndex / progressBarTotalMeshCount);
-                        
+
 
                     Texture2D texture = mesh.WireframeShader().GenerateWireframeTexture(resolution, editorSettings.solverType, editorSettings.solverReadFrom, s, editorSettings.solverNormalizeEdges, editorSettings.solverTryQuad, editorSettings.solverThickness, editorSettings.solverSmoothness);
 
@@ -202,7 +201,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
             }
 
         }
-        static void SaveTexture(Texture2D texture, EditorSettings.Enum.SaveFileFormat fileFormat, string saveDirectory, string fileName, ref List<string> generatedAssetsPath)
+        private static void SaveTexture(Texture2D texture, EditorSettings.Enum.SaveFileFormat fileFormat, string saveDirectory, string fileName, ref List<string> generatedAssetsPath)
         {
             if (texture == null)
                 return;

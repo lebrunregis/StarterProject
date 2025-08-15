@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using UniGLTF;
 using UniGLTF.Extensions.VRMC_materials_mtoon;
@@ -9,8 +7,8 @@ namespace UniVRM10.VRM10Viewer
 {
     public class TinyMToonrMaterialImporter : IMaterialImporter
     {
-        private Material m_opaque;
-        private Material m_alphablend;
+        private readonly Material m_opaque;
+        private readonly Material m_alphablend;
         public TinyMToonrMaterialImporter(Material opaque, Material alphablend)
         {
             m_opaque = opaque;

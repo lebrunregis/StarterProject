@@ -66,7 +66,7 @@ namespace Pinwheel.Griffin.StampTool
 
         public static GTextureStampLayer Create()
         {
-            GTextureStampLayer layer = new GTextureStampLayer();
+            GTextureStampLayer layer = new();
             layer.Color = Color.white;
             layer.Metallic = 0;
             layer.Smoothness = 0;

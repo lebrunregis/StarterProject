@@ -78,7 +78,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct TransformPositionJob : IJobParallelFor
+        private struct TransformPositionJob : IJobParallelFor
         {
             public float4x4 transformMatrix;
             public NativeArray<float3> localPositions;
@@ -276,7 +276,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct CreateGridMapJob : IJob
+        private struct CreateGridMapJob : IJob
         {
             public bool move;
             public bool fix;
@@ -387,7 +387,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct ConvertSelectionJob : IJobParallelFor
+        private struct ConvertSelectionJob : IJobParallelFor
         {
             public float gridSize;
             public float radius;

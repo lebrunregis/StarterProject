@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ namespace Abiogenesis3d
         public Camera cam;
         public Transform player;
 
-        void EnsureSingleAudioListener()
+        private void EnsureSingleAudioListener()
         {
             var audioListener = GetComponent<AudioListener>();
             audioListener.enabled = true;
@@ -29,12 +28,12 @@ namespace Abiogenesis3d
                 }
             }
         }
-        void Start()
+        private void Start()
         {
             EnsureSingleAudioListener();
         }
 
-        void Update()
+        private void Update()
         {
             if (!cam) cam = Camera.main;
             if (!player) player = GameObject.FindGameObjectWithTag("Player")?.transform;

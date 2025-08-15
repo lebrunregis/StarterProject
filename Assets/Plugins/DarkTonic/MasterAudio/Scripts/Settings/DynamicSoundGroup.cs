@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     // ReSharper disable once CheckNamespace
-    public class DynamicSoundGroup : MonoBehaviour {
+    public class DynamicSoundGroup : MonoBehaviour
+    {
         // ReSharper disable InconsistentNaming
         public GameObject variationTemplate;
 
@@ -52,8 +54,8 @@ namespace DarkTonic.MasterAudio {
         public MasterAudio.DefaultGroupPlayType groupPlayType = MasterAudio.DefaultGroupPlayType.Always;
 
         public string busName = string.Empty; // only used to remember the bus name during group creation.
-		public bool isExistingBus; // marked from DGSC's only
-		public bool isCopiedFromDGSC; // so we know if it's existing Buses or new.
+        public bool isExistingBus; // marked from DGSC's only
+        public bool isCopiedFromDGSC; // so we know if it's existing Buses or new.
 
         public MasterAudioGroup.LimitMode limitMode = MasterAudioGroup.LimitMode.None;
         public int limitPerXFrames = 1;
@@ -76,8 +78,8 @@ namespace DarkTonic.MasterAudio {
         public bool copySettingsExpanded = false;
 
         public bool expandLinkedGroups = false;
-        public List<string> childSoundGroups = new List<string>();
-        public List<string> endLinkedGroups = new List<string>();
+        public List<string> childSoundGroups = new();
+        public List<string> endLinkedGroups = new();
         public MasterAudio.LinkedGroupSelectionType linkedStartGroupSelectionType = MasterAudio.LinkedGroupSelectionType.All;
         public MasterAudio.LinkedGroupSelectionType linkedStopGroupSelectionType = MasterAudio.LinkedGroupSelectionType.All;
 
@@ -85,7 +87,7 @@ namespace DarkTonic.MasterAudio {
         public int addressableUnusedSecondsLifespan = 0;
 #endif
 
-        public List<DynamicGroupVariation> groupVariations = new List<DynamicGroupVariation>();
+        public List<DynamicGroupVariation> groupVariations = new();
         // filled and used by Inspector only
 
         // ReSharper restore InconsistentNaming

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     [AddComponentMenu("Dark Tonic/Master Audio/Button Clicker")]
     // ReSharper disable once CheckNamespace
-    public class ButtonClicker : MonoBehaviour {
+    public class ButtonClicker : MonoBehaviour
+    {
         public const float SmallSizeMultiplier = 0.9f;
         public const float LargeSizeMultiplier = 1.1f;
 
@@ -28,14 +30,15 @@ namespace DarkTonic.MasterAudio {
         private Transform _trans;
 
         private readonly Dictionary<Transform, Vector3> _siblingClickScaleByTransform =
-            new Dictionary<Transform, Vector3>();
+            new();
 
         private readonly Dictionary<Transform, Vector3> _siblingHoverScaleByTransform =
-            new Dictionary<Transform, Vector3>();
+            new();
 
         // This script can be triggered from NGUI clickable elements only. 
         // ReSharper disable once UnusedMember.Local
-        private void Awake() {
+        private void Awake()
+        {
             _trans = transform;
             _originalSize = _trans.localScale;
             _smallerSize = _originalSize * SmallSizeMultiplier;
@@ -43,98 +46,124 @@ namespace DarkTonic.MasterAudio {
 
             var holder = _trans.parent;
 
-            if (resizeOnClick && resizeClickAllSiblings && holder != null) {
-                for (var i = 0; i < holder.transform.childCount; i++) {
+            if (resizeOnClick && resizeClickAllSiblings && holder != null)
+            {
+                for (var i = 0; i < holder.transform.childCount; i++)
+                {
                     var aChild = holder.transform.GetChild(i);
                     _siblingClickScaleByTransform.Add(aChild, aChild.localScale);
                 }
             }
 
-            if (!resizeOnHover || !resizeHoverAllSiblings || holder == null) {
+            if (!resizeOnHover || !resizeHoverAllSiblings || holder == null)
+            {
                 return;
             }
-            for (var i = 0; i < holder.transform.childCount; i++) {
+            for (var i = 0; i < holder.transform.childCount; i++)
+            {
                 var aChild = holder.transform.GetChild(i);
                 _siblingHoverScaleByTransform.Add(aChild, aChild.localScale);
             }
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnPress(bool isDown) {
-            if (isDown) {
-                if (!enabled) {
+        private void OnPress(bool isDown)
+        {
+            if (isDown)
+            {
+                if (!enabled)
+                {
                     return;
                 }
                 MasterAudio.PlaySoundAndForget(mouseDownSound);
 
-                if (!resizeOnClick) {
+                if (!resizeOnClick)
+                {
                     return;
                 }
                 _trans.localScale = _smallerSize;
 
                 var scales = _siblingClickScaleByTransform.GetEnumerator();
 
-                while (scales.MoveNext()) {
+                while (scales.MoveNext())
+                {
                     scales.Current.Key.localScale = scales.Current.Value * SmallSizeMultiplier;
                 }
-            } else {
-                if (enabled) {
+            }
+            else
+            {
+                if (enabled)
+                {
                     MasterAudio.PlaySoundAndForget(mouseUpSound);
                 }
                 // still want to restore size if disabled
 
-                if (!resizeOnClick) {
+                if (!resizeOnClick)
+                {
                     return;
                 }
                 _trans.localScale = _originalSize;
 
                 var scales = _siblingClickScaleByTransform.GetEnumerator();
 
-                while (scales.MoveNext()) {
+                while (scales.MoveNext())
+                {
                     scales.Current.Key.localScale = scales.Current.Value;
                 }
             }
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnClick() {
-            if (enabled) {
+        private void OnClick()
+        {
+            if (enabled)
+            {
                 MasterAudio.PlaySoundAndForget(mouseClickSound);
             }
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnHover(bool isOver) {
-            if (isOver) {
-                if (!enabled) {
+        private void OnHover(bool isOver)
+        {
+            if (isOver)
+            {
+                if (!enabled)
+                {
                     return;
                 }
                 MasterAudio.PlaySoundAndForget(mouseOverSound);
 
-                if (!resizeOnHover) {
+                if (!resizeOnHover)
+                {
                     return;
                 }
                 _trans.localScale = _largerSize;
 
                 var scales = _siblingHoverScaleByTransform.GetEnumerator();
 
-                while (scales.MoveNext()) {
+                while (scales.MoveNext())
+                {
                     scales.Current.Key.localScale = scales.Current.Value * LargeSizeMultiplier;
                 }
-            } else {
-                if (enabled) {
+            }
+            else
+            {
+                if (enabled)
+                {
                     MasterAudio.PlaySoundAndForget(mouseOutSound);
                 }
                 // still want to restore size if disabled
 
-                if (!resizeOnHover) {
+                if (!resizeOnHover)
+                {
                     return;
                 }
                 _trans.localScale = _originalSize;
 
                 var scales = _siblingHoverScaleByTransform.GetEnumerator();
 
-                while (scales.MoveNext()) {
+                while (scales.MoveNext())
+                {
                     scales.Current.Key.localScale = scales.Current.Value;
                 }
             }

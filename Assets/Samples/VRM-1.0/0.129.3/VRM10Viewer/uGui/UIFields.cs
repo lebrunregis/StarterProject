@@ -6,16 +6,16 @@ using UnityEngine.UI;
 namespace UniVRM10.VRM10Viewer
 {
     [Serializable]
-    class UIFields
+    internal class UIFields
     {
         [SerializeField]
-        Toggle ToggleMotionTPose = default;
+        private Toggle ToggleMotionTPose = default;
 
         [SerializeField]
-        Toggle ToggleMotionBVH = default;
+        private Toggle ToggleMotionBVH = default;
 
         [SerializeField]
-        ToggleGroup ToggleMotion = default;
+        private ToggleGroup ToggleMotion = default;
 
         public void Reset(ObjectMap map)
         {

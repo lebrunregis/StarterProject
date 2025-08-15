@@ -110,7 +110,7 @@ namespace MagicaCloth2
 
         internal NativeReference<bool> existFixedTeam;
 
-        bool isValid;
+        private bool isValid;
 
         //=========================================================================================
         public void Dispose()
@@ -479,7 +479,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct EnableTransformJob : IJob
+        private struct EnableTransformJob : IJob
         {
             public DataChunk chunk;
             public bool sw;
@@ -594,7 +594,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct RestoreTransformJob : IJobParallelForTransform
+        private struct RestoreTransformJob : IJobParallelForTransform
         {
             [NativeDisableParallelForRestriction]
             public NativeReference<bool> existFixedTeam;
@@ -672,7 +672,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct RestoreBaseTransformJob : IJobParallelForTransform
+        private struct RestoreBaseTransformJob : IJobParallelForTransform
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<ExBitFlag8> flagList;
@@ -755,7 +755,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct ReadTransformJob : IJobParallelForTransform
+        private struct ReadTransformJob : IJobParallelForTransform
         {
             public int fixedUpdateCount;
 
@@ -870,7 +870,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct WriteTransformJob : IJobParallelForTransform
+        private struct WriteTransformJob : IJobParallelForTransform
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<ExBitFlag8> flagList;
@@ -1001,7 +1001,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct ReadComponentTransformJob : IJobParallelForTransform
+        private struct ReadComponentTransformJob : IJobParallelForTransform
         {
             [Unity.Collections.WriteOnly]
             public NativeArray<float3> positionArray;
@@ -1030,7 +1030,7 @@ namespace MagicaCloth2
         //=========================================================================================
         public void InformationLog(StringBuilder allsb)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine($"========== Transform Manager ==========");
             if (IsValid() == false)
             {

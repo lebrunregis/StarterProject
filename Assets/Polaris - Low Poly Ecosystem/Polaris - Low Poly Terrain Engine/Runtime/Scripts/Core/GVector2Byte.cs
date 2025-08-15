@@ -1,16 +1,14 @@
 #if GRIFFIN
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Pinwheel.Griffin
 {
     public struct GVector2Byte
     {
-        public static readonly GVector2Byte bottomLeft = new GVector2Byte(0, 0);
-        public static readonly GVector2Byte topLeft = new GVector2Byte(0, 255);
-        public static readonly GVector2Byte topRight = new GVector2Byte(255, 255);
-        public static readonly GVector2Byte bottomRight = new GVector2Byte(255, 0);
+        public static readonly GVector2Byte bottomLeft = new(0, 0);
+        public static readonly GVector2Byte topLeft = new(0, 255);
+        public static readonly GVector2Byte topRight = new(255, 255);
+        public static readonly GVector2Byte bottomRight = new(255, 0);
 
         public byte x;
         public byte y;

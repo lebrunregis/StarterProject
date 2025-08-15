@@ -220,7 +220,7 @@ namespace Pinwheel.Griffin
 
         public static GGrassPrototype Create(Texture2D tex)
         {
-            GGrassPrototype prototype = new GGrassPrototype();
+            GGrassPrototype prototype = new();
             prototype.Shape = GGrassShape.Quad;
             prototype.Texture = tex;
             prototype.ShadowCastingMode = ShadowCastingMode.On;
@@ -236,7 +236,7 @@ namespace Pinwheel.Griffin
 
         public static GGrassPrototype Create(GameObject prefab)
         {
-            GGrassPrototype prototype = new GGrassPrototype();
+            GGrassPrototype prototype = new();
             prototype.Shape = GGrassShape.DetailObject;
             prototype.Prefab = prefab;
             prototype.Size = Vector3.one;
@@ -282,7 +282,7 @@ namespace Pinwheel.Griffin
 
         public static explicit operator GGrassPrototype(DetailPrototype p)
         {
-            GGrassPrototype proto = new GGrassPrototype();
+            GGrassPrototype proto = new();
             proto.Color = p.healthyColor;
             proto.Shape = p.usePrototypeMesh ? GGrassShape.DetailObject : GGrassShape.Quad;
             proto.Texture = p.prototypeTexture;
@@ -297,7 +297,7 @@ namespace Pinwheel.Griffin
 
         public static explicit operator DetailPrototype(GGrassPrototype p)
         {
-            DetailPrototype proto = new DetailPrototype();
+            DetailPrototype proto = new();
             proto.usePrototypeMesh = p.Shape == GGrassShape.DetailObject;
             proto.prototypeTexture = p.Texture;
             proto.prototype = p.Prefab;

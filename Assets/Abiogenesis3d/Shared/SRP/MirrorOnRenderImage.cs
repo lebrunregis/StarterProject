@@ -11,7 +11,7 @@ namespace Abiogenesis3d
         public string target;
         public GameObject targetGO;
 
-        void OnRenderImage(RenderTexture src, RenderTexture dest)
+        private void OnRenderImage(RenderTexture src, RenderTexture dest)
         {
             if (renderImageCallback?.GetInvocationList().Length > 0)
                 renderImageCallback.Invoke(src, dest);

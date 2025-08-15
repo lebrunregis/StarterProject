@@ -1,11 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.Jobs;
-using Unity.Jobs;
 using Unity.Collections;
-using Unity.Burst;
+using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -54,8 +50,8 @@ namespace Pinwheel.Griffin
             Vector2 v12 = Vector2.zero;
 
             GSubdivNode currentNode;
-            GSubdivNode leftNode = new GSubdivNode();
-            GSubdivNode rightNode = new GSubdivNode();
+            GSubdivNode leftNode = new();
+            GSubdivNode rightNode = new();
 
             metadata[GGeometryJobUtilities.METADATA_NEW_VERTEX_CREATED] = 0;
             for (int res = meshBaseResolution; res < meshResolution; ++res)

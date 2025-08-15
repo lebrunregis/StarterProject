@@ -98,7 +98,7 @@ namespace Pinwheel.Griffin.TextureTool
 
         public static GCurveParams Create()
         {
-            GCurveParams param = new GCurveParams();
+            GCurveParams param = new();
             param.MasterCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
             param.RedCurve = AnimationCurve.Linear(0, 0, 1, 1);
             param.GreenCurve = AnimationCurve.Linear(0, 0, 1, 1);

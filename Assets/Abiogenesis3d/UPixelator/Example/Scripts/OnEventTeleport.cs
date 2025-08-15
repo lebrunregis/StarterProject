@@ -2,33 +2,33 @@ using UnityEngine;
 
 namespace Abiogenesis3d.UPixelator_Demo
 {
-public class OnEventTeleport : MonoBehaviour
-{
-    public Transform target;
-    public Transform destination;
-    public float delay;
-
-    bool shouldTeleport;
-    float eventTime;
-
-    void Update()
+    public class OnEventTeleport : MonoBehaviour
     {
-        if (!shouldTeleport) return;
+        public Transform target;
+        public Transform destination;
+        public float delay;
 
-        if (Time.time - eventTime >= delay)
-            Teleport();
-    }
+        private bool shouldTeleport;
+        private float eventTime;
 
-    public void OnEvent()
-    {
-        shouldTeleport = true;
-        eventTime = Time.time;
-    }
+        private void Update()
+        {
+            if (!shouldTeleport) return;
 
-    void Teleport()
-    {
-        target.position = destination.position;
-        shouldTeleport = false;
+            if (Time.time - eventTime >= delay)
+                Teleport();
+        }
+
+        public void OnEvent()
+        {
+            shouldTeleport = true;
+            eventTime = Time.time;
+        }
+
+        private void Teleport()
+        {
+            target.position = destination.position;
+            shouldTeleport = false;
+        }
     }
-}
 }

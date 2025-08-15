@@ -7,7 +7,7 @@ namespace Abiogenesis3d
         public Behaviour behaviour;
         public KeyCode toggleKey;
 
-        void Update()
+        private void Update()
         {
             if (Input.GetKeyDown(toggleKey))
                 behaviour.enabled = !behaviour.enabled;

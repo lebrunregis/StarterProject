@@ -202,7 +202,7 @@ namespace Pinwheel.Griffin.DataTool
                                 CreateNewSplatPrototypesGroup = true;
                             }
                             GUI.enabled = DesData.Shading.Splats != null && !DesData.Shading.Splats.IsSampleAsset;
-                            GUIContent newSplatsGroupGUI = new GUIContent("New Splats Group", "There is no splats group assigned or sample splats group is in used.");
+                            GUIContent newSplatsGroupGUI = new("New Splats Group", "There is no splats group assigned or sample splats group is in used.");
                             CreateNewSplatPrototypesGroup = EditorGUILayout.Toggle(newSplatsGroupGUI, CreateNewSplatPrototypesGroup);
                             GUI.enabled = true;
                         }
@@ -230,7 +230,7 @@ namespace Pinwheel.Griffin.DataTool
                                 CreateNewTreePrototypesGroup = true;
                             }
                             GUI.enabled = DesData.Foliage.Trees != null && !DesData.Foliage.Trees.IsSampleAsset;
-                            GUIContent newTreeGroupGUI = new GUIContent("New Trees Group", "There is no trees group assigned or sample trees group is in used.");
+                            GUIContent newTreeGroupGUI = new("New Trees Group", "There is no trees group assigned or sample trees group is in used.");
                             CreateNewTreePrototypesGroup = EditorGUILayout.Toggle(newTreeGroupGUI, CreateNewTreePrototypesGroup);
                             GUI.enabled = true;
                         }
@@ -258,7 +258,7 @@ namespace Pinwheel.Griffin.DataTool
                                 CreateNewGrassPrototypesGroup = true;
                             }
                             GUI.enabled = DesData.Foliage.Grasses != null && !DesData.Foliage.Grasses.IsSampleAsset;
-                            GUIContent newGrassGroupGUI = new GUIContent("New Grasses Group", "There is no grasses group assigned or sample grasses group is in used.");
+                            GUIContent newGrassGroupGUI = new("New Grasses Group", "There is no grasses group assigned or sample grasses group is in used.");
                             CreateNewGrassPrototypesGroup = EditorGUILayout.Toggle(newGrassGroupGUI, CreateNewGrassPrototypesGroup);
                             GUI.enabled = true;
                             EditorGUI.BeginChangeCheck();
@@ -306,7 +306,7 @@ namespace Pinwheel.Griffin.DataTool
                 GBackup.TryCreateInitialBackup(HISTORY_PREFIX, DesTerrain, GCommon.AllResourceFlags);
             }
 
-            GUnityTerrainDataImporter importer = new GUnityTerrainDataImporter();
+            GUnityTerrainDataImporter importer = new();
             importer.SrcTerrain = SrcTerrain;
             importer.SrcData = SrcData;
             importer.DesData = DesData;
@@ -336,7 +336,7 @@ namespace Pinwheel.Griffin.DataTool
         private void DoBulkImport()
         {
             string[] guid = AssetDatabase.FindAssets("t:TerrainData", new string[] { Directory });
-            List<TerrainData> terrainDatas = new List<TerrainData>();
+            List<TerrainData> terrainDatas = new();
             for (int i = 0; i < guid.Length; ++i)
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid[i]);
@@ -356,7 +356,7 @@ namespace Pinwheel.Griffin.DataTool
 
                     GBackup.TryCreateInitialBackup(HISTORY_PREFIX, t, GCommon.AllResourceFlags);
 
-                    GUnityTerrainDataImporter importer = new GUnityTerrainDataImporter();
+                    GUnityTerrainDataImporter importer = new();
                     importer.SrcTerrain = null;
                     importer.SrcData = srcData;
                     importer.DesData = t.TerrainData;

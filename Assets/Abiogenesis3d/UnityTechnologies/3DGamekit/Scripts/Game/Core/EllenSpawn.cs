@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace Gamekit3D
@@ -11,21 +9,21 @@ namespace Gamekit3D
         public float effectTime;
         public Material[] EllenRespawnMaterials;
         public GameObject respawnParticles;
-        Material[] EllenMaterials;
+        private Material[] EllenMaterials;
 
-        MaterialPropertyBlock m_PropertyBlock;
-        Renderer m_Renderer;
-        Vector4 pos;
-        Vector3 renderBounds;
+        private MaterialPropertyBlock m_PropertyBlock;
+        private Renderer m_Renderer;
+        private Vector4 pos;
+        private Vector3 renderBounds;
 
-        const string k_BoundsName = "_bounds";
-        const string k_CutoffName = "_Cutoff";
-        float m_Timer;
-        float m_EndTime;
+        private const string k_BoundsName = "_bounds";
+        private const string k_CutoffName = "_Cutoff";
+        private float m_Timer;
+        private readonly float m_EndTime;
 
-        bool m_Started = false;
+        private bool m_Started = false;
 
-        void Awake()
+        private void Awake()
         {
             respawnParticles.SetActive(false);
             m_PropertyBlock = new MaterialPropertyBlock();
@@ -47,7 +45,7 @@ namespace Gamekit3D
             this.enabled = false;
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             m_Started = false;
             m_Renderer.materials = EllenRespawnMaterials;
@@ -64,7 +62,7 @@ namespace Gamekit3D
             m_Timer = 0.0f;
         }
 
-        void Update()
+        private void Update()
         {
             if (!m_Started)
                 return;
@@ -81,7 +79,7 @@ namespace Gamekit3D
             }
         }
 
-        void Set(float cutoff)
+        private void Set(float cutoff)
         {
             renderBounds = m_Renderer.bounds.size;
             pos.y = renderBounds.y;

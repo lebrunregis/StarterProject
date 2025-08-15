@@ -1,8 +1,8 @@
 #if GRIFFIN
 using System.Collections.Generic;
-using UnityEngine;
 using Unity.Collections;
 using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.StampTool
 {
@@ -156,8 +156,8 @@ namespace Pinwheel.Griffin.StampTool
 
         private Texture2D falloffTexture;
 
-        private Vector3[] worldPoints = new Vector3[4];
-        private Vector2[] uvPoints = new Vector2[4];
+        private readonly Vector3[] worldPoints = new Vector3[4];
+        private readonly Vector2[] uvPoints = new Vector2[4];
 
         private Dictionary<string, RenderTexture> tempRt;
         private Dictionary<string, RenderTexture> TempRt
@@ -283,13 +283,13 @@ namespace Pinwheel.Griffin.StampTool
 #endif
 
             int sampleCount = layer.InstanceCount;
-            NativeArray<bool> cullResult = new NativeArray<bool>(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<GPrototypeInstanceInfo> instanceInfo = new NativeArray<GPrototypeInstanceInfo>(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<int> selectedPrototypeIndices = new NativeArray<int>(layer.PrototypeIndices.ToArray(), Allocator.TempJob);
-            GTextureNativeDataDescriptor<Color32> maskHandle = new GTextureNativeDataDescriptor<Color32>(layerMask);
+            NativeArray<bool> cullResult = new(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<GPrototypeInstanceInfo> instanceInfo = new(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<int> selectedPrototypeIndices = new(layer.PrototypeIndices.ToArray(), Allocator.TempJob);
+            GTextureNativeDataDescriptor<Color32> maskHandle = new(layerMask);
 
             {
-                GSampleInstanceJob job = new GSampleInstanceJob()
+                GSampleInstanceJob job = new()
                 {
                     cullResult = cullResult,
                     instanceInfo = instanceInfo,
@@ -310,15 +310,15 @@ namespace Pinwheel.Griffin.StampTool
             }
 
             Vector3 terrainSize = t.TerrainData.Geometry.Size;
-            NativeArray<RaycastCommand> raycastCommands = new NativeArray<RaycastCommand>(instanceInfo.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<RaycastHit> hits = new NativeArray<RaycastHit>(instanceInfo.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<RaycastCommand> raycastCommands = new(instanceInfo.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<RaycastHit> hits = new(instanceInfo.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
             for (int i = 0; i < raycastCommands.Length; ++i)
             {
                 GPrototypeInstanceInfo info = instanceInfo[i];
-                Vector3 from = new Vector3(t.transform.position.x + info.position.x * terrainSize.x, 10000, t.transform.position.z + info.position.z * terrainSize.z);
+                Vector3 from = new(t.transform.position.x + info.position.x * terrainSize.x, 10000, t.transform.position.z + info.position.z * terrainSize.z);
 #if UNITY_2022_2_OR_NEWER
-            QueryParameters q = new QueryParameters(layer.WorldRaycastMask, false, QueryTriggerInteraction.Ignore, false);
-            RaycastCommand cmd = new RaycastCommand(from, Vector3.down, q, float.MaxValue);
+                QueryParameters q = new(layer.WorldRaycastMask, false, QueryTriggerInteraction.Ignore, false);
+                RaycastCommand cmd = new(from, Vector3.down, q, float.MaxValue);
 #else
                 RaycastCommand cmd = new RaycastCommand(from, Vector3.down, float.MaxValue, layer.WorldRaycastMask, 1);
 #endif
@@ -456,7 +456,7 @@ namespace Pinwheel.Griffin.StampTool
             if (!TempRt.ContainsKey(key) ||
                 TempRt[key] == null)
             {
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 rt.wrapMode = TextureWrapMode.Clamp;
                 TempRt[key] = rt;
             }
@@ -464,7 +464,7 @@ namespace Pinwheel.Griffin.StampTool
             {
                 TempRt[key].Release();
                 Object.DestroyImmediate(TempRt[key]);
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 rt.wrapMode = TextureWrapMode.Clamp;
                 TempRt[key] = rt;
             }
@@ -485,11 +485,11 @@ namespace Pinwheel.Griffin.StampTool
         {
             if (t.TerrainData == null)
                 return;
-            Vector3 terrainSize = new Vector3(
+            Vector3 terrainSize = new(
                 t.TerrainData.Geometry.Width,
                 t.TerrainData.Geometry.Height,
                 t.TerrainData.Geometry.Length);
-            Vector3 scale = new Vector3(
+            Vector3 scale = new(
                 GUtilities.InverseLerpUnclamped(0, terrainSize.x, Scale.x),
                 GUtilities.InverseLerpUnclamped(0, terrainSize.y, Scale.y),
                 GUtilities.InverseLerpUnclamped(0, terrainSize.z, Scale.z));

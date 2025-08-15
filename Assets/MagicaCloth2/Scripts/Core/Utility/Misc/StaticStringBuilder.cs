@@ -10,7 +10,7 @@ namespace MagicaCloth2
     /// </summary>
     public class StaticStringBuilder
     {
-        private static StringBuilder stringBuilder = new StringBuilder(1024);
+        private static readonly StringBuilder stringBuilder = new(1024);
 
         /// <summary>
         /// StringBuilderのインスタンスを取得する

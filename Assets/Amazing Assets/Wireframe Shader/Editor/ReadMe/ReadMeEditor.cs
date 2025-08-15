@@ -2,9 +2,8 @@
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
 using System.IO;
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor
@@ -13,11 +12,11 @@ namespace AmazingAssets.WireframeShader.Editor
     [InitializeOnLoad]
     public class ReadMeEditor : UnityEditor.Editor
     {
-        const float k_Space = 16f;
+        private const float k_Space = 16f;
 
 
-        GUIStyle guiStyleTitle;
-        GUIStyle GUIStyleTitle
+        private GUIStyle guiStyleTitle;
+        private GUIStyle GUIStyleTitle
         {
             get
             {
@@ -33,8 +32,8 @@ namespace AmazingAssets.WireframeShader.Editor
             }
         }
 
-        GUIStyle guiStyleHeading;
-        GUIStyle GUIStyleHeading
+        private GUIStyle guiStyleHeading;
+        private GUIStyle GUIStyleHeading
         {
             get
             {
@@ -48,8 +47,8 @@ namespace AmazingAssets.WireframeShader.Editor
                 return guiStyleHeading;
             }
         }
-        GUIStyle guiStyleLink;
-        GUIStyle GUIStyleLink
+        private GUIStyle guiStyleLink;
+        private GUIStyle GUIStyleLink
         {
             get
             {
@@ -68,8 +67,8 @@ namespace AmazingAssets.WireframeShader.Editor
             }
         }
 
-        Texture2D m_logo;
-        Texture2D Logo
+        private Texture2D m_logo;
+        private Texture2D Logo
         {
             get
             {
@@ -148,7 +147,7 @@ namespace AmazingAssets.WireframeShader.Editor
             }
         }
 
-        bool LinkLabel(GUIContent label, params GUILayoutOption[] options)
+        private bool LinkLabel(GUIContent label, params GUILayoutOption[] options)
         {
             var position = GUILayoutUtility.GetRect(label, GUIStyleLink, options);
 
@@ -162,7 +161,7 @@ namespace AmazingAssets.WireframeShader.Editor
 
             return GUI.Button(position, label, GUIStyleLink);
         }
-        string GetThisAssetProjectPath()
+        private string GetThisAssetProjectPath()
         {
             string fileName = "AmazingAssets.WireframeShader.Editor";
 
@@ -177,14 +176,14 @@ namespace AmazingAssets.WireframeShader.Editor
                 return string.Empty;
             }
         }
-        Texture2D LoadIcon(string name)
+        private Texture2D LoadIcon(string name)
         {
             string iconPath = Path.Combine(GetThisAssetProjectPath(), "Editor", "ReadMe", name);
             if (File.Exists(iconPath) == false)
                 iconPath += ".png";
 
             byte[] bytes = File.ReadAllBytes(iconPath);
-            Texture2D icon = new Texture2D(2, 2);
+            Texture2D icon = new(2, 2);
             icon.LoadImage(bytes);
 
             return icon;

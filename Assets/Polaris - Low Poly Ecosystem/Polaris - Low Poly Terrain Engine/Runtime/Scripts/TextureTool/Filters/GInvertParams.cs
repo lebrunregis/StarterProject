@@ -64,7 +64,7 @@ namespace Pinwheel.Griffin.TextureTool
 
         public static GInvertParams Create()
         {
-            GInvertParams param = new GInvertParams();
+            GInvertParams param = new();
             param.invertRed = true;
             param.invertGreen = true;
             param.invertBlue = true;

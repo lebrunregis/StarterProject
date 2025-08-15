@@ -9,7 +9,7 @@ namespace DarkTonic.MasterAudio.Examples
         private Transform _trans;
 
         // ReSharper disable once UnusedMember.Local
-        void Awake()
+        private void Awake()
         {
             useGUILayout = false;
             _trans = transform;
@@ -33,7 +33,7 @@ namespace DarkTonic.MasterAudio.Examples
 
         // Update is called once per frame
         // ReSharper disable once UnusedMember.Local
-        void Update()
+        private void Update()
         {
             var moveAmt = 10f * AudioUtil.FrameTime;
 

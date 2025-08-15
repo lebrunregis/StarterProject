@@ -37,7 +37,7 @@ namespace Pinwheel.Griffin.TextureTool
 
         private void SetUp(GHeightMapFromMeshGeneratorParams param, RenderTexture targetRt)
         {
-            GameObject camGo = new GameObject("~HeightMapFromMeshCamera");
+            GameObject camGo = new("~HeightMapFromMeshCamera");
             camGo.transform.position = -Vector3.one * 5000;
             camGo.transform.rotation = Quaternion.Euler(90, 0, 0);
             camGo.transform.localScale = Vector3.one;
@@ -58,7 +58,7 @@ namespace Pinwheel.Griffin.TextureTool
             gameObject.transform.rotation = param.Rotation;
             gameObject.transform.localScale = param.Scale;
 
-            GameObject model = new GameObject("~Model");
+            GameObject model = new("~Model");
             GUtilities.ResetTransform(model.transform, gameObject.transform);
             model.transform.localPosition = -param.SrcMesh.bounds.center;
 

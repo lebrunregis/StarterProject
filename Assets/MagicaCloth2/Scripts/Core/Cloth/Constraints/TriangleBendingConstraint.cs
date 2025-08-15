@@ -19,7 +19,7 @@ namespace MagicaCloth2
         /// <summary>
         /// ボリュームとして処理する判定フラグ
         /// </summary>
-        const sbyte VOLUME_SIGN = 100;
+        private const sbyte VOLUME_SIGN = 100;
 
         public enum Method
         {
@@ -130,7 +130,7 @@ namespace MagicaCloth2
         /// <summary>
         /// ボリューム計算の浮動小数点誤差を回避するための倍数
         /// </summary>
-        const float VolumeScale = 1000.0f;
+        private const float VolumeScale = 1000.0f;
 
         //=========================================================================================
         public TriangleBendingConstraint()
@@ -153,7 +153,7 @@ namespace MagicaCloth2
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine($"[TriangleBendConstraint]");
             sb.AppendLine($"  -trianglePairArray:{trianglePairArray.ToSummary()}");
             sb.AppendLine($"  -restAngleOrVolumeArray:{restAngleOrVolumeArray.ToSummary()}");
@@ -233,7 +233,7 @@ namespace MagicaCloth2
                             //     \|/
                             //   v3 +
                             // 2/3が共通の辺, 0/1が対角点
-                            int4 vtx = new int4(dp.x, dp.y, edge.x, edge.y);
+                            int4 vtx = new(dp.x, dp.y, edge.x, edge.y);
 
                             // ４点がすべて固定ならば除外する
                             var attr0 = proxyMesh.attributes[vtx.x];
@@ -338,7 +338,7 @@ namespace MagicaCloth2
             return constraintData;
         }
 
-        static void InitVolume(VirtualMesh proxyMesh, int v0, int v1, int v2, int v3, out float volumeRest, out sbyte signFlag)
+        private static void InitVolume(VirtualMesh proxyMesh, int v0, int v1, int v2, int v3, out float volumeRest, out sbyte signFlag)
         {
             // 0/1が対角点,2/3が共通辺
             // ここは実行時とボリューム値を合わせるためワールド座標で計算する必要がある。
@@ -352,7 +352,7 @@ namespace MagicaCloth2
             signFlag = VOLUME_SIGN; // Volume
         }
 
-        static void InitDihedralAngle(VirtualMesh proxyMesh, int v0, int v1, int v2, int v3, out float restAngle, out sbyte signFlag)
+        private static void InitDihedralAngle(VirtualMesh proxyMesh, int v0, int v1, int v2, int v3, out float restAngle, out sbyte signFlag)
         {
             // 0/1が対角点,2/3が共通辺
             float3 pos0 = proxyMesh.localPositions[v0];
@@ -586,7 +586,7 @@ namespace MagicaCloth2
                     if (cnt > 0)
                     {
                         int pindex2 = pindex * 3;
-                        float3 add = new float3(sumPt[pindex2], sumPt[pindex2 + 1], sumPt[pindex2 + 2]);
+                        float3 add = new(sumPt[pindex2], sumPt[pindex2 + 1], sumPt[pindex2 + 2]);
                         add /= cnt;
                         // データは固定小数点なので戻す
                         add *= InterlockUtility.ToFloat;
@@ -601,7 +601,7 @@ namespace MagicaCloth2
             }
         }
 
-        static bool CalcVolume(
+        private static bool CalcVolume(
             in float3x4 nextPosBuffer,
             in float4 invMassBuffer,
             float volumeRest,
@@ -647,7 +647,7 @@ namespace MagicaCloth2
             return true;
         }
 
-        static bool CalcDihedralAngle(
+        private static bool CalcDihedralAngle(
             float sign,
             in float3x4 nextPosBuffer,
             in float4 invMassBuffer,

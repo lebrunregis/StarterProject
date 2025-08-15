@@ -2,18 +2,18 @@
 
 namespace CitrioN.Common
 {
-  public class SerializedAction
-  {
-    private Action action;
-
-    public SerializedAction(Action action)
+    public class SerializedAction
     {
-      this.action = action;
-    }
+        private readonly Action action;
 
-    public void Invoke()
-    {
-      action?.Invoke();
+        public SerializedAction(Action action)
+        {
+            this.action = action;
+        }
+
+        public void Invoke()
+        {
+            action?.Invoke();
+        }
     }
-  }
 }

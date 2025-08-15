@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Gamekit3D
 {
@@ -27,10 +25,10 @@ namespace Gamekit3D
 
         public EventData[] events;
 
-        protected Dictionary<int, EventData> m_EventLookup = new Dictionary<int, EventData>();
+        protected Dictionary<int, EventData> m_EventLookup = new();
         protected Animator m_Animator;
 
-        void Start()
+        private void Start()
         {
             m_Animator = GetComponent<Animator>();
             if (m_Animator == null)

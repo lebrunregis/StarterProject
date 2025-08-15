@@ -1,5 +1,4 @@
 #if GRIFFIN
-using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -30,7 +29,7 @@ namespace Pinwheel.Griffin
             GEditorCommon.Foldout(label, true, id, () =>
             {
                 string filePath = AssetDatabase.GetAssetPath(instance);
-                FileInfo fileInfo = new FileInfo(filePath);
+                FileInfo fileInfo = new(filePath);
                 if (fileInfo != null)
                 {
                     long length = fileInfo.Length;

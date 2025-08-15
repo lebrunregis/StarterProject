@@ -1,8 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using Pinwheel.Griffin.SplineTool;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {

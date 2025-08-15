@@ -1,8 +1,8 @@
 #if GRIFFIN
-using System.Collections.Generic;
-using UnityEngine;
 using System;
+using System.Collections.Generic;
 using Unity.Collections;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.SplineTool
 {
@@ -94,7 +94,7 @@ namespace Pinwheel.Griffin.SplineTool
                 (s0.StartIndex == endIndex && s0.EndIndex == startIndex));
             if (s != null)
                 return s;
-            GSplineSegment newSegment = new GSplineSegment();
+            GSplineSegment newSegment = new();
             newSegment.StartIndex = startIndex;
             newSegment.EndIndex = endIndex;
             Segments.Add(newSegment);
@@ -184,7 +184,7 @@ namespace Pinwheel.Griffin.SplineTool
 
         public List<int> FindSegments(int anchorIndex)
         {
-            List<int> indices = new List<int>();
+            List<int> indices = new();
             for (int i = 0; i < Segments.Count; ++i)
             {
                 if (Segments[i].StartIndex == anchorIndex ||
@@ -253,7 +253,7 @@ namespace Pinwheel.Griffin.SplineTool
                 }
             }
 
-            List<int> segmentIndices = new List<int>();
+            List<int> segmentIndices = new();
             for (int i = 0; i < Segments.Count; ++i)
             {
                 GSplineSegment s = Segments[i];
@@ -286,7 +286,7 @@ namespace Pinwheel.Griffin.SplineTool
 
         public NativeArray<GSplineAnchor.GSweepTestData> GetAnchorSweepTestData()
         {
-            NativeArray<GSplineAnchor.GSweepTestData> data = new NativeArray<GSplineAnchor.GSweepTestData>(Anchors.Count, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<GSplineAnchor.GSweepTestData> data = new(Anchors.Count, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
             for (int i = 0; i < Anchors.Count; ++i)
             {
                 data[i] = Anchors[i].SweepTestData;
@@ -296,7 +296,7 @@ namespace Pinwheel.Griffin.SplineTool
 
         public NativeArray<GSplineSegment.GSweepTestData> GetSegmentSweepTestData()
         {
-            NativeArray<GSplineSegment.GSweepTestData> data = new NativeArray<GSplineSegment.GSweepTestData>(Segments.Count, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<GSplineSegment.GSweepTestData> data = new(Segments.Count, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
             for (int i = 0; i < Segments.Count; ++i)
             {
                 data[i] = Segments[i].SweepTestData;

@@ -1,7 +1,4 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Jobs;
 
 namespace Pinwheel.Griffin.Rendering

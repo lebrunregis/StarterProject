@@ -103,7 +103,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
 
             if (rootTransform == null)
                 hasUnknownRootTransform = true;
-                //throw new System.ArgumentNullException(nameof(rootTransform));
+            //throw new System.ArgumentNullException(nameof(rootTransform));
 
             if (renderers == null)
                 throw new System.ArgumentNullException(nameof(renderers));
@@ -123,7 +123,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
             {
 
                 var renderer = renderers[i];
-                
+
                 if (renderer == null)
 
                     throw new System.ArgumentException(string.Format("The renderer at index {0} is null.", i), nameof(renderers));
@@ -143,16 +143,16 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
                     throw new System.ArgumentException(string.Format("The mesh filter for renderer at index {0} has no mesh.", i), nameof(renderers));
 
                 else if (!meshFilter.sharedMesh.isReadable)
-                    
+
                     throw new System.ArgumentException(string.Format("The mesh in the mesh filter for renderer at index {0} is not readable.", i), nameof(renderers));
 
 
 
                 meshes[i] = meshFilter.sharedMesh;
 
-                if(hasUnknownRootTransform)
+                if (hasUnknownRootTransform)
                 {
-                    rootTransform = topLevelParents[rendererTransform];              
+                    rootTransform = topLevelParents[rendererTransform];
                 }
 
                 transforms[i] = rootTransform.worldToLocalMatrix * rendererTransform.localToWorldMatrix;
@@ -194,10 +194,10 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
 
         public static Mesh CombineMeshes(Transform rootTransform, SkinnedMeshRenderer[] renderers, out Material[] resultMaterials, out Transform[] resultBones)
         {
-            
+
             //if (rootTransform == null)
 
-                //throw new System.ArgumentNullException(nameof(rootTransform));
+            //throw new System.ArgumentNullException(nameof(rootTransform));
 
             if (renderers == null)
 
@@ -215,7 +215,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
 
             var bones = new Transform[renderers.Length][];
 
-            Dictionary<string, BlendShapeFrame> blendShapes = new Dictionary<string, BlendShapeFrame>();
+            Dictionary<string, BlendShapeFrame> blendShapes = new();
 
             int vertexOffset = 0;
 
@@ -277,10 +277,10 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
                     MeshFilter mf = t == null ? null : t.GetComponent<MeshFilter>();
                     Mesh m = mf == null ? null : mf.sharedMesh;
 
-                    if(m != null)
+                    if (m != null)
                     {
                         Debug.LogWarning($"You have a static mesh attached to the bone:\"{t.name}\". The mesh combination logic will not deal with this properly, since that would require it to modify the original game object hierarchy. You might get erroneous results on mesh combination.");
-                    }             
+                    }
                 }
 
 
@@ -550,7 +550,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
                 var meshBindposes = mesh.bindposes;
 
 
-                
+
                 // Transform vertices with bones to keep only one bindpose
 
                 if (meshBones != null && meshBoneWeights != null && meshBoneWeights.Length > 0 && meshBindposes != null && meshBindposes.Length > 0 && meshBones.Length == meshBindposes.Length)
@@ -601,7 +601,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
 
 
                 // Transforms the vertices, normals and tangents using the mesh transform
-                
+
                 TransformVertices(meshVertices, ref meshTransform);
 
                 TransformNormals(meshNormals, ref normalsTransform);
@@ -723,7 +723,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
 
             Mesh combinedMesh = MeshUtils.CreateMesh(resultVertices, resultIndices, resultNormals, resultTangents, resultColors, resultBoneWeights, resultUVs, resultBindposes, null);
 
-            if(blendShapes != null && blendShapes.Count > 0)
+            if (blendShapes != null && blendShapes.Count > 0)
             {
                 foreach (BlendShapeFrame blendShape in blendShapes.Values)
                 {

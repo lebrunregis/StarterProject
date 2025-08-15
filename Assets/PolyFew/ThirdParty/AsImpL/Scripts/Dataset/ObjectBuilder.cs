@@ -23,7 +23,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
         /// </summary>
         public string alternativeTexPath = null;
 #endif
-        private BuildStatus buildStatus = new BuildStatus();
+        private readonly BuildStatus buildStatus = new();
         private DataSet currDataSet;
         private GameObject currParentObj;
         private Dictionary<string, Material> currMaterials;
@@ -39,10 +39,10 @@ namespace BrainFailProductions.PolyFew.AsImpL
         /// </summary>
         public int NumImportedMaterials { get { return currMaterials != null ? currMaterials.Count : 0; } }
 
-        private static int MAX_VERTICES_LIMIT_FOR_A_MESH = 65000;
-        private static int MAX_INDICES_LIMIT_FOR_A_MESH = 65000;
+        private static readonly int MAX_VERTICES_LIMIT_FOR_A_MESH = 65000;
+        private static readonly int MAX_INDICES_LIMIT_FOR_A_MESH = 65000;
         // maximum number of vertices that can be used for triangles
-        private static int MAX_VERT_COUNT = (MAX_VERTICES_LIMIT_FOR_A_MESH - 2) / 3 * 3;
+        private static readonly int MAX_VERT_COUNT = (MAX_VERTICES_LIMIT_FOR_A_MESH - 2) / 3 * 3;
 
 
         /// <summary>
@@ -231,8 +231,8 @@ namespace BrainFailProductions.PolyFew.AsImpL
                 float t2 = w3.y - w1.y;
 
                 float r = 1.0f / (s1 * t2 - s2 * t1);
-                Vector3 sdir = new Vector3((t2 * x1 - t1 * x2) * r, (t2 * y1 - t1 * y2) * r, (t2 * z1 - t1 * z2) * r);
-                Vector3 tdir = new Vector3((s1 * x2 - s2 * x1) * r, (s1 * y2 - s2 * y1) * r, (s1 * z2 - s2 * z1) * r);
+                Vector3 sdir = new((t2 * x1 - t1 * x2) * r, (t2 * y1 - t1 * y2) * r, (t2 * z1 - t1 * z2) * r);
+                Vector3 tdir = new((s1 * x2 - s2 * x1) * r, (s1 * y2 - s2 * y1) * r, (s1 * z2 - s2 * z1) * r);
 
                 tan1[i1] += sdir;
                 tan1[i2] += sdir;
@@ -351,17 +351,17 @@ namespace BrainFailProductions.PolyFew.AsImpL
 #endif
             bool splitGrp = false;
 
-            DataSet.FaceGroupData grp = new DataSet.FaceGroupData();
+            DataSet.FaceGroupData grp = new();
             grp.name = objData.faceGroups[buildStatus.grpIdx].name;
             grp.materialName = objData.faceGroups[buildStatus.grpIdx].materialName;
 
 
             // data for sub-object
-            DataSet.ObjectData subObjData = new DataSet.ObjectData();
+            DataSet.ObjectData subObjData = new();
             subObjData.hasNormals = objData.hasNormals;
             subObjData.hasColors = objData.hasColors;
 
-            HashSet<int> vertIdxSet = new HashSet<int>();
+            HashSet<int> vertIdxSet = new();
 
             bool conv2sided = buildOptions != null && buildOptions.convertToDoubleSided;
 
@@ -392,7 +392,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
             // create an empty (group) object in case the group has been splitted
             if (buildStatus.meshPartIdx == 1)
             {
-                GameObject grpObj = new GameObject();
+                GameObject grpObj = new();
                 grpObj.transform.SetParent(buildStatus.currObjGameObject.transform, false);
                 grpObj.name = grp.name;
                 buildStatus.subObjParent = grpObj;
@@ -443,7 +443,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
         private GameObject ImportSubObject(GameObject parentObj, DataSet.ObjectData objData, Dictionary<string, Material> mats)
         {
             bool conv2sided = buildOptions != null && buildOptions.convertToDoubleSided;
-            GameObject go = new GameObject();
+            GameObject go = new();
             go.name = objData.name;
             int count = 0;
             if (parentObj.transform)
@@ -468,7 +468,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
             //Debug.Log( "Importing sub object:" + objData.Name );
 
             // count vertices needed for all the faces and map face indices to new vertices
-            Dictionary<string, int> vIdxCount = new Dictionary<string, int>();
+            Dictionary<string, int> vIdxCount = new();
             int vcount = 0;
             foreach (DataSet.FaceIndices fi in objData.allFaces)
             {
@@ -537,7 +537,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
             MeshFilter meshFilter = go.AddComponent<MeshFilter>();
             go.AddComponent<MeshRenderer>();
 
-            Mesh mesh = new Mesh();
+            Mesh mesh = new();
 #if UNITY_2017_3_OR_NEWER
             if (Using32bitIndices())
             {
@@ -656,7 +656,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
             {
                 shaderName = "Standard (Specular setup)";
             }
-            Material newMaterial = new Material(Shader.Find(shaderName)); // "Standard (Specular setup)"
+            Material newMaterial = new(Shader.Find(shaderName)); // "Standard (Specular setup)"
             newMaterial.name = md.materialName;
 
             float shinLog = Mathf.Log(md.shininess, 2);
@@ -687,8 +687,8 @@ namespace BrainFailProductions.PolyFew.AsImpL
                     // update diffuse texture if an opacity map was found
                     int w = md.diffuseTex.width;
                     int h = md.diffuseTex.width;
-                    Texture2D albedoTexture = new Texture2D(w, h, TextureFormat.ARGB32, false);
-                    Color col = new Color();
+                    Texture2D albedoTexture = new(w, h, TextureFormat.ARGB32, false);
+                    Color col = new();
                     for (int x = 0; x < albedoTexture.width; x++)
                     {
                         for (int y = 0; y < albedoTexture.height; y++)
@@ -735,8 +735,8 @@ namespace BrainFailProductions.PolyFew.AsImpL
                 mode = ModelUtil.MtlBlendMode.FADE;
                 int w = md.opacityTex.width;
                 int h = md.opacityTex.width;
-                Texture2D albedoTexture = new Texture2D(w, h, TextureFormat.ARGB32, false);
-                Color col = new Color();
+                Texture2D albedoTexture = new(w, h, TextureFormat.ARGB32, false);
+                Color col = new();
                 bool detected = false;
                 for (int x = 0; x < albedoTexture.width; x++)
                 {
@@ -815,8 +815,8 @@ namespace BrainFailProductions.PolyFew.AsImpL
 
             if (md.specularTex != null)
             {
-                Texture2D glossTexture = new Texture2D(md.specularTex.width, md.specularTex.height, TextureFormat.ARGB32, false);
-                Color col = new Color();
+                Texture2D glossTexture = new(md.specularTex.width, md.specularTex.height, TextureFormat.ARGB32, false);
+                Color col = new();
                 float pix = 0.0f;
                 for (int x = 0; x < glossTexture.width; x++)
                 {

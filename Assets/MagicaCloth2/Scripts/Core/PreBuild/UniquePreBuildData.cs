@@ -15,10 +15,10 @@ namespace MagicaCloth2
         public int version;
         public ResultCode buildResult;
 
-        public List<RenderSetupData.UniqueSerializationData> renderSetupDataList = new List<RenderSetupData.UniqueSerializationData>();
+        public List<RenderSetupData.UniqueSerializationData> renderSetupDataList = new();
 
         public VirtualMesh.UniqueSerializationData proxyMesh;
-        public List<VirtualMesh.UniqueSerializationData> renderMeshList = new List<VirtualMesh.UniqueSerializationData>();
+        public List<VirtualMesh.UniqueSerializationData> renderMeshList = new();
 
         //=========================================================================================
         public ResultCode DataValidate()

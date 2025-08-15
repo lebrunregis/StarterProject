@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace UniVRM10.VRM10Viewer
 {
-    class Loaded : IDisposable
+    internal class Loaded : IDisposable
     {
-        RuntimeGltfInstance m_instance;
-        Vrm10Instance m_vrm;
+        private readonly RuntimeGltfInstance m_instance;
+        private readonly Vrm10Instance m_vrm;
         public Vrm10Instance Instance => m_vrm;
         public Vrm10RuntimeControlRig ControlRig => m_vrm.Runtime.ControlRig;
         public Vrm10Runtime Runtime => m_vrm?.Runtime;

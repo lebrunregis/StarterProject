@@ -1,10 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Jobs;
 using Unity.Collections;
-using Unity.Burst;
+using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -32,7 +29,7 @@ namespace Pinwheel.Griffin
             ResetStates();
             ResetMarker();
 
-            GSubdivNode nodes0 = new GSubdivNode()
+            GSubdivNode nodes0 = new()
             {
                 v0 = Vector2.up,
                 v1 = Vector2.one,
@@ -42,7 +39,7 @@ namespace Pinwheel.Griffin
             creationState[0] = GGeometryJobUtilities.STATE_CREATED;
             GGeometryJobUtilities.MarkVertices(ref vertexMarker, ref nodes0);
 
-            GSubdivNode nodes1 = new GSubdivNode()
+            GSubdivNode nodes1 = new()
             {
                 v0 = Vector2.right,
                 v1 = Vector2.zero,
@@ -57,8 +54,8 @@ namespace Pinwheel.Griffin
             int leftNodeIndex = 0;
             int rightNodeIndex = 0;
             GSubdivNode currentNode;
-            GSubdivNode leftNode = new GSubdivNode();
-            GSubdivNode rightNode = new GSubdivNode();
+            GSubdivNode leftNode = new();
+            GSubdivNode rightNode = new();
 
             for (int res = 0; res < resolution; ++res)
             {

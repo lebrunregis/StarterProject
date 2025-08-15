@@ -8,7 +8,7 @@ namespace Abiogenesis3d
         public Transform target;
         public Vector3 offset;
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             if (!target) return;
             transform.position = target.position + offset;

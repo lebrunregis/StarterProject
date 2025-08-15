@@ -13,7 +13,7 @@ namespace MagicaCloth2
     {
         //=========================================================================================
         [MenuItem("GameObject/Create Other/Magica Cloth2/Magica Cloth", priority = 200)]
-        static void AddMagicaCloth()
+        private static void AddMagicaCloth()
         {
             var obj = AddObject("Magica Cloth", false, false);
             var comp = obj.AddComponent<MagicaCloth>();
@@ -21,7 +21,7 @@ namespace MagicaCloth2
         }
 
         [MenuItem("GameObject/Create Other/Magica Cloth2/Magica Sphere Collider", priority = 200)]
-        static void AddSphereCollider()
+        private static void AddSphereCollider()
         {
             var obj = AddObject("Magica Sphere Collider", true, true);
             var comp = obj.AddComponent<MagicaSphereCollider>();
@@ -31,7 +31,7 @@ namespace MagicaCloth2
         }
 
         [MenuItem("GameObject/Create Other/Magica Cloth2/Magica Capsule Collider", priority = 200)]
-        static void AddCapsuleCollider()
+        private static void AddCapsuleCollider()
         {
             var obj = AddObject("Magica Capsule Collider", true, true);
             var comp = obj.AddComponent<MagicaCapsuleCollider>();
@@ -43,7 +43,7 @@ namespace MagicaCloth2
         }
 
         [MenuItem("GameObject/Create Other/Magica Cloth2/Magica Plane Collider", priority = 200)]
-        static void AddPlaneCollider()
+        private static void AddPlaneCollider()
         {
             var obj = AddObject("Magica Plane Collider", true, true);
             var comp = obj.AddComponent<MagicaPlaneCollider>();
@@ -51,7 +51,7 @@ namespace MagicaCloth2
         }
 
         [MenuItem("GameObject/Create Other/Magica Cloth2/Magica Wind Zone", priority = 200)]
-        static void AddWindZone()
+        private static void AddWindZone()
         {
             var obj = AddObject("Magica Wind Zone", false, true);
             var comp = obj.AddComponent<MagicaWindZone>();
@@ -59,7 +59,7 @@ namespace MagicaCloth2
         }
 
         [MenuItem("GameObject/Create Other/Magica Cloth2/Magica Settings", priority = 200)]
-        static void AddSettings()
+        private static void AddSettings()
         {
             var obj = AddObject("Magica Settings", false, true);
             var comp = obj.AddComponent<MagicaSettings>();
@@ -71,11 +71,11 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="objName"></param>
         /// <returns></returns>
-        static GameObject AddObject(string objName, bool addParentName, bool autoScale = false)
+        private static GameObject AddObject(string objName, bool addParentName, bool autoScale = false)
         {
             var parent = Selection.activeGameObject;
 
-            GameObject obj = new GameObject(addParentName && parent ? objName + " (" + parent.name + ")" : objName);
+            GameObject obj = new(addParentName && parent ? objName + " (" + parent.name + ")" : objName);
             if (parent)
             {
                 obj.transform.parent = parent.transform;
@@ -96,9 +96,9 @@ namespace MagicaCloth2
 
         //=========================================================================================
         [MenuItem("Tools/Magica Cloth2/Manager information", false)]
-        static async void DispClothManagerInfo()
+        private static async void DispClothManagerInfo()
         {
-            StringBuilder allsb = new StringBuilder();
+            StringBuilder allsb = new();
 
             await ClothEditorManager.InformationLog(allsb);
 
@@ -195,7 +195,7 @@ namespace MagicaCloth2
             // file
             DateTime dt = DateTime.Now;
             var filename = dt.ToString("yyyy-MM-dd-HHmm-ss");
-            StreamWriter sw = new StreamWriter($"./MagicaCloth2_SysInfo_{filename}.txt", false);
+            StreamWriter sw = new($"./MagicaCloth2_SysInfo_{filename}.txt", false);
             sw.WriteLine(allsb.ToString());
             sw.Flush();
             sw.Close();

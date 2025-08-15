@@ -1,11 +1,11 @@
-using UnityEditor;
 using RelationsInspector;
+using UnityEditor;
 
 public class RelationsInspectorMenuItem
 {
-	[MenuItem("Window/RelationsInspector")]
-	static void SpawnWindow()
-	{
-		EditorWindow.GetWindow<RelationsInspectorWindow>("Relations", typeof(SceneView));
-	}
+    [MenuItem("Window/RelationsInspector")]
+    private static void SpawnWindow()
+    {
+        EditorWindow.GetWindow<RelationsInspectorWindow>("Relations", typeof(SceneView));
+    }
 }

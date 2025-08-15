@@ -1,23 +1,14 @@
 #if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using UnityEngine;
 using UnityEditor;
-using UnityEditor.ShortcutManagement;
-using UnityEngine.UIElements;
-using UnityEngine.SceneManagement;
-using UnityEditor.SceneManagement;
 using UnityEditor.IMGUI.Controls;
-using Type = System.Type;
-using static VHierarchy.Libs.VUtils;
+using UnityEditor.SceneManagement;
+using UnityEngine;
 using static VHierarchy.Libs.VGUI;
+using static VHierarchy.Libs.VUtils;
 // using static VTools.VDebug;
-using static VHierarchy.VHierarchy;
-using static VHierarchy.VHierarchyData;
-using static VHierarchy.VHierarchyCache;
 
 #if UNITY_6000_2_OR_NEWER
 using TreeViewItem = UnityEditor.IMGUI.Controls.TreeViewItem<int>;
@@ -186,8 +177,8 @@ namespace VHierarchy
 
         }
 
-        object treeViewController;
-        object treeViewControllerData;
+        private object treeViewController;
+        private object treeViewControllerData;
 
         public float currentScrollPos;
 

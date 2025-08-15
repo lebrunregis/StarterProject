@@ -11,6 +11,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
         private int _audioSources = -1;
 
         [MenuItem("Window/Master Audio/Master Audio Sound Upgrader")]
+        private
         // ReSharper disable once UnusedMember.Local
         static void Init()
         {
@@ -25,7 +26,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
         // ReSharper disable once UnusedMember.Local
         // ReSharper disable once InconsistentNaming
-        void OnGUI()
+        private void OnGUI()
         {
             _scrollPos = GUI.BeginScrollView(
                     new Rect(0, 0, position.width, position.height),
@@ -133,7 +134,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
             var audSources = new List<GameObject>();
             foreach (var t in sources)
             {
-                var src = (AudioSource)t;
+                var src = t;
 
                 var plController = src.GetComponent<PlaylistController>();
                 if (plController != null)

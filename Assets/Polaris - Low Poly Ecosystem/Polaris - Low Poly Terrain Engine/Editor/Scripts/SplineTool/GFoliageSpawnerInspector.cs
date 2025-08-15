@@ -75,8 +75,8 @@ namespace Pinwheel.Griffin.SplineTool
 
         private class GBaseGUI
         {
-            public static readonly GUIContent SPLINE_CREATOR = new GUIContent("Spline Creator", "The Spline Creator component which this modifier belongs to");
-            public static readonly GUIContent LIVE_PREVIEW = new GUIContent("Live Preview", "Draw a preview on the terrain");
+            public static readonly GUIContent SPLINE_CREATOR = new("Spline Creator", "The Spline Creator component which this modifier belongs to");
+            public static readonly GUIContent LIVE_PREVIEW = new("Live Preview", "Draw a preview on the terrain");
         }
 
         private void DrawBaseGUI()
@@ -95,9 +95,9 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Falloff";
             public static readonly string ID = "spline-foliage-spawner-falloff";
 
-            public static readonly GUIContent FALL_OFF = new GUIContent("Falloff", "Falloff factor of the spline effect, from the center to the edge");
-            public static readonly GUIContent FALL_OFF_NOISE = new GUIContent("Falloff Noise", "Noise map in world space to blend with the falloff curve");
-            public static readonly GUIContent FALL_OFF_NOISE_SIZE = new GUIContent("Falloff Noise Size", "Size of the falloff noise in world space");
+            public static readonly GUIContent FALL_OFF = new("Falloff", "Falloff factor of the spline effect, from the center to the edge");
+            public static readonly GUIContent FALL_OFF_NOISE = new("Falloff Noise", "Noise map in world space to blend with the falloff curve");
+            public static readonly GUIContent FALL_OFF_NOISE_SIZE = new("Falloff Noise Size", "Size of the falloff noise in world space");
         }
 
         private void DrawFalloffGUI()
@@ -120,7 +120,7 @@ namespace Pinwheel.Griffin.SplineTool
         {
             public static readonly string LABEL = "Mask";
             public static readonly string ID = "spline-foliage-spawner-mask";
-            public static readonly GUIContent MASK_RESOLUTION = new GUIContent("Mask Resolution", "Resolution of the mask which is rendered by the spline, this mask will be used for sample foliage instances");
+            public static readonly GUIContent MASK_RESOLUTION = new("Mask Resolution", "Resolution of the mask which is rendered by the spline, this mask will be used for sample foliage instances");
         }
 
         private void DrawMaskGUI()
@@ -136,9 +136,9 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Trees";
             public static readonly string ID = "spline-foliage-spawner-trees";
 
-            public static readonly GUIContent SPAWN_TREES = new GUIContent("Spawn Trees", "Toggle trees spawning along the spline");
-            public static readonly GUIContent PROTOTYPES = new GUIContent("Prototypes", "The tree types to spawn");
-            public static readonly GUIContent DENSITY = new GUIContent("Density", "Number of instances per a meter-squared");
+            public static readonly GUIContent SPAWN_TREES = new("Spawn Trees", "Toggle trees spawning along the spline");
+            public static readonly GUIContent PROTOTYPES = new("Prototypes", "The tree types to spawn");
+            public static readonly GUIContent DENSITY = new("Density", "Number of instances per a meter-squared");
         }
 
         private void DrawTreesGUI()
@@ -161,9 +161,9 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Grasses";
             public static readonly string ID = "spline-foliage-spawner-grasses";
 
-            public static readonly GUIContent SPAWN_GRASSES = new GUIContent("Spawn Grasses", "Toggle grasses spawning along the spline");
-            public static readonly GUIContent PROTOTYPES = new GUIContent("Prototypes", "The grass types to spawn");
-            public static readonly GUIContent DENSITY = new GUIContent("Density", "Number of instances per a meter-squared");
+            public static readonly GUIContent SPAWN_GRASSES = new("Spawn Grasses", "Toggle grasses spawning along the spline");
+            public static readonly GUIContent PROTOTYPES = new("Prototypes", "The grass types to spawn");
+            public static readonly GUIContent DENSITY = new("Density", "Number of instances per a meter-squared");
         }
 
         private void DrawGrassesGUI()
@@ -186,10 +186,10 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Rotation & Scale";
             public static readonly string ID = "spline-foliage-spawner-rotation-scale";
 
-            public static readonly GUIContent MIN_ROTATION = new GUIContent("Min Rotation", "Minimum rotation of each instance, in degree, on Y axis");
-            public static readonly GUIContent MAX_ROTATION = new GUIContent("Max Rotation", "Maximum rotation of each instance, in degree, on Y axis");
-            public static readonly GUIContent MIN_SCALE = new GUIContent("Min Scale", "Minimum scale of each instance");
-            public static readonly GUIContent MAX_SCALE = new GUIContent("Max Scale", "Maximum scale of each instance");
+            public static readonly GUIContent MIN_ROTATION = new("Min Rotation", "Minimum rotation of each instance, in degree, on Y axis");
+            public static readonly GUIContent MAX_ROTATION = new("Max Rotation", "Maximum rotation of each instance, in degree, on Y axis");
+            public static readonly GUIContent MIN_SCALE = new("Min Scale", "Minimum scale of each instance");
+            public static readonly GUIContent MAX_SCALE = new("Max Scale", "Maximum scale of each instance");
         }
 
         private void DrawRotationScaleGUI()
@@ -208,9 +208,9 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Action";
             public static readonly string ID = "spline-foliage-spawner-action";
 
-            public static readonly GUIContent SPAWN_TREES = new GUIContent("Spawn Trees");
-            public static readonly GUIContent SPAWN_GRASSES = new GUIContent("Spawn Grasses");
-            public static readonly GUIContent SPAWN_TREES_GRASSES = new GUIContent("Spawn Trees & Grasses");
+            public static readonly GUIContent SPAWN_TREES = new("Spawn Trees");
+            public static readonly GUIContent SPAWN_GRASSES = new("Spawn Grasses");
+            public static readonly GUIContent SPAWN_TREES_GRASSES = new("Spawn Trees & Grasses");
         }
 
         private void DrawActionGUI()
@@ -333,14 +333,14 @@ namespace Pinwheel.Griffin.SplineTool
             if (!previewTextures.ContainsKey(t) ||
                 previewTextures[t] == null)
             {
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 previewTextures[t] = rt;
             }
             else if (previewTextures[t].width != resolution || previewTextures[t].height != resolution)
             {
                 previewTextures[t].Release();
                 Object.DestroyImmediate(previewTextures[t]);
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 previewTextures[t] = rt;
             }
 

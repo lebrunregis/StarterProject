@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace MagicaCloth2
 {
-    interface ITransform
+    internal interface ITransform
     {
         /// <summary>
         /// 利用しているすべてのトランスフォームをtransformSetに追加する

@@ -2,5 +2,5 @@ using UnityEngine;
 
 namespace Abiogenesis3d
 {
-    public class FakeStopMotionIgnore : MonoBehaviour {}
+    public class FakeStopMotionIgnore : MonoBehaviour { }
 }

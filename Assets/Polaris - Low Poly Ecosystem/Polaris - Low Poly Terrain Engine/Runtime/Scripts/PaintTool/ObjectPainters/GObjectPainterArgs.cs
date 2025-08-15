@@ -6,7 +6,7 @@ namespace Pinwheel.Griffin.PaintTool
 {
     public struct GObjectPainterArgs
     {
-        public Vector3 HitPoint { get; set; }        
+        public Vector3 HitPoint { get; set; }
         public Vector3[] WorldPointCorners { get; internal set; }
         public Texture2D Mask { get; set; }
         public bool EnableTerrainMask { get; set; }

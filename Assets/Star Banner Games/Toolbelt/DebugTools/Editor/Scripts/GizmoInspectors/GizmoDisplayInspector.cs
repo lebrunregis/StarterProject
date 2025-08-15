@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
 using System;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace SBG.Toolbelt.DebugTools.Editor
 {
-	[CustomEditor(typeof(GizmoDisplay))]
-	public abstract class GizmoDisplayInspector : UnityEditor.Editor
-	{
-		private GizmoDisplay _gimzo;
+    [CustomEditor(typeof(GizmoDisplay))]
+    public abstract class GizmoDisplayInspector : UnityEditor.Editor
+    {
+        private GizmoDisplay _gimzo;
 
         protected SerializedProperty _alwaysDisplay;
         protected SerializedProperty _displayMode;
@@ -35,7 +33,7 @@ namespace SBG.Toolbelt.DebugTools.Editor
         }
 
         public override void OnInspectorGUI()
-		{
+        {
             serializedObject.Update();
 
             ResetAttributeStates();

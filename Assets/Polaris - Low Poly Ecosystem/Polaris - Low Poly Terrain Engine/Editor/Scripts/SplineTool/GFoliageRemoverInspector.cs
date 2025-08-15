@@ -72,8 +72,8 @@ namespace Pinwheel.Griffin.SplineTool
 
         private class GBaseGUI
         {
-            public static readonly GUIContent SPLINE_CREATOR = new GUIContent("Spline Creator", "The Spline Creator component which this modifier belongs to");
-            public static readonly GUIContent LIVE_PREVIEW = new GUIContent("Live Preview", "Draw a preview on the terrain");
+            public static readonly GUIContent SPLINE_CREATOR = new("Spline Creator", "The Spline Creator component which this modifier belongs to");
+            public static readonly GUIContent LIVE_PREVIEW = new("Live Preview", "Draw a preview on the terrain");
         }
 
         private void DrawBaseGUI()
@@ -92,9 +92,9 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Falloff";
             public static readonly string ID = "spline-foliage-remover-falloff";
 
-            public static readonly GUIContent FALL_OFF = new GUIContent("Falloff", "Falloff factor of the spline effect, from the center to the edge");
-            public static readonly GUIContent FALL_OFF_NOISE = new GUIContent("Falloff Noise", "Noise map in world space to blend with the falloff curve");
-            public static readonly GUIContent FALL_OFF_NOISE_SIZE = new GUIContent("Falloff Noise Size", "Size of the falloff noise in world space");
+            public static readonly GUIContent FALL_OFF = new("Falloff", "Falloff factor of the spline effect, from the center to the edge");
+            public static readonly GUIContent FALL_OFF_NOISE = new("Falloff Noise", "Noise map in world space to blend with the falloff curve");
+            public static readonly GUIContent FALL_OFF_NOISE_SIZE = new("Falloff Noise Size", "Size of the falloff noise in world space");
         }
 
         private void DrawFalloffGUI()
@@ -117,7 +117,7 @@ namespace Pinwheel.Griffin.SplineTool
         {
             public static readonly string LABEL = "Mask";
             public static readonly string ID = "spline-foliage-remover-mask";
-            public static readonly GUIContent MASK_RESOLUTION = new GUIContent("Mask Resolution", "Resolution of the mask which is rendered by the spline, this mask will be used for sample foliage instances");
+            public static readonly GUIContent MASK_RESOLUTION = new("Mask Resolution", "Resolution of the mask which is rendered by the spline, this mask will be used for sample foliage instances");
         }
 
         private void DrawMaskGUI()
@@ -133,8 +133,8 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Trees";
             public static readonly string ID = "spline-foliage-remover-trees";
 
-            public static readonly GUIContent REMOVE_TREES = new GUIContent("Remove Trees", "Toggle trees removing along the spline");
-            public static readonly GUIContent PROTOTYPES = new GUIContent("Prototypes", "The tree types to remove");
+            public static readonly GUIContent REMOVE_TREES = new("Remove Trees", "Toggle trees removing along the spline");
+            public static readonly GUIContent PROTOTYPES = new("Prototypes", "The tree types to remove");
         }
 
         private void DrawTreesGUI()
@@ -156,8 +156,8 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Grasses";
             public static readonly string ID = "spline-foliage-remover-grasses";
 
-            public static readonly GUIContent REMOVE_GRASSES = new GUIContent("Remove Grasses", "Toggle grasses removing along the spline");
-            public static readonly GUIContent PROTOTYPES = new GUIContent("Prototypes", "The grass types to remove");
+            public static readonly GUIContent REMOVE_GRASSES = new("Remove Grasses", "Toggle grasses removing along the spline");
+            public static readonly GUIContent PROTOTYPES = new("Prototypes", "The grass types to remove");
         }
 
         private void DrawGrassesGUI()
@@ -178,9 +178,9 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Action";
             public static readonly string ID = "spline-foliage-remover-action";
 
-            public static readonly GUIContent REMOVE_TREES = new GUIContent("Remove Trees");
-            public static readonly GUIContent REMOVE_GRASSES = new GUIContent("Remove Grasses");
-            public static readonly GUIContent REMOVE_TREES_GRASSES = new GUIContent("Remove Trees & Grasses");
+            public static readonly GUIContent REMOVE_TREES = new("Remove Trees");
+            public static readonly GUIContent REMOVE_GRASSES = new("Remove Grasses");
+            public static readonly GUIContent REMOVE_TREES_GRASSES = new("Remove Trees & Grasses");
         }
 
         private void DrawActionGUI()
@@ -304,14 +304,14 @@ namespace Pinwheel.Griffin.SplineTool
             if (!previewTextures.ContainsKey(t) ||
                 previewTextures[t] == null)
             {
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 previewTextures[t] = rt;
             }
             else if (previewTextures[t].width != resolution || previewTextures[t].height != resolution)
             {
                 previewTextures[t].Release();
                 Object.DestroyImmediate(previewTextures[t]);
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 previewTextures[t] = rt;
             }
 

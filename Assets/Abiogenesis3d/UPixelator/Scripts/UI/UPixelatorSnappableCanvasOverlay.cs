@@ -5,14 +5,14 @@ namespace Abiogenesis3d
     [ExecuteInEditMode]
     public class UPixelatorSnappableCanvasOverlay : MonoBehaviour
     {
-        Camera cam;
-        UPixelator uPixelator;
-        RectTransform rectTransform;
-        Vector3 storedPosition;
+        private Camera cam;
+        private UPixelator uPixelator;
+        private RectTransform rectTransform;
+        private Vector3 storedPosition;
         public bool scaleFactorFromPixelMultiplier = true;
         public float snapSize = 1;
 
-        void OnEnable()
+        private void OnEnable()
         {
             var canvas = GetComponentInParent<Canvas>();
             if (!canvas)
@@ -52,12 +52,12 @@ namespace Abiogenesis3d
             Utils.RunAtEndOfFrameOrdered(() => RestorePosition(), 0, this);
         }
 
-        void RestorePosition()
+        private void RestorePosition()
         {
             rectTransform.anchoredPosition = storedPosition;
         }
 
-        void SnapPosition()
+        private void SnapPosition()
         {
             storedPosition = rectTransform.anchoredPosition;
 
@@ -71,7 +71,7 @@ namespace Abiogenesis3d
             rectTransform.anchoredPosition = new Vector2(x, y);
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             if (!cam) return;
             if (!uPixelator) return;

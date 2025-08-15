@@ -1,20 +1,20 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor
 {
     public class WireframeRenderingOptionsDrawer : WireframeMaterialBasePropertyDrawer
     {
-        static string[] renderingOptionNames = new string[] { "Opaque",
+        private static readonly string[] renderingOptionNames = new string[] { "Opaque",
                                                                   "Transparent/Simple", "Transparent/ZWrite", "Transparent/2 Sided",
                                                                   "Cutout/Simple", "Cutout/2 Sided",
                                                                   "Addative/Simple", "Addative/ZWrite",
                                                                   "Multiply/Simple", "Multiply/ZWrite" };
-        static int[] renderingOptionValues = new int[] { 0,
+        private static readonly int[] renderingOptionValues = new int[] { 0,
                                                              1, 2, 3,
                                                              4, 5,
                                                              6, 7,

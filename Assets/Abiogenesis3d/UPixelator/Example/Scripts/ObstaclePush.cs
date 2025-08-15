@@ -2,20 +2,20 @@ using UnityEngine;
 
 namespace Abiogenesis3d.UPixelator_Demo
 {
-public class ObstaclePush : MonoBehaviour
-{
-    public float forceMagnitude = 1;
-
-    void OnControllerColliderHit(ControllerColliderHit hit)
+    public class ObstaclePush : MonoBehaviour
     {
-        Rigidbody rb = hit.collider.attachedRigidbody;
-        if (rb == null) return;
+        public float forceMagnitude = 1;
 
-        Vector3 forceDirection = hit.gameObject.transform.position - transform.position;
-        forceDirection.y = 0;
-        forceDirection.Normalize();
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            Rigidbody rb = hit.collider.attachedRigidbody;
+            if (rb == null) return;
 
-        rb.AddForceAtPosition(forceDirection * forceMagnitude, transform.position, ForceMode.Impulse);
+            Vector3 forceDirection = hit.gameObject.transform.position - transform.position;
+            forceDirection.y = 0;
+            forceDirection.Normalize();
+
+            rb.AddForceAtPosition(forceDirection * forceMagnitude, transform.position, ForceMode.Impulse);
+        }
     }
-}
 }

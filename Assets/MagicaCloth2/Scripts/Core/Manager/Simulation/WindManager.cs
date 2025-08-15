@@ -54,12 +54,12 @@ namespace MagicaCloth2
 
         public int WindCount => windDataArray?.Count ?? 0;
 
-        bool isValid;
+        private bool isValid;
 
         /// <summary>
         /// WindIDとゾーンコンポーネントの関連辞書
         /// </summary>
-        Dictionary<int, MagicaWindZone> windZoneDict = new Dictionary<int, MagicaWindZone>();
+        private readonly Dictionary<int, MagicaWindZone> windZoneDict = new();
 
         //=========================================================================================
         public void Dispose()
@@ -201,7 +201,7 @@ namespace MagicaCloth2
         //=========================================================================================
         public void InformationLog(StringBuilder allsb)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine($"========== Wind Manager ==========");
             if (IsValid() == false)
             {

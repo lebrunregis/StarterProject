@@ -132,7 +132,7 @@ namespace Pinwheel.Griffin.HelpTool
             List<GHelpEntry> entries = instance.Entries;
             int total = entries.Count;
 
-            Dictionary<GCategory, int> countPerCategory = new Dictionary<GCategory, int>();
+            Dictionary<GCategory, int> countPerCategory = new();
             foreach (GCategory c in Enum.GetValues(typeof(GCategory)))
             {
                 int count = entries.FindAll(e => e.Category == c).Count;

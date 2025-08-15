@@ -1,8 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.ErosionTool
 {
@@ -45,7 +43,7 @@ namespace Pinwheel.Griffin.ErosionTool
 
         private Vector3 GetSimulationBounds(List<GStylizedTerrain> terrains)
         {
-            Vector3 bounds = new Vector3();
+            Vector3 bounds = new();
             bounds.x = Mathf.CeilToInt(Simulator.DetailLevel * Simulator.transform.lossyScale.x);
             bounds.z = Mathf.CeilToInt(Simulator.DetailLevel * Simulator.transform.lossyScale.z);
             for (int i = 0; i < terrains.Count; ++i)
@@ -62,12 +60,12 @@ namespace Pinwheel.Griffin.ErosionTool
                 simulationData.Release();
             }
 
-            if (simulationMask!=null)
+            if (simulationMask != null)
             {
                 simulationMask.Release();
             }
 
-            if (erosionMap!=null)
+            if (erosionMap != null)
             {
                 erosionMap.Release();
             }
@@ -104,10 +102,10 @@ namespace Pinwheel.Griffin.ErosionTool
                 Vector3 terrainSize = t.TerrainData.Geometry.Size;
                 Vector3[] terrainWorldCorners = new Vector3[4]
                 {
-                    new Vector3(terrainPos.x, 0, terrainPos.z),
-                    new Vector3(terrainPos.x, 0, terrainPos.z + terrainSize.z),
-                    new Vector3(terrainPos.x + terrainSize.x, 0, terrainPos.z + terrainSize.z),
-                    new Vector3(terrainPos.x + terrainSize.x, 0, terrainPos.z)
+                    new(terrainPos.x, 0, terrainPos.z),
+                    new(terrainPos.x, 0, terrainPos.z + terrainSize.z),
+                    new(terrainPos.x + terrainSize.x, 0, terrainPos.z + terrainSize.z),
+                    new(terrainPos.x + terrainSize.x, 0, terrainPos.z)
                 };
 
                 Vector2[] uvCorner = new Vector2[4];

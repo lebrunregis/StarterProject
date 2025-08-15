@@ -8,7 +8,7 @@ namespace Abiogenesis3d
 {
     public partial class Utils
     {
-        private static List<(Action action, int order)> actions = new List<(Action action, int order)>();
+        private static readonly List<(Action action, int order)> actions = new();
         private static Coroutine coroutine = null;
 
         public static void RunAtEndOfFrameOrdered(Action action, int order, MonoBehaviour caller)
@@ -35,8 +35,8 @@ namespace Abiogenesis3d
     }
 }
 
-    // IEnumerator RunAtEndOfFrame(Action action)
-    // {
-    //     yield return new WaitForEndOfFrame();
-    //     action?.Invoke();
-    // }
+// IEnumerator RunAtEndOfFrame(Action action)
+// {
+//     yield return new WaitForEndOfFrame();
+//     action?.Invoke();
+// }

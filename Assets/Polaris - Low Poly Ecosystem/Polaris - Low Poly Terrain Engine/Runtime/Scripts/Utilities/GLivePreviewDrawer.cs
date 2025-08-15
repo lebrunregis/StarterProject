@@ -7,7 +7,7 @@ namespace Pinwheel.Griffin
 {
     public static class GLivePreviewDrawer
     {
-        private static MaterialPropertyBlock previewPropertyBlock = new MaterialPropertyBlock();
+        private static readonly MaterialPropertyBlock previewPropertyBlock = new();
 
         public static void DrawGeometryLivePreview(GStylizedTerrain t, Camera cam, Texture newHeightMap, Rect dirtyRect)
         {
@@ -17,7 +17,7 @@ namespace Pinwheel.Griffin
 
             Mesh previewMesh = GEditorSettings.Instance.livePreview.GetTriangleMesh(t.TerrainData.Geometry.MeshResolution);
 
-            Vector3 terrainSize = new Vector3(
+            Vector3 terrainSize = new(
                 t.TerrainData.Geometry.Width,
                 t.TerrainData.Geometry.Height,
                 t.TerrainData.Geometry.Length);
@@ -39,13 +39,13 @@ namespace Pinwheel.Griffin
                     Rect uvRect = GCommon.GetUvRange(gridSize, x, z);
                     if (!uvRect.Overlaps(dirtyRect))
                         continue;
-                    Vector3 localPos = new Vector3(
+                    Vector3 localPos = new(
                         terrainSize.x * uvRect.x,
                         0f,
                         terrainSize.z * uvRect.y);
                     Vector3 worldPos = t.transform.TransformPoint(localPos);
                     Quaternion rotation = Quaternion.identity;
-                    Vector3 scale = new Vector3(terrainSize.x * uvRect.width, 1, terrainSize.z * uvRect.height);
+                    Vector3 scale = new(terrainSize.x * uvRect.width, 1, terrainSize.z * uvRect.height);
 
                     Graphics.DrawMesh(
                         previewMesh,
@@ -67,7 +67,7 @@ namespace Pinwheel.Griffin
 
             Mesh previewMesh = GEditorSettings.Instance.livePreview.GetTriangleMesh(t.TerrainData.Geometry.MeshResolution);
 
-            Vector3 terrainSize = new Vector3(
+            Vector3 terrainSize = new(
                 t.TerrainData.Geometry.Width,
                 t.TerrainData.Geometry.Height,
                 t.TerrainData.Geometry.Length);
@@ -87,9 +87,9 @@ namespace Pinwheel.Griffin
                 if (chunkCulling[i] == false)
                     continue;
                 Rect r = chunkRects[i];
-                Vector3 position = new Vector3(r.x, t.transform.position.y, r.y);
+                Vector3 position = new(r.x, t.transform.position.y, r.y);
                 Quaternion rotation = Quaternion.identity;
-                Vector3 scale = new Vector3(r.width, 1, r.height);
+                Vector3 scale = new(r.width, 1, r.height);
                 Matrix4x4 trs = Matrix4x4.TRS(position, rotation, scale);
 
                 Graphics.DrawMesh(
@@ -120,7 +120,7 @@ namespace Pinwheel.Griffin
             int resolution = t.TerrainData.Geometry.MeshResolution;
             int maxLevel = baseResolution + Mathf.Min(Mathf.FloorToInt(1f / GCommon.SUB_DIV_STEP), resolution - baseResolution);
 
-            Vector3 terrainSize = new Vector3(
+            Vector3 terrainSize = new(
                 t.TerrainData.Geometry.Width,
                 t.TerrainData.Geometry.Height,
                 t.TerrainData.Geometry.Length);
@@ -146,13 +146,13 @@ namespace Pinwheel.Griffin
                     Rect uvRect = GCommon.GetUvRange(gridSize, x, z);
                     if (!uvRect.Overlaps(dirtyRect))
                         continue;
-                    Vector3 localPos = new Vector3(
+                    Vector3 localPos = new(
                         terrainSize.x * uvRect.x,
                         0f,
                         terrainSize.z * uvRect.y);
                     Vector3 worldPos = t.transform.TransformPoint(localPos);
                     Quaternion rotation = Quaternion.identity;
-                    Vector3 scale = new Vector3(terrainSize.x * uvRect.width, 1, terrainSize.z * uvRect.height);
+                    Vector3 scale = new(terrainSize.x * uvRect.width, 1, terrainSize.z * uvRect.height);
 
                     for (int i = baseResolution; i <= maxLevel; ++i)
                     {
@@ -186,7 +186,7 @@ namespace Pinwheel.Griffin
             int resolution = t.TerrainData.Geometry.MeshResolution;
             int maxLevel = baseResolution + Mathf.Min(Mathf.FloorToInt(1f / GCommon.SUB_DIV_STEP), resolution - baseResolution);
 
-            Vector3 terrainSize = new Vector3(
+            Vector3 terrainSize = new(
                 t.TerrainData.Geometry.Width,
                 t.TerrainData.Geometry.Height,
                 t.TerrainData.Geometry.Length);
@@ -215,13 +215,13 @@ namespace Pinwheel.Griffin
                     Rect uvRect = GCommon.GetUvRange(gridSize, x, z);
                     if (!uvRect.Overlaps(dirtyRect))
                         continue;
-                    Vector3 localPos = new Vector3(
+                    Vector3 localPos = new(
                         terrainSize.x * uvRect.x,
                         0f,
                         terrainSize.z * uvRect.y);
                     Vector3 worldPos = t.transform.TransformPoint(localPos);
                     Quaternion rotation = Quaternion.identity;
-                    Vector3 scale = new Vector3(terrainSize.x * uvRect.width, 1, terrainSize.z * uvRect.height);
+                    Vector3 scale = new(terrainSize.x * uvRect.width, 1, terrainSize.z * uvRect.height);
 
                     for (int i = baseResolution; i <= maxLevel; ++i)
                     {
@@ -255,7 +255,7 @@ namespace Pinwheel.Griffin
             int resolution = t.TerrainData.Geometry.MeshResolution;
             int maxLevel = baseResolution + Mathf.Min(Mathf.FloorToInt(1f / GCommon.SUB_DIV_STEP), resolution - baseResolution);
 
-            Vector3 terrainSize = new Vector3(
+            Vector3 terrainSize = new(
                 t.TerrainData.Geometry.Width,
                 t.TerrainData.Geometry.Height,
                 t.TerrainData.Geometry.Length);
@@ -282,9 +282,9 @@ namespace Pinwheel.Griffin
                 if (chunkCulling[i] == false)
                     continue;
                 Rect r = chunkRects[i];
-                Vector3 position = new Vector3(r.x, t.transform.position.y, r.y);
+                Vector3 position = new(r.x, t.transform.position.y, r.y);
                 Quaternion rotation = Quaternion.identity;
-                Vector3 scale = new Vector3(r.width, 1, r.height);
+                Vector3 scale = new(r.width, 1, r.height);
                 Matrix4x4 trs = Matrix4x4.TRS(position, rotation, scale);
 
                 for (int res = baseResolution; res <= maxLevel; ++res)
@@ -323,7 +323,7 @@ namespace Pinwheel.Griffin
             int resolution = t.TerrainData.Geometry.MeshResolution;
             int maxLevel = baseResolution + Mathf.Min(Mathf.FloorToInt(1f / GCommon.SUB_DIV_STEP), resolution - baseResolution);
 
-            Vector3 terrainSize = new Vector3(
+            Vector3 terrainSize = new(
                 t.TerrainData.Geometry.Width,
                 t.TerrainData.Geometry.Height,
                 t.TerrainData.Geometry.Length);
@@ -348,13 +348,13 @@ namespace Pinwheel.Griffin
                     Rect uvRect = GCommon.GetUvRange(gridSize, x, z);
                     if (!uvRect.Overlaps(dirtyRect))
                         continue;
-                    Vector3 localPos = new Vector3(
+                    Vector3 localPos = new(
                         terrainSize.x * uvRect.x,
                         0f,
                         terrainSize.z * uvRect.y);
                     Vector3 worldPos = t.transform.TransformPoint(localPos);
                     Quaternion rotation = Quaternion.identity;
-                    Vector3 scale = new Vector3(terrainSize.x * uvRect.width, 1, terrainSize.z * uvRect.height);
+                    Vector3 scale = new(terrainSize.x * uvRect.width, 1, terrainSize.z * uvRect.height);
 
                     for (int i = baseResolution; i <= maxLevel; ++i)
                     {

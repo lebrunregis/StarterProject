@@ -1,15 +1,15 @@
 #if GRIFFIN
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
-using System.IO;
 
 namespace Pinwheel.Griffin
 {
     public class GTreePrototypeGroupInspectorDrawer
     {
-        private GTreePrototypeGroup instance;
+        private readonly GTreePrototypeGroup instance;
 
         public GTreePrototypeGroupInspectorDrawer(GTreePrototypeGroup group)
         {
@@ -53,7 +53,7 @@ namespace Pinwheel.Griffin
                 id = "treeprototype" + i + instance.GetInstanceID().ToString();
 
                 int index = i;
-                GenericMenu menu = new GenericMenu();
+                GenericMenu menu = new();
                 menu.AddItem(
                     new GUIContent("Remove"),
                     false,

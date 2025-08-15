@@ -4,9 +4,9 @@ namespace Abiogenesis3d
 {
     public class RotateOnHover : MonoBehaviour
     {
-        bool isRotating;
+        private bool isRotating;
 
-        void Update()
+        private void Update()
         {
             if (isRotating)
             {
@@ -14,12 +14,12 @@ namespace Abiogenesis3d
             }
         }
 
-        void OnMouseEnter()
+        private void OnMouseEnter()
         {
             isRotating = true;
         }
 
-        void OnMouseExit()
+        private void OnMouseExit()
         {
             isRotating = false;
         }

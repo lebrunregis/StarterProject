@@ -1,10 +1,9 @@
 // Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
- 
-using System;
 
-using UnityEngine;
+using System;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
@@ -35,7 +34,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             All = UV0 | UV1 | UV2 | UV3 | UV4 | UV5 | UV6 | UV7 | Normal | Tangent | Color | Skin
         }
 
-        AttributeFlags usedAttributes;
+        private readonly AttributeFlags usedAttributes;
         public VertexAttributePopup(AttributeFlags attributeFlags)
         {
             this.usedAttributes = attributeFlags;
@@ -63,7 +62,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             if (GUILayout.Button("None"))
             {
                 EditorWindow.active.editorSettings.saveUseDefaultFlagsForVertexAttribute = false;
-                EditorWindow.active.editorSettings.saveVertexAttributeFlags = (AttributeFlags)0;
+                EditorWindow.active.editorSettings.saveVertexAttributeFlags = 0;
 
                 EditorWindow.active.Repaint();
             }
@@ -136,7 +135,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             }
         }
 
-        void DrawFlag(ref bool value, AttributeFlags flag)
+        private void DrawFlag(ref bool value, AttributeFlags flag)
         {
             if (usedAttributes.HasFlag(flag))
             {

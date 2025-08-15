@@ -1,6 +1,3 @@
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 
 namespace Pinwheel.Griffin
@@ -26,7 +23,7 @@ namespace Pinwheel.Griffin
         [SettingsProvider]
         public static SettingsProvider CreateSettingsProvider()
         {
-            GBaseSettingsProvider provider = new GBaseSettingsProvider("Project/Polaris", SettingsScope.Project);
+            GBaseSettingsProvider provider = new("Project/Polaris", SettingsScope.Project);
             return provider;
         }
     }

@@ -5,12 +5,14 @@ using UnityEngine.AddressableAssets;
 #endif
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     // ReSharper disable once CheckNamespace
-    public class DynamicGroupVariation : MonoBehaviour {
+    public class DynamicGroupVariation : MonoBehaviour
+    {
         // ReSharper disable InconsistentNaming
-		[Range(0f, 1f)]
-		public int probabilityToPlay = 100;
+        [Range(0f, 1f)]
+        public int probabilityToPlay = 100;
 
         [Range(0f, 10f)]
         public int importance = 5;
@@ -54,7 +56,7 @@ namespace DarkTonic.MasterAudio {
 
         public bool useRandomStartTime = false;
         public float randomStartMinPercent = 0f;
-		public float randomStartMaxPercent = 100f;
+        public float randomStartMaxPercent = 100f;
         public float randomEndPercent = 100f;
         // ReSharper restore InconsistentNaming
 
@@ -71,9 +73,12 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property returns you a lazy-loaded reference to the Unity Distortion Filter FX component.
         /// </summary>
-        public AudioDistortionFilter DistortionFilter {
-            get {
-                if (_distFilter != null) {
+        public AudioDistortionFilter DistortionFilter
+        {
+            get
+            {
+                if (_distFilter != null)
+                {
                     return _distFilter;
                 }
                 _distFilter = GetComponent<AudioDistortionFilter>();
@@ -85,9 +90,12 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property returns you a lazy-loaded reference to the Unity Reverb Filter FX component.
         /// </summary>
-        public AudioReverbFilter ReverbFilter {
-            get {
-                if (_reverbFilter != null) {
+        public AudioReverbFilter ReverbFilter
+        {
+            get
+            {
+                if (_reverbFilter != null)
+                {
                     return _reverbFilter;
                 }
                 _reverbFilter = GetComponent<AudioReverbFilter>();
@@ -99,9 +107,12 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property returns you a lazy-loaded reference to the Unity Chorus Filter FX component.
         /// </summary>
-        public AudioChorusFilter ChorusFilter {
-            get {
-                if (_chorusFilter != null) {
+        public AudioChorusFilter ChorusFilter
+        {
+            get
+            {
+                if (_chorusFilter != null)
+                {
                     return _chorusFilter;
                 }
                 _chorusFilter = GetComponent<AudioChorusFilter>();
@@ -113,9 +124,12 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property returns you a lazy-loaded reference to the Unity Echo Filter FX component.
         /// </summary>
-        public AudioEchoFilter EchoFilter {
-            get {
-                if (_echoFilter != null) {
+        public AudioEchoFilter EchoFilter
+        {
+            get
+            {
+                if (_echoFilter != null)
+                {
                     return _echoFilter;
                 }
                 _echoFilter = GetComponent<AudioEchoFilter>();
@@ -127,9 +141,12 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property returns you a lazy-loaded reference to the Unity Low Pass Filter FX component.
         /// </summary>
-        public AudioLowPassFilter LowPassFilter {
-            get {
-                if (_lpFilter != null) {
+        public AudioLowPassFilter LowPassFilter
+        {
+            get
+            {
+                if (_lpFilter != null)
+                {
                     return _lpFilter;
                 }
                 _lpFilter = GetComponent<AudioLowPassFilter>();
@@ -141,9 +158,12 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property returns you a lazy-loaded reference to the Unity High Pass Filter FX component.
         /// </summary>
-        public AudioHighPassFilter HighPassFilter {
-            get {
-                if (_hpFilter != null) {
+        public AudioHighPassFilter HighPassFilter
+        {
+            get
+            {
+                if (_hpFilter != null)
+                {
                     return _hpFilter;
                 }
                 _hpFilter = GetComponent<AudioHighPassFilter>();
@@ -152,13 +172,17 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        public DynamicSoundGroup ParentGroup {
-            get {
-                if (_parentGroupScript == null) {
+        public DynamicSoundGroup ParentGroup
+        {
+            get
+            {
+                if (_parentGroupScript == null)
+                {
                     _parentGroupScript = Trans.parent.GetComponent<DynamicSoundGroup>();
                 }
 
-                if (_parentGroupScript == null) {
+                if (_parentGroupScript == null)
+                {
                     Debug.LogError("The Group that Dynamic Sound Variation '" + name +
                                    "' is in does not have a DynamicSoundGroup script in it!");
                 }
@@ -167,9 +191,12 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        public Transform Trans {
-            get {
-                if (_trans != null) {
+        public Transform Trans
+        {
+            get
+            {
+                if (_trans != null)
+                {
                     return _trans;
                 }
                 _trans = transform;
@@ -178,24 +205,32 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        public bool HasActiveFXFilter {
-            get {
-                if (HighPassFilter != null && HighPassFilter.enabled) {
+        public bool HasActiveFXFilter
+        {
+            get
+            {
+                if (HighPassFilter != null && HighPassFilter.enabled)
+                {
                     return true;
                 }
-                if (LowPassFilter != null && LowPassFilter.enabled) {
+                if (LowPassFilter != null && LowPassFilter.enabled)
+                {
                     return true;
                 }
-                if (ReverbFilter != null && ReverbFilter.enabled) {
+                if (ReverbFilter != null && ReverbFilter.enabled)
+                {
                     return true;
                 }
-                if (DistortionFilter != null && DistortionFilter.enabled) {
+                if (DistortionFilter != null && DistortionFilter.enabled)
+                {
                     return true;
                 }
-                if (EchoFilter != null && EchoFilter.enabled) {
+                if (EchoFilter != null && EchoFilter.enabled)
+                {
                     return true;
                 }
-                if (ChorusFilter != null && ChorusFilter.enabled) {
+                if (ChorusFilter != null && ChorusFilter.enabled)
+                {
                     return true;
                 }
 
@@ -203,9 +238,12 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        public AudioSource VarAudio {
-            get {
-                if (_aud != null) {
+        public AudioSource VarAudio
+        {
+            get
+            {
+                if (_aud != null)
+                {
                     return _aud;
                 }
                 _aud = GetComponent<AudioSource>();

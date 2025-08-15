@@ -1,7 +1,4 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 
 namespace Pinwheel.Griffin
@@ -27,7 +24,7 @@ namespace Pinwheel.Griffin
         [SettingsProvider]
         public static SettingsProvider CreateSettingsProvider()
         {
-            GEditorSettingsProvider provider = new GEditorSettingsProvider("Project/Polaris/Editor", SettingsScope.Project);
+            GEditorSettingsProvider provider = new("Project/Polaris/Editor", SettingsScope.Project);
             return provider;
         }
     }

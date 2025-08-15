@@ -57,7 +57,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct SearchJoinEdgeJob : IJob
+        private struct SearchJoinEdgeJob : IJob
         {
             public int vcnt;
             public float radius;

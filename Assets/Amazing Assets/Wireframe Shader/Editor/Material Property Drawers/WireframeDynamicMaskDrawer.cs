@@ -2,9 +2,8 @@
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
 using System.Linq;
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor
@@ -18,9 +17,9 @@ namespace AmazingAssets.WireframeShader.Editor
 
         }
 
-        static string[] baseTexKeywords = new string[] { "", "WIREFRAME_DYNAMIC_MASK_BASE_TEX_ON" };
-        static string[] baseTexKeywordNames = new string[] { "Off", "On" };
-        static int[] baseTexIntValues = new int[] { 0, 1 };
+        private static readonly string[] baseTexKeywords = new string[] { "", "WIREFRAME_DYNAMIC_MASK_BASE_TEX_ON" };
+        private static readonly string[] baseTexKeywordNames = new string[] { "Off", "On" };
+        private static readonly int[] baseTexIntValues = new int[] { 0, 1 };
 
 
 

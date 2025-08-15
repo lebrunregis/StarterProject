@@ -1,9 +1,6 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates. 
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Lofelt.NiceVibrations
 {
@@ -11,7 +8,7 @@ namespace Lofelt.NiceVibrations
     {
 
         [Header("Ball")]
-        public Vector2 Gravity = new Vector2(0, -30f);
+        public Vector2 Gravity = new(0, -30f);
 
         protected virtual void Start()
         {

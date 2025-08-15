@@ -1,5 +1,4 @@
-﻿using BrainFailProductions.PolyFew;
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -38,7 +37,7 @@ namespace BrainFailProductions.PolyFewRuntime
         private bool didApplyLosslessLast = false;
         private bool disableTemporary = false;
         private GameObject barabarianRef;
-        private PolyfewRuntime.ReferencedNumeric<float> downloadProgress = new PolyfewRuntime.ReferencedNumeric<float>(0);
+        private PolyfewRuntime.ReferencedNumeric<float> downloadProgress = new(0);
 #pragma warning disable
         private bool isImportingFromNetwork;
         private bool isWebGL;
@@ -58,7 +57,7 @@ namespace BrainFailProductions.PolyFewRuntime
             objectMeshPairs = PolyfewRuntime.GetObjectMeshPairs(targetObject, true);
             trianglesCount.text = PolyfewRuntime.CountTriangles(true, targetObject) + "";
         }
-        
+
 
 
         // Update is called once per frame
@@ -124,8 +123,8 @@ namespace BrainFailProductions.PolyFewRuntime
 
             trianglesCount.text = PolyfewRuntime.SimplifyObjectDeep(objectMeshPairs, options, (GameObject go, PolyfewRuntime.MeshRendererPair mInfo) =>
             {
-            //Debug.Log("Simplified mesh  " + mInfo.mesh.name + " on GameObject  " + go.name);
-        }) + "";
+                //Debug.Log("Simplified mesh  " + mInfo.mesh.name + " on GameObject  " + go.name);
+            }) + "";
 
         }
 
@@ -165,8 +164,8 @@ namespace BrainFailProductions.PolyFewRuntime
 
             trianglesCount.text = PolyfewRuntime.SimplifyObjectDeep(objectMeshPairs, options, (GameObject go, PolyfewRuntime.MeshRendererPair mInfo) =>
             {
-            //Debug.Log("Simplified mesh  " + mInfo.mesh.name + " on GameObject  " + go.name);
-        }) + "";
+                //Debug.Log("Simplified mesh  " + mInfo.mesh.name + " on GameObject  " + go.name);
+            }) + "";
 
 
             //w.Stop();

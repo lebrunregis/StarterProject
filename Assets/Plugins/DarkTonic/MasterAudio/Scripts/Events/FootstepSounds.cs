@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     [AddComponentMenu("Dark Tonic/Master Audio/Footstep Sounds")]
     // ReSharper disable once CheckNamespace
-    public class FootstepSounds : MonoBehaviour {
+    public class FootstepSounds : MonoBehaviour
+    {
         // ReSharper disable InconsistentNaming
         public MasterAudio.SoundSpawnLocationMode soundSpawnMode = MasterAudio.SoundSpawnLocationMode.AttachToCaller;
         public FootstepTriggerMode footstepEvent = FootstepTriggerMode.None;
 
-        public List<FootstepGroup> footstepGroups = new List<FootstepGroup>();
+        public List<FootstepGroup> footstepGroups = new();
 
         // retrigger limit
         public EventSounds.RetriggerLimMode retriggerLimitMode = EventSounds.RetriggerLimMode.None;
@@ -23,7 +25,8 @@ namespace DarkTonic.MasterAudio {
 
         private Transform _trans;
 
-        public enum FootstepTriggerMode {
+        public enum FootstepTriggerMode
+        {
             None,
             OnCollision,
             OnTriggerEnter,
@@ -71,16 +74,20 @@ namespace DarkTonic.MasterAudio {
         }
 #endif
 
-        private bool CheckForRetriggerLimit() {
+        private bool CheckForRetriggerLimit()
+        {
             // check for limiting restraints
-            switch (retriggerLimitMode) {
+            switch (retriggerLimitMode)
+            {
                 case EventSounds.RetriggerLimMode.FrameBased:
-                    if (triggeredLastFrame > 0 && AudioUtil.FrameCount - triggeredLastFrame < limitPerXFrm) {
+                    if (triggeredLastFrame > 0 && AudioUtil.FrameCount - triggeredLastFrame < limitPerXFrm)
+                    {
                         return false;
                     }
                     break;
                 case EventSounds.RetriggerLimMode.TimeBased:
-                    if (triggeredLastTime > 0 && AudioUtil.Time - triggeredLastTime < limitPerXSec) {
+                    if (triggeredLastTime > 0 && AudioUtil.Time - triggeredLastTime < limitPerXSec)
+                    {
                         return false;
                     }
                     break;
@@ -89,13 +96,16 @@ namespace DarkTonic.MasterAudio {
             return true;
         }
 
-        private void PlaySoundsIfMatch(GameObject go) {
-            if (!CheckForRetriggerLimit()) {
+        private void PlaySoundsIfMatch(GameObject go)
+        {
+            if (!CheckForRetriggerLimit())
+            {
                 return;
             }
 
             // set the last triggered time or frame
-            switch (retriggerLimitMode) {
+            switch (retriggerLimitMode)
+            {
                 case EventSounds.RetriggerLimMode.FrameBased:
                     triggeredLastFrame = AudioUtil.FrameCount;
                     break;
@@ -105,30 +115,36 @@ namespace DarkTonic.MasterAudio {
             }
 
             // ReSharper disable once ForCanBeConvertedToForeach
-            for (var i = 0; i < footstepGroups.Count; i++) {
+            for (var i = 0; i < footstepGroups.Count; i++)
+            {
                 var aGroup = footstepGroups[i];
 
                 // check filters for matches if turned on
-                if (aGroup.useLayerFilter && !aGroup.matchingLayers.Contains(go.layer)) {
+                if (aGroup.useLayerFilter && !aGroup.matchingLayers.Contains(go.layer))
+                {
                     continue;
                 }
 
-                if (aGroup.useTagFilter && !aGroup.matchingTags.Contains(go.tag)) {
+                if (aGroup.useTagFilter && !aGroup.matchingTags.Contains(go.tag))
+                {
                     continue;
                 }
 
                 var volume = aGroup.volume;
                 float? pitch = aGroup.pitch;
-                if (!aGroup.useFixedPitch) {
+                if (!aGroup.useFixedPitch)
+                {
                     pitch = null;
                 }
 
                 string variationName = null;
-                if (aGroup.variationType == EventSounds.VariationType.PlaySpecific) {
+                if (aGroup.variationType == EventSounds.VariationType.PlaySpecific)
+                {
                     variationName = aGroup.variationName;
                 }
 
-                switch (soundSpawnMode) {
+                switch (soundSpawnMode)
+                {
                     case MasterAudio.SoundSpawnLocationMode.CallerLocation:
                         MasterAudio.PlaySound3DAtTransformAndForget(aGroup.soundType, Trans, volume, pitch, aGroup.delaySound,
                             variationName);
@@ -141,9 +157,12 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        private Transform Trans {
-            get {
-                if (_trans != null) {
+        private Transform Trans
+        {
+            get
+            {
+                if (_trans != null)
+                {
                     return _trans;
                 }
 

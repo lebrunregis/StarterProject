@@ -1,7 +1,7 @@
 namespace CitrioN.SettingsMenuCreator
 {
-  public class Setting_String : Setting_Generic_Type<string>
-  {
+    public class Setting_String : Setting_Generic_Type<string>
+    {
 
-  }
+    }
 }

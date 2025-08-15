@@ -103,7 +103,7 @@ namespace Pinwheel.Griffin
         public Vector4 GetWindParams()
         {
             Vector2 dir = new Vector2(DirectionX, DirectionZ).normalized;
-            Vector4 param = new Vector4(dir.x, dir.y, speed, spread);
+            Vector4 param = new(dir.x, dir.y, speed, spread);
             return param;
         }
 

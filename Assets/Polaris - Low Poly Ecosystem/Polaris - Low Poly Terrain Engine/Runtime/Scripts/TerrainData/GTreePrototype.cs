@@ -1,7 +1,7 @@
 #if GRIFFIN
+using Pinwheel.Griffin.Physic;
 using UnityEngine;
 using UnityEngine.Rendering;
-using Pinwheel.Griffin.Physic;
 
 namespace Pinwheel.Griffin
 {
@@ -270,7 +270,7 @@ namespace Pinwheel.Griffin
 
         public static GTreePrototype Create(GameObject g)
         {
-            GTreePrototype prototype = new GTreePrototype();
+            GTreePrototype prototype = new();
             prototype.Prefab = g;
             prototype.PivotOffset = 0;
             prototype.BaseRotation = Quaternion.identity;
@@ -328,7 +328,7 @@ namespace Pinwheel.Griffin
 
         public static explicit operator TreePrototype(GTreePrototype p)
         {
-            TreePrototype prototype = new TreePrototype();
+            TreePrototype prototype = new();
             prototype.prefab = p.Prefab;
             return prototype;
         }

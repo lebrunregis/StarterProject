@@ -608,12 +608,12 @@ namespace MagicaCloth2
         /// チームの有効状態を別途記録
         /// NativeArrayはジョブ実行中にアクセスできないため。
         /// </summary>
-        HashSet<int> enableTeamSet = new HashSet<int>();
+        private readonly HashSet<int> enableTeamSet = new();
 
         /// <summary>
         /// チームIDとClothProcessクラスの関連辞書
         /// </summary>
-        Dictionary<int, ClothProcess> clothProcessDict = new Dictionary<int, ClothProcess>();
+        private readonly Dictionary<int, ClothProcess> clothProcessDict = new();
 
         //=========================================================================================
         /// <summary>
@@ -638,7 +638,7 @@ namespace MagicaCloth2
 
         //=========================================================================================
         // ■作業データ
-        bool isValid;
+        private bool isValid;
 
         /// <summary>
         /// エッジコライダーコリジョンのエッジ数合計
@@ -665,7 +665,7 @@ namespace MagicaCloth2
         internal NativeParallelHashMap<int, float3> transformPositionMap;
         internal NativeParallelHashMap<int, quaternion> transformRotationMap;
 
-        internal HashSet<MagicaCloth> cameraCullingClothSet = new HashSet<MagicaCloth>(256);
+        internal HashSet<MagicaCloth> cameraCullingClothSet = new(256);
 
         //=========================================================================================
         public void Dispose()
@@ -978,8 +978,8 @@ namespace MagicaCloth2
         }
 
         //=========================================================================================
-        static readonly ProfilerMarker teamCameraCullingPreProfiler = new ProfilerMarker("CameraCullingPre");
-        static readonly ProfilerMarker teamCameraCullingProfiler = new ProfilerMarker("CameraCullingPost");
+        private static readonly ProfilerMarker teamCameraCullingPreProfiler = new("CameraCullingPre");
+        private static readonly ProfilerMarker teamCameraCullingProfiler = new("CameraCullingPost");
 
         /// <summary>
         /// カメラカリング状態更新（前処理）
@@ -1135,7 +1135,7 @@ namespace MagicaCloth2
         }
 
         //=========================================================================================
-        static readonly ProfilerMarker startClothUpdateComponentProfiler = new ProfilerMarker("StartClothUpdate.Component");
+        private static readonly ProfilerMarker startClothUpdateComponentProfiler = new("StartClothUpdate.Component");
 
         /// <summary>
         /// 毎フレーム常に実行するチーム更新
@@ -1419,7 +1419,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        unsafe struct AlwaysTeamUpdatePreJob : IJob
+        private unsafe struct AlwaysTeamUpdatePreJob : IJob
         {
             public NativeArray<TeamData> teamDataArray;
             public NativeArray<ClothParameters> parameterArray;
@@ -1595,7 +1595,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct AlwaysTeamUpdatePostJob : IJob
+        private struct AlwaysTeamUpdatePostJob : IJob
         {
             public int teamCount;
             public float unityFrameDeltaTime;
@@ -1864,7 +1864,7 @@ namespace MagicaCloth2
                 teamStatus.Value = new int4(maxCount, splitPointCollisionCount, splitEdgeCollisionCount, splitSelfCollisionCount);
             }
 
-            void DistanceCullingUpdate(int teamId, ref TeamData tdata, ref ClothParameters param)
+            private void DistanceCullingUpdate(int teamId, ref TeamData tdata, ref ClothParameters param)
             {
                 // 現在の状態
                 bool oldInvisible = tdata.IsDistanceCullingInvisible;
@@ -1940,8 +1940,8 @@ namespace MagicaCloth2
         /// ここに登録されるのはClothコンポーネントがDisable時に初期化されたプロセス
         /// これらのプロセスはマネージャ側で消滅が監視される
         /// </summary>
-        HashSet<ClothProcess> monitoringProcessSet = new HashSet<ClothProcess>();
-        List<ClothProcess> disposeProcessList = new List<ClothProcess>();
+        private readonly HashSet<ClothProcess> monitoringProcessSet = new();
+        private readonly List<ClothProcess> disposeProcessList = new();
 
         internal void AddMonitoringProcess(ClothProcess cprocess)
         {
@@ -1960,7 +1960,7 @@ namespace MagicaCloth2
         /// コンポーネントDisable時に初期化されたClothProcessを監視し消滅していたらマネージャ側からメモリを開放する
         /// </summary>
         /// <param name="force"></param>
-        void MonitoringProcess(bool force)
+        private void MonitoringProcess(bool force)
         {
             disposeProcessList.Clear();
             foreach (var cprocess in monitoringProcessSet)
@@ -1985,7 +1985,7 @@ namespace MagicaCloth2
             }
         }
 
-        void MonitoringProcessUpdate() => MonitoringProcess(false);
+        private void MonitoringProcessUpdate() => MonitoringProcess(false);
 
         //=========================================================================================
         // Simulation
@@ -2657,7 +2657,7 @@ namespace MagicaCloth2
         }
 
         // 各風ゾーンの時間更新
-        static void UpdateWind(
+        private static void UpdateWind(
             float simulationDeltaTime,
             int teamId,
             in TeamData tdata,
@@ -2690,7 +2690,7 @@ namespace MagicaCloth2
             teamWindData.movingWind = movingWindInfo;
         }
 
-        static void UpdateWindTime(ref TeamWindInfo windInfo, float frequency, float simulationDeltaTime)
+        private static void UpdateWindTime(ref TeamWindInfo windInfo, float frequency, float simulationDeltaTime)
         {
             // 風速係数
             float mainRatio = windInfo.main / Define.System.WindBaseSpeed; // 0.0 ~ 
@@ -2768,7 +2768,7 @@ namespace MagicaCloth2
         //=========================================================================================
         public void InformationLog(StringBuilder allsb)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             sb.AppendLine($"========== Team Manager ==========");
             if (IsValid() == false)

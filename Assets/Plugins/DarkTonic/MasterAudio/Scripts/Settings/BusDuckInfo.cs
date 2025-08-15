@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     [Serializable]
     // ReSharper disable once CheckNamespace
-    public class BusDuckInfo {
-        public List<BusSingleDuckInfo> BusesToDuck = new List<BusSingleDuckInfo>();
+    public class BusDuckInfo
+    {
+        public List<BusSingleDuckInfo> BusesToDuck = new();
         public PlaylistController.AudioDuckingMode DuckingMode = PlaylistController.AudioDuckingMode.NotDucking;
         public string TriggeredBySoundGroup;
         public float TimeToStartUnducking;

@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using UnityEngine.Audio;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     [Serializable]
     // ReSharper disable once CheckNamespace
-    public class AudioEvent {
+    public class AudioEvent
+    {
         // ReSharper disable InconsistentNaming
         public string actionName = "Your action name";
         public bool isExpanded = true;
@@ -35,9 +37,9 @@ namespace DarkTonic.MasterAudio {
         public MasterAudio.CustomEventCommand currentCustomEventCommand = MasterAudio.CustomEventCommand.None;
         public MasterAudio.GlobalCommand currentGlobalCommand = MasterAudio.GlobalCommand.None;
         public MasterAudio.UnityMixerCommand currentMixerCommand = MasterAudio.UnityMixerCommand.None;
-	    public AudioMixerSnapshot snapshotToTransitionTo = null;
-	    public float snapshotTransitionTime = 1f;
-	    public List<MA_SnapshotInfo> snapshotsToBlend = new List<MA_SnapshotInfo>() { new MA_SnapshotInfo(null, 1f) };
+        public AudioMixerSnapshot snapshotToTransitionTo = null;
+        public float snapshotTransitionTime = 1f;
+        public List<MA_SnapshotInfo> snapshotsToBlend = new() { new MA_SnapshotInfo(null, 1f) };
 
         public MasterAudio.PersistentSettingsCommand currentPersistentSettingsCommand =
             MasterAudio.PersistentSettingsCommand.None;
@@ -50,7 +52,7 @@ namespace DarkTonic.MasterAudio {
         public float fadeTime = 1f;
         public float minAge = 1f;
         public bool stopAfterFade = false;
-		public bool restoreVolumeAfterFade = false;
+        public bool restoreVolumeAfterFade = false;
         public bool fireCustomEventAfterFade = false;
         public TargetVolumeMode targetVolMode = TargetVolumeMode.UseSliderValue;
         public string clipName = "[None]";
@@ -64,38 +66,46 @@ namespace DarkTonic.MasterAudio {
         // ReSharper restore InconsistentNaming
         public bool logDupeEventFiring = true;
 
-        public enum TargetVolumeMode {
+        public enum TargetVolumeMode
+        {
             UseSliderValue,
             UseSpecificValue
         }
 
-    [Serializable]
-	public class MA_SnapshotInfo {
-		public AudioMixerSnapshot snapshot;
-		public float weight;
+        [Serializable]
+        public class MA_SnapshotInfo
+        {
+            public AudioMixerSnapshot snapshot;
+            public float weight;
 
-		public MA_SnapshotInfo(AudioMixerSnapshot snap, float wt) {
-			snapshot = snap;
-			weight = wt;
-		}
-	}
+            public MA_SnapshotInfo(AudioMixerSnapshot snap, float wt)
+            {
+                snapshot = snap;
+                weight = wt;
+            }
+        }
 
-        public bool IsFadeCommand {
-            get {
+        public bool IsFadeCommand
+        {
+            get
+            {
                 if (currentSoundFunctionType == MasterAudio.EventSoundFunctionType.PlaylistControl &&
-                    currentPlaylistCommand == MasterAudio.PlaylistCommand.FadeToVolume) {
+                    currentPlaylistCommand == MasterAudio.PlaylistCommand.FadeToVolume)
+                {
                     return true;
                 }
 
                 if (currentSoundFunctionType == MasterAudio.EventSoundFunctionType.BusControl &&
-                    currentBusCommand == MasterAudio.BusCommand.FadeToVolume) {
+                    currentBusCommand == MasterAudio.BusCommand.FadeToVolume)
+                {
                     return true;
                 }
 
                 if (currentSoundFunctionType == MasterAudio.EventSoundFunctionType.GroupControl && (
                     currentSoundGroupCommand == MasterAudio.SoundGroupCommand.FadeToVolume
                     || currentSoundGroupCommand == MasterAudio.SoundGroupCommand.FadeOutAllOfSound
-                    || currentSoundGroupCommand == MasterAudio.SoundGroupCommand.FadeOutSoundGroupOfTransform)) {
+                    || currentSoundGroupCommand == MasterAudio.SoundGroupCommand.FadeOutSoundGroupOfTransform))
+                {
 
                     return true;
                 }

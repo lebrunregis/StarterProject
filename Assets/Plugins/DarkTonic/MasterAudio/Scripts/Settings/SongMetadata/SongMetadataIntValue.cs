@@ -2,19 +2,23 @@
 using System;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     [Serializable]
     // ReSharper disable once CheckNamespace
-	public class SongMetadataIntValue {
-		public string PropertyName;
-		public int Value;
+    public class SongMetadataIntValue
+    {
+        public string PropertyName;
+        public int Value;
 
-        public SongMetadataIntValue(SongMetadataProperty prop) {
-			if (prop  == null) {
-				return;
-			}
+        public SongMetadataIntValue(SongMetadataProperty prop)
+        {
+            if (prop == null)
+            {
+                return;
+            }
 
-			PropertyName = prop.PropertyName;
+            PropertyName = prop.PropertyName;
         }
     }
 }

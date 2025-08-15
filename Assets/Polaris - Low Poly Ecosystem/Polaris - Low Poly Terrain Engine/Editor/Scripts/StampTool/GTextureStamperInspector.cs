@@ -1,6 +1,5 @@
 #if GRIFFIN
 using Pinwheel.Griffin.BackupTool;
-using Pinwheel.Griffin.TextureTool;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -72,9 +71,9 @@ namespace Pinwheel.Griffin.StampTool
 
         private class GBaseGUI
         {
-            public static readonly GUIContent GROUP_ID = new GUIContent("Group Id", "Id of the terrain group which is edited by this tool");
-            public static readonly GUIContent ENABLE_TERRAIN_MASK = new GUIContent("Enable Terrain Mask", "Use terrain mask (R) to lock a particular region from editing");
-            public static readonly GUIContent SHOW_TERRAIN_MASK = new GUIContent("Show Terrain Mask", "Draw an overlay of the terrain mask in the scene view");
+            public static readonly GUIContent GROUP_ID = new("Group Id", "Id of the terrain group which is edited by this tool");
+            public static readonly GUIContent ENABLE_TERRAIN_MASK = new("Enable Terrain Mask", "Use terrain mask (R) to lock a particular region from editing");
+            public static readonly GUIContent SHOW_TERRAIN_MASK = new("Show Terrain Mask", "Draw an overlay of the terrain mask in the scene view");
         }
 
         public override void OnInspectorGUI()
@@ -127,9 +126,9 @@ namespace Pinwheel.Griffin.StampTool
             public static readonly string LABEL = "Transform";
             public static readonly string ID = "texture-stamper-transform";
 
-            public static readonly GUIContent POSITION = new GUIContent("Position", "Position of the stamper");
-            public static readonly GUIContent ROTATION = new GUIContent("Rotation", "Rotation of the stamper");
-            public static readonly GUIContent SCALE = new GUIContent("Scale", "Scale of the stamper");
+            public static readonly GUIContent POSITION = new("Position", "Position of the stamper");
+            public static readonly GUIContent ROTATION = new("Rotation", "Rotation of the stamper");
+            public static readonly GUIContent SCALE = new("Scale", "Scale of the stamper");
         }
 
         private void DrawTransformGUI()
@@ -151,9 +150,9 @@ namespace Pinwheel.Griffin.StampTool
             public static readonly string LABEL = "Stamp";
             public static readonly string ID = "texture-stamper-stamp";
 
-            public static readonly GUIContent MASK = new GUIContent("Mask", "A texture defines the opacity of the stamper");
-            public static readonly GUIContent FALLOFF = new GUIContent("Falloff", "Gradually decrease the mask intensity over its edge");
-            public static readonly GUIContent CHANNEL = new GUIContent("Channel", "Choose the texture to stamp on, Albedo Metallic or Splat Controls");
+            public static readonly GUIContent MASK = new("Mask", "A texture defines the opacity of the stamper");
+            public static readonly GUIContent FALLOFF = new("Falloff", "Gradually decrease the mask intensity over its edge");
+            public static readonly GUIContent CHANNEL = new("Channel", "Choose the texture to stamp on, Albedo Metallic or Splat Controls");
         }
 
         private void DrawStampGUI()
@@ -178,45 +177,45 @@ namespace Pinwheel.Griffin.StampTool
             public static readonly string ID = "texture-stamper-layer";
             public static readonly string LAYER_ID_PREFIX = "texture-stamp-layer";
 
-            public static readonly GUIContent ADD_LAYER = new GUIContent("Add Layer");
+            public static readonly GUIContent ADD_LAYER = new("Add Layer");
 
-            public static readonly GUIContent MOVE_LAYER_UP = new GUIContent("Move Up");
-            public static readonly GUIContent MOVE_LAYER_DOWN = new GUIContent("Move Down");
-            public static readonly GUIContent REMOVE = new GUIContent("Remove");
+            public static readonly GUIContent MOVE_LAYER_UP = new("Move Up");
+            public static readonly GUIContent MOVE_LAYER_DOWN = new("Move Down");
+            public static readonly GUIContent REMOVE = new("Remove");
 
             public static readonly string HEADER_GENERAL = "General";
-            public static readonly GUIContent IGNORE = new GUIContent("Ignore", "Ignore this layer");
-            public static readonly GUIContent NAME = new GUIContent("Name", "Display name of this layer");
-            public static readonly GUIContent VISUALIZE_COLOR = new GUIContent("Visualize Color", "Color to draw a visualize mask in the scene view");
+            public static readonly GUIContent IGNORE = new("Ignore", "Ignore this layer");
+            public static readonly GUIContent NAME = new("Name", "Display name of this layer");
+            public static readonly GUIContent VISUALIZE_COLOR = new("Visualize Color", "Color to draw a visualize mask in the scene view");
 
             public static readonly string HEADER_ALBEDO_METALLIC_SMOOTHNESS = "AMS";
-            public static readonly GUIContent COLOR = new GUIContent("Color", "The albedo color to stamp");
-            public static readonly GUIContent METALLIC = new GUIContent("Metallic", "The metallic value");
-            public static readonly GUIContent SMOOTHNESS = new GUIContent("Smoothness", "The smoothness value");
+            public static readonly GUIContent COLOR = new("Color", "The albedo color to stamp");
+            public static readonly GUIContent METALLIC = new("Metallic", "The metallic value");
+            public static readonly GUIContent SMOOTHNESS = new("Smoothness", "The smoothness value");
 
             public static readonly string HEADER_SPLAT = "Splats";
 
             public static readonly string HEADER_HEIGHT_RULE = "Height Rule";
-            public static readonly GUIContent BLEND_HEIGHT = new GUIContent("Enable", "Toggle terrain height rule");
-            public static readonly GUIContent MIN_HEIGHT = new GUIContent("Min", "The minimum height to satisfy the rule");
-            public static readonly GUIContent MAX_HEIGHT = new GUIContent("Max", "The maximum height to satisfy the rule");
-            public static readonly GUIContent HEIGHT_TRANSITION = new GUIContent("Transition", "Fade factor for height rule");
+            public static readonly GUIContent BLEND_HEIGHT = new("Enable", "Toggle terrain height rule");
+            public static readonly GUIContent MIN_HEIGHT = new("Min", "The minimum height to satisfy the rule");
+            public static readonly GUIContent MAX_HEIGHT = new("Max", "The maximum height to satisfy the rule");
+            public static readonly GUIContent HEIGHT_TRANSITION = new("Transition", "Fade factor for height rule");
 
             public static readonly string HEADER_SLOPE_RULE = "Slope Rule";
-            public static readonly GUIContent BLEND_SLOPE = new GUIContent("Enable", "Toggle slope/steepness rule");
-            public static readonly GUIContent NORMAL_MAP_MODE = new GUIContent("Mode", "Choose which normal map to read slope data from");
-            public static readonly GUIContent MIN_SLOPE = new GUIContent("Min", "Minimum angle between surface normal and the up vector to satisfy the rule");
-            public static readonly GUIContent MAX_SLOPE = new GUIContent("Max", "Maximum angle between surface normal and the up vector to satisfy the rule");
-            public static readonly GUIContent SLOPE_TRANSITION = new GUIContent("Transition", "Fade factor for slope rule");
+            public static readonly GUIContent BLEND_SLOPE = new("Enable", "Toggle slope/steepness rule");
+            public static readonly GUIContent NORMAL_MAP_MODE = new("Mode", "Choose which normal map to read slope data from");
+            public static readonly GUIContent MIN_SLOPE = new("Min", "Minimum angle between surface normal and the up vector to satisfy the rule");
+            public static readonly GUIContent MAX_SLOPE = new("Max", "Maximum angle between surface normal and the up vector to satisfy the rule");
+            public static readonly GUIContent SLOPE_TRANSITION = new("Transition", "Fade factor for slope rule");
 
             public static readonly string HEADER_NOISE_RULE = "Noise Rule";
-            public static readonly GUIContent BLEND_NOISE = new GUIContent("Enable", "Toggle noise rule");
-            public static readonly GUIContent NOISE_ORIGIN = new GUIContent("Origin", "The origin point of the noise map");
-            public static readonly GUIContent NOISE_FREQUENCY = new GUIContent("Frequency", "Frequency of the noise pattern, higher value gives thicker noise");
-            public static readonly GUIContent NOISE_OCTAVES = new GUIContent("Octaves", "The number of noise layers to stack on top of each others");
-            public static readonly GUIContent NOISE_LACUNARITY = new GUIContent("Lacunarity", "The change in frequency of each noise layer");
-            public static readonly GUIContent NOISE_PERSISTENCE = new GUIContent("Persistence", "The change in amplitude of each noise layer");
-            public static readonly GUIContent NOISE_REMAP = new GUIContent("Remap", "Remap the generated noise value");
+            public static readonly GUIContent BLEND_NOISE = new("Enable", "Toggle noise rule");
+            public static readonly GUIContent NOISE_ORIGIN = new("Origin", "The origin point of the noise map");
+            public static readonly GUIContent NOISE_FREQUENCY = new("Frequency", "Frequency of the noise pattern, higher value gives thicker noise");
+            public static readonly GUIContent NOISE_OCTAVES = new("Octaves", "The number of noise layers to stack on top of each others");
+            public static readonly GUIContent NOISE_LACUNARITY = new("Lacunarity", "The change in frequency of each noise layer");
+            public static readonly GUIContent NOISE_PERSISTENCE = new("Persistence", "The change in amplitude of each noise layer");
+            public static readonly GUIContent NOISE_REMAP = new("Remap", "Remap the generated noise value");
         }
 
         private void DrawStampLayersGUI()
@@ -248,7 +247,7 @@ namespace Pinwheel.Griffin.StampTool
                 layer.Ignore ? "[Ignored]" : string.Empty);
             string id = GLayerGUI.LAYER_ID_PREFIX + index;
 
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 GLayerGUI.MOVE_LAYER_UP,
                 false,
@@ -391,8 +390,8 @@ namespace Pinwheel.Griffin.StampTool
             public static readonly string LABEL = "Gizmos";
             public static readonly string ID = "texture-stamper-gizmos";
 
-            public static readonly GUIContent LIVE_PREVIEW = new GUIContent("Live Preview", "Draw a preview in the scene view");
-            public static readonly GUIContent BOUNDS = new GUIContent("Bounds", "Show the stamper bounds in the scene view");
+            public static readonly GUIContent LIVE_PREVIEW = new("Live Preview", "Draw a preview in the scene view");
+            public static readonly GUIContent BOUNDS = new("Bounds", "Show the stamper bounds in the scene view");
         }
 
         private void DrawGizmosGUI()
@@ -408,9 +407,9 @@ namespace Pinwheel.Griffin.StampTool
         {
             public static readonly string LABEL = "Action";
             public static readonly string ID = "texture-stamper-action";
-            public static readonly GUIContent SNAP_TO_TERRAIN = new GUIContent("Snap To Terrain", "Fit the stamper to the underneath terrain");
-            public static readonly GUIContent SNAP_TO_LEVEL_BOUNDS = new GUIContent("Snap To Level Bounds", "Fit the stamper to cover all terrains in the level");
-            public static readonly GUIContent APPLY = new GUIContent("Apply", "Stamp on the terrains");
+            public static readonly GUIContent SNAP_TO_TERRAIN = new("Snap To Terrain", "Fit the stamper to the underneath terrain");
+            public static readonly GUIContent SNAP_TO_LEVEL_BOUNDS = new("Snap To Level Bounds", "Fit the stamper to cover all terrains in the level");
+            public static readonly GUIContent APPLY = new("Apply", "Stamp on the terrains");
         }
 
         private void DrawActionGUI()
@@ -425,8 +424,8 @@ namespace Pinwheel.Griffin.StampTool
                     {
                         GStylizedTerrain t = terrains.Current;
                         Bounds b = t.Bounds;
-                        Rect r = new Rect(new Vector2(b.min.x, b.min.z), new Vector2(b.size.x, b.size.z));
-                        Vector2 p = new Vector2(instance.Position.x, instance.Position.z);
+                        Rect r = new(new Vector2(b.min.x, b.min.z), new Vector2(b.size.x, b.size.z));
+                        Vector2 p = new(instance.Position.x, instance.Position.z);
                         if (r.Contains(p))
                         {
                             instance.Position = new Vector3(r.center.x, b.min.y, r.center.y);
@@ -460,7 +459,7 @@ namespace Pinwheel.Griffin.StampTool
             string historyPrefix =
                 instance.Channel == GTextureStampChannel.AlbedoMetallicSmoothness ? HISTORY_PREFIX_COLOR :
                 instance.Channel == GTextureStampChannel.Splat ? HISTORY_PREFIX_TEXTURE : "Unknown Action";
-            List<GTerrainResourceFlag> resourcesFlag = new List<GTerrainResourceFlag>();
+            List<GTerrainResourceFlag> resourcesFlag = new();
             if (instance.Channel == GTextureStampChannel.AlbedoMetallicSmoothness)
             {
                 resourcesFlag.Add(GTerrainResourceFlag.AlbedoMap);
@@ -498,7 +497,7 @@ namespace Pinwheel.Griffin.StampTool
             string historyPrefix =
                 instance.Channel == GTextureStampChannel.AlbedoMetallicSmoothness ? HISTORY_PREFIX_COLOR :
                 instance.Channel == GTextureStampChannel.Splat ? HISTORY_PREFIX_TEXTURE : "Unknown Action";
-            List<GTerrainResourceFlag> resourcesFlag = new List<GTerrainResourceFlag>();
+            List<GTerrainResourceFlag> resourcesFlag = new();
             if (instance.Channel == GTextureStampChannel.AlbedoMetallicSmoothness)
             {
                 resourcesFlag.Add(GTerrainResourceFlag.AlbedoMap);
@@ -686,7 +685,7 @@ namespace Pinwheel.Griffin.StampTool
             if (!previewTextures.ContainsKey(key) ||
                 previewTextures[key] == null)
             {
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 rt.wrapMode = TextureWrapMode.Clamp;
                 previewTextures[key] = rt;
             }
@@ -694,7 +693,7 @@ namespace Pinwheel.Griffin.StampTool
             {
                 previewTextures[key].Release();
                 Object.DestroyImmediate(previewTextures[key]);
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 rt.wrapMode = TextureWrapMode.Clamp;
                 previewTextures[key] = rt;
             }

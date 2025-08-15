@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using BrainFailProductions.PolyFew.AsImpL.MathUtil;
+using System.Collections.Generic;
 using UnityEngine;
-using BrainFailProductions.PolyFew.AsImpL.MathUtil;
 
 
 namespace BrainFailProductions.PolyFew.AsImpL
@@ -22,7 +22,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
             Vector3 planeNormal = FindPlaneNormal(dataSet, face);
 
             // setup the data structure used for triangluation
-            List<MathUtil.Vertex> poly = new List<MathUtil.Vertex>();
+            List<MathUtil.Vertex> poly = new();
             for (int i = 0; i < numVerts; i++)
             {
                 int idx = face[i].vertIdx;

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 #if ADDRESSABLES_ENABLED
-using UnityEngine.AddressableAssets;
 #endif
 
 namespace DarkTonic.MasterAudio.EditorScripts
@@ -143,9 +142,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                                     }
                                     break;
 #if ADDRESSABLES_ENABLED
-                            case MasterAudio.AudioLocation.Addressable:
-                                DTGUIHelper.PreviewAddressable(rndVar.audioClipAddressable, previewer, calcVolume);
-                                break;
+                                case MasterAudio.AudioLocation.Addressable:
+                                    DTGUIHelper.PreviewAddressable(rndVar.audioClipAddressable, previewer, calcVolume);
+                                    break;
 #endif
                             }
                         }
@@ -176,11 +175,13 @@ namespace DarkTonic.MasterAudio.EditorScripts
             EditorGUILayout.BeginHorizontal();
 
             var newVol = DTGUIHelper.DisplayVolumeField(_group.groupMasterVolume, DTGUIHelper.VolumeFieldType.None, MasterAudio.MixerWidthMode.Normal, 0f, true, "Group Master Volume");
-            if (newVol != _group.groupMasterVolume) {
+            if (newVol != _group.groupMasterVolume)
+            {
                 AudioUndoHelper.RecordObjectPropertyForUndo(ref _isDirty, _group, "change Group Master Volume");
                 _group.groupMasterVolume = newVol;
 
-                if (Application.isPlaying) {
+                if (Application.isPlaying)
+                {
                     MasterAudio.SetGroupVolume(_group.GameObjectName, _group.groupMasterVolume);
                 }
             }
@@ -287,11 +288,12 @@ namespace DarkTonic.MasterAudio.EditorScripts
                 }
 
 #if ADDRESSABLES_ENABLED
-        var newDelay = EditorGUILayout.IntSlider(new GUIContent("Unused Addressable Life (sec)", "To avoid reloading frequently used Addressables, you can keep them loaded when not in use for up to X seconds. Playing the Addressable again will reset the stopwatch back to zero when its finished playing."), _group.addressableUnusedSecondsLifespan, 0, 1800);
-        if (newDelay != _group.addressableUnusedSecondsLifespan) {
-            AudioUndoHelper.RecordObjectPropertyForUndo(ref _isDirty, _group, "Change Unused Addressable Life (sec)");
-            _group.addressableUnusedSecondsLifespan = newDelay;
-        }
+                var newDelay = EditorGUILayout.IntSlider(new GUIContent("Unused Addressable Life (sec)", "To avoid reloading frequently used Addressables, you can keep them loaded when not in use for up to X seconds. Playing the Addressable again will reset the stopwatch back to zero when its finished playing."), _group.addressableUnusedSecondsLifespan, 0, 1800);
+                if (newDelay != _group.addressableUnusedSecondsLifespan)
+                {
+                    AudioUndoHelper.RecordObjectPropertyForUndo(ref _isDirty, _group, "Change Unused Addressable Life (sec)");
+                    _group.addressableUnusedSecondsLifespan = newDelay;
+                }
 #endif
 
                 if (_group.targetDespawnedBehavior == MasterAudioGroup.TargetDespawnedBehavior.FadeOut)
@@ -1516,9 +1518,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                                             }
                                             break;
 #if ADDRESSABLES_ENABLED
-                                case MasterAudio.AudioLocation.Addressable:
-                                    DTGUIHelper.PreviewAddressable(variation.audioClipAddressable, previewer, calcVolume);
-                                    break;
+                                        case MasterAudio.AudioLocation.Addressable:
+                                            DTGUIHelper.PreviewAddressable(variation.audioClipAddressable, previewer, calcVolume);
+                                            break;
 #endif
                                     }
                                 }
@@ -1553,7 +1555,8 @@ namespace DarkTonic.MasterAudio.EditorScripts
                             EditorGUILayout.LabelField(label,
                                 EditorStyles.miniButtonMid, GUILayout.Height(16));
                         }
-                        else if (variation.IsPlaying && variation.VarAudio.clip != null) { // wait for Resource files to load
+                        else if (variation.IsPlaying && variation.VarAudio.clip != null)
+                        { // wait for Resource files to load
                             EditorGUILayout.BeginHorizontal();
                             GUI.color = Color.green;
 
@@ -1674,17 +1677,18 @@ namespace DarkTonic.MasterAudio.EditorScripts
                                 }
                                 break;
 #if ADDRESSABLES_ENABLED
-                    case MasterAudio.AudioLocation.Addressable:
-                        var varSerialized = new SerializedObject(variation);
-                        varSerialized.Update();
-                        EditorGUILayout.PropertyField(varSerialized.FindProperty(nameof(SoundGroupVariation.audioClipAddressable)), true);
-                        varSerialized.ApplyModifiedProperties();
+                            case MasterAudio.AudioLocation.Addressable:
+                                var varSerialized = new SerializedObject(variation);
+                                varSerialized.Update();
+                                EditorGUILayout.PropertyField(varSerialized.FindProperty(nameof(SoundGroupVariation.audioClipAddressable)), true);
+                                varSerialized.ApplyModifiedProperties();
 
-                        if (!DTGUIHelper.IsAddressableTypeValid(variation.audioClipAddressable, variation.GameObjectName)) {
-                            variation.audioClipAddressable = null;
-                            varIsDirty = true;
-                        }
-                        break;
+                                if (!DTGUIHelper.IsAddressableTypeValid(variation.audioClipAddressable, variation.GameObjectName))
+                                {
+                                    variation.audioClipAddressable = null;
+                                    varIsDirty = true;
+                                }
+                                break;
 #endif
                             case MasterAudio.AudioLocation.ResourceFile:
                                 EditorGUILayout.BeginVertical();
@@ -2406,7 +2410,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
                 DTGUIHelper.ShowAlert("You already have a Variation for this Group named '" + clipName + "'. \n\nPlease rename these Variations when finished to be unique, or you may not be able to play them by name if you have a need to.");
             }
 
-            var newVar = (GameObject)Instantiate(ma.soundGroupVariationTemplate.gameObject, group.transform.position, Quaternion.identity);
+            var newVar = Instantiate(ma.soundGroupVariationTemplate.gameObject, group.transform.position, Quaternion.identity);
             AudioUndoHelper.CreateObjectForUndo(newVar, "create Variation");
 
             newVar.transform.name = clipName;
@@ -2430,9 +2434,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                     variation.useLocalization = useLocalization;
                     break;
 #if ADDRESSABLES_ENABLED
-            case MasterAudio.AudioLocation.Addressable:
-                variation.audioClipAddressable = AddressableEditorHelper.CreateAssetReferenceFromObject(clip);
-                break;
+                case MasterAudio.AudioLocation.Addressable:
+                    variation.audioClipAddressable = AddressableEditorHelper.CreateAssetReferenceFromObject(clip);
+                    break;
 #endif
             }
 
@@ -2465,9 +2469,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                         ac = setting.VarAudio.clip;
                         break;
 #if ADDRESSABLES_ENABLED
-                case MasterAudio.AudioLocation.Addressable:
-                    ac = DTGUIHelper.EditModeLoadAddressable(setting.audioClipAddressable);
-                    break;
+                    case MasterAudio.AudioLocation.Addressable:
+                        ac = DTGUIHelper.EditModeLoadAddressable(setting.audioClipAddressable);
+                        break;
 #endif
                     case MasterAudio.AudioLocation.ResourceFile:
                         if (string.IsNullOrEmpty(setting.resourceFileName))

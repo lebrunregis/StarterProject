@@ -15,25 +15,25 @@ namespace MagicaCloth2
     public class ClothManager : IManager, IValid
     {
         // すべて
-        internal HashSet<ClothProcess> clothSet = new HashSet<ClothProcess>(256);
+        internal HashSet<ClothProcess> clothSet = new(256);
 
         // BoneCloth,BoneSpring
-        internal HashSet<ClothProcess> boneClothSet = new HashSet<ClothProcess>();
+        internal HashSet<ClothProcess> boneClothSet = new();
 
         // MeshCloth
-        internal HashSet<ClothProcess> meshClothSet = new HashSet<ClothProcess>();
+        internal HashSet<ClothProcess> meshClothSet = new();
 
         //=========================================================================================
-        Dictionary<int, bool> animatorVisibleDict = new Dictionary<int, bool>(30);
-        Dictionary<int, bool> rendererVisibleDict = new Dictionary<int, bool>(100);
+        private readonly Dictionary<int, bool> animatorVisibleDict = new(30);
+        private readonly Dictionary<int, bool> rendererVisibleDict = new(100);
 
         //=========================================================================================
         /// <summary>
         /// マスタージョブハンドル
         /// </summary>
-        JobHandle masterJob = default;
+        private JobHandle masterJob = default;
 
-        bool isValid = false;
+        private bool isValid = false;
 
         //=========================================================================================
         public void Dispose()
@@ -83,12 +83,12 @@ namespace MagicaCloth2
         }
 
         //=========================================================================================
-        void ClearMasterJob()
+        private void ClearMasterJob()
         {
             masterJob = default;
         }
 
-        void CompleteMasterJob()
+        private void CompleteMasterJob()
         {
             masterJob.Complete();
         }
@@ -143,7 +143,7 @@ namespace MagicaCloth2
         /// <summary>
         /// フレーム開始時に実行される更新処理
         /// </summary>
-        void OnEarlyClothUpdate()
+        private void OnEarlyClothUpdate()
         {
             //Debug.Log($"OnEarlyClothUpdate. F:{Time.frameCount}");
             if (MagicaManager.Team.TrueTeamCount > 0) // カリング判定があるのでDisableチームもまわす必要がある
@@ -165,7 +165,7 @@ namespace MagicaCloth2
         /// <summary>
         /// PreUpdate開始時に実行される更新処理
         /// </summary>
-        void OnFirstPreUpdate()
+        private void OnFirstPreUpdate()
         {
             //Debug.Log($"OnFirstPreUpdate. F:{Time.frameCount}");
             if (MagicaManager.Team.TrueTeamCount > 0) // カリング判定があるのでDisableチームもまわす必要がある
@@ -181,28 +181,28 @@ namespace MagicaCloth2
             }
         }
 
-        void OnBeforeLateUpdate()
+        private void OnBeforeLateUpdate()
         {
             if (MagicaManager.Time.updateLocation == TimeManager.UpdateLocation.BeforeLateUpdate)
                 ClothUpdate();
         }
 
-        void OnAfterLateUpdate()
+        private void OnAfterLateUpdate()
         {
             if (MagicaManager.Time.updateLocation == TimeManager.UpdateLocation.AfterLateUpdate)
                 ClothUpdate();
         }
 
         //=========================================================================================
-        static readonly ProfilerMarker startClothUpdateTimeProfiler = new ProfilerMarker("StartClothUpdate.Time");
-        static readonly ProfilerMarker startClothUpdateTeamProfiler = new ProfilerMarker("StartClothUpdate.Team");
-        static readonly ProfilerMarker startClothUpdatePrePareProfiler = new ProfilerMarker("StartClothUpdate.Prepare");
-        static readonly ProfilerMarker startClothUpdateScheduleProfiler = new ProfilerMarker("StartClothUpdate.Schedule");
+        private static readonly ProfilerMarker startClothUpdateTimeProfiler = new("StartClothUpdate.Time");
+        private static readonly ProfilerMarker startClothUpdateTeamProfiler = new("StartClothUpdate.Team");
+        private static readonly ProfilerMarker startClothUpdatePrePareProfiler = new("StartClothUpdate.Prepare");
+        private static readonly ProfilerMarker startClothUpdateScheduleProfiler = new("StartClothUpdate.Schedule");
 
         /// <summary>
         /// クロスコンポーネントの更新
         /// </summary>
-        void ClothUpdate()
+        private void ClothUpdate()
         {
             if (MagicaManager.IsPlaying() == false)
                 return;
@@ -304,7 +304,7 @@ namespace MagicaCloth2
             }
         }
 
-        bool CheckRendererVisible(List<Renderer> renderers)
+        private bool CheckRendererVisible(List<Renderer> renderers)
         {
             foreach (var ren in renderers)
             {

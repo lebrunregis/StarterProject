@@ -1,14 +1,12 @@
 #if GRIFFIN
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.Rendering;
 
 namespace Pinwheel.Griffin.ErosionTool
 {
     public class GErosionPreviewDrawer
     {
-        private static MaterialPropertyBlock previewPropertyBlock = new MaterialPropertyBlock();
+        private static readonly MaterialPropertyBlock previewPropertyBlock = new();
 
         private static Material geometryPreviewMaterial;
         private static Material GeometryPreviewMaterial
@@ -55,12 +53,12 @@ namespace Pinwheel.Griffin.ErosionTool
 
             Mesh previewMesh = GEditorSettings.Instance.livePreview.GetTriangleMesh(t.TerrainData.Geometry.MeshResolution);
 
-            Vector3 terrainSize = new Vector3(
+            Vector3 terrainSize = new(
                 t.TerrainData.Geometry.Width,
                 t.TerrainData.Geometry.Height,
                 t.TerrainData.Geometry.Length);
             previewPropertyBlock.Clear();
-            previewPropertyBlock.SetTexture(SIMULATION_DATA, simulator.SimulationData != null ? (Texture)simulator.SimulationData : Texture2D.blackTexture);
+            previewPropertyBlock.SetTexture(SIMULATION_DATA, simulator.SimulationData != null ? simulator.SimulationData : Texture2D.blackTexture);
             previewPropertyBlock.SetFloat(FADE_DISTANCE, 0f);
             previewPropertyBlock.SetFloat(TRANSPARENCY, 1f);
             previewPropertyBlock.SetMatrix(WORLD_TO_SIM, simulator.transform.worldToLocalMatrix);
@@ -81,9 +79,9 @@ namespace Pinwheel.Griffin.ErosionTool
                 if (chunkCulling[i] == false)
                     continue;
                 Rect r = chunkRects[i];
-                Vector3 position = new Vector3(r.x, t.transform.position.y, r.y);
+                Vector3 position = new(r.x, t.transform.position.y, r.y);
                 Quaternion rotation = Quaternion.identity;
-                Vector3 scale = new Vector3(r.width, 1, r.height);
+                Vector3 scale = new(r.width, 1, r.height);
                 Matrix4x4 trs = Matrix4x4.TRS(position, rotation, scale);
 
                 Graphics.DrawMesh(

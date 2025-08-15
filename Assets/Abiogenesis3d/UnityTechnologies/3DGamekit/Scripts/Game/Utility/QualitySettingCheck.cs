@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -18,13 +16,13 @@ namespace Gamekit3D
 
         protected int m_PreviousQualitySetting;
 
-        void OnEnable()
+        private void OnEnable()
         {
             m_PreviousQualitySetting = QualitySettings.GetQualityLevel();
             Toggle(m_PreviousQualitySetting >= minimumQualitySettings);
         }
 
-        void Update()
+        private void Update()
         {
             //This is *slightly* expensive as we are going to check on every QulaitySettingChecker every frame (though our project only have a couple)
             //But this detect quality changes esily. A real world scenario would have a system that register every behaviour that need to be notified
@@ -36,7 +34,7 @@ namespace Gamekit3D
             }
         }
 
-        void Toggle(bool qualitySettingMet)
+        private void Toggle(bool qualitySettingMet)
         {
             for (int i = 0; i < targets.Length; ++i)
             {
@@ -51,7 +49,7 @@ namespace Gamekit3D
     {
         private QualitySettingCheck m_Target;
 
-        void OnEnable()
+        private void OnEnable()
         {
             m_Target = target as QualitySettingCheck;
 

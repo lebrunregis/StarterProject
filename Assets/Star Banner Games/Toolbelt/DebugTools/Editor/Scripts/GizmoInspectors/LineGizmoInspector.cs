@@ -1,13 +1,12 @@
-using UnityEngine;
-using UnityEditor;
-using System;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace SBG.Toolbelt.DebugTools.Editor
 {
-	[CustomEditor(typeof(LineGizmo))]
-	public class LineGizmoInspector : GizmoDisplayInspector
-	{
+    [CustomEditor(typeof(LineGizmo))]
+    public class LineGizmoInspector : GizmoDisplayInspector
+    {
         private SerializedProperty _target;
         private SerializedProperty _targetOffset;
 

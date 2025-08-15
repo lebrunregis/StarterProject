@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace BrainFailProductions.PolyFew.AsImpL
 {
@@ -159,7 +157,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
             int w = bumpMap.width;
             float changeNeg, changePos;
             float /*h0,*/ h1, h2, h3/*, h4*/;
-            Texture2D normalMap = new Texture2D(w, h, TextureFormat.ARGB32, true);
+            Texture2D normalMap = new(w, h, TextureFormat.ARGB32, true);
 
             Color col = Color.black;
 

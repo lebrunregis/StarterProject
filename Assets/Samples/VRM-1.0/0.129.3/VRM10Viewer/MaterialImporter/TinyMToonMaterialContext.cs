@@ -1,4 +1,3 @@
-using System.Dynamic;
 using UnityEngine;
 
 namespace UniVRM10.VRM10Viewer

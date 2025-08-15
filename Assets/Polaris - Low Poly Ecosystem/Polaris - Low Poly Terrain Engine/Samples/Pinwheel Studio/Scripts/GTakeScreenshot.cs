@@ -53,7 +53,7 @@ namespace Pinwheel.Griffin
             yield return new WaitForEndOfFrame();
 
             // create a texture to pass to encoding
-            Texture2D texture = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+            Texture2D texture = new(Screen.width, Screen.height, TextureFormat.RGB24, false);
 
             // put buffer into texture
             texture.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);

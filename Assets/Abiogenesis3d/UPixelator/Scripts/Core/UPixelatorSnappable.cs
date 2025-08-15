@@ -32,19 +32,19 @@ namespace Abiogenesis3d
         public bool snapLocalScale;
         [Range(0, 1)] public float snapScaleValue = 0.05f;
 
-        Vector3 storedPosition;
+        private Vector3 storedPosition;
         [HideInInspector] public Vector3 lastSnappedPosition;
         [HideInInspector] public Vector3 skippedSnappedPosition;
 
-        Quaternion storedRotation;
-        Vector3 storedLocalScale;
+        private Quaternion storedRotation;
+        private Vector3 storedLocalScale;
 
         public Vector3 initialPosition;
 
         // NOTE: needed because exiting play mode resets values before onEndCameraRendering calls reset so it resets to default 0 position
-        bool storePositionDirty;
-        bool storeRotationDirty;
-        bool storeLocalScaleDirty;
+        private bool storePositionDirty;
+        private bool storeRotationDirty;
+        private bool storeLocalScaleDirty;
 
         [Header("Experimental")]
         [Tooltip("Waits for more than a pixel size position diff to snap, use for moving objects not followed by the camera")]
@@ -54,12 +54,12 @@ namespace Abiogenesis3d
         public bool smoothSnapUI = true;
 
         // NOTE: default to true because snapping should be accompanied with restoring otherwise it can lead to issues
-        [NonSerialized] bool log = false;
-        [NonSerialized] bool verboseLog = false;
+        [NonSerialized] private readonly bool log = false;
+        [NonSerialized] private readonly bool verboseLog = false;
 
-        [HideInInspector] public List<UPixelatorSnappable> nested = new List<UPixelatorSnappable>();
+        [HideInInspector] public List<UPixelatorSnappable> nested = new();
 
-        bool positionMutated;
+        private bool positionMutated;
 
         // NOTE: don't use transform.position when there's rectTransform, it does not serialize properly when
         //  reopening the project... what seems to serialize properly is rectTransform.anchoredPosition3D
@@ -75,7 +75,7 @@ namespace Abiogenesis3d
             if (positionMutated) Log("Position <color=red>mutated</color>, diff (" + diff.x + ", " + diff.y + ", " + diff.z + ")");
         }
 
-        void OnValidate()
+        private void OnValidate()
         {
             if (divisions360 > 0)
                 snapRotationAngles = Vector3.one * 360 / Mathf.Pow(2, divisions360);
@@ -97,7 +97,7 @@ namespace Abiogenesis3d
         //     }
         // }
 
-        void OnEnable()
+        private void OnEnable()
         {
             var uPixelator = FindObjectOfType<UPixelator>();
             if (uPixelator) uPixelator.isSnappablesDirty = true;
@@ -121,7 +121,7 @@ namespace Abiogenesis3d
             }
         }
 
-        void Log(string str)
+        private void Log(string str)
         {
             if (!log) return;
             // TODO: simplify Log calls, remove name as it's appended here
@@ -166,7 +166,8 @@ namespace Abiogenesis3d
         }
         public void RestoreRotation()
         {
-            if (storeRotationDirty) {
+            if (storeRotationDirty)
+            {
                 if (isLocalRotation) transform.localRotation = storedRotation;
                 else transform.rotation = storedRotation;
             }
@@ -205,7 +206,7 @@ namespace Abiogenesis3d
         {
             // var r = camRotation * camRotationOffset;
             // WIP
-            Vector3 axis = new Vector3(1, 0, 0);
+            Vector3 axis = new(1, 0, 0);
             Vector3 rotatedAxis = camRotation * axis;
 
             Quaternion inverseRotation = Quaternion.Inverse(Quaternion.AngleAxis(camRotationOffset.x, rotatedAxis));

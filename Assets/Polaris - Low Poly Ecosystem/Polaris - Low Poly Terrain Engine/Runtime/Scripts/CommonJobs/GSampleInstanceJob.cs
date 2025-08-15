@@ -1,10 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Collections;
-using Unity.Burst;
 using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -33,9 +30,9 @@ namespace Pinwheel.Griffin
 
         public void Execute(int index)
         {
-            
-            Unity.Mathematics.Random rand = Unity.Mathematics.Random.CreateFromIndex((uint)(index^seed));
-            Vector2 uv = new Vector2(rand.NextFloat(), rand.NextFloat());
+
+            Unity.Mathematics.Random rand = Unity.Mathematics.Random.CreateFromIndex((uint)(index ^ seed));
+            Vector2 uv = new(rand.NextFloat(), rand.NextFloat());
             float maskValue = GJobCommon.GetColorBilinear(mask, uv).r;
             if (rand.NextFloat() > maskValue)
             {
@@ -44,7 +41,7 @@ namespace Pinwheel.Griffin
             else
             {
                 cullResult[index] = true;
-                GPrototypeInstanceInfo info = new GPrototypeInstanceInfo();
+                GPrototypeInstanceInfo info = new();
                 info.prototypeIndex = selectedPrototypeIndices[rand.NextInt(0, selectedPrototypeIndices.Length)];
                 info.position = new Vector3(uv.x, 0, uv.y);
                 info.rotation = Quaternion.Euler(0, rand.NextFloat(minRotation, maxRotation), 0);

@@ -20,7 +20,7 @@ namespace MagicaCloth2
     public partial class ClothProcess
     {
         //=========================================================================================
-        static readonly ProfilerMarker initClothProfiler = new ProfilerMarker("InitCloth");
+        private static readonly ProfilerMarker initClothProfiler = new("InitCloth");
 
         /// <summary>
         /// 初期化（必ずアニメーションの実行前に行う）
@@ -275,7 +275,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="ren"></param>
         /// <returns>レンダー情報ハンドル</returns>
-        int AddRenderer(
+        private int AddRenderer(
             Renderer ren,
             RenderSetupData referenceSetupData,
             RenderSetupData.UniqueSerializationData referenceUniqueSetupData,
@@ -311,7 +311,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="rootTransforms"></param>
         /// <param name="connectionMode"></param>
-        void CreateBoneRenderSetupData(
+        private void CreateBoneRenderSetupData(
             ClothInitSerializeData initData,
             ClothType ctype,
             List<Transform> rootTransforms,
@@ -463,7 +463,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="ct"></param>
         /// <returns></returns>
-        async Task RuntimeBuildAsync(CancellationToken ct)
+        private async Task RuntimeBuildAsync(CancellationToken ct)
         {
             isBuild = true;
             Develop.DebugLog($"Build start : {Name}");
@@ -1116,7 +1116,7 @@ namespace MagicaCloth2
             TransformRecord clothTransformRecord, VirtualMesh renderMesh, PaintMapData paintMapData, out SelectionData selectionData
             )
         {
-            ResultCode result = new ResultCode();
+            ResultCode result = new();
             result.SetProcess();
             selectionData = new SelectionData();
 
@@ -1137,7 +1137,7 @@ namespace MagicaCloth2
                 // レンダーメッシュのUV値からペイントマップをフェッチしてセレクションデータを作成
                 // 座標はクロス空間に変換する
                 var toM = MathUtility.Transform(renderMesh.initLocalToWorld, clothTransformRecord.worldToLocalMatrix);
-                int2 xySize = new int2(paintMapData.paintMapWidth, paintMapData.paintMapHeight);
+                int2 xySize = new(paintMapData.paintMapWidth, paintMapData.paintMapHeight);
                 using var paintData = new NativeArray<Color32>(paintMapData.paintData, Allocator.TempJob);
 
                 // Burstにより属性マップからセレクションデータを設定
@@ -1183,7 +1183,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct GenerateSelectionJob : IJobParallelFor
+        private struct GenerateSelectionJob : IJobParallelFor
         {
             public int offset;
             [NativeDisableParallelForRestriction]
@@ -1319,7 +1319,7 @@ namespace MagicaCloth2
             TransformRecord clothTransformRecord, VirtualMesh renderMesh, VertexAttribute[] vertexAttributeArray, out SelectionData selectionData
             )
         {
-            ResultCode result = new ResultCode();
+            ResultCode result = new();
             result.SetProcess();
             selectionData = new SelectionData();
 
@@ -1359,9 +1359,9 @@ namespace MagicaCloth2
         }
 
         //=========================================================================================
-        static readonly ProfilerMarker preBuildProfiler = new ProfilerMarker("ClothProcess.PreBuild");
-        static readonly ProfilerMarker preBuildDeserializationProfiler = new ProfilerMarker("ClothProcess.PreBuild.Deserialization");
-        static readonly ProfilerMarker preBuildRegistrationProfiler = new ProfilerMarker("ClothProcess.PreBuild.Registration");
+        private static readonly ProfilerMarker preBuildProfiler = new("ClothProcess.PreBuild");
+        private static readonly ProfilerMarker preBuildDeserializationProfiler = new("ClothProcess.PreBuild.Deserialization");
+        private static readonly ProfilerMarker preBuildRegistrationProfiler = new("ClothProcess.PreBuild.Registration");
 
         /// <summary>
         /// PreBuildデータによる即時構築
@@ -1383,7 +1383,7 @@ namespace MagicaCloth2
             var sdata2 = cloth.GetSerializeData2();
 
             VirtualMeshContainer proxyMeshContainer = null;
-            List<VirtualMeshContainer> renderMeshContainerList = new List<VirtualMeshContainer>();
+            List<VirtualMeshContainer> renderMeshContainerList = new();
 
             try
             {

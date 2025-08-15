@@ -1,7 +1,6 @@
 #if GRIFFIN
 using System.Collections.Generic;
 using UnityEngine;
-using Type = System.Type;
 
 namespace Pinwheel.Griffin
 {
@@ -377,8 +376,8 @@ namespace Pinwheel.Griffin
             if (heightMap == null)
                 return;
             Texture2D tmp = GCommon.CreateTexture(HeightMapResolution, Color.clear, HeightMapFormat);
-            RenderTexture rt = new RenderTexture(HeightMapResolution, HeightMapResolution, 32, HeightMapRTFormat);
-            
+            RenderTexture rt = new(HeightMapResolution, HeightMapResolution, 32, HeightMapRTFormat);
+
             GCommon.CopyTexture(heightMap, tmp);
             tmp.name = heightMap.name;
             tmp.filterMode = heightMap.filterMode;
@@ -398,7 +397,7 @@ namespace Pinwheel.Griffin
             if (heightmapVersion < HEIGHT_MAP_VERSION_ENCODE_RG)
             {
                 Texture2D tmp = GCommon.CreateTexture(HeightMapResolution, Color.clear, HeightMapFormat);
-                RenderTexture rt = new RenderTexture(HeightMapResolution, HeightMapResolution, 32, HeightMapRTFormat);
+                RenderTexture rt = new(HeightMapResolution, HeightMapResolution, 32, HeightMapRTFormat);
                 Material mat = GInternalMaterials.HeightmapConverterEncodeRGMaterial;
                 mat.SetTexture("_MainTex", heightMap);
                 GCommon.DrawQuad(rt, GCommon.FullRectUvPoints, mat, 0);
@@ -433,7 +432,7 @@ namespace Pinwheel.Griffin
             }
 
             int resolution = GCommon.SUB_DIV_MAP_RESOLUTION;
-            RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32);
+            RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32);
             Material mat = GInternalMaterials.SubDivisionMapMaterial;
             Graphics.Blit(HeightMap, rt, mat);
             GCommon.CopyFromRT(subDivisionMap, rt);
@@ -456,7 +455,7 @@ namespace Pinwheel.Griffin
             }
 
             int resolution = GCommon.SUB_DIV_MAP_RESOLUTION;
-            RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32);
+            RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32);
             Material mat = GInternalMaterials.SubDivisionMapMaterial;
             Graphics.Blit(altHeightMap, rt, mat);
             GCommon.CopyFromRT(subDivisionMap, rt);
@@ -547,7 +546,7 @@ namespace Pinwheel.Griffin
         public Vector4 GetDecodedHeightMapSample(Vector2 uv)
         {
             Vector4 c = HeightMap.GetPixelBilinear(uv.x, uv.y);
-            Vector2 encodedHeight = new Vector2(c.x, c.y);
+            Vector2 encodedHeight = new(c.x, c.y);
             float decodedHeight = GCommon.DecodeTerrainHeight(encodedHeight);
             c.x = decodedHeight;
             c.y = decodedHeight;
@@ -577,11 +576,11 @@ namespace Pinwheel.Griffin
 
             for (int z = 0; z < res; ++z)
             {
-                for (int x = 0; x< res; ++x)
+                for (int x = 0; x < res; ++x)
                 {
                     color = HeightMap.GetPixel(x, z);
                     float h = GCommon.DecodeTerrainHeight(color);
-                    samples[z, x] = h; 
+                    samples[z, x] = h;
                 }
             }
             return samples;

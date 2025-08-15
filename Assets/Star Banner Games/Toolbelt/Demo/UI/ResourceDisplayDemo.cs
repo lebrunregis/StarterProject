@@ -1,16 +1,14 @@
 using SBG.Toolbelt.UI;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SBG.Toolbelt.Demo
 {
-	public class ResourceDisplayDemo : MonoBehaviour
-	{
-        [SerializeField] ResourceBarUI resourceBar;
-        [SerializeField] ResourceCounterUI resourceCounter;
-        [SerializeField] float value = 100;
-        [SerializeField] float maxValue = 100;
+    public class ResourceDisplayDemo : MonoBehaviour
+    {
+        [SerializeField] private ResourceBarUI resourceBar;
+        [SerializeField] private ResourceCounterUI resourceCounter;
+        [SerializeField] private float value = 100;
+        [SerializeField] private float maxValue = 100;
 
 
         private void Start()

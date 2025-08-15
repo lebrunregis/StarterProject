@@ -10,7 +10,6 @@ using UnityEditor.Experimental.SceneManagement;
 #endif
 #endif
 using Unity.Collections;
-using Unity.Mathematics;
 
 namespace Pinwheel.Griffin
 {
@@ -37,7 +36,7 @@ namespace Pinwheel.Griffin
         public static string ListElementsToString<T>(this IEnumerable<T> list, string separator)
         {
             IEnumerator<T> i = list.GetEnumerator();
-            System.Text.StringBuilder s = new System.Text.StringBuilder();
+            System.Text.StringBuilder s = new();
             if (i.MoveNext())
                 s.Append(i.Current.ToString());
             while (i.MoveNext())
@@ -57,7 +56,7 @@ namespace Pinwheel.Griffin
 
         public static T[] To1dArray<T>(T[][] jaggedArray)
         {
-            List<T> result = new List<T>();
+            List<T> result = new();
             for (int z = 0; z < jaggedArray.Length; ++z)
             {
                 for (int x = 0; x < jaggedArray[z].Length; ++x)
@@ -166,18 +165,18 @@ namespace Pinwheel.Griffin
 
         public static Gradient CreateFullWhiteGradient()
         {
-            Gradient g = new Gradient();
-            GradientColorKey color = new GradientColorKey(Color.white, 1);
-            GradientAlphaKey alpha = new GradientAlphaKey(1, 1);
+            Gradient g = new();
+            GradientColorKey color = new(Color.white, 1);
+            GradientAlphaKey alpha = new(1, 1);
             g.SetKeys(new GradientColorKey[] { color }, new GradientAlphaKey[] { alpha });
             return g;
         }
 
         public static Gradient CreateFullTransparentGradient()
         {
-            Gradient g = new Gradient();
-            GradientColorKey color = new GradientColorKey(Color.white, 1);
-            GradientAlphaKey alpha = new GradientAlphaKey(0, 1);
+            Gradient g = new();
+            GradientColorKey color = new(Color.white, 1);
+            GradientAlphaKey alpha = new(0, 1);
             g.SetKeys(new GradientColorKey[] { color }, new GradientAlphaKey[] { alpha });
             return g;
         }
@@ -259,7 +258,7 @@ namespace Pinwheel.Griffin
             Transform t = parent.Find(name);
             if (t == null)
             {
-                GameObject g = new GameObject(name);
+                GameObject g = new(name);
                 g.transform.parent = parent;
                 ResetTransform(g.transform, parent);
                 t = g.transform;
@@ -310,7 +309,7 @@ namespace Pinwheel.Griffin
 
         public static string Repeat(char src, int count)
         {
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            System.Text.StringBuilder sb = new();
             sb.Append(src, count);
             return sb.ToString();
         }
@@ -430,7 +429,7 @@ namespace Pinwheel.Griffin
         public static float GetValueBilinear(float[] data, int width, int height, Vector2 uv)
         {
             float value = 0;
-            Vector2 pixelCoord = new Vector2(
+            Vector2 pixelCoord = new(
                 Mathf.Lerp(0, width - 1, uv.x),
                 Mathf.Lerp(0, height - 1, uv.y));
             //apply a bilinear filter
@@ -444,7 +443,7 @@ namespace Pinwheel.Griffin
             float f10 = data[GUtilities.To1DIndex(xCeil, yFloor, width)];
             float f11 = data[GUtilities.To1DIndex(xCeil, yCeil, width)];
 
-            Vector2 unitCoord = new Vector2(
+            Vector2 unitCoord = new(
                 pixelCoord.x - xFloor,
                 pixelCoord.y - yFloor);
 
@@ -460,7 +459,7 @@ namespace Pinwheel.Griffin
         public static Color GetColorBilinear(Color[] textureData, int width, int height, Vector2 uv)
         {
             Color color = Color.clear;
-            Vector2 pixelCoord = new Vector2(
+            Vector2 pixelCoord = new(
                 Mathf.Lerp(0, width - 1, uv.x),
                 Mathf.Lerp(0, height - 1, uv.y));
             //apply a bilinear filter
@@ -474,7 +473,7 @@ namespace Pinwheel.Griffin
             Color f10 = textureData[GUtilities.To1DIndex(xCeil, yFloor, width)];
             Color f11 = textureData[GUtilities.To1DIndex(xCeil, yCeil, width)];
 
-            Vector2 unitCoord = new Vector2(
+            Vector2 unitCoord = new(
                 pixelCoord.x - xFloor,
                 pixelCoord.y - yFloor);
 
@@ -489,7 +488,7 @@ namespace Pinwheel.Griffin
 
         public static GameObject CreatePreviewGameObject(Mesh m, Material mat, Vector3 position)
         {
-            GameObject g = new GameObject("GO");
+            GameObject g = new("GO");
             g.transform.position = position;
             g.transform.rotation = Quaternion.identity;
             g.transform.localScale = Vector3.one;
@@ -507,7 +506,7 @@ namespace Pinwheel.Griffin
 
         public static Camera CreatePreviewCamera(GameObject target, float distance, float padding)
         {
-            GameObject g = new GameObject("CAM");
+            GameObject g = new("CAM");
             g.transform.rotation = Quaternion.identity;
             g.transform.localScale = Vector3.one;
 
@@ -656,7 +655,7 @@ namespace Pinwheel.Griffin
         {
             if (src == null)
                 return null;
-            Gradient des = new Gradient();
+            Gradient des = new();
             des.SetKeys(src.colorKeys, src.alphaKeys);
             return des;
         }
@@ -665,7 +664,7 @@ namespace Pinwheel.Griffin
         {
             if (src == null)
                 return null;
-            AnimationCurve des = new AnimationCurve();
+            AnimationCurve des = new();
             Keyframe[] keys = src.keys;
             for (int i = 0; i < keys.Length; ++i)
             {
@@ -727,7 +726,7 @@ namespace Pinwheel.Griffin
         /// <returns></returns>
         public static bool IsPointInCircumcircle(Vector2 v0, Vector2 v1, Vector2 v2, Vector2 p)
         {
-            Matrix4x4 mat = new Matrix4x4();
+            Matrix4x4 mat = new();
             mat.SetRow(0, new Vector4(v0.x, v0.y, v0.x * v0.x + v0.y * v0.y, 1));
             mat.SetRow(1, new Vector4(v2.x, v2.y, v2.x * v2.x + v2.y * v2.y, 1)); //a,b,c counterclockwise
             mat.SetRow(2, new Vector4(v1.x, v1.y, v1.x * v1.x + v1.y * v1.y, 1));
@@ -738,7 +737,7 @@ namespace Pinwheel.Griffin
 
         public static bool IsPointInCircumcircleXZ(Vector3 v0, Vector3 v1, Vector3 v2, Vector3 p)
         {
-            Matrix4x4 mat = new Matrix4x4();
+            Matrix4x4 mat = new();
             mat.SetRow(0, new Vector4(v0.x, v0.z, v0.x * v0.x + v0.z * v0.z, 1));
             mat.SetRow(1, new Vector4(v2.x, v2.z, v2.x * v2.x + v2.z * v2.z, 1)); //a,b,c counterclockwise
             mat.SetRow(2, new Vector4(v1.x, v1.z, v1.x * v1.x + v1.z * v1.z, 1));
@@ -749,8 +748,8 @@ namespace Pinwheel.Griffin
 
         public static bool AreSetEqual(ushort[] setA, ushort[] setB)
         {
-            HashSet<ushort> a = new HashSet<ushort>(setA);
-            HashSet<ushort> b = new HashSet<ushort>(setB);
+            HashSet<ushort> a = new(setA);
+            HashSet<ushort> b = new(setB);
             return a.SetEquals(b);
         }
 
@@ -851,7 +850,7 @@ namespace Pinwheel.Griffin
 
         public static List<GStylizedTerrain> ExtractTerrainsFromOverlapTest(List<GOverlapTestResult> sweepTests)
         {
-            List<GStylizedTerrain> terrains = new List<GStylizedTerrain>();
+            List<GStylizedTerrain> terrains = new();
             foreach (GOverlapTestResult st in sweepTests)
             {
                 if (st.IsOverlapped)

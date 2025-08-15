@@ -25,7 +25,7 @@ namespace Pinwheel.Griffin.TextureTool
             GWarpParams warpParam = param.Warp;
             RenderTexture bg = CloneBg(targetRt);
             Mat.SetTexture("_MainTex", bg);
-            Mat.SetTexture("_Mask", warpParam.UseBackgroundAsMask ? (Texture)bg : (Texture)warpParam.Mask);
+            Mat.SetTexture("_Mask", warpParam.UseBackgroundAsMask ? bg : warpParam.Mask);
             Mat.SetFloat("_Strength", warpParam.Strength);
             GCommon.SetMaterialKeywordActive(Mat, "MASK_IS_NORMAL", warpParam.MaskIsNormalMap);
 

@@ -4,25 +4,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
-using System.Linq;
 
 namespace BrainFailProductions.PolyFewRuntime
 {
-    
+
     [AddComponentMenu("")]
     public class PolyfewRuntime : MonoBehaviour
     {
-        
+
 
         #region DATA_STRUCTURES
 
 
         private const int MAX_LOD_COUNT = 8;
         //public const int MAX_CONCURRENT_THREADS = 16;
-//#pragma warning disable
+        //#pragma warning disable
         //private static int maxConcurrentThreads = SystemInfo.processorCount * 2;
 
 
@@ -136,7 +136,7 @@ namespace BrainFailProductions.PolyFewRuntime
             public bool regardPreservationSpheres = false;
 
             /// <summary> The list of preservation spheres that dictate which areas of the mesh to preserve during simplification. This list will only be regarded if "regardPreservationSphere" option is set to true. </summary>
-            public List<PreservationSphere> preservationSpheres = new List<PreservationSphere>();
+            public List<PreservationSphere> preservationSpheres = new();
 
             /// <summary> This option (if set to true) will take into account the discrete curvature of mesh surface during simplification. Taking surface curvature into account can result in very good quality mesh simplification, but it can slow the simplification process significantly.</summary>
             public bool regardCurvature = false;
@@ -301,7 +301,7 @@ namespace BrainFailProductions.PolyFewRuntime
             /// <summary> The albedo tint color. Please note that the alpha value means nothing and can't be changed</summary>
             public Color albedoTint;
             /// <summary> The UV tiling</summary>
-            public Vector4 uvTileOffset = new Vector4(1, 1, 0, 0);
+            public Vector4 uvTileOffset = new(1, 1, 0, 0);
             /// <summary> The normal intensity</summary>
             public float normalIntensity = 1;
             /// <summary> The occlusion intensity</summary>
@@ -315,7 +315,7 @@ namespace BrainFailProductions.PolyFewRuntime
             /// <summary> The color of the emissive channel</summary>
             public Color emissionColor = Color.black;
             /// <summary> The uv tiling for detailed maps</summary>
-            public Vector4 detailUVTileOffset = new Vector4(1, 1, 0, 0);
+            public Vector4 detailUVTileOffset = new(1, 1, 0, 0);
             /// <summary> The alpha cutoff value</summary>
             public float alphaCutoff = 0.5f;
             /// <summary> The specular channel color</summary>
@@ -614,7 +614,7 @@ namespace BrainFailProductions.PolyFewRuntime
                             }
 
                             else
-                            {             
+                            {
                                 meshSimplifier.SimplifyMeshLossless();
                             }
 
@@ -817,7 +817,7 @@ namespace BrainFailProductions.PolyFewRuntime
                     OnEachMeshSimplified?.Invoke(gameObject, meshRendererPair);
 
                     var reducedMesh = meshSimplifier.ToMesh();
-                    reducedMesh.bindposes = meshRendererPair.mesh.bindposes;   
+                    reducedMesh.bindposes = meshRendererPair.mesh.bindposes;
                     reducedMesh.name = meshRendererPair.mesh.name.Replace("-POLY_REDUCED", "") + "-POLY_REDUCED";
 
                     if (meshSimplifier.RecalculateNormals)
@@ -1074,7 +1074,7 @@ namespace BrainFailProductions.PolyFewRuntime
                             lock (threadLock1)
                             {
                                 meshAssignments.Add(structure);
-                            
+
                                 threadsRunning--;
                                 meshesHandled++;
                             }
@@ -1214,7 +1214,7 @@ namespace BrainFailProductions.PolyFewRuntime
 
                     else
                     {
-                        meshSimplifier.SimplifyMeshLossless();       
+                        meshSimplifier.SimplifyMeshLossless();
                     }
 
 
@@ -1464,7 +1464,7 @@ namespace BrainFailProductions.PolyFewRuntime
 
                                 AssignReducedMesh(gameObject, meshRendererPair.mesh, reducedMesh, meshRendererPair.attachedToMeshFilter, true);
 
-                                if(meshSimplifier.RecalculateNormals)
+                                if (meshSimplifier.RecalculateNormals)
                                 {
                                     reducedMesh.RecalculateNormals();
                                     reducedMesh.RecalculateTangents();
@@ -1479,7 +1479,7 @@ namespace BrainFailProductions.PolyFewRuntime
                         try
                         {
                             if (!simplificationOptions.simplifyMeshLossless)
-                            {                    
+                            {
                                 meshSimplifier.SimplifyMesh(quality);
                             }
 
@@ -1628,7 +1628,7 @@ namespace BrainFailProductions.PolyFewRuntime
                                 targetObject = gameObject,
                                 preservationStrength = sphere.preservationStrength
                             };
-                            
+
                             tSpheres[a] = toleranceSphere;
                             a++;
                         }
@@ -1660,7 +1660,7 @@ namespace BrainFailProductions.PolyFewRuntime
 
 
                     meshSimplifier.Initialize(meshRendererPair.mesh, simplificationOptions.regardPreservationSpheres);
-                    
+
 
                     if (!simplificationOptions.simplifyMeshLossless)
                     {
@@ -2720,14 +2720,14 @@ namespace BrainFailProductions.PolyFewRuntime
                 }, importOptions);
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 isWorking = false;
                 OnError(ex);
             }
 
-            
-            while(isWorking)
+
+            while (isWorking)
             {
                 await Task.Delay(1);
             }
@@ -2762,17 +2762,17 @@ namespace BrainFailProductions.PolyFewRuntime
             {
                 isWorking = false;
                 OnSuccess(importedObject);
-            }, 
-            (Exception ex) => 
+            },
+            (Exception ex) =>
             {
                 isWorking = false;
                 OnError(ex);
 
-            } , importOptions);
+            }, importOptions);
 
-            
-            while(isWorking)
-            {      
+
+            while (isWorking)
+            {
                 await Task.Delay(1);
             }
 
@@ -2816,7 +2816,7 @@ namespace BrainFailProductions.PolyFewRuntime
 
             try
             {
-                importerExporter.ExportGameObjectToOBJ(toExport, exportPath, exportOptions, ()=> 
+                importerExporter.ExportGameObjectToOBJ(toExport, exportPath, exportOptions, () =>
                 {
                     isWorking = false;
                     OnSuccess();
@@ -2830,7 +2830,7 @@ namespace BrainFailProductions.PolyFewRuntime
             }
 
 
-            while(isWorking)
+            while (isWorking)
             {
                 await Task.Delay(1);
             }
@@ -2935,7 +2935,7 @@ namespace BrainFailProductions.PolyFewRuntime
         /// </summary>
         /// <param name="forObject"> The GameObject whose material properties objects to fetch</param>
         /// <returns>A list of MaterialProperties objects associated with this GameObject</returns>
-         
+
         public static List<MaterialProperties> GetMaterialsProperties(GameObject forObject)
         {
 
@@ -3004,7 +3004,7 @@ namespace BrainFailProductions.PolyFewRuntime
         /// </summary>
         /// <param name="changeTo"> The new material properties</param>
         /// <param name="forObject"> The GameObject whose merged material to change properties for</param>
-        
+
         public static void ChangeMaterialProperties(MaterialProperties changeTo, GameObject forObject)
         {
             if (forObject == null) { return; }
@@ -3130,7 +3130,7 @@ namespace BrainFailProductions.PolyFewRuntime
         }
 
 
-#endregion PRIVATE_METHODS
+        #endregion PRIVATE_METHODS
 
 
     }

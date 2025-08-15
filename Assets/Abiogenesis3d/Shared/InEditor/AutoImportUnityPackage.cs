@@ -21,17 +21,17 @@ namespace Abiogenesis3d
         public Object unitypackage;
         public AutoImportCondition condition;
 
-        void Awake()
+        private void Awake()
         {
 #if UNITY_EDITOR
             bool shouldImport = false;
 
 #if UNITY_PIPELINE_URP
-    #if UNITY_6000_0_OR_NEWER
+#if UNITY_6000_0_OR_NEWER
             if (condition == AutoImportCondition.URP_Unity6) shouldImport = true;
-    #else
+#else
             if (condition == AutoImportCondition.URP) shouldImport = true;
-    #endif
+#endif
 #else
         if (condition == AutoImportCondition.Builtin) shouldImport = true;
 #endif
@@ -50,7 +50,7 @@ namespace Abiogenesis3d
                     DestroyImmediate(gameObject, true);
                 }
             }
-            #endif
+#endif
         }
     }
 }

@@ -26,7 +26,7 @@ namespace MagicaCloth2
             serializedObject.ApplyModifiedProperties();
         }
 
-        void WindInspector()
+        private void WindInspector()
         {
             var wind = target as MagicaWindZone;
 

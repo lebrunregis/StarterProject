@@ -1,10 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Jobs;
 using Unity.Collections;
-using Unity.Burst;
+using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -34,8 +31,8 @@ namespace Pinwheel.Griffin
             int rightNodeIndex = 0;
 
             GSubdivNode currentNode;
-            GSubdivNode leftNode = new GSubdivNode();
-            GSubdivNode rightNode = new GSubdivNode();
+            GSubdivNode leftNode = new();
+            GSubdivNode rightNode = new();
 
             Vector2 uv0 = Vector2.zero;
             Vector2 uv1 = Vector2.zero;

@@ -14,31 +14,31 @@ namespace MagicaCloth2
     {
         [HideInInspector]
         public float animationPoseRatioProperty;
-        float _animationPoseRatioProperty;
+        private float _animationPoseRatioProperty;
 
         [HideInInspector]
         public float gravityProperty;
-        float _gravityProperty;
+        private float _gravityProperty;
 
         [HideInInspector]
         public float dampingProperty;
-        float _dampingProperty;
+        private float _dampingProperty;
 
         [HideInInspector]
         public float worldInertiaProperty;
-        float _worldInertiaProperty;
+        private float _worldInertiaProperty;
 
         [HideInInspector]
         public float localInertiaProperty;
-        float _localInertiaProperty;
+        private float _localInertiaProperty;
 
         [HideInInspector]
         public float windInfluenceProperty;
-        float _windInfluenceProperty;
+        private float _windInfluenceProperty;
 
         [HideInInspector]
         public float blendWeightProperty;
-        float _blendWeightProperty;
+        private float _blendWeightProperty;
 
         //=========================================================================================
         internal void InitAnimationProperty()
@@ -69,7 +69,7 @@ namespace MagicaCloth2
         /// アニメーションによりMagicaClothのプロパティが変更されたときに呼び出される.
         /// Called when a property of MagicaCloth changes due to animation.
         /// </summary>
-        void OnDidApplyAnimationProperties()
+        private void OnDidApplyAnimationProperties()
         {
             if (Application.isPlaying)
             {

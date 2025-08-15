@@ -2,14 +2,14 @@ using UnityEngine;
 
 namespace SBG.Toolbelt.DebugTools
 {
-	public abstract class GizmoDisplay : MonoBehaviour
-	{
+    public abstract class GizmoDisplay : MonoBehaviour
+    {
 #if UNITY_EDITOR
 
         [SerializeField] protected bool alwaysDisplay = false;
         [SerializeField] protected ToolbeltGizmos.WireframeMode displayMode = ToolbeltGizmos.WireframeMode.Wireframe;
 
-        [SerializeField] protected Color color = new Color(1,1,1,0.5f);
+        [SerializeField] protected Color color = new(1, 1, 1, 0.5f);
         [SerializeField] protected Transform origin;
         [SerializeField] protected Vector3 offset = Vector3.zero;
 

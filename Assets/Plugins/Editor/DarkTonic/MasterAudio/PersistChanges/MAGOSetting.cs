@@ -20,7 +20,8 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
         public GameObject GameObj { get; set; }
 
-        public List<MAComponentPatch> ComponentSettings {
+        public List<MAComponentPatch> ComponentSettings
+        {
             get { return _componentSettings; }
         }
 

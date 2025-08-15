@@ -174,7 +174,7 @@ namespace Pinwheel.Griffin.BackupTool
 
         private void RefreshBackup()
         {
-            List<string> backups = new List<string>(GBackupFile.GetAllBackupNames());
+            List<string> backups = new(GBackupFile.GetAllBackupNames());
             Backups.Clear();
             Backups.AddRange(backups);
             Repaint();
@@ -195,7 +195,7 @@ namespace Pinwheel.Griffin.BackupTool
                     }
                     else if (Event.current.button == 1)
                     {
-                        GenericMenu menu = new GenericMenu();
+                        GenericMenu menu = new();
                         menu.AddItem(
                             new GUIContent("Restore"),
                             false,
@@ -212,7 +212,7 @@ namespace Pinwheel.Griffin.BackupTool
 
             if (backupName.Equals(GUndoCompatibleBuffer.Instance.CurrentBackupName))
             {
-                Rect dotRect = new Rect(r.x, r.y, r.height, r.height);
+                Rect dotRect = new(r.x, r.y, r.height, r.height);
                 GUI.Label(dotRect, GEditorCommon.dot);
             }
         }
@@ -254,7 +254,7 @@ namespace Pinwheel.Griffin.BackupTool
             string label = "History";
             string id = "history";
 
-            GenericMenu context = new GenericMenu();
+            GenericMenu context = new();
             context.AddItem(
                 new GUIContent("Clear"),
                 false,
@@ -316,7 +316,7 @@ namespace Pinwheel.Griffin.BackupTool
                     }
                     else if (Event.current.button == 1)
                     {
-                        GenericMenu menu = new GenericMenu();
+                        GenericMenu menu = new();
                         menu.AddItem(
                             new GUIContent("Restore"),
                             false,
@@ -335,7 +335,7 @@ namespace Pinwheel.Griffin.BackupTool
 
             if (backupName.Equals(GUndoCompatibleBuffer.Instance.CurrentBackupName))
             {
-                Rect dotRect = new Rect(r.x, r.y, r.height, r.height);
+                Rect dotRect = new(r.x, r.y, r.height, r.height);
                 GUI.Label(dotRect, GEditorCommon.dot);
             }
         }

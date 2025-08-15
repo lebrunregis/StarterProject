@@ -5,11 +5,11 @@ namespace Abiogenesis3d
 {
     public class MouseDragUI : MonoBehaviour, IDragHandler, IBeginDragHandler
     {
-        KeyCode dragKey = KeyCode.Mouse0;
-        Vector2 lastMousePosition;
-        RectTransform rectTransform;
+        private readonly KeyCode dragKey = KeyCode.Mouse0;
+        private Vector2 lastMousePosition;
+        private RectTransform rectTransform;
 
-        void Start()
+        private void Start()
         {
             rectTransform = GetComponent<RectTransform>();
         }

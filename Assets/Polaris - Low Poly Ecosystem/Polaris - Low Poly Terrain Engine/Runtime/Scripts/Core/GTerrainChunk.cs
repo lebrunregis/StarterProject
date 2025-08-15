@@ -1,7 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
 using System.Collections.Generic;
 using Unity.Collections;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -448,7 +448,7 @@ namespace Pinwheel.Griffin
             int meshResolution,
             int lod)
         {
-            GCreateBaseTreeJob job = new GCreateBaseTreeJob()
+            GCreateBaseTreeJob job = new()
             {
                 nodes = subdivNodeNativeArray,
                 creationState = subdivNodeCreationState,
@@ -467,7 +467,7 @@ namespace Pinwheel.Griffin
             GTextureNativeDataDescriptor<Color32> subdivMap)
         {
             Rect uvRect = GetUvRange();
-            GSplitBaseTreeForDynamicPolygonJob job = new GSplitBaseTreeForDynamicPolygonJob()
+            GSplitBaseTreeForDynamicPolygonJob job = new()
             {
                 baseTree = subdivNodeNativeArray,
                 creationState = subdivNodeCreationState,
@@ -490,7 +490,7 @@ namespace Pinwheel.Griffin
             bool hasRightMarkers, NativeArray<bool> rightMarkers,
             bool hasBottomMarkers, NativeArray<bool> bottomMarkers)
         {
-            GStitchSeamJob job = new GStitchSeamJob()
+            GStitchSeamJob job = new()
             {
                 nodes = subdivNodeNativeArray,
                 creationState = subdivNodeCreationState,
@@ -521,7 +521,7 @@ namespace Pinwheel.Griffin
             int lod,
             NativeArray<bool> markerLOD0)
         {
-            GStitchSeamLODJob job = new GStitchSeamLODJob()
+            GStitchSeamLODJob job = new()
             {
                 nodes = subdivNodeNativeArray,
                 creationState = subdivNodeCreationState,
@@ -550,7 +550,7 @@ namespace Pinwheel.Griffin
             int meshResolution,
             int lod)
         {
-            GCountLeafNodeJob job = new GCountLeafNodeJob()
+            GCountLeafNodeJob job = new()
             {
                 creationState = subdivNodeCreationState,
                 metadata = generationMetadata,
@@ -581,7 +581,7 @@ namespace Pinwheel.Griffin
             Vector3 terrainSize = Terrain.TerrainData.Geometry.Size;
             Rect uvRect = GetUvRange();
             float texelSize = 1.0f / Terrain.TerrainData.Geometry.HeightMapResolution;
-            GCreateVertexJob job = new GCreateVertexJob()
+            GCreateVertexJob job = new()
             {
                 nodes = subdivNodeNativeArray,
                 creationState = subdivNodeCreationState,
@@ -680,7 +680,7 @@ namespace Pinwheel.Griffin
         internal NativeArray<bool> GetVertexMarkerFromMeshUV(int lod)
         {
             int dimension = GGeometryJobUtilities.VERTEX_MARKER_DIMENSION;
-            NativeArray<bool> markers = new NativeArray<bool>(dimension * dimension, Allocator.TempJob);
+            NativeArray<bool> markers = new(dimension * dimension, Allocator.TempJob);
 
             Mesh m = GetMesh(lod);
             Vector2[] uvs = m.uv;
@@ -711,7 +711,7 @@ namespace Pinwheel.Griffin
             int dimension = GGeometryJobUtilities.VERTEX_MARKER_DIMENSION;
             if (vertexMarker_Cache != null && vertexMarker_Cache.Length == dimension * dimension)
             {
-                NativeArray<bool> markers = new NativeArray<bool>(vertexMarker_Cache, Allocator.TempJob);
+                NativeArray<bool> markers = new(vertexMarker_Cache, Allocator.TempJob);
                 return markers;
             }
             else
@@ -749,7 +749,7 @@ namespace Pinwheel.Griffin
             LodGroupComponent.SetLODs(lods);
             Internal_UpdateRenderer();
 
-            List<GameObject> childLod = new List<GameObject>();
+            List<GameObject> childLod = new();
             int maxIndex = transform.childCount - 1;
             for (int i = lodCount - 1; i <= maxIndex; ++i)
             {

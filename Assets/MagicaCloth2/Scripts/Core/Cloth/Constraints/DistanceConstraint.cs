@@ -136,7 +136,7 @@ namespace MagicaCloth2
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine($"[DistanceConstraint]");
             sb.AppendLine($"  -indexArray:{indexArray.ToSummary()}");
             sb.AppendLine($"  -dataArray:{dataArray.ToSummary()}");

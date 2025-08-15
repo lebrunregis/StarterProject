@@ -14,7 +14,7 @@ namespace BrainFailProductions.PolyFew
 {
 
     [System.Serializable]
-    public class DataContainer 
+    public class DataContainer
     {
 
         [System.Serializable]
@@ -31,14 +31,14 @@ namespace BrainFailProductions.PolyFew
 
             private TempGameObjectWrapper(GameObject gameObject)
             {
-                if(gameObject == null) { throw new ArgumentNullException(nameof(gameObject)); }
+                if (gameObject == null) { throw new ArgumentNullException(nameof(gameObject)); }
                 this.gameObject = gameObject;
                 uniqueId = gameObject.GetInstanceID();
             }
 
             public static implicit operator GameObject(TempGameObjectWrapper gameObjectWrapper) => gameObjectWrapper.gameObject;
 
-            public static explicit operator TempGameObjectWrapper(GameObject gameObject) => new TempGameObjectWrapper(gameObject);
+            public static explicit operator TempGameObjectWrapper(GameObject gameObject) => new(gameObject);
 
             public override int GetHashCode()
             {
@@ -78,7 +78,7 @@ namespace BrainFailProductions.PolyFew
 
             public void Destruct()
             {
-                if(mesh != null)
+                if (mesh != null)
                 {
                     UnityEngine.Object.DestroyImmediate(mesh);
                 }
@@ -144,7 +144,7 @@ namespace BrainFailProductions.PolyFew
             {
                 this.gameObject = gameObject;
                 this.undoOperations = undoOperations;
-                this.redoOperations = redoOperations; 
+                this.redoOperations = redoOperations;
             }
 
 
@@ -170,7 +170,7 @@ namespace BrainFailProductions.PolyFew
                         undoOperations.RemoveAt(0);
                     }
 
-                    ObjectHistory undoOperation = new ObjectHistory(isReduceDeep, originalMeshesClones);
+                    ObjectHistory undoOperation = new(isReduceDeep, originalMeshesClones);
 
                     undoOperations.Add(undoOperation);
 
@@ -185,7 +185,7 @@ namespace BrainFailProductions.PolyFew
                         redoOperations.RemoveAt(0);
                     }
 
-                    ObjectHistory redoOperation = new ObjectHistory(isReduceDeep, originalMeshesClones);
+                    ObjectHistory redoOperation = new(isReduceDeep, originalMeshesClones);
 
                     redoOperations.Add(redoOperation);
                 }
@@ -243,7 +243,7 @@ namespace BrainFailProductions.PolyFew
 
 
 
-                ObjectMeshPair originalMeshesClones = new ObjectMeshPair();
+                ObjectMeshPair originalMeshesClones = new();
                 int totalOverwrites = lastOp.objectMeshPairs.Count;
                 int done = 0;
 
@@ -267,7 +267,7 @@ namespace BrainFailProductions.PolyFew
                         if (filter != null)
                         {
                             Mesh origMesh = UnityEngine.Object.Instantiate(filter.sharedMesh);
-                            MeshRendererPair originalPair = new MeshRendererPair(true, origMesh);
+                            MeshRendererPair originalPair = new(true, origMesh);
                             originalMeshesClones.Add(gameObject, originalPair);
 
                             // Overwrites the mesh assets and keeps references intact
@@ -290,7 +290,7 @@ namespace BrainFailProductions.PolyFew
                         if (sRenderer != null)
                         {
                             Mesh origMesh = UnityEngine.Object.Instantiate(sRenderer.sharedMesh);
-                            MeshRendererPair originalPair = new MeshRendererPair(false, origMesh);
+                            MeshRendererPair originalPair = new(false, origMesh);
                             originalMeshesClones.Add(gameObject, originalPair);
 
                             //sRenderer.sharedMesh.MakeSimilarToOtherMesh(meshRendererPair.mesh);
@@ -418,7 +418,7 @@ namespace BrainFailProductions.PolyFew
         [SerializeField]
 #endif
         public ObjectMeshPair objectMeshPairs;
-        
+
         public List<LODLevelSettings> currentLodLevelSettings;
 
         public List<ToleranceSphere> toleranceSpheres;
@@ -451,21 +451,21 @@ namespace BrainFailProductions.PolyFew
 
         public int choiceTextureMap = 0;
         public int choiceDiffuseColorSpace = 0;
-     
+
         public readonly string[] textureMapsChoices = new[] { "Albedo", "Metallic", "Specular", "Normal", "Height", "Occlusion", "Emission", "Detail Mask", "Detail Albedo", "Detail Normal" };
-        public readonly string[] compressionTypesChoices = new[] { "Uncompressed", "DXT1", "ETC2_RGB", "PVRTC_RGB4", "ASTC_RGB"};
+        public readonly string[] compressionTypesChoices = new[] { "Uncompressed", "DXT1", "ETC2_RGB", "PVRTC_RGB4", "ASTC_RGB" };
         public readonly string[] resolutionsChoices = new[] { "32", "64", "128", "256", "512", "1024", "2048", "4096" };
         public readonly string[] filteringModesChoices = new[] { "Point (no filter)", "Bilinear", "Trilinear" };
         public readonly string[] compressionQualitiesChoices = new[] { "Low", "Medium", "High" };
         public readonly string[] colorSpaceChoices = new[] { "Non_Linear", "Linear" };
         public string batchFewSavePath = "";
 
-#endregion BATCH FEW DATA
+        #endregion BATCH FEW DATA
 
 
-#region ALTER TEXTURE ARRAYS
+        #region ALTER TEXTURE ARRAYS
 
-        public List<Texture2DArray> existingTextureArrays = new List<Texture2DArray>();
+        public List<Texture2DArray> existingTextureArrays = new();
         public bool existingTextureArraysFoldout;
         public int existingTextureArraysSize;
         public bool textureArraysPropsFoldout;
@@ -477,10 +477,10 @@ namespace BrainFailProductions.PolyFew
         public TextureArrayUserSettings existingArraysProps;
         public int choiceColorSpace = 0; //non linear
 
-#endregion ALTER TEXTURE ARRAYS
+        #endregion ALTER TEXTURE ARRAYS
 
 
-#region INSPECTOR DRAWER VARS
+        #region INSPECTOR DRAWER VARS
 
         public bool preserveBorders;
         public bool preserveUVSeams;
@@ -504,7 +504,7 @@ namespace BrainFailProductions.PolyFew
         public bool foldoutAutoLOD;
         public bool foldoutBatchFew;
         public bool foldoutAutoLODMultiple;
-        public Vector3 objPositionPrevFrame; 
+        public Vector3 objPositionPrevFrame;
         public Vector3 objScalePrevFrame;
         public bool considerChildrenBatchFew = true;
         public string autoLODSavePath = "";
@@ -524,7 +524,7 @@ namespace BrainFailProductions.PolyFew
 
         public bool isPlainSkin = false;
 
-#endregion INSPECTOR DRAWER VARS
+        #endregion INSPECTOR DRAWER VARS
 
     }
 }

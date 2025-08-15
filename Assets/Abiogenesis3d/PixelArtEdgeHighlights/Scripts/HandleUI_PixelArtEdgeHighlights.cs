@@ -15,7 +15,7 @@ namespace Abiogenesis3d.UPixelator_Demo
         public Slider debugEffect;
         public Text debugEffectName;
 
-        void Start()
+        private void Start()
         {
             paeh = FindObjectOfType<PixelArtEdgeHighlights>();
             if (!paeh) return;
@@ -27,7 +27,7 @@ namespace Abiogenesis3d.UPixelator_Demo
             debugEffect.value = (int)paeh.debugEffect;
         }
 
-        void Update()
+        private void Update()
         {
             if (!paeh) return;
             paeh.gameObject.SetActive(effectEnabled.isOn);

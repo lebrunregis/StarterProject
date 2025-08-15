@@ -61,10 +61,10 @@ namespace BrainFailProductions.PolyFew
 
             SetPatterns();
 
-            UnityWebRequest webRequest = new UnityWebRequest(encodedUrl);
+            UnityWebRequest webRequest = new(encodedUrl);
             webRequest.timeout = timeout == null ? webRequest.timeout : (int)timeout;
             webRequest.method = "GET";
-            DownloadHandlerBuffer downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerBuffer downloadHandler = new();
 
             webRequest.downloadHandler = downloadHandler;
 
@@ -124,10 +124,10 @@ namespace BrainFailProductions.PolyFew
 
             SetPatterns();
 
-            UnityWebRequest webRequest = new UnityWebRequest(encodedUrl);
+            UnityWebRequest webRequest = new(encodedUrl);
             webRequest.timeout = timeout == null ? webRequest.timeout : (int)timeout;
             webRequest.method = "GET";
-            DownloadHandlerBuffer downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerBuffer downloadHandler = new();
 
             webRequest.downloadHandler = downloadHandler;
 
@@ -189,11 +189,11 @@ namespace BrainFailProductions.PolyFew
         {
             SetPatterns();
 
-            UnityWebRequest webRequest = new UnityWebRequest(baseUrl);
+            UnityWebRequest webRequest = new(baseUrl);
             webRequest.timeout = timeout == null ? webRequest.timeout : (int)timeout;
             webRequest.method = "POST";
-            UploadHandlerRaw uploadHandler = new UploadHandlerRaw(data);
-            DownloadHandlerBuffer downloadHandler = new DownloadHandlerBuffer();
+            UploadHandlerRaw uploadHandler = new(data);
+            DownloadHandlerBuffer downloadHandler = new();
             webRequest.uploadHandler = uploadHandler;
             webRequest.downloadHandler = downloadHandler;
             webRequest.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -262,11 +262,11 @@ namespace BrainFailProductions.PolyFew
 
             SetPatterns();
 
-            UnityWebRequest webRequest = new UnityWebRequest(baseUrl);
+            UnityWebRequest webRequest = new(baseUrl);
             webRequest.timeout = timeout == null ? webRequest.timeout : (int)timeout;
             webRequest.method = "POST";
-            UploadHandlerRaw uploadHandler = new UploadHandlerRaw(data);
-            DownloadHandlerBuffer downloadHandler = new DownloadHandlerBuffer();
+            UploadHandlerRaw uploadHandler = new(data);
+            DownloadHandlerBuffer downloadHandler = new();
             webRequest.uploadHandler = uploadHandler;
             webRequest.downloadHandler = downloadHandler;
             webRequest.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -429,7 +429,7 @@ namespace BrainFailProductions.PolyFew
                 {
                     Stream stream = httpResponse.GetResponseStream();
 
-                    StreamReader reader = new StreamReader(stream);
+                    StreamReader reader = new(stream);
 
                     string response = await reader.ReadToEndAsync();
 
@@ -447,7 +447,7 @@ namespace BrainFailProductions.PolyFew
             catch (Exception e)
             {
 
-                HttpStatusCode? statusCode = (httpResponse == null) ? null : (HttpStatusCode?)httpResponse.StatusCode;
+                HttpStatusCode? statusCode = (httpResponse == null) ? null : httpResponse.StatusCode;
 
 
                 if (e.InnerException is WebException || e.InnerException is SocketException)
@@ -566,7 +566,7 @@ namespace BrainFailProductions.PolyFew
                 {
                     Stream stream = httpResponse.GetResponseStream();
 
-                    StreamReader reader = new StreamReader(stream);
+                    StreamReader reader = new(stream);
 
                     string response = reader.ReadToEnd();
 
@@ -585,7 +585,7 @@ namespace BrainFailProductions.PolyFew
 
             catch (Exception e)
             {
-                HttpStatusCode? statusCode = (httpResponse == null) ? null : (HttpStatusCode?)httpResponse.StatusCode;
+                HttpStatusCode? statusCode = (httpResponse == null) ? null : httpResponse.StatusCode;
 
                 if (e.InnerException is WebException || e.InnerException is SocketException)
                 {
@@ -659,7 +659,7 @@ namespace BrainFailProductions.PolyFew
 
                     try
                     {
-                        using (BinaryReader br = new BinaryReader(stream))
+                        using (BinaryReader br = new(stream))
                         {
                             bytes = br.ReadBytes((int)stream.Length);
                         }
@@ -685,7 +685,7 @@ namespace BrainFailProductions.PolyFew
             catch (Exception e)
             {
 
-                HttpStatusCode? statusCode = (httpResponse == null) ? null : (HttpStatusCode?)httpResponse.StatusCode;
+                HttpStatusCode? statusCode = (httpResponse == null) ? null : httpResponse.StatusCode;
 
 
                 if (e.InnerException is WebException || e.InnerException is SocketException)
@@ -724,19 +724,19 @@ namespace BrainFailProductions.PolyFew
             await SendHTTPRequestAsync(testUrl, method, (string response, HttpStatusCode? statusCode) =>
             {
 
-            /*
-            if (Regex.IsMatch(response, regexPatterns.netError, RegexOptions.Compiled))
-            {
-                Debug.Log("No internet connection or system services are down");
-                if (callback != null) { callback(false); }
-            }
+                /*
+                if (Regex.IsMatch(response, regexPatterns.netError, RegexOptions.Compiled))
+                {
+                    Debug.Log("No internet connection or system services are down");
+                    if (callback != null) { callback(false); }
+                }
 
-            else
-            {
-                Debug.Log("Connection to the internet exists");
-                if (callback != null) { callback(true); }
-            }
-            */
+                else
+                {
+                    Debug.Log("Connection to the internet exists");
+                    if (callback != null) { callback(true); }
+                }
+                */
 
                 if (statusCode != null && statusCode == HttpStatusCode.OK)
                 {
@@ -765,19 +765,19 @@ namespace BrainFailProductions.PolyFew
             SendHTTPRequestBlocking(url, method, (string response, HttpStatusCode? statusCode) =>
             {
 
-            /*
-            if (Regex.IsMatch(response, regexPatterns.netError, RegexOptions.Compiled))
-            {
-                Debug.Log("No internet connection or system services are down");
-                if (callback != null) { callback(false); }
-            }
+                /*
+                if (Regex.IsMatch(response, regexPatterns.netError, RegexOptions.Compiled))
+                {
+                    Debug.Log("No internet connection or system services are down");
+                    if (callback != null) { callback(false); }
+                }
 
-            else
-            {
-                Debug.Log("Connection to the internet exists");
-                if (callback != null) { callback(true); }
-            }
-            */
+                else
+                {
+                    Debug.Log("Connection to the internet exists");
+                    if (callback != null) { callback(true); }
+                }
+                */
 
                 if (statusCode != null && statusCode == HttpStatusCode.OK)
                 {

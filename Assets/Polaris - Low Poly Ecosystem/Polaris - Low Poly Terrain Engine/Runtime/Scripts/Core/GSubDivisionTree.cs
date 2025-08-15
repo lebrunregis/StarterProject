@@ -149,15 +149,15 @@ namespace Pinwheel.Griffin
             public void Split()
             {
                 Vector2 v12 = (V1 + V2) * 0.5f;
-                Node n0 = new Node(v12, V0, V1);
-                Node n1 = new Node(v12, V2, V0);
+                Node n0 = new(v12, V0, V1);
+                Node n1 = new(v12, V2, V0);
                 LeftNode = n0;
                 RightNode = n1;
             }
 
             public Node Clone()
             {
-                Node n = new Node(V0, V1, V2);
+                Node n = new(V0, V1, V2);
                 n.Level = Level;
                 if (LeftNode != null)
                     n.LeftNode = LeftNode.Clone();
@@ -168,16 +168,16 @@ namespace Pinwheel.Griffin
         }
 
         public Node Root;
-        private Stack<Node> st = new Stack<Node>(1000);
+        private readonly Stack<Node> st = new(1000);
 
         public GSubDivisionTree()
         {
             Root = new Node();
-            Node left = new Node(
+            Node left = new(
                 new Vector2(0, 1),
                 new Vector2(1, 1),
                 new Vector2(0, 0));
-            Node right = new Node(
+            Node right = new(
                 new Vector2(1, 0),
                 new Vector2(0, 0),
                 new Vector2(1, 1));
@@ -187,19 +187,19 @@ namespace Pinwheel.Griffin
 
         public static GSubDivisionTree Rect(Rect r)
         {
-            GSubDivisionTree tree = new GSubDivisionTree();
+            GSubDivisionTree tree = new();
             tree.Root = new Node();
 
-            Vector2 bottomLeft = new Vector2(r.min.x, r.min.y);
-            Vector2 topLeft = new Vector2(r.min.x, r.max.y);
-            Vector2 topRight = new Vector2(r.max.x, r.max.y);
-            Vector2 bottomRight = new Vector2(r.max.x, r.min.y);
+            Vector2 bottomLeft = new(r.min.x, r.min.y);
+            Vector2 topLeft = new(r.min.x, r.max.y);
+            Vector2 topRight = new(r.max.x, r.max.y);
+            Vector2 bottomRight = new(r.max.x, r.min.y);
 
-            Node left = new Node(
+            Node left = new(
                 topLeft,
                 topRight,
                 bottomLeft);
-            Node right = new Node(
+            Node right = new(
                 bottomRight,
                 bottomLeft,
                 topRight);
@@ -233,7 +233,7 @@ namespace Pinwheel.Griffin
 
         public GSubDivisionTree Clone(int maxLevel)
         {
-            GSubDivisionTree tree = new GSubDivisionTree();
+            GSubDivisionTree tree = new();
             tree.Root = Root.Clone();
 
             st.Clear();

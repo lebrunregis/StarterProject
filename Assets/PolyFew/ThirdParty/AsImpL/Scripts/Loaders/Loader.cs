@@ -24,7 +24,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
         /// <summary>
         /// Total loading progress, for all the models currently loading.
         /// </summary>
-        public static LoadingProgress totalProgress = new LoadingProgress();
+        public static LoadingProgress totalProgress = new();
 
         /// <summary>
         /// Options to define how the model will be loaded and imported.
@@ -32,7 +32,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
         public ImportOptions buildOptions;
 
 
-        public ReferencedNumeric<float> individualProgress = new ReferencedNumeric<float>(0);
+        public ReferencedNumeric<float> individualProgress = new(0);
 
 
 #if UNITY_EDITOR
@@ -49,15 +49,15 @@ namespace BrainFailProductions.PolyFew.AsImpL
         protected static float MATERIAL_PHASE_PERC = 1f;
         protected static float BUILD_PHASE_PERC = 90f;
 
-        protected static Dictionary<string, GameObject> loadedModels = new Dictionary<string, GameObject>();
-        protected static Dictionary<string, int> instanceCount = new Dictionary<string, int>();
+        protected static Dictionary<string, GameObject> loadedModels = new();
+        protected static Dictionary<string, int> instanceCount = new();
 
-        protected DataSet dataSet = new DataSet();
-        protected ObjectBuilder objectBuilder = new ObjectBuilder();
+        protected DataSet dataSet = new();
+        protected ObjectBuilder objectBuilder = new();
 
         protected List<MaterialData> materialData;
 
-        protected SingleLoadingProgress objLoadingProgress = new SingleLoadingProgress();
+        protected SingleLoadingProgress objLoadingProgress = new();
 
         protected Stats loadStats;
 
@@ -249,7 +249,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
         }
 
 
-        
+
 
         public async Task<GameObject> LoadFromNetwork(string objURL, string diffuseTexURL, string bumpTexURL, string specularTexURL, string opacityTexURL, string materialURL, string objName)
         {
@@ -303,7 +303,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
                     await LoadMaterialLibrary(materialURL);
                 }
 
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw ex;
                 }
@@ -373,10 +373,10 @@ namespace BrainFailProductions.PolyFew.AsImpL
             float startTime = lastTime;
 
             // base model here
-            
+
             yield return StartCoroutine(LoadModelFileNetworkedWebGL(objURL, OnError));
-            
-            if(ObjectImporter.isException) { yield return null; }
+
+            if (ObjectImporter.isException) { yield return null; }
 
             loadStats.modelParseTime = Time.realtimeSinceStartup - lastTime;
 
@@ -399,7 +399,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
             {
                 ObjectImporter.activeDownloads -= 1;
             }
-            
+
             if (ObjectImporter.isException) { yield return null; }
 
 
@@ -460,7 +460,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
         /// <remarks>This is called by Load() method</remarks>
         protected abstract Task LoadMaterialLibrary(string absolutePath, string materialsFolderPath = "");
 
-        
+
         protected abstract Task LoadMaterialLibrary(string materialURL);
 
         protected abstract IEnumerator LoadMaterialLibraryWebGL(string materialURL);
@@ -498,7 +498,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
                         {
 
                             await LoadMaterialTexture(basePath, mtl.diffuseTexPath, texturesFolderPath);
-                            
+
                             mtl.diffuseTex = loadedTexture;
                         }
                     }
@@ -514,7 +514,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
 #endif
                         {
                             await LoadMaterialTexture(basePath, mtl.bumpTexPath, texturesFolderPath);
-                            
+
                             mtl.bumpTex = loadedTexture;
                         }
                     }
@@ -530,7 +530,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
 #endif
                         {
                             await LoadMaterialTexture(basePath, mtl.specularTexPath, texturesFolderPath);
-                            
+
                             mtl.specularTex = loadedTexture;
                         }
                     }
@@ -544,9 +544,9 @@ namespace BrainFailProductions.PolyFew.AsImpL
                         }
                         else
 #endif
-                        {                          
+                        {
                             await LoadMaterialTexture(basePath, mtl.opacityTexPath, texturesFolderPath);
-                            
+
                             mtl.opacityTex = loadedTexture;
                         }
                     }
@@ -631,7 +631,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
                         else
 #endif
                         {
-                            if(!string.IsNullOrWhiteSpace(diffuseTexURL))
+                            if (!string.IsNullOrWhiteSpace(diffuseTexURL))
                             {
                                 try
                                 {
@@ -835,7 +835,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
 
 
 
-        
+
         protected IEnumerator NetworkedBuildWebGL(Transform parentTransform, string objName, string objURL, string diffuseTexURL, string bumpTexURL, string specularTexURL, string opacityTexURL)
         {
             float prevTime = Time.realtimeSinceStartup;
@@ -1162,7 +1162,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
             return texPath;
         }
 
-        private async Task LoadMaterialTexture(string basePath, string path, string texturesFolderPath="")
+        private async Task LoadMaterialTexture(string basePath, string path, string texturesFolderPath = "")
         {
             loadedTexture = null;
             //string texPath = GetTextureUrl(basePath, path);
@@ -1253,7 +1253,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
                 tex.LoadImage(downloadedBytes);
                 loadedTexture = tex;
             }
-            
+
 
             else
             {
@@ -1401,7 +1401,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
                 downloadProgress.Value = oldProgress;
                 OnError(ex.ToString());
             }
-            
+
 
             Coroutine progress = StartCoroutine(GetProgress(webrequest, downloadProgress));
 
@@ -1470,7 +1470,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
                     downloadProgress.Value = oldProgress + webrequest.downloadProgress;
                 }
 
-                if(webrequest.downloadHandler.isDone && string.IsNullOrWhiteSpace(webrequest.error))
+                if (webrequest.downloadHandler.isDone && string.IsNullOrWhiteSpace(webrequest.error))
                 {
                     downloadProgress.Value = oldProgress + webrequest.downloadProgress;
                     //Debug.Log("Progress  " + webrequest.downloadProgress);
@@ -1532,7 +1532,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
                     if (string.IsNullOrWhiteSpace(webrequest.error))
                     {
                         downloadProgress.Value = oldProgress + 1;
-                        DownloadComplete(webrequest.downloadHandler.text); 
+                        DownloadComplete(webrequest.downloadHandler.text);
                     }
                     else
                     {
@@ -1628,6 +1628,6 @@ namespace BrainFailProductions.PolyFew.AsImpL
             webrequest.Dispose();
         }
 
-        
+
     }
 }

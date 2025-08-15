@@ -6,8 +6,8 @@ using UnityEngine.UI;
 namespace SBG.Toolbelt.UI
 {
     [Serializable]
-	public class ScreenFade
-	{
+    public class ScreenFade
+    {
         [SerializeField] private Image fadePanel;
 
 

@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace BrainFailProductions.PolyFew.AsImpL
 {
@@ -13,27 +13,27 @@ namespace BrainFailProductions.PolyFew.AsImpL
         /// <summary>
         /// List of objects
         /// </summary>
-        public List<ObjectData> objectList = new List<ObjectData>();
+        public List<ObjectData> objectList = new();
 
         /// <summary>
         /// List of vertices
         /// </summary>
-        public List<Vector3> vertList = new List<Vector3>();
+        public List<Vector3> vertList = new();
 
         /// <summary>
         /// List of texture coordinates (UV)
         /// </summary>
-        public List<Vector2> uvList = new List<Vector2>();
+        public List<Vector2> uvList = new();
 
         /// <summary>
         /// List of normals
         /// </summary>
-        public List<Vector3> normalList = new List<Vector3>();
+        public List<Vector3> normalList = new();
 
         /// <summary>
         /// List of colors
         /// </summary>
-        public List<Color> colorList = new List<Color>();
+        public List<Color> colorList = new();
 
         // naming index for unnamed group (e.g. "Unnamed-1")
         private int unnamedGroupIndex = 1;
@@ -102,12 +102,12 @@ namespace BrainFailProductions.PolyFew.AsImpL
         /// </summary>
         public DataSet()
         {
-            ObjectData d = new ObjectData();
+            ObjectData d = new();
             d.name = "default";
             objectList.Add(d);
             currObjData = d;
 
-            FaceGroupData g = new FaceGroupData();
+            FaceGroupData g = new();
             g.name = "default";
             d.faceGroups.Add(g);
             currGroup = g;
@@ -125,11 +125,11 @@ namespace BrainFailProductions.PolyFew.AsImpL
 
             if (noFaceDefined) objectList.Remove(currObjData);
 
-            ObjectData objData = new ObjectData();
+            ObjectData objData = new();
             objData.name = objectName;
             objectList.Add(objData);
 
-            FaceGroupData grp = new FaceGroupData();
+            FaceGroupData grp = new();
             grp.materialName = currentMaterial;
             grp.name = "default";
             objData.faceGroups.Add(grp);
@@ -148,7 +148,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
             string currentMaterial = currObjData.faceGroups[currObjData.faceGroups.Count - 1].materialName;
 
             if (currGroup.IsEmpty) currObjData.faceGroups.Remove(currGroup);
-            FaceGroupData grp = new FaceGroupData();
+            FaceGroupData grp = new();
             grp.materialName = currentMaterial;
             if (groupName == null)
             {
@@ -269,8 +269,8 @@ namespace BrainFailProductions.PolyFew.AsImpL
         public class ObjectData
         {
             public string name;
-            public List<FaceGroupData> faceGroups = new List<FaceGroupData>();
-            public List<FaceIndices> allFaces = new List<FaceIndices>();
+            public List<FaceGroupData> faceGroups = new();
+            public List<FaceIndices> allFaces = new();
             public bool hasNormals = false;
             public bool hasColors = false;
             public ObjectData()

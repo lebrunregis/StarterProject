@@ -1,10 +1,8 @@
 #if GRIFFIN
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Serialization;
-using Unity.Collections;
-using Pinwheel.Griffin.Rendering;
 using Pinwheel.Griffin.Compression;
+using System.Collections.Generic;
+using Unity.Collections;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -174,7 +172,7 @@ namespace Pinwheel.Griffin
                     {
                         for (int z = 0; z < patchGridSize; ++z)
                         {
-                            GGrassPatch patch = new GGrassPatch(this, x, z);
+                            GGrassPatch patch = new(this, x, z);
                             grassPatches[GUtilities.To1DIndex(x, z, PatchGridSize)] = patch;
                         }
                     }
@@ -339,7 +337,7 @@ namespace Pinwheel.Griffin
 
         private void ResampleGrassPatches()
         {
-            List<GGrassInstance> grassInstances = new List<GGrassInstance>();
+            List<GGrassInstance> grassInstances = new();
             for (int i = 0; i < grassPatches.Length; ++i)
             {
                 grassInstances.AddRange(grassPatches[i].Instances);
@@ -351,7 +349,7 @@ namespace Pinwheel.Griffin
                 for (int z = 0; z < patchGridSize; ++z)
                 {
                     int index = GUtilities.To1DIndex(x, z, PatchGridSize);
-                    GGrassPatch patch = new GGrassPatch(this, x, z);
+                    GGrassPatch patch = new(this, x, z);
                     grassPatches[index] = patch;
                 }
             }
@@ -394,7 +392,7 @@ namespace Pinwheel.Griffin
 
         public List<GGrassInstance> GetGrassInstances()
         {
-            List<GGrassInstance> instances = new List<GGrassInstance>();
+            List<GGrassInstance> instances = new();
             for (int i = 0; i < GrassPatches.Length; ++i)
             {
                 instances.AddRange(GrassPatches[i].Instances);
@@ -551,7 +549,7 @@ namespace Pinwheel.Griffin
         {
             List<GTreeInstance> trees = TreeInstances;
             int treeCount = trees.Count;
-            NativeArray<Vector2> positions = new NativeArray<Vector2>(treeCount, allocator, NativeArrayOptions.UninitializedMemory);
+            NativeArray<Vector2> positions = new(treeCount, allocator, NativeArrayOptions.UninitializedMemory);
             Vector2 pos = Vector2.zero;
 
             for (int i = 0; i < treeCount; ++i)

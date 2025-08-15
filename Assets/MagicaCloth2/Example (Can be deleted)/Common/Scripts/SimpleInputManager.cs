@@ -126,7 +126,7 @@ namespace MagicaCloth2
             mobilePlatform = Application.isMobilePlatform;
         }
 
-        void Update()
+        private void Update()
         {
             // 入力タイプ別更新処理
             if (mobilePlatform)
@@ -560,7 +560,7 @@ namespace MagicaCloth2
                 // 移動
                 if (mouseDown[i])
                 {
-                    Vector2 spos = new Vector2(SimpleInput.mousePosition.x, SimpleInput.mousePosition.y);
+                    Vector2 spos = new(SimpleInput.mousePosition.x, SimpleInput.mousePosition.y);
                     Vector2 delta = spos - mouseOldMovePos[i];
 
                     if (spos != mouseOldMovePos[i])

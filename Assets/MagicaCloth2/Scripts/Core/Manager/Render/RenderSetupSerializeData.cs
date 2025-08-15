@@ -231,7 +231,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct CalcUseBoneArrayJob2 : IJob
+        private struct CalcUseBoneArrayJob2 : IJob
         {
             public int boneCount;
 

@@ -8,7 +8,7 @@ namespace SBG.Toolbelt.UI
     /// All GameObjects are handled internally, using an Overlay Canvas with Sort Order 1000.
     /// </summary>
 	public class ScreenTransition : MonoBehaviour
-	{
+    {
         private enum TransitionType
         {
             None,
@@ -143,7 +143,7 @@ namespace SBG.Toolbelt.UI
         }
 
         public static void FadeToGame(float duration = 1, float startDelay = 0, Action fadeCompleteCallback = null)
-        {   
+        {
             Instance.screenFade.SetColor(Instance._lastColor);
             Instance.StartFade(false, Color.clear, duration, startDelay, fadeCompleteCallback);
         }

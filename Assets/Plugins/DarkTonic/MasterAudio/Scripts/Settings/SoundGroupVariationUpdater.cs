@@ -4,13 +4,15 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     /// <summary>
     /// This class is only activated when you need code to execute in an Update method, such as "follow" code.
     /// </summary>
     // ReSharper disable once CheckNamespace
     [AudioScriptOrder(-15)]
-    public class SoundGroupVariationUpdater : MonoBehaviour {
+    public class SoundGroupVariationUpdater : MonoBehaviour
+    {
         private const float TimeEarlyToScheduleNextClip = .1f;
         private const float FakeNegativeFloatValue = -10f;
 
@@ -77,7 +79,8 @@ namespace DarkTonic.MasterAudio {
         private static MasterAudio _maThisFrame;
         private static Transform _listenerThisFrame;
 
-        private enum WaitForSoundFinishMode {
+        private enum WaitForSoundFinishMode
+        {
             None,
             Play,
             WaitForEnd,
@@ -86,7 +89,8 @@ namespace DarkTonic.MasterAudio {
 
         #region Public methods
 
-        public void GlidePitch(float targetPitch, float glideTime, System.Action completionCallback = null) {
+        public void GlidePitch(float targetPitch, float glideTime, System.Action completionCallback = null)
+        {
             GrpVariation.curPitchMode = SoundGroupVariation.PitchMode.Gliding;
 
             var pitchDiff = targetPitch - VarAudio.pitch;
@@ -99,7 +103,8 @@ namespace DarkTonic.MasterAudio {
             _glideToPitchCompletionCallback = completionCallback;
         }
 
-        public void FadeOverTimeToVolume(float targetVolume, float fadeTime, System.Action completionCallback = null) {
+        public void FadeOverTimeToVolume(float targetVolume, float fadeTime, System.Action completionCallback = null)
+        {
             GrpVariation.curFadeMode = SoundGroupVariation.FadeMode.GradualFade;
 
             var volDiff = targetVolume - VarAudio.volume;
@@ -107,7 +112,8 @@ namespace DarkTonic.MasterAudio {
             var currentClipTime = VarAudio.time;
             var currentClipLength = ClipEndPosition;
 
-            if (!VarAudio.loop && VarAudio.clip != null && fadeTime + currentClipTime > currentClipLength) {
+            if (!VarAudio.loop && VarAudio.clip != null && fadeTime + currentClipTime > currentClipLength)
+            {
                 // if too long, fade out faster
                 fadeTime = currentClipLength - currentClipTime;
             }
@@ -120,17 +126,20 @@ namespace DarkTonic.MasterAudio {
             _fadeToTargetCompletionCallback = completionCallback;
         }
 
-        public void FadeOutEarly(float fadeTime, System.Action completionCallback = null) {
+        public void FadeOutEarly(float fadeTime, System.Action completionCallback = null)
+        {
             GrpVariation.curFadeMode = SoundGroupVariation.FadeMode.FadeOutEarly;
             // cancel the FadeInOut loop, if it's going.
 
-            if (!VarAudio.loop && VarAudio.clip != null && VarAudio.time + fadeTime > ClipEndPosition) {
+            if (!VarAudio.loop && VarAudio.clip != null && VarAudio.time + fadeTime > ClipEndPosition)
+            {
                 // if too long, fade out faster
                 fadeTime = ClipEndPosition - VarAudio.time;
             }
 
             var frameTime = AudioUtil.FrameTime;
-            if (frameTime == 0) {
+            if (frameTime == 0)
+            {
                 frameTime = AudioUtil.FixedDeltaTime;
             }
 
@@ -142,8 +151,10 @@ namespace DarkTonic.MasterAudio {
         }
 
         // Called by Master Audio, do not call.
-        public void Initialize() {
-            if (_inited) {
+        public void Initialize()
+        {
+            if (_inited)
+            {
                 return;
             }
 
@@ -159,31 +170,40 @@ namespace DarkTonic.MasterAudio {
             _inited = true;
         }
 
-        public void FadeInOut() {
+        public void FadeInOut()
+        {
             GrpVariation.curFadeMode = SoundGroupVariation.FadeMode.FadeInOut;
             // wait to set this so it stops the previous one if it's still going.
             _fadeOutStartTime = ClipEndPosition - GrpVariation.fadeOutTime;
 
-            if (GrpVariation.fadeInTime > 0f) {
+            if (GrpVariation.fadeInTime > 0f)
+            {
                 VarAudio.volume = 0f; // start at zero volume
                 _fadeInOutInFactor = GrpVariation.fadeMaxVolume / GrpVariation.fadeInTime;
-            } else {
+            }
+            else
+            {
                 _fadeInOutInFactor = 0f;
             }
 
             _fadeInOutWillFadeOut = GrpVariation.fadeOutTime > 0f && !VarAudio.loop;
 
-            if (_fadeInOutWillFadeOut) {
+            if (_fadeInOutWillFadeOut)
+            {
                 _fadeInOutOutFactor = GrpVariation.fadeMaxVolume / (ClipEndPosition - _fadeOutStartTime);
-            } else {
+            }
+            else
+            {
                 _fadeInOutOutFactor = 0f;
             }
         }
 
-        public void FollowObject(bool follow, Transform objToFollow, bool clipAgePriority) {
+        public void FollowObject(bool follow, Transform objToFollow, bool clipAgePriority)
+        {
             _isFollowing = follow;
 
-            if (objToFollow != null) {
+            if (objToFollow != null)
+            {
                 _objectToFollow = objToFollow;
                 _objectToFollowGo = objToFollow.gameObject;
             }
@@ -193,8 +213,10 @@ namespace DarkTonic.MasterAudio {
             UpdateAudioLocationAndPriority(false); // in case we're not following, it should get one update.
         }
 
-        public void WaitForSoundFinish() {
-            if (MasterAudio.IsWarming) {
+        public void WaitForSoundFinish()
+        {
+            if (MasterAudio.IsWarming)
+            {
                 PlaySoundAndWait();
                 return;
             }
@@ -202,10 +224,12 @@ namespace DarkTonic.MasterAudio {
             _waitMode = WaitForSoundFinishMode.Play;
         }
 
-        public void StopPitchGliding() {
+        public void StopPitchGliding()
+        {
             GrpVariation.curPitchMode = SoundGroupVariation.PitchMode.None;
 
-            if (_glideToPitchCompletionCallback != null) {
+            if (_glideToPitchCompletionCallback != null)
+            {
                 _glideToPitchCompletionCallback();
                 _glideToPitchCompletionCallback = null;
             }
@@ -213,20 +237,23 @@ namespace DarkTonic.MasterAudio {
             DisableIfFinished();
         }
 
-        public void StopFading() {
+        public void StopFading()
+        {
             GrpVariation.curFadeMode = SoundGroupVariation.FadeMode.None;
 
             DisableIfFinished();
         }
 
-        public void StopWaitingForFinish() {
+        public void StopWaitingForFinish()
+        {
             _waitMode = WaitForSoundFinishMode.None;
             GrpVariation.curDetectEndMode = SoundGroupVariation.DetectEndMode.None;
 
             DisableIfFinished();
         }
 
-        public void StopFollowing() {
+        public void StopFollowing()
+        {
             _isFollowing = false;
             _useClipAgePriority = false;
             _objectToFollow = null;
@@ -239,33 +266,40 @@ namespace DarkTonic.MasterAudio {
 
         #region Helper methods
 
-        private void DisableIfFinished() {
+        private void DisableIfFinished()
+        {
             if (_isFollowing
                 || GrpVariation.curDetectEndMode == SoundGroupVariation.DetectEndMode.DetectEnd
-                || GrpVariation.curFadeMode != SoundGroupVariation.FadeMode.None) {
+                || GrpVariation.curFadeMode != SoundGroupVariation.FadeMode.None)
+            {
 
                 return;
             }
 
-            if (GrpVariation.curPitchMode != SoundGroupVariation.PitchMode.None) {
+            if (GrpVariation.curPitchMode != SoundGroupVariation.PitchMode.None)
+            {
                 return;
             }
 
             enabled = false;
         }
 
-        private void UpdateAudioLocationAndPriority(bool rePrioritize) {
+        private void UpdateAudioLocationAndPriority(bool rePrioritize)
+        {
             // update location, only if following.
-            if (_isFollowing && _objectToFollow != null) {
+            if (_isFollowing && _objectToFollow != null)
+            {
                 Trans.position = _objectToFollow.position;
             }
 
             // re-set priority, still used by non-following (audio clip age priority)
-            if (!_maThisFrame.prioritizeOnDistance || !rePrioritize || ParentGroup.alwaysHighestPriority) {
+            if (!_maThisFrame.prioritizeOnDistance || !rePrioritize || ParentGroup.alwaysHighestPriority)
+            {
                 return;
             }
 
-            if (Time.realtimeSinceStartup - _priorityLastUpdated <= MasterAudio.ReprioritizeTime) {
+            if (Time.realtimeSinceStartup - _priorityLastUpdated <= MasterAudio.ReprioritizeTime)
+            {
                 return;
             }
 
@@ -273,28 +307,34 @@ namespace DarkTonic.MasterAudio {
             _priorityLastUpdated = AudioUtil.Time;
         }
 
-        private void ResetToNonOcclusionSetting() {
+        private void ResetToNonOcclusionSetting()
+        {
             var lp = GrpVariation.LowPassFilter;
-            if (lp != null) {
+            if (lp != null)
+            {
                 lp.cutoffFrequency = AudioUtil.DefaultMinOcclusionCutoffFrequency;
             }
         }
 
-        private void UpdateOcclusion() {
+        private void UpdateOcclusion()
+        {
             var hasOcclusionOn = GrpVariation.UsesOcclusion;
-            if (!hasOcclusionOn) {
+            if (!hasOcclusionOn)
+            {
                 MasterAudio.StopTrackingOcclusionForSource(GrpVariation.GameObj);
                 ResetToNonOcclusionSetting();
 
                 return;
             }
 
-            if (_listenerThisFrame == null) {
+            if (_listenerThisFrame == null)
+            {
                 // cannot occlude without something to raycast at.
                 return;
             }
 
-            if (IsOcclusionMeasuringPaused) {
+            if (IsOcclusionMeasuringPaused)
+            {
                 return; // wait until processed
             }
 
@@ -302,7 +342,8 @@ namespace DarkTonic.MasterAudio {
             _isWaitingForQueuedOcclusionRay = true;
         }
 
-        private void DoneWithOcclusion() {
+        private void DoneWithOcclusion()
+        {
             _isWaitingForQueuedOcclusionRay = false;
             MasterAudio.RemoveFromOcclusionFrequencyTransitioning(GrpVariation);
         }
@@ -311,20 +352,23 @@ namespace DarkTonic.MasterAudio {
         /// This method is called in a batch from ListenerFollower
         /// </summary>
         /// <returns></returns>
-        public bool RayCastForOcclusion() {
+        public bool RayCastForOcclusion()
+        {
             DoneWithOcclusion();
 
             var raycastOrigin = Trans.position;
 
             var offset = RayCastOriginOffset;
-            if (offset > 0) {
+            if (offset > 0)
+            {
                 raycastOrigin = Vector3.MoveTowards(raycastOrigin, _listenerThisFrame.position, offset);
             }
 
             var direction = _listenerThisFrame.position - raycastOrigin;
             var distanceToListener = direction.magnitude;
 
-            if (distanceToListener > VarAudio.maxDistance) {
+            if (distanceToListener > VarAudio.maxDistance)
+            {
                 // out of hearing range, no reason to calculate occlusion.
                 MasterAudio.AddToOcclusionOutOfRangeSources(GrpVariation.GameObj);
                 ResetToNonOcclusionSetting();
@@ -334,7 +378,8 @@ namespace DarkTonic.MasterAudio {
             MasterAudio.AddToOcclusionInRangeSources(GrpVariation.GameObj);
             var is2DRaycast = _maThisFrame.occlusionRaycastMode == MasterAudio.RaycastMode.Physics2D;
 
-            if (GrpVariation.LowPassFilter == null) {
+            if (GrpVariation.LowPassFilter == null)
+            {
                 // in case Occlusion got turned on during runtime.
                 var newFilter = GrpVariation.gameObject.AddComponent<AudioLowPassFilter>();
                 GrpVariation.LowPassFilter = newFilter;
@@ -352,12 +397,15 @@ namespace DarkTonic.MasterAudio {
 #endif
 
             // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-            if (is2DRaycast) {
+            if (is2DRaycast)
+            {
 #if PHY2D_ENABLED
                 oldRaycastsHitTriggers = Physics2D.queriesHitTriggers;
                 Physics2D.queriesHitTriggers = _maThisFrame.occlusionRaycastsHitTriggers;
 #endif
-            } else {
+            }
+            else
+            {
 #if PHY3D_ENABLED
                 oldRaycastsHitTriggers = Physics.queriesHitTriggers;
                 Physics.queriesHitTriggers = _maThisFrame.occlusionRaycastsHitTriggers;
@@ -368,8 +416,10 @@ namespace DarkTonic.MasterAudio {
             float? hitDistance = null;
             var isHit = false;
 
-            if (_maThisFrame.occlusionUseLayerMask) {
-                switch (_maThisFrame.occlusionRaycastMode) {
+            if (_maThisFrame.occlusionUseLayerMask)
+            {
+                switch (_maThisFrame.occlusionRaycastMode)
+                {
                     case MasterAudio.RaycastMode.Physics3D:
 #if PHY3D_ENABLED
                         RaycastHit hitObject;
@@ -391,8 +441,11 @@ namespace DarkTonic.MasterAudio {
 #endif
                         break;
                 }
-            } else {
-                switch (_maThisFrame.occlusionRaycastMode) {
+            }
+            else
+            {
+                switch (_maThisFrame.occlusionRaycastMode)
+                {
                     case MasterAudio.RaycastMode.Physics3D:
 #if PHY3D_ENABLED
                         RaycastHit hitObject;
@@ -416,24 +469,29 @@ namespace DarkTonic.MasterAudio {
                 }
             }
 
-            if (is2DRaycast) {
+            if (is2DRaycast)
+            {
 #if PHY2D_ENABLED
                 Physics2D.queriesStartInColliders = oldQueriesStart;
                 Physics2D.queriesHitTriggers = oldRaycastsHitTriggers;
 #endif
-            } else {
+            }
+            else
+            {
 #if PHY3D_ENABLED
                 Physics.queriesHitTriggers = oldRaycastsHitTriggers;
 #endif
             }
 
-            if (_maThisFrame.occlusionShowRaycasts) {
+            if (_maThisFrame.occlusionShowRaycasts)
+            {
                 var endPoint = isHit ? hitPoint : _listenerThisFrame.position;
                 var lineColor = isHit ? Color.red : Color.green;
                 Debug.DrawLine(raycastOrigin, endPoint, lineColor, .1f);
             }
 
-            if (!isHit) {
+            if (!isHit)
+            {
                 // ReSharper disable once PossibleNullReferenceException
                 MasterAudio.RemoveFromBlockedOcclusionSources(GrpVariation.GameObj);
                 ResetToNonOcclusionSetting();
@@ -446,7 +504,8 @@ namespace DarkTonic.MasterAudio {
             var filterFrequency = AudioUtil.GetOcclusionCutoffFrequencyByDistanceRatio(ratioToEdgeOfSound, this);
 
             var fadeTime = _maThisFrame.occlusionFreqChangeSeconds;
-            if (fadeTime <= MasterAudio.InnerLoopCheckInterval) { // fast, just do it instantly.
+            if (fadeTime <= MasterAudio.InnerLoopCheckInterval)
+            { // fast, just do it instantly.
                 // ReSharper disable once PossibleNullReferenceException
                 GrpVariation.LowPassFilter.cutoffFrequency = filterFrequency;
                 return true;
@@ -457,33 +516,39 @@ namespace DarkTonic.MasterAudio {
             return true;
         }
 
-        private void PlaySoundAndWait() {
-            if (VarAudio.clip == null) { // in case the warming sound is an "internet file"
+        private void PlaySoundAndWait()
+        {
+            if (VarAudio.clip == null)
+            { // in case the warming sound is an "internet file"
                 return;
             }
 
             double startTime = AudioSettings.dspTime;
 
-            if (GrpVariation.PlaySoundParm.TimeToSchedulePlay.HasValue) {
+            if (GrpVariation.PlaySoundParm.TimeToSchedulePlay.HasValue)
+            {
                 startTime = GrpVariation.PlaySoundParm.TimeToSchedulePlay.Value;
             }
 
             var delayTime = 0f;
 
-            if (GrpVariation.useIntroSilence && GrpVariation.introSilenceMax > 0f) {
+            if (GrpVariation.useIntroSilence && GrpVariation.introSilenceMax > 0f)
+            {
                 var rndSilence = Random.Range(GrpVariation.introSilenceMin, GrpVariation.introSilenceMax);
                 delayTime += rndSilence;
             }
 
             delayTime += GrpVariation.PlaySoundParm.DelaySoundTime;
 
-            if (delayTime > 0f) {
+            if (delayTime > 0f)
+            {
                 startTime += delayTime;
             }
 
             VarAudio.PlayScheduled(startTime);
 
-            switch (GrpVariation.audLocation) {
+            switch (GrpVariation.audLocation)
+            {
 #if ADDRESSABLES_ENABLED
                 case MasterAudio.AudioLocation.Addressable:
                     AudioAddressableOptimizer.AddAddressablePlayingClip(GrpVariation.audioClipAddressable, VarAudio);
@@ -494,10 +559,12 @@ namespace DarkTonic.MasterAudio {
                     break;
             }
 
-            if (GrpVariation.useRandomStartTime) {
+            if (GrpVariation.useRandomStartTime)
+            {
                 VarAudio.time = ClipStartPosition;
 
-                if (!VarAudio.loop) { // don't stop it if it's going to loop.
+                if (!VarAudio.loop)
+                { // don't stop it if it's going to loop.
                     var playableLength = AudioUtil.AdjustAudioClipDurationForPitch(ClipEndPosition - ClipStartPosition, VarAudio);
                     _clipSchedEndTime = startTime + playableLength;
                     VarAudio.SetScheduledEndTime(_clipSchedEndTime.Value);
@@ -514,43 +581,60 @@ namespace DarkTonic.MasterAudio {
             _waitMode = WaitForSoundFinishMode.WaitForEnd;
         }
 
-        private void DuckIfNotSilent() {
+        private void DuckIfNotSilent()
+        {
             bool isSilent = false;
 
-            if (GrpVariation.PlaySoundParm.VolumePercentage <= 0) {
+            if (GrpVariation.PlaySoundParm.VolumePercentage <= 0)
+            {
                 isSilent = true;
-            } else if (GrpVariation.ParentGroup.groupMasterVolume <= 0) {
+            }
+            else if (GrpVariation.ParentGroup.groupMasterVolume <= 0)
+            {
                 isSilent = true;
-            } else if (GrpVariation.VarAudio.mute) { // other group soloed
+            }
+            else if (GrpVariation.VarAudio.mute)
+            { // other group soloed
                 isSilent = true;
-            } else if (MasterAudio.MixerMuted) { 
+            }
+            else if (MasterAudio.MixerMuted)
+            {
                 isSilent = true;
-            } else if (GrpVariation.ParentGroup.isMuted) {
+            }
+            else if (GrpVariation.ParentGroup.isMuted)
+            {
                 isSilent = true;
-            } else {
+            }
+            else
+            {
                 var bus = GrpVariation.ParentGroup.BusForGroup;
-                if (bus != null && bus.isMuted) {
+                if (bus != null && bus.isMuted)
+                {
                     isSilent = true;
                 }
             }
 
             // sound play worked! Duck music if a ducking sound and sound is not silent.
-            if (!isSilent) {
+            if (!isSilent)
+            {
                 MasterAudio.DuckSoundGroup(ParentGroup.GameObjectName, VarAudio, this);
             }
         }
 
-        private void StopOrChain() {
+        private void StopOrChain()
+        {
             var playSnd = GrpVariation.PlaySoundParm;
 
             var wasPlaying = playSnd.IsPlaying;
             var usingChainLoop = wasPlaying && playSnd.IsChainLoop;
 
-            if (!VarAudio.loop || usingChainLoop) {
+            if (!VarAudio.loop || usingChainLoop)
+            {
                 GrpVariation.Stop();
             }
 
-            if (!usingChainLoop) {
+            if (!usingChainLoop)
+            {
                 return;
             }
             StopWaitingForFinish();
@@ -558,24 +642,29 @@ namespace DarkTonic.MasterAudio {
             MaybeChain();
         }
 
-        public void Pause() {
+        public void Pause()
+        {
             _isPaused = true;
             _pauseTime = AudioSettings.dspTime;
             MasterAudio.EndDucking(this);
         }
 
-        public void Unpause() {
+        public void Unpause()
+        {
             _isPaused = false;
 
-            if (_clipSchedEndTime.HasValue) {
+            if (_clipSchedEndTime.HasValue)
+            {
                 var timePaused = AudioSettings.dspTime - _pauseTime;
                 _clipSchedEndTime += timePaused;
                 VarAudio.SetScheduledEndTime(_clipSchedEndTime.Value);
             }
         }
 
-        public void MaybeChain() {
-            if (_hasStartedNextInChain) {
+        public void MaybeChain()
+        {
+            if (_hasStartedNextInChain)
+            {
                 return;
             }
 
@@ -586,56 +675,72 @@ namespace DarkTonic.MasterAudio {
             var clipsRemaining = MasterAudio.RemainingClipsInGroup(ParentGroup.GameObjectName);
             var totalClips = MasterAudio.VoicesForGroup(ParentGroup.GameObjectName);
 
-            if (clipsRemaining == totalClips) {
+            if (clipsRemaining == totalClips)
+            {
                 ParentGroup.FireLastVariationFinishedPlay();
             }
 
             // check if loop count is over.
-            if (ParentGroup.chainLoopMode == MasterAudioGroup.ChainedLoopLoopMode.NumberOfLoops && ParentGroup.ChainLoopCount >= ParentGroup.chainLoopNumLoops) {
+            if (ParentGroup.chainLoopMode == MasterAudioGroup.ChainedLoopLoopMode.NumberOfLoops && ParentGroup.ChainLoopCount >= ParentGroup.chainLoopNumLoops)
+            {
                 // done looping
                 return;
             }
 
             var rndDelay = playSnd.DelaySoundTime;
-            if (ParentGroup.chainLoopDelayMin > 0f || ParentGroup.chainLoopDelayMax > 0f) {
+            if (ParentGroup.chainLoopDelayMin > 0f || ParentGroup.chainLoopDelayMax > 0f)
+            {
                 rndDelay = Random.Range(ParentGroup.chainLoopDelayMin, ParentGroup.chainLoopDelayMax);
             }
 
             // cannot use "AndForget" methods! Chain loop needs to check the status.
-            if (playSnd.AttachToSource || playSnd.SourceTrans != null) {
+            if (playSnd.AttachToSource || playSnd.SourceTrans != null)
+            {
                 PlaySoundResult chainedVariation = null;
-                
-                if (playSnd.AttachToSource) {
+
+                if (playSnd.AttachToSource)
+                {
                     chainedVariation = MasterAudio.PlaySound3DFollowTransform(playSnd.SoundType, playSnd.SourceTrans,
                         playSnd.VolumePercentage, playSnd.Pitch, rndDelay, null, _clipSchedEndTime, true);
-                } else {
+                }
+                else
+                {
                     chainedVariation = MasterAudio.PlaySound3DAtTransform(playSnd.SoundType, playSnd.SourceTrans, playSnd.VolumePercentage,
                         playSnd.Pitch, rndDelay, null, _clipSchedEndTime, true);
                 }
 
-                if (chainedVariation.ActingVariation != null) {
+                if (chainedVariation.ActingVariation != null)
+                {
                     // must set and inform TransformTracker of the new Variation so it doesn't continue to follow the old.
                     chainedVariation.ActingVariation.UpdateAudioVariation(GrpVariation.AmbientFollower);
                 }
-            } else {
+            }
+            else
+            {
                 MasterAudio.PlaySoundAndForget(playSnd.SoundType, playSnd.VolumePercentage, playSnd.Pitch, rndDelay, null, _clipSchedEndTime, true);
             }
         }
 
-        private void UpdatePitch() {
-            switch (GrpVariation.curPitchMode) {
+        private void UpdatePitch()
+        {
+            switch (GrpVariation.curPitchMode)
+            {
                 case SoundGroupVariation.PitchMode.None:
                     return;
                 case SoundGroupVariation.PitchMode.Gliding:
-                    if (!VarAudio.isPlaying) {
+                    if (!VarAudio.isPlaying)
+                    {
                         break;
                     }
 
                     _pitchGlideToTargetFrameNumber++;
-                    if (_pitchGlideToTargetFrameNumber >= _pitchGlideToTargetTotalFrames) {
+                    if (_pitchGlideToTargetFrameNumber >= _pitchGlideToTargetTotalFrames)
+                    {
                         VarAudio.pitch = _glideToTargetPitch;
                         StopPitchGliding();
-                    } else {
+                    }
+                    else
+                    {
                         VarAudio.pitch = (_pitchGlideToTargetFrameNumber * _pitchGlideToTargetFramePitchChange) + _glideToTargetOrigPitch;
                     }
 
@@ -643,28 +748,38 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        private void PerformFading() {
-            switch (GrpVariation.curFadeMode) {
+        private void PerformFading()
+        {
+            switch (GrpVariation.curFadeMode)
+            {
                 case SoundGroupVariation.FadeMode.None:
                     break;
                 case SoundGroupVariation.FadeMode.FadeInOut:
-                    if (!VarAudio.isPlaying) {
+                    if (!VarAudio.isPlaying)
+                    {
                         break;
                     }
 
                     var clipTime = VarAudio.time;
-                    if (GrpVariation.fadeInTime > 0f && clipTime < GrpVariation.fadeInTime) {
+                    if (GrpVariation.fadeInTime > 0f && clipTime < GrpVariation.fadeInTime)
+                    {
                         // fade in!
                         VarAudio.volume = clipTime * _fadeInOutInFactor;
-                    } else if (clipTime >= GrpVariation.fadeInTime && !_hasFadeInOutSetMaxVolume) {
+                    }
+                    else if (clipTime >= GrpVariation.fadeInTime && !_hasFadeInOutSetMaxVolume)
+                    {
                         VarAudio.volume = GrpVariation.fadeMaxVolume;
                         _hasFadeInOutSetMaxVolume = true;
-                        if (!_fadeInOutWillFadeOut) {
+                        if (!_fadeInOutWillFadeOut)
+                        {
                             StopFading();
                         }
-                    } else if (_fadeInOutWillFadeOut && clipTime >= _fadeOutStartTime) {
+                    }
+                    else if (_fadeInOutWillFadeOut && clipTime >= _fadeOutStartTime)
+                    {
                         // fade out!
-                        if (GrpVariation.PlaySoundParm.IsChainLoop && !_fadeOutStarted) {
+                        if (GrpVariation.PlaySoundParm.IsChainLoop && !_fadeOutStarted)
+                        {
                             MaybeChain();
                             _fadeOutStarted = true;
                         }
@@ -672,7 +787,8 @@ namespace DarkTonic.MasterAudio {
                     }
                     break;
                 case SoundGroupVariation.FadeMode.FadeOutEarly:
-                    if (!VarAudio.isPlaying) {
+                    if (!VarAudio.isPlaying)
+                    {
                         break;
                     }
 
@@ -680,7 +796,8 @@ namespace DarkTonic.MasterAudio {
 
                     VarAudio.volume = (_fadeOutEarlyFrameNumber * _fadeOutEarlyFrameVolChange) + _fadeOutEarlyOrigVol;
 
-                    if (_fadeOutEarlyFrameNumber >= _fadeOutEarlyTotalFrames) {
+                    if (_fadeOutEarlyFrameNumber >= _fadeOutEarlyTotalFrames)
+                    {
                         GrpVariation.curFadeMode = SoundGroupVariation.FadeMode.None;
                         GrpVariation.Stop();
                         if (_fadeOutEarlyCompletionCallback != null)
@@ -691,14 +808,17 @@ namespace DarkTonic.MasterAudio {
 
                     break;
                 case SoundGroupVariation.FadeMode.GradualFade:
-                    if (!VarAudio.isPlaying) {
+                    if (!VarAudio.isPlaying)
+                    {
                         break;
                     }
 
                     _fadeToTargetFrameNumber++;
-                    if (_fadeToTargetFrameNumber >= _fadeToTargetTotalFrames) {
+                    if (_fadeToTargetFrameNumber >= _fadeToTargetTotalFrames)
+                    {
                         var grpInfo = MasterAudio.GetAllVariationsOfGroup(ParentGroup.GameObjectName);
-                        for (var i = 0; i < grpInfo.Count; i++) {
+                        for (var i = 0; i < grpInfo.Count; i++)
+                        {
                             var aVar = grpInfo[i];
                             if (aVar.Variation != this.GrpVariation)
                             {
@@ -716,19 +836,22 @@ namespace DarkTonic.MasterAudio {
                         {
                             _fadeToTargetCompletionCallback();
                         }
-                    } else {
+                    }
+                    else
+                    {
                         VarAudio.volume = (_fadeToTargetFrameNumber * _fadeToTargetFrameVolChange) + _fadeToTargetOrigVol;
                     }
                     break;
             }
         }
 
-#endregion
+        #endregion
 
-#region MonoBehavior events
+        #region MonoBehavior events
 
         // ReSharper disable once UnusedMember.Local
-        private void OnEnable() {
+        private void OnEnable()
+        {
             _inited = false;
 
             // values to be reset every time a sound plays.
@@ -746,8 +869,10 @@ namespace DarkTonic.MasterAudio {
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnDisable() {
-            if (MasterAudio.AppIsShuttingDown) {
+        private void OnDisable()
+        {
+            if (MasterAudio.AppIsShuttingDown)
+            {
                 return; // do nothing
             }
 
@@ -757,11 +882,13 @@ namespace DarkTonic.MasterAudio {
             MasterAudio.UnregisterUpdaterForUpdates(this);
         }
 
-        public void UpdateCachedObjects() {
+        public void UpdateCachedObjects()
+        {
             _frameNum = AudioUtil.FrameCount;
 
             // ReSharper disable once InvertIf
-            if (_maCachedFromFrame >= _frameNum) {
+            if (_maCachedFromFrame >= _frameNum)
+            {
                 return; // same frame. Use cached objects
             }
 
@@ -774,17 +901,23 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This method will be called by MasterAudio.cs either during LateUpdate (default) or FixedUpdate, however you've configured it in Advanced Settings.
         /// </summary>
-        public void ManualUpdate() {
+        public void ManualUpdate()
+        {
             UpdateCachedObjects();
 
             _framesPlayed++;
 
-            if (VarAudio.loop) {
-                if (VarAudio.timeSamples < _lastFrameClipPosition) {
+            if (VarAudio.loop)
+            {
+                if (VarAudio.timeSamples < _lastFrameClipPosition)
+                {
                     _timesLooped++;
-                    if (VarAudio.loop && GrpVariation.useCustomLooping && _timesLooped >= GrpVariation.MaxLoops) {
+                    if (VarAudio.loop && GrpVariation.useCustomLooping && _timesLooped >= GrpVariation.MaxLoops)
+                    {
                         GrpVariation.Stop();
-                    } else {
+                    }
+                    else
+                    {
                         GrpVariation.SoundLoopStarted(_timesLooped);
                     }
                 }
@@ -792,10 +925,14 @@ namespace DarkTonic.MasterAudio {
                 _lastFrameClipPosition = VarAudio.timeSamples;
             }
 
-            if (_isFollowing) { // check for despawned caller and act if so.
-                if (ParentGroup.targetDespawnedBehavior != MasterAudioGroup.TargetDespawnedBehavior.None) {
-                    if (_objectToFollowGo == null || !DTMonoHelper.IsActive(_objectToFollowGo)) {
-                        switch (ParentGroup.targetDespawnedBehavior) {
+            if (_isFollowing)
+            { // check for despawned caller and act if so.
+                if (ParentGroup.targetDespawnedBehavior != MasterAudioGroup.TargetDespawnedBehavior.None)
+                {
+                    if (_objectToFollowGo == null || !DTMonoHelper.IsActive(_objectToFollowGo))
+                    {
+                        switch (ParentGroup.targetDespawnedBehavior)
+                        {
                             case MasterAudioGroup.TargetDespawnedBehavior.Stop:
                                 GrpVariation.Stop();
                                 break;
@@ -822,24 +959,30 @@ namespace DarkTonic.MasterAudio {
             UpdatePitch();
 
 
-            switch (_waitMode) {
+            switch (_waitMode)
+            {
                 case WaitForSoundFinishMode.None:
                     break;
                 case WaitForSoundFinishMode.Play:
                     PlaySoundAndWait();
                     break;
                 case WaitForSoundFinishMode.WaitForEnd:
-                    if (_isPaused) {
+                    if (_isPaused)
+                    {
                         break;
                     }
 
-                    if (_clipSchedEndTime.HasValue) {
-                        if (AudioSettings.dspTime + TimeEarlyToScheduleNextClip >= _clipSchedEndTime.Value) {
-                            if (GrpVariation.PlaySoundParm.IsChainLoop && !_hasScheduledNextClip) {
+                    if (_clipSchedEndTime.HasValue)
+                    {
+                        if (AudioSettings.dspTime + TimeEarlyToScheduleNextClip >= _clipSchedEndTime.Value)
+                        {
+                            if (GrpVariation.PlaySoundParm.IsChainLoop && !_hasScheduledNextClip)
+                            {
                                 MaybeChain();
                                 _hasScheduledNextClip = true;
                             }
-                            if (HasEndLinkedGroups && !_hasScheduledEndLinkedGroups) {
+                            if (HasEndLinkedGroups && !_hasScheduledEndLinkedGroups)
+                            {
                                 GrpVariation.PlayEndLinkedGroups(_clipSchedEndTime.Value);
                                 _hasScheduledEndLinkedGroups = true;
                             }
@@ -848,19 +991,25 @@ namespace DarkTonic.MasterAudio {
 
                     var willChangeModes = false;
 
-                    if (_isPlayingBackward) {
-                        if (VarAudio.time > _lastFrameClipTime) {
+                    if (_isPlayingBackward)
+                    {
+                        if (VarAudio.time > _lastFrameClipTime)
+                        {
                             willChangeModes = true;
                         }
-                    } else {
-                        if (VarAudio.time < _lastFrameClipTime) {
+                    }
+                    else
+                    {
+                        if (VarAudio.time < _lastFrameClipTime)
+                        {
                             willChangeModes = true;
                         }
                     }
 
                     _lastFrameClipTime = VarAudio.time;
 
-                    if (willChangeModes) {
+                    if (willChangeModes)
+                    {
                         _waitMode = WaitForSoundFinishMode.StopOrRepeat;
                     }
                     break;
@@ -870,19 +1019,25 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-#endregion
+        #endregion
 
-#region Properties
+        #region Properties
 
-        public float ClipStartPosition {
-            get {
-                if (_clipStartPosition.HasValue) {
+        public float ClipStartPosition
+        {
+            get
+            {
+                if (_clipStartPosition.HasValue)
+                {
                     return _clipStartPosition.Value;
                 }
 
-                if (GrpVariation.useRandomStartTime) {
+                if (GrpVariation.useRandomStartTime)
+                {
                     _clipStartPosition = Random.Range(GrpVariation.randomStartMinPercent, GrpVariation.randomStartMaxPercent) * 0.01f * VarAudio.clip.length;
-                } else {
+                }
+                else
+                {
                     _clipStartPosition = 0f;
                 }
 
@@ -890,15 +1045,21 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        public float ClipEndPosition {
-            get {
-                if (_clipEndPosition.HasValue) {
+        public float ClipEndPosition
+        {
+            get
+            {
+                if (_clipEndPosition.HasValue)
+                {
                     return _clipEndPosition.Value;
                 }
 
-                if (GrpVariation.useRandomStartTime) {
+                if (GrpVariation.useRandomStartTime)
+                {
                     _clipEndPosition = GrpVariation.randomEndPercent * 0.01f * VarAudio.clip.length;
-                } else {
+                }
+                else
+                {
                     _clipEndPosition = VarAudio.clip.length;
                 }
 
@@ -906,22 +1067,29 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        public int FramesPlayed {
-            get {
+        public int FramesPlayed
+        {
+            get
+            {
                 return _framesPlayed;
             }
         }
 
-        public MasterAudio MAThisFrame {
-            get {
+        public MasterAudio MAThisFrame
+        {
+            get
+            {
                 return _maThisFrame;
             }
         }
 
-        public float MaxOcclusionFreq {
-            get {
+        public float MaxOcclusionFreq
+        {
+            get
+            {
                 // ReSharper disable once InvertIf
-                if (GrpVariation.UsesOcclusion && ParentGroup.willOcclusionOverrideFrequencies) {
+                if (GrpVariation.UsesOcclusion && ParentGroup.willOcclusionOverrideFrequencies)
+                {
                     return ParentGroup.occlusionMaxCutoffFreq;
                 }
 
@@ -929,10 +1097,13 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        public float MinOcclusionFreq {
-            get {
+        public float MinOcclusionFreq
+        {
+            get
+            {
                 // ReSharper disable once InvertIf
-                if (GrpVariation.UsesOcclusion && ParentGroup.willOcclusionOverrideFrequencies) {
+                if (GrpVariation.UsesOcclusion && ParentGroup.willOcclusionOverrideFrequencies)
+                {
                     return ParentGroup.occlusionMinCutoffFreq;
                 }
 
@@ -940,9 +1111,12 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        private Transform Trans {
-            get {
-                if (_trans != null) {
+        private Transform Trans
+        {
+            get
+            {
+                if (_trans != null)
+                {
                     return _trans;
                 }
 
@@ -952,9 +1126,12 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        private AudioSource VarAudio {
-            get {
-                if (_varAudio != null) {
+        private AudioSource VarAudio
+        {
+            get
+            {
+                if (_varAudio != null)
+                {
                     return _varAudio;
                 }
 
@@ -964,9 +1141,12 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        private MasterAudioGroup ParentGroup {
-            get {
-                if (_parentGrp != null) {
+        private MasterAudioGroup ParentGroup
+        {
+            get
+            {
+                if (_parentGrp != null)
+                {
                     return _parentGrp;
                 }
 
@@ -976,9 +1156,12 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        private SoundGroupVariation GrpVariation {
-            get {
-                if (_variation != null) {
+        private SoundGroupVariation GrpVariation
+        {
+            get
+            {
+                if (_variation != null)
+                {
                     return _variation;
                 }
 
@@ -988,10 +1171,13 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        private float RayCastOriginOffset {
-            get {
+        private float RayCastOriginOffset
+        {
+            get
+            {
                 // ReSharper disable once InvertIf
-                if (GrpVariation.UsesOcclusion && ParentGroup.willOcclusionOverrideRaycastOffset) {
+                if (GrpVariation.UsesOcclusion && ParentGroup.willOcclusionOverrideRaycastOffset)
+                {
                     return ParentGroup.occlusionRayCastOffset;
                 }
 
@@ -999,20 +1185,24 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        private bool IsOcclusionMeasuringPaused {
+        private bool IsOcclusionMeasuringPaused
+        {
             get { return _isWaitingForQueuedOcclusionRay || MasterAudio.IsOcclusionFrequencyTransitioning(GrpVariation); }
         }
 
-        private bool HasEndLinkedGroups {
-            get {
-                if (GrpVariation.ParentGroup.endLinkedGroups.Count > 0) {
+        private bool HasEndLinkedGroups
+        {
+            get
+            {
+                if (GrpVariation.ParentGroup.endLinkedGroups.Count > 0)
+                {
                     return true;
                 }
 
                 return false;
             }
         }
-#endregion
+        #endregion
     }
 }
 /*! \endcond */

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Threading.Tasks;
@@ -40,10 +39,10 @@ namespace BrainFailProductions.PolyFew.AsImpL
 
 
 #if UNITY_EDITOR
-    /// <summary>
-    /// Import the model as a set of assets. This should be set only by the Editor window.
-    /// </summary>
-    [HideInInspector]
+        /// <summary>
+        /// Import the model as a set of assets. This should be set only by the Editor window.
+        /// </summary>
+        [HideInInspector]
         public bool importAssets = false;
 
         /// <summary>
@@ -359,7 +358,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
         /// <returns>A proper loader or null if not available.</returns>
         private Loader CreateLoader(string absolutePath, bool isNetwork = false)
         {
-            if(isNetwork)
+            if (isNetwork)
             {
                 Loader laoder = gameObject.AddComponent<LoaderObj>();
 
@@ -430,7 +429,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
             if (loaderList.Count == 0)
             {
                 numTotalImports = 0;// files.Length;
-                ImportingStart?.Invoke();          
+                ImportingStart?.Invoke();
             }
 
             string absolutePath = filePath.Contains("//") ? filePath : Path.GetFullPath(filePath);
@@ -451,18 +450,18 @@ namespace BrainFailProductions.PolyFew.AsImpL
             if (string.IsNullOrEmpty(objName))
             {
                 objName = Path.GetFileNameWithoutExtension(absolutePath);
-            } 
+            }
 
             allLoaded = false;
 
             GameObject loaded = await loader.Load(objName, absolutePath, parentObj, texturesFolderPath, materialsFolderPath);
 
             return loaded;
-            
+
         }
 
 
-        
+
         public async Task<GameObject> ImportModelFromNetwork(string objURL, string objName, string diffuseTexURL, string bumpTexURL, string specularTexURL, string opacityTexURL, string materialURL, ReferencedNumeric<float> downloadProgress, ImportOptions options)
         {
 
@@ -477,7 +476,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
                 ImportingStart?.Invoke();
             }
 
-            
+
             Loader loader = CreateLoader("", true);
 
             if (loader == null)
@@ -493,7 +492,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
             allLoaded = false;
 
 
-            if(string.IsNullOrWhiteSpace(objName)) { objName = ""; }
+            if (string.IsNullOrWhiteSpace(objName)) { objName = ""; }
 
             ObjectImporter.downloadProgress = downloadProgress;
 
@@ -502,7 +501,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
 
             try
             {
-               loaded = await loader.LoadFromNetwork(objURL, diffuseTexURL, bumpTexURL, specularTexURL, opacityTexURL, materialURL, objName);
+                loaded = await loader.LoadFromNetwork(objURL, diffuseTexURL, bumpTexURL, specularTexURL, opacityTexURL, materialURL, objName);
             }
 
             catch (Exception ex)
@@ -536,7 +535,7 @@ namespace BrainFailProductions.PolyFew.AsImpL
 
             if (loader == null)
             {
-                OnError(new SystemException("Loader initialization failed due to unknown reasons."));        
+                OnError(new SystemException("Loader initialization failed due to unknown reasons."));
             }
 
             numTotalImports++;

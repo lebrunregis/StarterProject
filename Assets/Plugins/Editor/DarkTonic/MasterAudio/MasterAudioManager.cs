@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -17,6 +16,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
         private Vector2 _scrollPos = Vector2.zero;
 
         [MenuItem("Window/Master Audio/Master Audio Manager")]
+        private
         // ReSharper disable once UnusedMember.Local
         static void Init()
         {
@@ -31,7 +31,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
         // ReSharper disable once UnusedMember.Local
         // ReSharper disable once InconsistentNaming
-        void OnGUI()
+        private void OnGUI()
         {
             _scrollPos = GUI.BeginScrollView(
                     new Rect(0, 0, position.width, position.height),

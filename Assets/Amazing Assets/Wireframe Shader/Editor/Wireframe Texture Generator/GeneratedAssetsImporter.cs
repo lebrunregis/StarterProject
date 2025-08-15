@@ -7,7 +7,7 @@ using UnityEditor;
 namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
 {
     internal class GeneratedAssetsImporter
-    {       
+    {
         static public void ReimportTextures(string[] assetsPath, int size)
         {
             AssetDatabase.Refresh();

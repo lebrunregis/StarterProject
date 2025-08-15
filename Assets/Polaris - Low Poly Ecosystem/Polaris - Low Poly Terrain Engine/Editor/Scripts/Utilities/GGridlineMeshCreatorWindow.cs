@@ -45,7 +45,7 @@ namespace Pinwheel.Griffin
 
         private Mesh ConvertToLineMesh(Mesh m)
         {
-            Mesh wm = new Mesh();
+            Mesh wm = new();
             wm.vertices = m.vertices;
             wm.uv = m.uv;
             wm.colors = m.colors;
@@ -53,7 +53,7 @@ namespace Pinwheel.Griffin
             int[] tris = m.triangles;
             int trisCount = tris.Length / 3;
 
-            List<int> indices = new List<int>();
+            List<int> indices = new();
 
             for (int i = 0; i < trisCount; ++i)
             {

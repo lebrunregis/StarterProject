@@ -1,11 +1,13 @@
 /*! \cond PRIVATE */
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     // ReSharper disable once CheckNamespace
-    public class DelayBetweenSongs : MonoBehaviour {
+    public class DelayBetweenSongs : MonoBehaviour
+    {
         // ReSharper disable InconsistentNaming
         public float minTimeToWait = 1f;
         public float maxTimeToWait = 2f;
@@ -15,28 +17,35 @@ namespace DarkTonic.MasterAudio {
         private PlaylistController _controller;
 
         // ReSharper disable once UnusedMember.Local
-        private void Start() {
+        private void Start()
+        {
             _controller = PlaylistController.InstanceByName(playlistControllerName);
             _controller.SongEnded += SongEnded;
         }
 
         // ReSharper disable once UnusedMember.Local
-        private void OnDisable() {
+        private void OnDisable()
+        {
             _controller.SongEnded -= SongEnded;
         }
 
-        private void SongEnded(string songName) {
+        private void SongEnded(string songName)
+        {
             StopAllCoroutines();
             // just in case we are still waiting from calling this before. Don't want multiple coroutines running!
             StartCoroutine(PlaySongWithDelay());
         }
 
-        private IEnumerator PlaySongWithDelay() {
+        private IEnumerator PlaySongWithDelay()
+        {
             var randomTime = Random.Range(minTimeToWait, maxTimeToWait);
 
-            if (MasterAudio.IgnoreTimeScale) {
+            if (MasterAudio.IgnoreTimeScale)
+            {
                 yield return StartCoroutine(CoroutineHelper.WaitForActualSeconds(randomTime));
-            } else {
+            }
+            else
+            {
                 yield return new WaitForSeconds(randomTime);
             }
 

@@ -19,7 +19,7 @@ namespace BrainFailProductions.PolyFew.AsImpL.MathUtil
         public static List<Triangle> TriangulateConvexPolygon(List<Vertex> vertices, bool preserveOriginalVertices = true)
         {
             List<Vertex> poly = preserveOriginalVertices ? new List<Vertex>(vertices) : vertices;
-            List<Triangle> triangles = new List<Triangle>();
+            List<Triangle> triangles = new();
 
             while (true)
             {
@@ -66,7 +66,7 @@ namespace BrainFailProductions.PolyFew.AsImpL.MathUtil
         public static List<Triangle> TriangulateByEarClipping(List<Vertex> origVertices, Vector3 planeNormal, string meshName, bool preserveOriginalVertices = true)
         {
             //The list with triangles the method returns
-            List<Triangle> triangles = new List<Triangle>();
+            List<Triangle> triangles = new();
             List<Vertex> vertices = preserveOriginalVertices ? new List<Vertex>(origVertices) : origVertices;
 
             //Find the next and previous vertex
@@ -124,7 +124,7 @@ namespace BrainFailProductions.PolyFew.AsImpL.MathUtil
             Vertex vertexNext = vertex.NextVertex;
 
             // Define the triangle with the given vertex
-            Triangle newTriangle = new Triangle(vertexPrev, vertex, vertexNext);
+            Triangle newTriangle = new(vertexPrev, vertex, vertexNext);
 
             // Remove the vertex from the list
             vertices.Remove(vertex);
@@ -191,7 +191,7 @@ namespace BrainFailProductions.PolyFew.AsImpL.MathUtil
         private static List<Vertex> FindEarVertices(List<Vertex> vertices, Vector3 planeNormal)
         {
             //Have to find the ears after we have found if the vertex is reflex or convex
-            List<Vertex> earVertices = new List<Vertex>();
+            List<Vertex> earVertices = new();
 
             for (int i = 0; i < vertices.Count; i++)
             {

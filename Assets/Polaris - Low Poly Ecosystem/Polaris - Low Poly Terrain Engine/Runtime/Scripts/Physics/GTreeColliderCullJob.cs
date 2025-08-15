@@ -1,10 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Jobs;
 using Unity.Collections;
-using Unity.Burst;
+using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.Physic
 {

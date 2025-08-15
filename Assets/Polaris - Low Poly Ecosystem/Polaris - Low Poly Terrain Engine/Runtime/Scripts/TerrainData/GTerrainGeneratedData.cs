@@ -201,7 +201,7 @@ namespace Pinwheel.Griffin
                 int.TryParse(indices[0], out x);
                 int.TryParse(indices[1], out y);
                 int.TryParse(indices[2], out z);
-                Vector3Int newKey = new Vector3Int(x, y, z);
+                Vector3Int newKey = new(x, y, z);
                 Mesh m = GeneratedMeshes[k];
                 Meshes.Add(newKey, m);
             }

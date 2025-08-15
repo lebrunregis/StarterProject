@@ -6,7 +6,7 @@ namespace Pinwheel.Griffin
 {
     public static class GDebug
     {
-        private static Stopwatch st = new Stopwatch();
+        private static readonly Stopwatch st = new();
 
         public static void StartStopwatch()
         {

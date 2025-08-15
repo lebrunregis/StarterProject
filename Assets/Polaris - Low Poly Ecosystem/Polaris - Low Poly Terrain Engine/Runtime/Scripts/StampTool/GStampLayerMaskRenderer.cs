@@ -1,5 +1,4 @@
 #if GRIFFIN
-using Pinwheel.Griffin.TextureTool;
 using UnityEngine;
 
 namespace Pinwheel.Griffin.StampTool
@@ -48,7 +47,7 @@ namespace Pinwheel.Griffin.StampTool
             brushMat.SetFloat("_StamperMinHeight", stamperMinHeight);
             brushMat.SetFloat("_StamperMaxHeight", stamperMaxHeight);
 
-            Vector3 terrainSize = new Vector3(
+            Vector3 terrainSize = new(
                 terrain.TerrainData.Geometry.Width,
                 terrain.TerrainData.Geometry.Height,
                 terrain.TerrainData.Geometry.Length);
@@ -82,7 +81,7 @@ namespace Pinwheel.Griffin.StampTool
             GCommon.SetMaterialKeywordActive(brushMat, BLEND_HEIGHT_KW, layer.BlendHeight);
             GCommon.SetMaterialKeywordActive(brushMat, BLEND_SLOPE_KW, layer.BlendSlope);
             GCommon.SetMaterialKeywordActive(brushMat, BLEND_NOISE_KW, layer.BlendNoise);
-            
+
             DrawOnBrushTexture(rt, uvPoints, brushMat, 0);
 
             Object.DestroyImmediate(brushMat);

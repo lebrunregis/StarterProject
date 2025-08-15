@@ -1,8 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 #if UNITY_EDITOR
-using UnityEditor;
 #endif
 
 namespace Pinwheel.Griffin.BackupTool

@@ -1,10 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -13,14 +10,14 @@ namespace Pinwheel.Griffin
         public static void AddGrassInstancesWithFilter(this GFoliage f, NativeArray<bool> filterNA, NativeArray<GPrototypeInstanceInfo> foliageInfoNA)
         {
             GGrassPatch[] patches = f.GrassPatches;
-            NativeArray<Rect> patchRectsNA = new NativeArray<Rect>(patches.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<Rect> patchRectsNA = new(patches.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
             for (int r = 0; r < patches.Length; ++r)
             {
                 patchRectsNA[r] = patches[r].GetUvRange();
             }
 
-            NativeArray<int> patchIndexNA = new NativeArray<int>(foliageInfoNA.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            GPatchTestWithFilterJob job = new GPatchTestWithFilterJob()
+            NativeArray<int> patchIndexNA = new(foliageInfoNA.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            GPatchTestWithFilterJob job = new()
             {
                 patchRects = patchRectsNA,
                 filter = filterNA,
@@ -80,7 +77,7 @@ namespace Pinwheel.Griffin
                 }
 
                 GPrototypeInstanceInfo info = foliageInfo[index];
-                Vector2 pos = new Vector2(info.position.x, info.position.z);
+                Vector2 pos = new(info.position.x, info.position.z);
                 int length = patchRects.Length;
                 for (int i = 0; i < length; ++i)
                 {

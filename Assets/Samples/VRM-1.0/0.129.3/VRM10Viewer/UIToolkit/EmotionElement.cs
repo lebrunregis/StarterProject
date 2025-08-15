@@ -6,11 +6,11 @@ using UniVRM10;
 
 public class EmotionElement : VisualElement
 {
-    Slider _slider;
-    Toggle m_binary;
-    DropdownField _overrideMouth;
-    DropdownField _overrideBlink;
-    DropdownField _overrideLookat;
+    private Slider _slider;
+    private Toggle m_binary;
+    private DropdownField _overrideMouth;
+    private DropdownField _overrideBlink;
+    private DropdownField _overrideLookat;
     public bool m_useOverride;
 
     public EmotionElement()
@@ -40,7 +40,7 @@ public class EmotionElement : VisualElement
 
     public float Value => _slider.value;
 
-    static UniGLTF.Extensions.VRMC_vrm.ExpressionOverrideType ToOverrideType(int index)
+    private static UniGLTF.Extensions.VRMC_vrm.ExpressionOverrideType ToOverrideType(int index)
     {
         switch (index)
         {
@@ -62,7 +62,7 @@ public class EmotionElement : VisualElement
         }
     }
 
-    static int GetOverrideIndex(UniGLTF.Extensions.VRMC_vrm.ExpressionOverrideType value)
+    private static int GetOverrideIndex(UniGLTF.Extensions.VRMC_vrm.ExpressionOverrideType value)
     {
         switch (value)
         {

@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BrainFailProductions.PolyFew.AsImpL
@@ -74,12 +73,12 @@ namespace BrainFailProductions.PolyFew.AsImpL
         public string FullPath(string path)
         {
             string fullPath = path;
-            if(!Path.IsPathRooted(path))
+            if (!Path.IsPathRooted(path))
             {
                 fullPath = RootPath + path;
             }
             return fullPath;
         }
-    
+
     }
 }

@@ -1,25 +1,22 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 #if AMD
 using UnityEngine.AMD;
 #endif
-using UnityEngine.Rendering;
 
 namespace CitrioN.SettingsMenuCreator.SRP
 {
-  #region General
-  [DisplayName("Dynamic Resolution Enabled (HDRP) [Unity]")]
-  public class Setting_DynamicResolution_Enabled : Setting_HDPR_DynamicResolutionSettings<bool>
-  {
-    public override string RuntimeName => "Dynamic Resolution";
-
-    public override string EditorName => $"{RuntimeName} Enabled (HDRP) [Unity]";
-
-    public Setting_DynamicResolution_Enabled()
+    #region General
+    [DisplayName("Dynamic Resolution Enabled (HDRP) [Unity]")]
+    public class Setting_DynamicResolution_Enabled : Setting_HDPR_DynamicResolutionSettings<bool>
     {
-      defaultValue = false;
-    }
+        public override string RuntimeName => "Dynamic Resolution";
+
+        public override string EditorName => $"{RuntimeName} Enabled (HDRP) [Unity]";
+
+        public Setting_DynamicResolution_Enabled()
+        {
+            defaultValue = false;
+        }
 
 #if UNITY_HDRP
     protected override object ApplySettingChangeWithValue(SettingsCollection settings, bool value)
@@ -39,7 +36,7 @@ namespace CitrioN.SettingsMenuCreator.SRP
       return new List<object>() { ResolutionSettings.enabled };
     }
 #endif
-  }
+    }
 
 #if UNITY_HDRP
   [DisplayName("Dynamic Resolution Type (HDRP) [Unity]")]
@@ -106,17 +103,17 @@ namespace CitrioN.SettingsMenuCreator.SRP
   }
 #endif
 
-  [DisplayName("Use Mip Bias (HDRP) [Unity]")]
-  public class Setting_UseMipBias : Setting_HDPR_DynamicResolutionSettings<bool>
-  {
-    public override string RuntimeName => "Use Mip Bias";
-
-    public override string EditorName => $"{RuntimeName} (HDRP) [Unity]";
-
-    public Setting_UseMipBias()
+    [DisplayName("Use Mip Bias (HDRP) [Unity]")]
+    public class Setting_UseMipBias : Setting_HDPR_DynamicResolutionSettings<bool>
     {
-      defaultValue = false;
-    }
+        public override string RuntimeName => "Use Mip Bias";
+
+        public override string EditorName => $"{RuntimeName} (HDRP) [Unity]";
+
+        public Setting_UseMipBias()
+        {
+            defaultValue = false;
+        }
 
 #if UNITY_HDRP
     protected override object ApplySettingChangeWithValue(SettingsCollection settings, bool value)
@@ -136,23 +133,23 @@ namespace CitrioN.SettingsMenuCreator.SRP
       return new List<object>() { ResolutionSettings.useMipBias };
     }
 #endif
-  }
-
-  [DisplayName("Min Screen Percentage (HDRP) [Unity]")]
-  public class Setting_MinScreenPercentage : Setting_HDPR_DynamicResolutionSettings<float>
-  {
-    public override string RuntimeName => "Min Screen Percentage";
-
-    public override string EditorName => $"{RuntimeName} (HDRP) [Unity]";
-
-    public Setting_MinScreenPercentage()
-    {
-      options.AddMinMaxRangeValues("50", "100");
-      options.AddStepSize("0.5");
-      options.AddValueSuffix(" %");
-
-      defaultValue = 100f;
     }
+
+    [DisplayName("Min Screen Percentage (HDRP) [Unity]")]
+    public class Setting_MinScreenPercentage : Setting_HDPR_DynamicResolutionSettings<float>
+    {
+        public override string RuntimeName => "Min Screen Percentage";
+
+        public override string EditorName => $"{RuntimeName} (HDRP) [Unity]";
+
+        public Setting_MinScreenPercentage()
+        {
+            options.AddMinMaxRangeValues("50", "100");
+            options.AddStepSize("0.5");
+            options.AddValueSuffix(" %");
+
+            defaultValue = 100f;
+        }
 
 #if UNITY_HDRP
     protected override object ApplySettingChangeWithValue(SettingsCollection settings, float value)
@@ -172,23 +169,23 @@ namespace CitrioN.SettingsMenuCreator.SRP
       return new List<object>() { ResolutionSettings.minPercentage };
     }
 #endif
-  }
-
-  [DisplayName("Max Screen Percentage (HDRP) [Unity]")]
-  public class Setting_MaxScreenPercentage : Setting_HDPR_DynamicResolutionSettings<float>
-  {
-    public override string RuntimeName => "Max Screen Percentage";
-
-    public override string EditorName => $"{RuntimeName} (HDRP) [Unity]";
-
-    public Setting_MaxScreenPercentage()
-    {
-      options.AddMinMaxRangeValues("50", "100");
-      options.AddStepSize("0.5");
-      options.AddValueSuffix(" %");
-
-      defaultValue = 100f;
     }
+
+    [DisplayName("Max Screen Percentage (HDRP) [Unity]")]
+    public class Setting_MaxScreenPercentage : Setting_HDPR_DynamicResolutionSettings<float>
+    {
+        public override string RuntimeName => "Max Screen Percentage";
+
+        public override string EditorName => $"{RuntimeName} (HDRP) [Unity]";
+
+        public Setting_MaxScreenPercentage()
+        {
+            options.AddMinMaxRangeValues("50", "100");
+            options.AddStepSize("0.5");
+            options.AddValueSuffix(" %");
+
+            defaultValue = 100f;
+        }
 
 #if UNITY_HDRP
     protected override object ApplySettingChangeWithValue(SettingsCollection settings, float value)
@@ -208,10 +205,10 @@ namespace CitrioN.SettingsMenuCreator.SRP
       return new List<object>() { ResolutionSettings.maxPercentage };
     }
 #endif
-  }
-  #endregion
+    }
+    #endregion
 
-  #region DLSS
+    #region DLSS
 #if NVIDIA
   [DisplayName("DLSS Enabled (HDRP) [Unity 2021/2022]")]
   public class Setting_DLSS_Unity_Enabled : Setting_HDPR_DynamicResolutionSettings<bool>
@@ -343,9 +340,9 @@ namespace CitrioN.SettingsMenuCreator.SRP
 #endif
   }
 #endif
-  #endregion
+    #endregion
 
-  #region FSR 2
+    #region FSR 2
 #if AMD
   [DisplayName("FSR 2 Sharpness Enabled (HDRP) [Unity]")]
   public class Setting_FSR2_Unity_Sharpness_Enabled : Setting_HDPR_DynamicResolutionSettings<bool>
@@ -479,5 +476,5 @@ namespace CitrioN.SettingsMenuCreator.SRP
 #endif
   }
 #endif
-  #endregion
+    #endregion
 }

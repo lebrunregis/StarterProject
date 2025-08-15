@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Gamekit3D
 {
@@ -9,7 +7,7 @@ namespace Gamekit3D
         public int targetFPS = 60;
 
         // Use this for initialization
-        void OnEnable()
+        private void OnEnable()
         {
             SetTargetFPS(targetFPS);
         }
@@ -18,5 +16,5 @@ namespace Gamekit3D
         {
             Application.targetFrameRate = fps;
         }
-    } 
+    }
 }

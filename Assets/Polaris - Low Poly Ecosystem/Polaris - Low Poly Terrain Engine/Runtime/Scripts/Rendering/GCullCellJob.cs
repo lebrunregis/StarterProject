@@ -1,10 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Jobs;
-using Unity.Burst;
 using Unity.Collections;
+using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.Rendering
 {
@@ -33,7 +30,7 @@ namespace Pinwheel.Griffin.Rendering
                 cullResults[index] = culledValue;
                 return;
             }
-            BoundingSphere b = new BoundingSphere();
+            BoundingSphere b = new();
             b.position = normalizeToWorldMatrix.MultiplyPoint(param.boundCenter);
             b.radius = normalizeToWorldMatrix.MultiplyVector(param.boundSize).x;
             if (!DoFrustumTest(frustum, b))

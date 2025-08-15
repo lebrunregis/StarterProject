@@ -21,15 +21,15 @@ namespace MagicaCloth2
         [SerializeField]
         private Texture2D skirtPaintMap;
 
-        GameObject character;
-        GameObjectContainer gameObjectContainer;
+        private GameObject character;
+        private GameObjectContainer gameObjectContainer;
 
-        void Start()
+        private void Start()
         {
 
         }
 
-        void Update()
+        private void Update()
         {
 
         }
@@ -71,7 +71,7 @@ namespace MagicaCloth2
         /// This component is optional.
         /// It's just there to help with data construction.
         /// </summary>
-        void GenerateCharacter()
+        private void GenerateCharacter()
         {
             if (characterPrefab)
             {
@@ -84,7 +84,7 @@ namespace MagicaCloth2
         /// BoneCloth construction example (1).
         /// Set all parameters from a script.
         /// </summary>
-        void SetupHairTail_BoneCloth()
+        private void SetupHairTail_BoneCloth()
         {
             if (character == null)
                 return;
@@ -118,7 +118,7 @@ namespace MagicaCloth2
         /// BoneCloth construction example (2).
         /// Copy parameters from an existing component.
         /// </summary>
-        void SetupFrontHair_BoneCloth()
+        private void SetupFrontHair_BoneCloth()
         {
             if (character == null || frontHairSource == null)
                 return;
@@ -155,7 +155,7 @@ namespace MagicaCloth2
         /// BoneCloth construction example (3).
         /// Load parameters from saved presets.
         /// </summary>
-        void SetupRibbon_BoneCloth()
+        private void SetupRibbon_BoneCloth()
         {
             if (character == null || string.IsNullOrEmpty(ribbonPresetName))
                 return;
@@ -186,7 +186,7 @@ namespace MagicaCloth2
         /// MeshCloth construction example (1).
         /// Reads vertex attributes from a paintmap.
         /// </summary>
-        void SetupSkirt_MeshCloth()
+        private void SetupSkirt_MeshCloth()
         {
             if (character == null || skirtPaintMap == null)
                 return;

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine.EventSystems;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Abiogenesis3d
 {
@@ -28,25 +28,25 @@ namespace Abiogenesis3d
 
         public MultiCameraEventsCameraInfo[] cameraInfos = new MultiCameraEventsCameraInfo[0];
 
-        GameObject lastColliderGO;
-        GameObject lastMouseDownColliderGO;
+        private GameObject lastColliderGO;
+        private GameObject lastMouseDownColliderGO;
 
-        const SendMessageOptions msgOpts = SendMessageOptions.DontRequireReceiver;
+        private const SendMessageOptions msgOpts = SendMessageOptions.DontRequireReceiver;
 
         public RaycastHit raycastHit;
 
-        GameObject lastDragGO;
-        Vector3 lastDragMousePosition;
+        private GameObject lastDragGO;
+        private Vector3 lastDragMousePosition;
 
-        float lastHandleInits;
-        float handleInitsEvery = 0.1f;
+        private float lastHandleInits;
+        private readonly float handleInitsEvery = 0.1f;
 
-        void OnValidate()
+        private void OnValidate()
         {
             lastHandleInits = 0;
         }
 
-        void CheckForInstances()
+        private void CheckForInstances()
         {
             var existingInstances = FindObjectsOfType<MultiCameraEvents>();
             if (existingInstances.Length > 1)
@@ -57,17 +57,17 @@ namespace Abiogenesis3d
             }
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             CheckForInstances();
         }
 
-        void OnDisable()
+        private void OnDisable()
         {
             RestoreEventMask();
         }
 
-        void RestoreEventMask()
+        private void RestoreEventMask()
         {
             foreach (var camInfo in cameraInfos)
             {
@@ -76,7 +76,7 @@ namespace Abiogenesis3d
             }
         }
 
-        void HandleInits()
+        private void HandleInits()
         {
             // TODO: randomize this to not create processing spikes
             if (Time.time - lastHandleInits > handleInitsEvery)
@@ -87,16 +87,16 @@ namespace Abiogenesis3d
             }
         }
 
-        Type GetIgnoredType()
+        private Type GetIgnoredType()
         {
             return typeof(MultiCameraEventsIgnore);
         }
 
-        void AutoDetectCameras()
+        private void AutoDetectCameras()
         {
             var allCameras = FindObjectsOfType<Camera>();
 
-            foreach(var cam in allCameras)
+            foreach (var cam in allCameras)
             {
                 var ignoreTag = cam.GetComponent(GetIgnoredType());
                 var camInfo = cameraInfos.FirstOrDefault(c => c.cam == cam);
@@ -105,8 +105,8 @@ namespace Abiogenesis3d
                 {
                     if (ignoreTag == null)
                     {
-                        camInfo = new MultiCameraEventsCameraInfo {cam = cam};
-                        cameraInfos = cameraInfos.Concat(new[] {camInfo}).ToArray();
+                        camInfo = new MultiCameraEventsCameraInfo { cam = cam };
+                        cameraInfos = cameraInfos.Concat(new[] { camInfo }).ToArray();
                     }
                 }
                 else
@@ -117,12 +117,12 @@ namespace Abiogenesis3d
             }
         }
 
-        bool IsCamInfoDisabled(MultiCameraEventsCameraInfo camInfo)
+        private bool IsCamInfoDisabled(MultiCameraEventsCameraInfo camInfo)
         {
             return camInfo.cam == null || !camInfo.cam.gameObject.activeInHierarchy;
         }
 
-        void Awake()
+        private void Awake()
         {
             if (Application.isPlaying)
             {
@@ -135,7 +135,7 @@ namespace Abiogenesis3d
             }
         }
 
-        void Update()
+        private void Update()
         {
             HandleInits();
             if (!Application.isPlaying) return;
@@ -154,12 +154,12 @@ namespace Abiogenesis3d
             SynthesizeEvents();
         }
 
-        bool IsPointerOverUIObject()
+        private bool IsPointerOverUIObject()
         {
-            PointerEventData eventData = new PointerEventData(EventSystem.current);
+            PointerEventData eventData = new(EventSystem.current);
             eventData.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
-            List<RaycastResult> results = new List<RaycastResult>();
+            List<RaycastResult> results = new();
             EventSystem.current.RaycastAll(eventData, results);
 
             results.RemoveAll(r => r.gameObject.GetComponent(GetIgnoredType()) != null);
@@ -167,7 +167,7 @@ namespace Abiogenesis3d
             return results.Count > 0;
         }
 
-        void SynthesizeEvents()
+        private void SynthesizeEvents()
         {
             if (blockedByUI)
             {

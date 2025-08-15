@@ -530,7 +530,7 @@ namespace MagicaCloth2
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine($"[InertiaConstraint]");
             sb.AppendLine($"  -fixedArray:{fixedArray.ToSummary()}");
 
@@ -575,7 +575,7 @@ namespace MagicaCloth2
                     }
                 }
 
-                float3 localGravityDirection = new float3(0, -1, 0);
+                float3 localGravityDirection = new(0, -1, 0);
                 if (ccnt > 0)
                 {
                     // 初期センター姿勢からローカル重力方向を算出する

@@ -25,7 +25,7 @@ namespace Pinwheel.Griffin.TextureTool
         private const int FILTER_BILINEAR = 1;
         private int filterMode = 1;
 
-        private int previewPadding = 10;
+        private readonly int previewPadding = 10;
         private bool lockLivePreviewTerrain = false;
 
         private MaterialPropertyBlock livePreviewMaterialProperties;
@@ -115,7 +115,7 @@ namespace Pinwheel.Griffin.TextureTool
         protected override void OnToolbarGUI(Rect r)
         {
             base.OnToolbarGUI(r);
-            List<string> channelButtonLabels = new List<string>()
+            List<string> channelButtonLabels = new()
             {
                 "RGB",
                 "R",
@@ -123,7 +123,7 @@ namespace Pinwheel.Griffin.TextureTool
                 "B",
                 "A"
             };
-            List<int> channelValue = new List<int>()
+            List<int> channelValue = new()
             {
                 PREVIEW_RGB,
                 PREVIEW_R,
@@ -147,13 +147,13 @@ namespace Pinwheel.Griffin.TextureTool
                 }
             }
 
-            List<string> filterButtonLabels = new List<string>()
+            List<string> filterButtonLabels = new()
             {
                 "==============",
                 "Point",
                 "Bilinear"
             };
-            List<int> filterValue = new List<int>()
+            List<int> filterValue = new()
             {
                 0,
                 FILTER_POINT,
@@ -174,7 +174,7 @@ namespace Pinwheel.Griffin.TextureTool
                 }
             }
 
-            Rect saveButtonRect = new Rect(
+            Rect saveButtonRect = new(
                 r.max.x - 100 - 2,
                 r.min.y,
                 100,
@@ -189,7 +189,7 @@ namespace Pinwheel.Griffin.TextureTool
         {
             base.OnLeftPaneGUI(r);
 
-            Rect previewRect = new Rect();
+            Rect previewRect = new();
             int size = Mathf.FloorToInt(Mathf.Min(LeftPaneRect.width, LeftPaneRect.height) - 2 * previewPadding);
             previewRect.size = new Vector2(size, size);
             previewRect.center = LeftPaneRect.center;
@@ -501,7 +501,7 @@ namespace Pinwheel.Griffin.TextureTool
             else
             {
                 List<GTreePrototype> prototypes = param.Terrain.TerrainData.Foliage.Trees.Prototypes;
-                GSelectionGridArgs args = new GSelectionGridArgs();
+                GSelectionGridArgs args = new();
                 args.collection = prototypes;
                 args.selectedIndices = param.TreePrototypeIndices;
                 args.itemSize = GEditorCommon.selectionGridTileSizeSmall;
@@ -522,7 +522,7 @@ namespace Pinwheel.Griffin.TextureTool
             else
             {
                 List<GGrassPrototype> prototypes = param.Terrain.TerrainData.Foliage.Grasses.Prototypes;
-                GSelectionGridArgs args = new GSelectionGridArgs();
+                GSelectionGridArgs args = new();
                 args.collection = prototypes;
                 args.selectedIndices = param.GrassPrototypeIndices;
                 args.itemSize = GEditorCommon.selectionGridTileSizeSmall;
@@ -555,7 +555,7 @@ namespace Pinwheel.Griffin.TextureTool
 
                 if (GUILayout.Button("Add Filter"))
                 {
-                    GenericMenu menu = new GenericMenu();
+                    GenericMenu menu = new();
                     Array types = Enum.GetValues(typeof(GTextureFilterType));
                     foreach (GTextureFilterType t in types)
                     {
@@ -637,7 +637,7 @@ namespace Pinwheel.Griffin.TextureTool
                     warp.MaskIsNormalMap = EditorGUILayout.Toggle("Is Normal Map", warp.MaskIsNormalMap);
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.PrefixLabel("Mask");
-                    using (EditorGUI.IndentLevelScope level = new EditorGUI.IndentLevelScope(-1))
+                    using (EditorGUI.IndentLevelScope level = new(-1))
                     {
                         warp.Mask = EditorGUILayout.ObjectField(warp.Mask, typeof(Texture2D), false) as Texture2D;
                     }
@@ -781,7 +781,7 @@ namespace Pinwheel.Griffin.TextureTool
             string filePath = Path.Combine(generalParams.Directory, fileName);
 
             TextureFormat format = generalParams.UseHighPrecisionTexture ? TextureFormat.RGBAFloat : TextureFormat.RGBA32;
-            Texture2D tex = new Texture2D(generalParams.Resolution, generalParams.Resolution, format, false);
+            Texture2D tex = new(generalParams.Resolution, generalParams.Resolution, format, false);
             tex.wrapMode = TextureWrapMode.Clamp;
             GCommon.CopyFromRT(tex, PreviewRt);
 
@@ -829,7 +829,7 @@ namespace Pinwheel.Griffin.TextureTool
             {
                 mat = GInternalMaterials.GeometryLivePreviewMaterial;
                 GStylizedTerrain t = livePreviewParam.Terrain;
-                Vector3 terrainSize = new Vector3(
+                Vector3 terrainSize = new(
                     t.TerrainData.Geometry.Width,
                     t.TerrainData.Geometry.Height,
                     t.TerrainData.Geometry.Length);

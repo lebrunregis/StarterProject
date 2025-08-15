@@ -9,12 +9,12 @@ namespace SBG.Toolbelt.Optimization
     /// such as AI Pathfinding, etc.
     /// </summary>
 	public abstract class FrameSkipper : MonoBehaviour
-	{
-		[Range(1,60)]
-		[SerializeField] private int framesToSkip = 1; //Frames skipped until the next Update is called
+    {
+        [Range(1, 60)]
+        [SerializeField] private int framesToSkip = 1; //Frames skipped until the next Update is called
         [SerializeField] private bool randomStartOffset = true;
 
-		public int FramesToSkip => framesToSkip;
+        public int FramesToSkip => framesToSkip;
 
         /// <summary>
         /// The time since the last executed Frame
@@ -22,7 +22,7 @@ namespace SBG.Toolbelt.Optimization
         public float SkippedDeltaTime { get; private set; }
 
 
-		private int _skippedFrames = 0;
+        private int _skippedFrames = 0;
 
 
         protected virtual void Awake()

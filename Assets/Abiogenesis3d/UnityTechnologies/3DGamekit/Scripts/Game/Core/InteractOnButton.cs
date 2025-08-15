@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 
@@ -12,7 +10,7 @@ namespace Gamekit3D
         public string buttonName = "X";
         public UnityEvent OnButtonPress;
 
-        bool canExecuteButtons = false;
+        private bool canExecuteButtons = false;
 
         protected override void ExecuteOnEnter(Collider other)
         {
@@ -24,7 +22,7 @@ namespace Gamekit3D
             canExecuteButtons = false;
         }
 
-        void Update()
+        private void Update()
         {
             if (canExecuteButtons && Input.GetButtonDown(buttonName))
             {
@@ -32,5 +30,5 @@ namespace Gamekit3D
             }
         }
 
-    } 
+    }
 }

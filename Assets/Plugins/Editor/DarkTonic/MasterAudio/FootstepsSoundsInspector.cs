@@ -17,7 +17,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
             if (groups != null)
             {
 #if UNITY_2023_1_OR_NEWER
-                var creators = Object.FindObjectsByType<DynamicSoundGroupCreator>(FindObjectsInactive.Include, FindObjectsSortMode.None) as DynamicSoundGroupCreator[];
+                var creators = Object.FindObjectsByType<DynamicSoundGroupCreator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 #else
                 var creators = FindObjectsOfType(typeof(DynamicSoundGroupCreator)) as DynamicSoundGroupCreator[];
 #endif

@@ -1,15 +1,15 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor
 {
     public class WireframeGlobalIlluminationDrawer : WireframeMaterialBasePropertyDrawer
     {
-        static string keywordName = "_EMISSION";
+        private static readonly string keywordName = "_EMISSION";
 
         public override void OnGUI(Rect position, MaterialProperty prop, string label, MaterialEditor editor)
         {

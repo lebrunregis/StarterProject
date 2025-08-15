@@ -2,9 +2,8 @@
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
 using System.IO;
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor.ShaderInstructions
@@ -18,12 +17,12 @@ namespace AmazingAssets.WireframeShader.Editor.ShaderInstructions
             AmplifyShaderEditorCore, AmplifyShaderEditorMaskPlane, AmplifyShaderEditorMaskSphere, AmplifyShaderEditorMaskBox, AmplifyShaderEditorDistanceFade
         }
 
-        static string wireframeShaderCGINCFilePath;
-        static bool? packageShaderGraphIsInstalled;
-        static bool? packageAmplfyShaderEditorIsInstalled;
+        private static string wireframeShaderCGINCFilePath;
+        private static bool? packageShaderGraphIsInstalled;
+        private static bool? packageAmplfyShaderEditorIsInstalled;
 
 
-        Vector2 scroll;
+        private Vector2 scroll;
 
 
         [MenuItem("Window/Amazing Assets/Wireframe Shader/Shader Instructions", false, 3103)]
@@ -34,7 +33,7 @@ namespace AmazingAssets.WireframeShader.Editor.ShaderInstructions
             window.Show();
         }
 
-        void OnGUI()
+        private void OnGUI()
         {
             if (WireframeTextureGenerator.EditorWindow.AreRequiedFilesInstalled() == false)
                 return;
@@ -58,7 +57,7 @@ namespace AmazingAssets.WireframeShader.Editor.ShaderInstructions
                             {
                                 if (GUILayout.Button("Copy Path", GUILayout.MaxWidth(100)))
                                 {
-                                    TextEditor te = new TextEditor();
+                                    TextEditor te = new();
                                     te.text = GetWireframeShaderCGINCFilePathForShader();
                                     te.SelectAll();
                                     te.Copy();
@@ -76,7 +75,7 @@ namespace AmazingAssets.WireframeShader.Editor.ShaderInstructions
                             {
                                 if (GUILayout.Button("Copy", GUILayout.MaxWidth(100)))
                                 {
-                                    TextEditor te = new TextEditor();
+                                    TextEditor te = new();
                                     te.text = "WireframeShaderReadTriangleMassFromUV(/*float3*/ texcoord3, /*float*/ thickness, /*float*/ smoothness)";
                                     te.SelectAll();
                                     te.Copy();
@@ -95,7 +94,7 @@ namespace AmazingAssets.WireframeShader.Editor.ShaderInstructions
                             {
                                 if (GUILayout.Button("Copy", GUILayout.MaxWidth(100)))
                                 {
-                                    TextEditor te = new TextEditor();
+                                    TextEditor te = new();
                                     te.text = "WireframeShaderDistanceFade(/*float3*/ cameraPositionWS, /*float3*/ vertexPositionWS, /*float*/ startDistance, /*float*/ endDistance)";
                                     te.SelectAll();
                                     te.Copy();
@@ -113,7 +112,7 @@ namespace AmazingAssets.WireframeShader.Editor.ShaderInstructions
                             {
                                 if (GUILayout.Button("Copy", GUILayout.MaxWidth(100)))
                                 {
-                                    TextEditor te = new TextEditor();
+                                    TextEditor te = new();
                                     te.text = "WireframeShaderMaskPlane(/*float3*/ planePositionWS, /*float3*/ planeNormalWS, /*float3*/ vertexPositionWS, /*float*/ edgeFalloff, /*float*/ invert)";
                                     te.SelectAll();
                                     te.Copy();
@@ -131,7 +130,7 @@ namespace AmazingAssets.WireframeShader.Editor.ShaderInstructions
                             {
                                 if (GUILayout.Button("Copy", GUILayout.MaxWidth(100)))
                                 {
-                                    TextEditor te = new TextEditor();
+                                    TextEditor te = new();
                                     te.text = "WireframeShaderMaskSphere(/*float3*/ spherePositionWS, /*float*/ sphereRadius, /*float3*/ vertexPositionWS, /*float*/ edgeFalloff, /*float*/ invert)";
                                     te.SelectAll();
                                     te.Copy();
@@ -149,7 +148,7 @@ namespace AmazingAssets.WireframeShader.Editor.ShaderInstructions
                             {
                                 if (GUILayout.Button("Copy", GUILayout.MaxWidth(100)))
                                 {
-                                    TextEditor te = new TextEditor();
+                                    TextEditor te = new();
                                     te.text = "WireframeShaderMaskBox(/*float4x4*/ boxTRSMatrix, /*float3*/ boundingBox, /*float3*/ vertexPositionWS, /*float*/ edgeFalloff, /*float*/ invert)";
                                     te.SelectAll();
                                     te.Copy();
@@ -171,7 +170,7 @@ namespace AmazingAssets.WireframeShader.Editor.ShaderInstructions
                         if (packageShaderGraphIsInstalled.HasValue == false)
                             packageShaderGraphIsInstalled = EditorUtilities.IsPackageInstalled("com.unity.shadergraph");
 
-                        using (new EditorGUIHelper.GUIEnabled(packageShaderGraphIsInstalled.Value || 
+                        using (new EditorGUIHelper.GUIEnabled(packageShaderGraphIsInstalled.Value ||
                               (WireframeShaderUtilities.GetCurrentRenderPipeline() == WireframeShaderEnum.RenderPipeline.Universal || WireframeShaderUtilities.GetCurrentRenderPipeline() == WireframeShaderEnum.RenderPipeline.HighDefinition)))
                         {
                             GUILayout.Space(5);

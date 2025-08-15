@@ -5,10 +5,10 @@
 #if UNITY_EDITOR
 
 
-using UnityEngine;
-using System.Reflection;
 using System;
+using System.Reflection;
 using UnityEditor;
+using UnityEngine;
 
 
 
@@ -64,7 +64,7 @@ namespace BrainFailProductions.PolyFew
 
         public static T AddComponentClone<T>(this GameObject go, T toAdd) where T : Component
         {
-            return go.AddComponent<T>().GetCopyOf(toAdd) as T;
+            return go.AddComponent<T>().GetCopyOf(toAdd);
         }
 
 

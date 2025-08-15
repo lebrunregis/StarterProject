@@ -18,10 +18,10 @@ namespace MagicaCloth2
     /// <typeparam name="T"></typeparam>
     public class ExSimpleNativeArray<T> : IDisposable where T : unmanaged
     {
-        NativeArray<T> nativeArray;
+        private NativeArray<T> nativeArray;
 
-        int count;
-        int length;
+        private int count;
+        private int length;
 
         //=========================================================================================
         public ExSimpleNativeArray()
@@ -449,7 +449,7 @@ namespace MagicaCloth2
             FillInternal(startIndex, dataLength, fillData);
         }
 
-        unsafe void FillInternal(int start, int size, T fillData = default(T))
+        private unsafe void FillInternal(int start, int size, T fillData = default(T))
         {
             //byte* dst_p = (byte*)nativeArray.GetUnsafePtr();
             void* dst_p = nativeArray.GetUnsafePtr();
@@ -499,7 +499,7 @@ namespace MagicaCloth2
         /// <param name="dataLength"></param>
         /// <param name="force">強制的に領域を追加</param>
         /// <param name="copy">古いデータをコピーするかどうか</param>
-        void Expand(int dataLength, bool force = false, bool copy = true)
+        private void Expand(int dataLength, bool force = false, bool copy = true)
         {
             int newlength = force ? length + dataLength : count + dataLength;
 
@@ -531,7 +531,7 @@ namespace MagicaCloth2
 
         public override string ToString()
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             sb.AppendLine($"ExSimpleNativeArray Length:{Length} Count:{Count} IsValid:{IsValid}");
             sb.AppendLine("---- Datas[~100] ----");

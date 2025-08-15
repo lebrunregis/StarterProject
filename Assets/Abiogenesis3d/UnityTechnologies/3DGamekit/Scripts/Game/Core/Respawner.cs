@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -17,12 +16,12 @@ namespace Gamekit3D
         public GameObject player;
         public float savePeriod = 5;
 
-        public List<SaveState> savedStates = new List<SaveState>();
+        public List<SaveState> savedStates = new();
 
-        float lastCheck = 0f;
-        bool paused = false;
+        private float lastCheck = 0f;
+        private bool paused = false;
 
-        void Start()
+        private void Start()
         {
             lastCheck = Time.time - savePeriod;
         }
@@ -48,7 +47,7 @@ namespace Gamekit3D
             }
         }
 
-        void Update()
+        private void Update()
         {
             if (!paused && Time.time - lastCheck > savePeriod)
             {

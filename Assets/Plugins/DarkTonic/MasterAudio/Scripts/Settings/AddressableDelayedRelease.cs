@@ -3,8 +3,10 @@
 using System;
 
 [Serializable]
-public class AddressableDelayedRelease  {
-    public AddressableDelayedRelease(string addressableId, float realtimeToRelease) {
+public class AddressableDelayedRelease
+{
+    public AddressableDelayedRelease(string addressableId, float realtimeToRelease)
+    {
         AddressableId = addressableId;
         RealtimeToRelease = realtimeToRelease;
     }

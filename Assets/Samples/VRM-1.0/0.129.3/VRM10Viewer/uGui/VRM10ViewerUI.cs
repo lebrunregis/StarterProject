@@ -9,101 +9,101 @@ namespace UniVRM10.VRM10Viewer
     public class VRM10ViewerUI : MonoBehaviour
     {
         [SerializeField]
-        VRM10ViewerController m_controller = new();
+        private VRM10ViewerController m_controller = new();
 
         [SerializeField]
-        GameObject Root = default;
+        private GameObject Root = default;
 
         [SerializeField]
-        Text m_version = default;
+        private Text m_version = default;
 
         [Header("UI")]
         [SerializeField]
-        Toggle m_useCustomPbrMaterial = default;
+        private Toggle m_useCustomPbrMaterial = default;
         [SerializeField]
-        Toggle m_useCustomMToonMaterial = default;
+        private Toggle m_useCustomMToonMaterial = default;
 
         [SerializeField]
-        Button m_openModel = default;
+        private Button m_openModel = default;
 
         [SerializeField]
-        Button m_openMotion = default;
+        private Button m_openMotion = default;
 
         [SerializeField]
-        Button m_pastePose = default;
+        private Button m_pastePose = default;
 
         [SerializeField]
-        Toggle m_showBoxMan = default;
+        private Toggle m_showBoxMan = default;
 
         [SerializeField]
-        Toggle m_useAsync = default;
+        private Toggle m_useAsync = default;
 
         [SerializeField, Header("springbone")]
-        Toggle m_useSpringboneSingelton = default;
+        private Toggle m_useSpringboneSingelton = default;
         [SerializeField]
-        Toggle m_springbonePause = default;
+        private Toggle m_springbonePause = default;
         [SerializeField]
-        Toggle m_springboneScaling = default;
+        private Toggle m_springboneScaling = default;
         [SerializeField]
-        Slider m_springboneExternalX = default;
+        private Slider m_springboneExternalX = default;
         [SerializeField]
-        Slider m_springboneExternalY = default;
+        private Slider m_springboneExternalY = default;
         [SerializeField]
-        Slider m_springboneExternalZ = default;
+        private Slider m_springboneExternalZ = default;
 
         [SerializeField]
-        Button m_resetSpringBone = default;
+        private Button m_resetSpringBone = default;
         [SerializeField]
-        Button m_reconstructSpringBone = default;
+        private Button m_reconstructSpringBone = default;
 
         [SerializeField, Header("expression")]
-        Toggle m_enableAutoExpression = default;
+        private Toggle m_enableAutoExpression = default;
 
         [SerializeField]
-        EmotionFields m_happy;
+        private EmotionFields m_happy;
         [SerializeField]
-        EmotionFields m_angry;
+        private EmotionFields m_angry;
         [SerializeField]
-        EmotionFields m_sad;
+        private EmotionFields m_sad;
         [SerializeField]
-        EmotionFields m_relaxed;
+        private EmotionFields m_relaxed;
         [SerializeField]
-        EmotionFields m_surprised;
+        private EmotionFields m_surprised;
 
         [SerializeField]
-        Toggle m_enableLipSync = default;
+        private Toggle m_enableLipSync = default;
         [SerializeField]
-        EmotionFields m_lipAa = default;
+        private EmotionFields m_lipAa = default;
         [SerializeField]
-        EmotionFields m_lipIh = default;
+        private EmotionFields m_lipIh = default;
         [SerializeField]
-        EmotionFields m_lipOu = default;
+        private EmotionFields m_lipOu = default;
         [SerializeField]
-        EmotionFields m_lipEe = default;
+        private EmotionFields m_lipEe = default;
         [SerializeField]
-        EmotionFields m_lipOh = default;
+        private EmotionFields m_lipOh = default;
 
         [SerializeField]
-        Toggle m_enableAutoBlink = default;
+        private Toggle m_enableAutoBlink = default;
         [SerializeField]
-        EmotionFields m_blink = default;
+        private EmotionFields m_blink = default;
 
         [SerializeField]
-        Toggle m_useLookAtTarget = default;
+        private Toggle m_useLookAtTarget = default;
         [SerializeField]
-        Slider m_yaw = default;
+        private Slider m_yaw = default;
         [SerializeField]
-        Slider m_pitch = default;
+        private Slider m_pitch = default;
 
         [SerializeField]
-        TextFields m_texts = default;
+        private TextFields m_texts = default;
 
         [SerializeField]
-        UIFields m_ui = default;
+        private UIFields m_ui = default;
 
-        VRM10AutoExpression m_autoEmotion;
-        VRM10Blinker m_autoBlink;
-        VRM10AIUEO m_autoLipsync;
+        private VRM10AutoExpression m_autoEmotion;
+        private VRM10Blinker m_autoBlink;
+        private VRM10AIUEO m_autoLipsync;
 
         private void Reset()
         {
@@ -150,7 +150,7 @@ namespace UniVRM10.VRM10Viewer
             m_pitch = map.Get<Slider>("SliderPitch");
         }
 
-        void OnLoaded(Loaded loaded)
+        private void OnLoaded(Loaded loaded)
         {
             m_showBoxMan.isOn = false;
             m_happy.OnLoad(loaded.Instance.Vrm.Expression.Happy);
@@ -166,7 +166,7 @@ namespace UniVRM10.VRM10Viewer
             m_blink.OnLoad(loaded.Instance.Vrm.Expression.Blink);
         }
 
-        LoadOptions MakeLoadOptions()
+        private LoadOptions MakeLoadOptions()
         {
             return new LoadOptions()
             {

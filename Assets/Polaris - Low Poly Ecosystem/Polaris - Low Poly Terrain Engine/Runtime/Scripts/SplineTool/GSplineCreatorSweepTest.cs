@@ -1,11 +1,8 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.Jobs;
 using Unity.Collections;
-using Unity.Burst;
-using Unity.Mathematics;
+using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.SplineTool
 {
@@ -17,9 +14,9 @@ namespace Pinwheel.Griffin.SplineTool
         {
             NativeArray<GSplineAnchor.GSweepTestData> anchors = Spline.GetAnchorSweepTestData();
             NativeArray<GSplineSegment.GSweepTestData> segments = Spline.GetSegmentSweepTestData();
-            NativeArray<Rect> rects = new NativeArray<Rect>(Smoothness * Spline.Segments.Count, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<Rect> rects = new(Smoothness * Spline.Segments.Count, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
 
-            GGenerateSweepRectsJob job = new GGenerateSweepRectsJob()
+            GGenerateSweepRectsJob job = new()
             {
                 anchors = anchors,
                 segments = segments,
@@ -39,27 +36,27 @@ namespace Pinwheel.Griffin.SplineTool
 
         public List<GOverlapTestResult> SweepTest()
         {
-            List<GOverlapTestResult> results = new List<GOverlapTestResult>();
+            List<GOverlapTestResult> results = new();
             GCommon.ForEachTerrain(GroupId, (t) =>
             {
                 if (t.TerrainData == null)
                     return;
-                GOverlapTestResult r = new GOverlapTestResult();
+                GOverlapTestResult r = new();
                 r.Terrain = t;
                 results.Add(r);
             });
 
-            NativeArray<Rect> terrainRects = new NativeArray<Rect>(results.Count, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<Rect> terrainRects = new(results.Count, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
             for (int i = 0; i < terrainRects.Length; ++i)
             {
                 terrainRects[i] = results[i].Terrain.Rect;
             }
 
             NativeArray<Rect> splineRects = GenerateSweepRectsNA();
-            NativeArray<bool> terrainTestResult = new NativeArray<bool>(results.Count, Allocator.TempJob, NativeArrayOptions.ClearMemory);
+            NativeArray<bool> terrainTestResult = new(results.Count, Allocator.TempJob, NativeArrayOptions.ClearMemory);
 
             {
-                GRectTestJob rectTestJob = new GRectTestJob()
+                GRectTestJob rectTestJob = new()
                 {
                     rectToTest = terrainRects,
                     sweepRects = splineRects,
@@ -82,9 +79,9 @@ namespace Pinwheel.Griffin.SplineTool
             terrainTestResult.Dispose();
 
 
-            List<JobHandle> chunkTestHandles = new List<JobHandle>();
-            List<NativeArray<Rect>> chunkRectsHandles = new List<NativeArray<Rect>>();
-            List<NativeArray<bool>> chunkTestResultsHandles = new List<NativeArray<bool>>();
+            List<JobHandle> chunkTestHandles = new();
+            List<NativeArray<Rect>> chunkRectsHandles = new();
+            List<NativeArray<bool>> chunkTestResultsHandles = new();
             for (int i = 0; i < results.Count; ++i)
             {
                 GOverlapTestResult r = results[i];
@@ -97,8 +94,8 @@ namespace Pinwheel.Griffin.SplineTool
                 }
 
                 NativeArray<Rect> chunkRects = r.Terrain.GetChunkRectsNA();
-                NativeArray<bool> chunkTestResults = new NativeArray<bool>(chunkRects.Length, Allocator.TempJob, NativeArrayOptions.ClearMemory);
-                GRectTestJob job = new GRectTestJob()
+                NativeArray<bool> chunkTestResults = new(chunkRects.Length, Allocator.TempJob, NativeArrayOptions.ClearMemory);
+                GRectTestJob job = new()
                 {
                     rectToTest = chunkRects,
                     sweepRects = splineRects,
@@ -118,7 +115,7 @@ namespace Pinwheel.Griffin.SplineTool
                 if (!r.IsOverlapped)
                 {
                     continue;
-                }    
+                }
 
                 chunkTestHandles[i].Complete();
                 r.IsChunkOverlapped = chunkTestResultsHandles[i].ToArray();
@@ -156,7 +153,7 @@ namespace Pinwheel.Griffin.SplineTool
             {
                 float splineSize = Mathf.Max(1, splineWidth + splineFalloffWidth * 2);
                 Vector2 sweepRectSize = Vector2.one * splineSize * 1.41f;
-                Rect sweepRect = new Rect();
+                Rect sweepRect = new();
                 sweepRect.size = sweepRectSize;
 
                 for (int i = 0; i < smoothness; ++i)

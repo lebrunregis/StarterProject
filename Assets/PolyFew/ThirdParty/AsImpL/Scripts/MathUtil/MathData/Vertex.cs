@@ -93,11 +93,11 @@ namespace BrainFailProductions.PolyFew.AsImpL.MathUtil
         /// <returns></returns>
         public Vector2 GetPosOnPlane(Vector3 planeNormal)
         {
-            Quaternion planeRotation = new Quaternion();
+            Quaternion planeRotation = new();
             planeRotation.SetFromToRotation(planeNormal, Vector3.back);
 
             Vector3 projPos = planeRotation * Position;
-            Vector2 pos_2d_xy = new Vector2(projPos.x, projPos.y);
+            Vector2 pos_2d_xy = new(projPos.x, projPos.y);
 
             return pos_2d_xy;
         }

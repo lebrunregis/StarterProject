@@ -10,7 +10,7 @@ namespace MagicaCloth2
     {
         public ResultCode GenerateStatusCheck()
         {
-            ResultCode result = new ResultCode();
+            ResultCode result = new();
 
             // スケール値チェック
             var scl = cloth.transform.lossyScale;

@@ -38,7 +38,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
         /// <summary>
         /// The default simplification options.
         /// </summary>
-        public static readonly SimplificationOptions Default = new SimplificationOptions()
+        public static readonly SimplificationOptions Default = new()
         {
             PreserveBorderEdges = false,
             PreserveUVSeamEdges = false,

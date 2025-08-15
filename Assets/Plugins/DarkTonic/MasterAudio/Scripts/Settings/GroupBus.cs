@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.Audio;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     /// <summary>
     /// This class is used to control 1 or more Sound Groups at once, for muting, volume, and other purposes. Sound Groups using the Bug are routed through it, and Bus output can be assigned to a Unity Mixer Group.
     /// </summary>
     [Serializable]
     // ReSharper disable once CheckNamespace
-    public class GroupBus {
+    public class GroupBus
+    {
         /*! \cond PRIVATE */
         // ReSharper disable InconsistentNaming
         public string busName;
@@ -19,8 +21,8 @@ namespace DarkTonic.MasterAudio {
         public bool isMuted = false;
         public int voiceLimit = -1;
         public bool isExisting = false; // for Dynamic Sound Group - referenced Buses
-		public bool isTemporary = false;
-		public bool isUsingOcclusion = false;
+        public bool isTemporary = false;
+        public bool isUsingOcclusion = false;
         public MasterAudio.BusVoiceLimitExceededMode busVoiceLimitExceededMode = MasterAudio.BusVoiceLimitExceededMode.DoNotPlayNewSound;
         public Color busColor = Color.white;
 
@@ -28,13 +30,14 @@ namespace DarkTonic.MasterAudio {
         public bool forceTo2D = false;
 
         // ReSharper restore InconsistentNaming
-        private readonly List<int> _activeAudioSourcesIds = new List<int>(50);
-        private readonly List<int> _actorInstanceIds = new List<int>();
+        private readonly List<int> _activeAudioSourcesIds = new(50);
+        private readonly List<int> _actorInstanceIds = new();
         private float _originalVolume = 1;
 
         public void AddActorInstanceId(int instanceId)
         {
-            if (_actorInstanceIds.Contains(instanceId)) {
+            if (_actorInstanceIds.Contains(instanceId))
+            {
                 return;
             }
 
@@ -46,15 +49,18 @@ namespace DarkTonic.MasterAudio {
             _actorInstanceIds.Remove(instanceId);
         }
 
-        public void AddActiveAudioSourceId(int id) {
-            if (_activeAudioSourcesIds.Contains(id)) {
+        public void AddActiveAudioSourceId(int id)
+        {
+            if (_activeAudioSourcesIds.Contains(id))
+            {
                 return;
             }
 
             _activeAudioSourcesIds.Add(id);
         }
 
-        public void RemoveActiveAudioSourceId(int id) {
+        public void RemoveActiveAudioSourceId(int id)
+        {
             _activeAudioSourcesIds.Remove(id);
         }
         /*! \endcond */
@@ -62,15 +68,18 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property returns the number of active voices playing through the bus
         /// </summary>
-        public int ActiveVoices {
+        public int ActiveVoices
+        {
             get { return _activeAudioSourcesIds.Count; }
         }
 
         /// <summary>
         /// This property returns the number of live actors (Dynamic Sound Group Creators) still in the Scene.
         /// </summary>
-        public bool HasLiveActors {
-            get {
+        public bool HasLiveActors
+        {
+            get
+            {
                 return _actorInstanceIds.Count > 0;
             }
         }
@@ -78,9 +87,12 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property returns whether or not the bus Active Voice limit has been reached
         /// </summary>
-        public bool BusVoiceLimitReached {
-            get {
-                if (voiceLimit <= 0) {
+        public bool BusVoiceLimitReached
+        {
+            get
+            {
+                if (voiceLimit <= 0)
+                {
                     return false; // no limit set
                 }
 
@@ -91,12 +103,15 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property will return the original volume of the bus.
         /// </summary>
-        public float OriginalVolume {
-            get {
+        public float OriginalVolume
+        {
+            get
+            {
                 // ReSharper disable once PossibleInvalidOperationException
                 return _originalVolume;
             }
-            set {
+            set
+            {
                 _originalVolume = value;
             }
         }

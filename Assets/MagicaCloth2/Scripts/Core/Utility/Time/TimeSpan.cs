@@ -10,10 +10,10 @@ namespace MagicaCloth2
     /// </summary>
     public class TimeSpan
     {
-        string name = string.Empty;
-        DateTime stime;
-        DateTime etime;
-        bool isFinish;
+        private readonly string name = string.Empty;
+        private DateTime stime;
+        private DateTime etime;
+        private bool isFinish;
 
         public TimeSpan() { }
 

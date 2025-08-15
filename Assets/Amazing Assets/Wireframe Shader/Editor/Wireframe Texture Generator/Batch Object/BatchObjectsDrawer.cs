@@ -1,29 +1,30 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
- 
+
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
 {
     internal class BatchObjectsDrawer
     {
-        enum SortBy { None, ObjectData, SubmeshCount, UV0, VertexAttribute }
-		enum ScrollViewItemVisibility { Visible, AboveDrawArea, BelowDrawArea }
+        private enum SortBy
+        { None, ObjectData, SubmeshCount, UV0, VertexAttribute }
+        private enum ScrollViewItemVisibility
+        { Visible, AboveDrawArea, BelowDrawArea }
 
 
-        static SortBy sortBy = SortBy.None;
-        static Vector2 scrollBatchObjects;
-        static bool sortByAscending = true;    //true - OrderBy, false - OrderByDescending
+        private static SortBy sortBy = SortBy.None;
+        private static Vector2 scrollBatchObjects;
+        private static bool sortByAscending = true;    //true - OrderBy, false - OrderByDescending
 
 
-        static int singleLineHeight = 20;
+        private static readonly int singleLineHeight = 20;
 
 
         internal static void Draw()
@@ -35,13 +36,13 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
             EditorSettings editorSettings = EditorWindow.active.editorSettings;
 
 
-            Rect rectObjectData = new Rect();
-            Rect rectSubmeshCount = new Rect();
-            Rect rectUV0 = new Rect();
-            Rect rectVertexAttribute = new Rect(); bool needRectVertexAttribute = false;
-            Rect rectRefresh = new Rect();
+            Rect rectObjectData = new();
+            Rect rectSubmeshCount = new();
+            Rect rectUV0 = new();
+            Rect rectVertexAttribute = new(); bool needRectVertexAttribute = false;
+            Rect rectRefresh = new();
 
-            
+
             bool needRepaint = false;
             Rect toolbarRect;
 
@@ -109,7 +110,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
                                     backgroundColor = Color.red;
 
 
-                                Rect rectObjectField = new Rect(rectObjectData.xMin, currentRowRect.yMin, rectObjectData.width, currentRowRect.height);
+                                Rect rectObjectField = new(rectObjectData.xMin, currentRowRect.yMin, rectObjectData.width, currentRowRect.height);
                                 using (new EditorGUIHelper.GUIBackgroundColor(backgroundColor))
                                 {
                                     EditorGUI.ObjectField(rectObjectField, currentBatchObject.mesh, typeof(Mesh), false);
@@ -126,7 +127,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
 
                                 if (needRectVertexAttribute)
                                 {
-                                    Rect vertexAttributeDrawRect = new Rect(rectVertexAttribute.xMin + rectVertexAttribute.width / 2 - 6, currentRowRect.yMin + 2, 12, 12);
+                                    Rect vertexAttributeDrawRect = new(rectVertexAttribute.xMin + rectVertexAttribute.width / 2 - 6, currentRowRect.yMin + 2, 12, 12);
                                     switch (editorSettings.solverReadFrom)
                                     {
                                         case WireframeShaderEnum.VertexAttribute.UV0: /*Never used*/ break;
@@ -215,7 +216,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
             }
         }
 
-        static int GetScrolViewHeight()
+        private static int GetScrolViewHeight()
         {
             int renderObjectsCount = EditorWindow.active.listBatchObjects.Count + 1;
 
@@ -275,13 +276,13 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
                 SortBatchObjects();
             }
         }
-        static string GetEditorPreferencesPath()
+        private static string GetEditorPreferencesPath()
         {
             return WireframeShaderAbout.name.RemoveWhiteSpace() + "WireframeTextureGenerator_ObjectsID_" + Application.dataPath.GetHashCode();
         }
 
 
-        static void SplitControlRect(Rect controlRect, out Rect rectObjectData, out Rect rectSubmeshCount, out Rect rectUV0, out bool needRectVertexAttribute, out Rect rectVertexAttribute, out Rect rectRefresh)
+        private static void SplitControlRect(Rect controlRect, out Rect rectObjectData, out Rect rectSubmeshCount, out Rect rectUV0, out bool needRectVertexAttribute, out Rect rectVertexAttribute, out Rect rectRefresh)
         {
             EditorSettings editorSettings = EditorWindow.active.editorSettings;
 
@@ -322,7 +323,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
                 rectSubmeshCount = new Rect(controlRect);
                 rectSubmeshCount.xMin = xMin;
                 rectSubmeshCount.width = width;
-            }           
+            }
 
             rectObjectData = new Rect(controlRect);
             rectObjectData.width = xMin - controlRect.xMin;
@@ -330,7 +331,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
 
             return;
         }
-        static void DrawSortByButton(Rect rect, string label, SortBy sortByOnClickEvent)
+        private static void DrawSortByButton(Rect rect, string label, SortBy sortByOnClickEvent)
         {
             using (new EditorGUIHelper.GUIColor(sortBy == sortByOnClickEvent ? Color.gray : Color.white))
             {
@@ -379,12 +380,13 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
                             default:
                                 break;
                         }
-                    } break;
+                    }
+                    break;
                 default:
                     break;
             }
         }
-        static void SortBatchObjects(Func<BatchObject, System.Object> orderRoot, Func<BatchObject, System.Object> orderRootThen)
+        private static void SortBatchObjects(Func<BatchObject, System.Object> orderRoot, Func<BatchObject, System.Object> orderRootThen)
         {
             if (EditorWindow.active.listBatchObjects == null)
                 return;
@@ -425,7 +427,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
             }
         }
 
-        static ScrollViewItemVisibility IsRectVisibleInsideScrollView(Rect topMostRect, Rect localRect, Vector2 scrollPosition)
+        private static ScrollViewItemVisibility IsRectVisibleInsideScrollView(Rect topMostRect, Rect localRect, Vector2 scrollPosition)
         {
             float windowSpacePositionY = topMostRect.y + localRect.y - scrollPosition.y;
 
@@ -514,7 +516,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
                 string savePath = Path.Combine(assetSaveDirectory, assetName);
 
 
-                BatchObject batchObject = new BatchObject(mesh);
+                BatchObject batchObject = new(mesh);
 
                 EditorWindow.active.listBatchObjects.Add(batchObject);
 
@@ -635,7 +637,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
         }
         internal static void CatchDragAndDrop()
         {
-            Rect drop_area = new Rect(0, 0, EditorWindow.active.position.width, EditorWindow.active.position.height);
+            Rect drop_area = new(0, 0, EditorWindow.active.position.width, EditorWindow.active.position.height);
 
             Event evt = Event.current;
             switch (evt.type)

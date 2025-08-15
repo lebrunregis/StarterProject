@@ -3,39 +3,39 @@ using UnityEngine;
 
 namespace Abiogenesis3d.UPixelator_Demo
 {
-public class PatrolWaypoints : MonoBehaviour
-{
-    public float stepSpeed = 0.1f;
-    public float stoppingDistance = 0.25f;
-    public List<Transform> waypoints = new List<Transform>();
-
-    Transform waypoint;
-    int index;
-
-    public Vector3 GetWaypoint()
+    public class PatrolWaypoints : MonoBehaviour
     {
-        return waypoint != null ? waypoint.position : transform.position;
-    }
+        public float stepSpeed = 0.1f;
+        public float stoppingDistance = 0.25f;
+        public List<Transform> waypoints = new();
 
-    void Update()
-    {
-        if (stepSpeed < 0) stepSpeed = 0;
+        private Transform waypoint;
+        private int index;
 
-        if (waypoints.Count == 0) return;
-        if (waypoint == null) waypoint = waypoints[index];
-
-        // TODO: this can get bad if crossing one waypoint that is above another
-        Vector3 distanceXZ = transform.position - waypoint.position;
-        distanceXZ.y = 0;
-        if (distanceXZ.magnitude < stoppingDistance)
+        public Vector3 GetWaypoint()
         {
-            index += 1;
-            if (index >= waypoints.Count) index = 0;
-            waypoint = waypoints[index];
+            return waypoint != null ? waypoint.position : transform.position;
         }
 
-        float dt = Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, waypoint.position, stepSpeed * dt);
+        private void Update()
+        {
+            if (stepSpeed < 0) stepSpeed = 0;
+
+            if (waypoints.Count == 0) return;
+            if (waypoint == null) waypoint = waypoints[index];
+
+            // TODO: this can get bad if crossing one waypoint that is above another
+            Vector3 distanceXZ = transform.position - waypoint.position;
+            distanceXZ.y = 0;
+            if (distanceXZ.magnitude < stoppingDistance)
+            {
+                index += 1;
+                if (index >= waypoints.Count) index = 0;
+                waypoint = waypoints[index];
+            }
+
+            float dt = Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, waypoint.position, stepSpeed * dt);
+        }
     }
-}
 }

@@ -1,17 +1,14 @@
 #if UNITY_EDITOR
-using Type = System.Type;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
-using UnityEditor;
 using System.Linq;
-using System.Text.RegularExpressions;
-using System.Diagnostics;
 using System.Reflection;
-using UnityEngine.Experimental.Rendering;
+using System.Text.RegularExpressions;
+using UnityEditor;
+using UnityEngine;
 using static VHierarchy.Libs.VUtils;
-using static VHierarchy.Libs.VGUI;
+using Type = System.Type;
 
 
 namespace VHierarchy.Libs
@@ -195,9 +192,9 @@ namespace VHierarchy.Libs
 
         }
 
-        static Dictionary<Type, Dictionary<string, FieldInfo>> fieldInfoCache = new();
-        static Dictionary<Type, Dictionary<string, PropertyInfo>> propertyInfoCache = new();
-        static Dictionary<Type, Dictionary<int, MethodInfo>> methodInfoCache = new();
+        private static readonly Dictionary<Type, Dictionary<string, FieldInfo>> fieldInfoCache = new();
+        private static readonly Dictionary<Type, Dictionary<string, PropertyInfo>> propertyInfoCache = new();
+        private static readonly Dictionary<Type, Dictionary<int, MethodInfo>> methodInfoCache = new();
 
 
 
@@ -216,7 +213,7 @@ namespace VHierarchy.Libs
 
         }
 
-        static Dictionary<MemberInfo, Dictionary<Type, System.Attribute>> attributesCache = new();
+        private static readonly Dictionary<MemberInfo, Dictionary<Type, System.Attribute>> attributesCache = new();
 
 
 
@@ -225,8 +222,8 @@ namespace VHierarchy.Libs
 
         public static List<Type> GetSubclasses(this Type t) => t.Assembly.GetTypes().Where(type => type.IsSubclassOf(t)).ToList();
 
-        public static object GetDefaultValue(this FieldInfo f, params object[] constructorVars) => f.GetValue(System.Activator.CreateInstance(((MemberInfo)f).ReflectedType, constructorVars));
-        public static object GetDefaultValue(this FieldInfo f) => f.GetValue(System.Activator.CreateInstance(((MemberInfo)f).ReflectedType));
+        public static object GetDefaultValue(this FieldInfo f, params object[] constructorVars) => f.GetValue(System.Activator.CreateInstance(f.ReflectedType, constructorVars));
+        public static object GetDefaultValue(this FieldInfo f) => f.GetValue(System.Activator.CreateInstance(f.ReflectedType));
 
         public static IEnumerable<FieldInfo> GetFieldsWithoutBase(this Type t) => t.GetFields().Where(r => !t.BaseType.GetFields().Any(rr => rr.Name == r.Name));
         public static IEnumerable<PropertyInfo> GetPropertiesWithoutBase(this Type t) => t.GetProperties().Where(r => !t.BaseType.GetProperties().Any(rr => rr.Name == r.Name));
@@ -486,7 +483,7 @@ namespace VHierarchy.Libs
         public static int FloorToInt(this float f) => Mathf.FloorToInt(f);
 
         public static int ToInt(this float f) => (int)f;
-        public static float ToFloat(this int f) => (float)f;
+        public static float ToFloat(this int f) => f;
         public static float ToFloat(this double f) => (float)f;
 
 
@@ -1100,8 +1097,8 @@ namespace VHierarchy.Libs
         [System.Serializable]
         public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
         {
-            [SerializeField] List<TKey> keys = new();
-            [SerializeField] List<TValue> values = new();
+            [SerializeField] private List<TKey> keys = new();
+            [SerializeField] private List<TValue> values = new();
 
             public void OnBeforeSerialize()
             {
@@ -1270,7 +1267,7 @@ namespace VHierarchy.Libs
 
         }
 
-        static object _noValue = new();
+        private static readonly object _noValue = new();
 
 #endif
 
@@ -1499,7 +1496,7 @@ namespace VHierarchy.Libs
 
             }
 
-            static Dictionary<string, bool> versionQueryCache = new();
+            private static readonly Dictionary<string, bool> versionQueryCache = new();
 
 
 
@@ -1536,7 +1533,7 @@ namespace VHierarchy.Libs
 
             }
 
-            static void DefineSymbolInAsmdef(string asmdefName, string symbol)
+            private static void DefineSymbolInAsmdef(string asmdefName, string symbol)
             {
                 var path = AssetDatabase.FindAssets("t: asmdef " + asmdefName, null).First().ToPath();
                 var importer = AssetImporter.GetAtPath(path);
@@ -1563,7 +1560,7 @@ namespace VHierarchy.Libs
                 Object.DestroyImmediate(editor);
 
             }
-            static void UndefineSymbolInAsmdef(string asmdefName, string symbol)
+            private static void UndefineSymbolInAsmdef(string asmdefName, string symbol)
             {
                 var path = AssetDatabase.FindAssets("t: asmdef " + asmdefName, null).First().ToPath();
                 var importer = AssetImporter.GetAtPath(path);
@@ -1602,7 +1599,7 @@ namespace VHierarchy.Libs
 
             }
 
-            static List<string> _dummyList = new();
+            private static readonly List<string> _dummyList = new();
 
 
 
@@ -1786,10 +1783,10 @@ namespace VHierarchy.Libs
             }
 
 
-            static Dictionary<string, int> ints_byKey = new();
-            static Dictionary<string, bool> bools_byKey = new();
-            static Dictionary<string, float> floats_byKey = new();
-            static Dictionary<string, string> strings_byKey = new();
+            private static readonly Dictionary<string, int> ints_byKey = new();
+            private static readonly Dictionary<string, bool> bools_byKey = new();
+            private static readonly Dictionary<string, float> floats_byKey = new();
+            private static readonly Dictionary<string, string> strings_byKey = new();
 
         }
 
@@ -1841,11 +1838,11 @@ namespace VHierarchy.Libs
         }
         public static void SelectInInspector(this Object obj, bool frameInHierarchy = false, bool frameInProject = false) => new[] { obj }.SelectInInspector(frameInHierarchy, frameInProject);
 
-        static IEnumerable<EditorWindow> allHierarchies => _allHierarchies ??= typeof(Editor).Assembly.GetType("UnityEditor.SceneHierarchyWindow").GetFieldValue<IList>("s_SceneHierarchyWindows").Cast<EditorWindow>();
-        static IEnumerable<EditorWindow> _allHierarchies;
+        private static IEnumerable<EditorWindow> allHierarchies => _allHierarchies ??= typeof(Editor).Assembly.GetType("UnityEditor.SceneHierarchyWindow").GetFieldValue<IList>("s_SceneHierarchyWindows").Cast<EditorWindow>();
+        private static IEnumerable<EditorWindow> _allHierarchies;
 
-        static IEnumerable<EditorWindow> allProjectBrowsers => _allProjectBrowsers ??= typeof(Editor).Assembly.GetType("UnityEditor.ProjectBrowser").GetFieldValue<IList>("s_ProjectBrowsers").Cast<EditorWindow>();
-        static IEnumerable<EditorWindow> _allProjectBrowsers;
+        private static IEnumerable<EditorWindow> allProjectBrowsers => _allProjectBrowsers ??= typeof(Editor).Assembly.GetType("UnityEditor.ProjectBrowser").GetFieldValue<IList>("s_ProjectBrowsers").Cast<EditorWindow>();
+        private static IEnumerable<EditorWindow> _allProjectBrowsers;
 
 
 
@@ -1972,7 +1969,7 @@ namespace VHierarchy.Libs
         }
         public static Rect DrawRounded(this Rect rect, Color color, float cornerRadius) => rect.DrawRounded(color, cornerRadius.RoundToInt());
 
-        static Dictionary<int, GUIStyle> _roundedStylesByCornerRadius = new();
+        private static readonly Dictionary<int, GUIStyle> _roundedStylesByCornerRadius = new();
 
 
 
@@ -2058,12 +2055,12 @@ namespace VHierarchy.Libs
         }
         public static Rect DrawBlurred(this Rect rect, Color color, float blurRadius) => rect.DrawBlurred(color, blurRadius.RoundToInt());
 
-        static Dictionary<(int, int), GUIStyle> _blurredStylesByTextureSize = new();
+        private static readonly Dictionary<(int, int), GUIStyle> _blurredStylesByTextureSize = new();
 
 
 
 
-        static void DrawCurtain(this Rect rect, Color color, int dir)
+        private static void DrawCurtain(this Rect rect, Color color, int dir)
         {
             void genTextures()
             {
@@ -2118,7 +2115,7 @@ namespace VHierarchy.Libs
 
         }
 
-        static Texture2D[] _gradientTextures;
+        private static Texture2D[] _gradientTextures;
 
         public static void DrawCurtainUp(this Rect rect, Color color) => rect.DrawCurtain(color, 0);
         public static void DrawCurtainDown(this Rect rect, Color color) => rect.DrawCurtain(color, 1);
@@ -2200,7 +2197,7 @@ namespace VHierarchy.Libs
         public static WrappedEvent Wrap(this Event e) => new(e);
 
         public static WrappedEvent curEvent => _curEvent ??= typeof(Event).GetFieldValue<Event>("s_Current").Wrap();
-        static WrappedEvent _curEvent;
+        private static WrappedEvent _curEvent;
 
 
 
@@ -2259,7 +2256,7 @@ namespace VHierarchy.Libs
 
         public static void SetGUIEnabled(bool enabled) { _prevGuiEnabled = GUI.enabled; GUI.enabled = enabled; }
         public static void ResetGUIEnabled() => GUI.enabled = _prevGuiEnabled;
-        static bool _prevGuiEnabled = true;
+        private static bool _prevGuiEnabled = true;
 
         public static void SetLabelFontSize(int size) => GUI.skin.label.fontSize = size;
         public static void SetLabelBold() => GUI.skin.label.fontStyle = FontStyle.Bold;
@@ -2285,23 +2282,23 @@ namespace VHierarchy.Libs
             GUI.color = _guiColorStack.Pop();
         }
 
-        static Stack<Color> _guiColorStack = new();
+        private static readonly Stack<Color> _guiColorStack = new();
 
 
 
         public static float editorDeltaTime = .0166f;
 
-        static void EditorDeltaTime_Update()
+        private static void EditorDeltaTime_Update()
         {
             editorDeltaTime = (float)(EditorApplication.timeSinceStartup - _lastUpdateTime);
 
             _lastUpdateTime = EditorApplication.timeSinceStartup;
 
         }
-        static double _lastUpdateTime;
+        private static double _lastUpdateTime;
 
         [InitializeOnLoadMethod]
-        static void EditorDeltaTime_Subscribe()
+        private static void EditorDeltaTime_Subscribe()
         {
             EditorApplication.update -= EditorDeltaTime_Update;
             EditorApplication.update += EditorDeltaTime_Update;
@@ -2402,7 +2399,7 @@ namespace VHierarchy.Libs
 
         }
 
-        static int _pressedIconButtonId;
+        private static int _pressedIconButtonId;
 
 
 
@@ -2440,7 +2437,7 @@ namespace VHierarchy.Libs
 
             EditorGUIUtility.labelWidth = _indentLabelWidthStack.Pop();
         }
-        static Stack<float> _indentLabelWidthStack = new();
+        private static readonly Stack<float> _indentLabelWidthStack = new();
 
 
 
@@ -2495,7 +2492,7 @@ namespace VHierarchy.Libs
                 {
                     if (icon) return;
 
-                    icon = typeof(EditorGUIUtility).InvokeMethod<Texture2D>("LoadIcon", iconNameOrPath) as Texture2D;
+                    icon = typeof(EditorGUIUtility).InvokeMethod<Texture2D>("LoadIcon", iconNameOrPath);
 
                 }
 
@@ -2509,9 +2506,9 @@ namespace VHierarchy.Libs
 
             }
 
-            static Dictionary<string, Texture2D> icons_byName = new();
+            private static readonly Dictionary<string, Texture2D> icons_byName = new();
 
-            static Dictionary<string, string> customIcons = new()
+            private static readonly Dictionary<string, string> customIcons = new()
             {
                 ["Search_"] = "89-50-4E-47-0D-0A-1A-0A-00-00-00-0D-49-48-44-52-00-00-00-20-00-00-00-20-08-06-00-00-00-73-7A-7A-F4-00-00-00-09-70-48-59-73-00-00-0B-13-00-00-0B-13-01-00-9A-9C-18-00-00-00-01-73-52-47-42-00-AE-CE-1C-E9-00-00-00-04-67-41-4D-41-00-00-B1-8F-0B-FC-61-05-00-00-02-00-49-44-41-54-78-01-ED-56-3D-4F-02-41-10-1D-3E-22-C6-C4-CA-D0-9A-58-6B-87-8D-12-6B-0B-1B-7F-07-85-89-95-F4-34-D6-F2-07-2C-FD-23-D0-41-A2-8D-FF-00-8A-0B-0D-7A-70-7C-1C-EB-7B-B8-47-16-C4-70-7B-77-1C-0D-2F-B9-DC-DE-DD-CE-CE-DB-99-D9-37-27-B2-C7-8E-91-B1-99-EC-38-CE-71-A1-50-38-E0-78-34-1A-8D-8B-C5-E2-97-6C-1B-4A-A9-43-38-AB-8E-C7-E3-CF-D9-6C-E6-29-0D-DF-F7-5D-BE-C3-B7-1A-E7-C8-36-E0-BA-EE-1D-1C-39-6A-03-40-CC-E5-5C-49-12-9E-E7-55-B0-B0-AF-1D-F8-93-C9-A4-81-77-0F-B8-97-79-E9-71-DB-20-E1-83-44-45-92-00-77-13-38-47-04-BA-83-C1-E0-FA-BF-B9-20-71-85-39-3D-83-44-BC-48-30-9F-0C-A9-5E-B0-D7-E9-74-8E-36-D9-70-0E-89-6A-C2-4E-AC-9A-D0-45-35-07-43-1D-D6-0E-51-2A-07-51-63-D1-4A-54-B0-B2-B5-F3-B6-58-02-36-4D-DA-72-8D-B0-36-59-F3-81-E7-3C-9B-CD-9E-72-8C-75-5E-C5-12-B0-79-E3-3D-9F-CF-9F-71-AD-30-36-4B-04-28-32-B9-5C-6E-9E-F3-4C-26-D3-12-4B-4C-A7-D3-96-B6-2D-04-82-65-45-60-17-58-22-40-79-65-0D-71-8C-7B-49-2C-81-D0-97-B4-AD-CB-B5-24-0A-8C-22-6C-8A-25-70-04-DB-B6-45-F8-07-3C-42-86-FA-59-1D-43-E3-F8-D6-24-2A-28-22-81-FE-53-5C-C2-0A-11-45-2B-E8-0B-2A-6E-73-32-A5-98-0B-87-90-E2-6E-62-52-6C-90-58-34-A3-40-98-90-DB-D5-66-D4-80-F3-45-C3-62-03-A3-ED-70-38-BC-C1-AB-0B-89-0B-1D-09-57-6D-00-53-16-EC-1C-24-6E-F1-3C-82-DD-37-08-5F-4A-5C-A8-DF-1F-92-1A-2B-1B-42-E3-1A-ED-D7-D3-3F-24-D5-20-E7-DC-39-9D-1B-73-26-F8-7E-2F-49-81-F2-DA-EF-F7-4F-78-AD-93-5A-38-3B-E7-CE-D5-F2-CF-CA-14-A9-8A-DE-9C-6C-C1-B0-73-E7-AB-69-42-6A-5E-24-2D-30-EC-DC-F9-1A-12-8F-92-16-50-0B-4F-6B-8A-F5-5D-D2-04-76-5C-37-09-20-3D-75-49-1B-28-C0-67-5C-1F-74-0E-0E-79-D9-63-8F-15-FC-00-17-02-EB-AB-1A-4B-B3-E7-00-00-00-00-49-45-4E-44-AE-42-60-82",
                 ["Cross"] = "89-50-4E-47-0D-0A-1A-0A-00-00-00-0D-49-48-44-52-00-00-00-20-00-00-00-20-08-06-00-00-00-73-7A-7A-F4-00-00-00-09-70-48-59-73-00-00-0B-13-00-00-0B-13-01-00-9A-9C-18-00-00-00-01-73-52-47-42-00-AE-CE-1C-E9-00-00-00-04-67-41-4D-41-00-00-B1-8F-0B-FC-61-05-00-00-00-C5-49-44-41-54-78-01-ED-96-D1-0D-83-30-0C-44-9D-4E-D0-51-BA-02-13-B5-23-A4-1B-A4-13-31-42-3B-4A-37-70-8D-6A-04-42-E0-D8-88-E0-1F-3F-29-8A-50-1C-DF-05-48-62-80-20-08-9C-49-D2-20-22-5E-A9-BB-53-1B-FA-67-4A-E9-0B-0A-66-F3-06-5E-DA-79-6B-89-32-4E-BC-39-71-55-9C-63-47-B2-14-7F-01-3D-37-6A-BD-64-82-C7-7A-8E-1D-A9-9A-06-29-E1-62-35-9B-6F-C2-12-7B-B8-89-66-E2-1A-81-E6-E2-0A-13-ED-C5-2B-26-CE-11-57-98-D8-25-6E-D9-86-FE-B8-7E-02-D7-9F-10-3D-B7-21-7A-1E-44-96-C4-4D-4C-D0-E4-62-49-B8-61-22-4B-1A-B5-6D-38-BF-C7-3F-D4-3A-E9-6E-E7-B1-8E-63-55-68-0A-92-07-3F-16-63-41-92-E1-BF-80-B2-BB-20-09-82-E0-0C-7E-54-36-6A-69-F6-3F-13-EF-00-00-00-00-49-45-4E-44-AE-42-60-82",
@@ -2543,9 +2540,9 @@ namespace VHierarchy.Libs
 
         }
 
-        static PropertyInfo _pi_GUIView_current = typeof(Editor).Assembly.GetType("UnityEditor.GUIView").GetProperty("current", maxBindingFlags);
-        static MethodInfo _mi_GUIView_MarkHotRegion = typeof(Editor).Assembly.GetType("UnityEditor.GUIView").GetMethod("MarkHotRegion", maxBindingFlags);
-        static MethodInfo _mi_GUIClip_UnclipToWindow = typeof(GUI).Assembly.GetType("UnityEngine.GUIClip").GetMethod("UnclipToWindow", maxBindingFlags, null, new[] { typeof(Rect) }, null);
+        private static readonly PropertyInfo _pi_GUIView_current = typeof(Editor).Assembly.GetType("UnityEditor.GUIView").GetProperty("current", maxBindingFlags);
+        private static readonly MethodInfo _mi_GUIView_MarkHotRegion = typeof(Editor).Assembly.GetType("UnityEditor.GUIView").GetMethod("MarkHotRegion", maxBindingFlags);
+        private static readonly MethodInfo _mi_GUIClip_UnclipToWindow = typeof(GUI).Assembly.GetType("UnityEngine.GUIClip").GetMethod("UnclipToWindow", maxBindingFlags, null, new[] { typeof(Rect) }, null);
 
 
 

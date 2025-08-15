@@ -44,7 +44,7 @@ namespace UniVRM10.VRM10Viewer
             }
         }
 
-        void OnDrawGizmos()
+        private void OnDrawGizmos()
         {
             if (!Application.isPlaying)
             {

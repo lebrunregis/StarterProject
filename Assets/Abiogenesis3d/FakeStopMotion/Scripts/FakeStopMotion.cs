@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 namespace Abiogenesis3d
 {
@@ -60,18 +60,18 @@ namespace Abiogenesis3d
         [HideInInspector] public List<StoredTransform> originals;
         [HideInInspector] public List<StoredTransform> rendered;
 
-        void Start()
+        private void Start()
         {
             ResetTimer();
         }
 
-        void OnValidate()
+        private void OnValidate()
         {
             if (divisions360 > 0) snapRotationAngles = Vector3.one * 360 / Mathf.Pow(2, divisions360);
             else snapRotationAngles = default;
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             if (!rootBone)
             {
@@ -96,7 +96,8 @@ namespace Abiogenesis3d
 
             // NOTE: defined with null to be able to call itself
             Action<Transform> addWithCondition = null;
-            addWithCondition = (t) => {
+            addWithCondition = (t) =>
+            {
                 if (ignored.Contains(t)) return;
 
                 transforms.Add(t);
@@ -107,8 +108,8 @@ namespace Abiogenesis3d
             addWithCondition(rootBone);
         }
 
-        public void PauseTimer() {isPaused = true;}
-        public void UnpauseTimer() {isPaused = false;}
+        public void PauseTimer() { isPaused = true; }
+        public void UnpauseTimer() { isPaused = false; }
 
         [Tooltip("Use to update force current frame update.")]
         public void ResetTimer()
@@ -116,7 +117,7 @@ namespace Abiogenesis3d
             lastTime = Time.time;
         }
 
-        bool ShouldUpdate()
+        private bool ShouldUpdate()
         {
             // initial update
             if (rendered.Count == 0) return true;
@@ -130,7 +131,7 @@ namespace Abiogenesis3d
             return shouldUpdate;
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             StoreTransforms(originals);
 
@@ -146,7 +147,8 @@ namespace Abiogenesis3d
             }
 
             // in case other code touches the transforms at end of frame, restore them last
-            Utils.RunAtEndOfFrameOrdered(() => {
+            Utils.RunAtEndOfFrameOrdered(() =>
+            {
                 RestoreTransforms(originals);
             }, 10, this);
 
@@ -161,18 +163,18 @@ namespace Abiogenesis3d
             }
         }
 
-        void StoreTransforms(List<StoredTransform> ts)
+        private void StoreTransforms(List<StoredTransform> ts)
         {
             // initialize list if empty
             if (ts.Count == 0)
-                    ts.AddRange(Enumerable.Repeat<StoredTransform>(default, transforms.Count));
+                ts.AddRange(Enumerable.Repeat<StoredTransform>(default, transforms.Count));
 
             // store current transforms into given list
             for (int i = 0; i < transforms.Count; ++i)
-                    ts[i] = new StoredTransform(transforms[i]);
+                ts[i] = new StoredTransform(transforms[i]);
         }
 
-        void RestoreTransforms(List<StoredTransform> ts)
+        private void RestoreTransforms(List<StoredTransform> ts)
         {
             for (int i = 0; i < ts.Count; ++i)
                 ts[i].Restore();

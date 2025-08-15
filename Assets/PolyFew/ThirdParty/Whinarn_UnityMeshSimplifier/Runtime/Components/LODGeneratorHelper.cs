@@ -132,7 +132,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
 
             levels = new LODLevel[]
             {
-                new LODLevel(0.5f, 1f)
+                new(0.5f, 1f)
                 {
                     CombineMeshes = false,
                     CombineSubMeshes = false,
@@ -143,7 +143,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
                     LightProbeUsage = UnityEngine.Rendering.LightProbeUsage.BlendProbes,
                     ReflectionProbeUsage = UnityEngine.Rendering.ReflectionProbeUsage.BlendProbes,
                 },
-                new LODLevel(0.17f, 0.65f)
+                new(0.17f, 0.65f)
                 {
                     CombineMeshes = true,
                     CombineSubMeshes = false,
@@ -154,7 +154,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
                     LightProbeUsage = UnityEngine.Rendering.LightProbeUsage.BlendProbes,
                     ReflectionProbeUsage = UnityEngine.Rendering.ReflectionProbeUsage.Simple
                 },
-                new LODLevel(0.02f, 0.4225f)
+                new(0.02f, 0.4225f)
                 {
                     CombineMeshes = true,
                     CombineSubMeshes = true,

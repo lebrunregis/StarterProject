@@ -1,8 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 #if UNITY_EDITOR
-using UnityEditor;
 #endif
 
 namespace Pinwheel.Griffin
@@ -69,7 +68,7 @@ namespace Pinwheel.Griffin
             GCommonGUI.CancelableProgressBar(title, info, 0);
 #endif
 
-            Vector3 terrainSize = new Vector3(
+            Vector3 terrainSize = new(
                 t.TerrainData.Geometry.Width,
                 t.TerrainData.Geometry.Height,
                 t.TerrainData.Geometry.Length);
@@ -82,7 +81,7 @@ namespace Pinwheel.Griffin
             {
                 if (!prototypes[i].IsValid)
                     continue;
-                GameObject template = Instantiate(prototypes[i].Prefab) as GameObject;
+                GameObject template = Instantiate(prototypes[i].Prefab);
                 Component[] components = template.GetComponentsInChildren<Component>();
                 for (int j = 0; j < components.Length; ++j)
                 {
@@ -113,10 +112,10 @@ namespace Pinwheel.Griffin
                 if (templates[tree.PrototypeIndex] == null)
                     continue;
 
-                GameObject g = Instantiate(templates[tree.PrototypeIndex]) as GameObject;
+                GameObject g = Instantiate(templates[tree.PrototypeIndex]);
                 g.transform.parent = root;
 
-                Vector3 localPos = new Vector3(
+                Vector3 localPos = new(
                     tree.Position.x * terrainSize.x,
                     tree.Position.y * terrainSize.y,
                     tree.Position.z * terrainSize.z);

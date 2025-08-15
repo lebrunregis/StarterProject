@@ -1,8 +1,8 @@
 namespace CitrioN.StyleProfileSystem.UIToolkit
 {
-  public enum StyleKeyword_Initial
-  {
-    None,
-    Initial
-  }
+    public enum StyleKeyword_Initial
+    {
+        None,
+        Initial
+    }
 }

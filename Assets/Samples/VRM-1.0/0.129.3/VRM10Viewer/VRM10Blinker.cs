@@ -26,10 +26,10 @@ namespace UniVRM10.VRM10Viewer
         [SerializeField]
         public float CloseSeconds = 0.1f;
 
-        Coroutine m_coroutine;
+        private Coroutine m_coroutine;
 
-        float m_nextRequest;
-        bool m_request;
+        private float m_nextRequest;
+        private bool m_request;
         public bool Request
         {
             get { return m_request; }
@@ -46,7 +46,7 @@ namespace UniVRM10.VRM10Viewer
 
         public float BlinkValue = 0;
 
-        IEnumerator BlinkRoutine()
+        private IEnumerator BlinkRoutine()
         {
             while (true)
             {

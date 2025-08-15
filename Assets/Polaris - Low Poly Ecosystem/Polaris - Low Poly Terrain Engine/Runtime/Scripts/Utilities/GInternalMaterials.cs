@@ -86,7 +86,7 @@ namespace Pinwheel.Griffin
             }
         }
 
-        
+
 
 
         private static Material painterCursorProjectorMaterial;

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -109,14 +108,14 @@ namespace BrainFailProductions.PolyFew
             public string materialName;
             public Material originalMaterial;
             public Color albedoTint;
-            public Vector4 uvTileOffset = new Vector4(1, 1, 0, 0);
+            public Vector4 uvTileOffset = new(1, 1, 0, 0);
             public float normalIntensity = 1;
             public float occlusionIntensity = 1;
             public float smoothnessIntensity = 1;
             public float glossMapScale = 1;
             public float metalIntensity = 1;
             public Color emissionColor = Color.black;
-            public Vector4 detailUVTileOffset = new Vector4(1, 1, 0, 0);
+            public Vector4 detailUVTileOffset = new(1, 1, 0, 0);
             public float alphaCutoff = 0.5f;
             public Color specularColor = Color.black;
             public float detailNormalScale = 1;
@@ -168,7 +167,7 @@ namespace BrainFailProductions.PolyFew
 
             public static Texture2D NewTexture()
             {
-                Texture2D tex = new Texture2D(8, 4, TextureFormat.RGBAHalf, false, true);
+                Texture2D tex = new(8, 4, TextureFormat.RGBAHalf, false, true);
 
                 for (int x = 0; x < 8; ++x)
                 {
@@ -348,13 +347,13 @@ namespace BrainFailProductions.PolyFew
             public MaterialProperties tempMaterialProperties;
             //For BatchFew UI
 
-            public List<MeshData> meshesData = new List<MeshData>();
+            public List<MeshData> meshesData = new();
         }
 
         [System.Serializable]
         public class MaterialEntity
         {
-            public List<CombineMetaData> combinedMats = new List<CombineMetaData>();
+            public List<CombineMetaData> combinedMats = new();
 
             // FOR BATCHFEW UI
             public int textArrIndex;
@@ -487,9 +486,9 @@ namespace BrainFailProductions.PolyFew
         #endregion PUBLIC_METHODS
 
 
-        public List<MaterialEntity> materialEntities = new List<MaterialEntity>();
+        public List<MaterialEntity> materialEntities = new();
 
-        public TextureArrayGroup textureArraysSettings = new TextureArrayGroup();
+        public TextureArrayGroup textureArraysSettings = new();
 
         public DiffuseColorSpace diffuseColorSpace;
 

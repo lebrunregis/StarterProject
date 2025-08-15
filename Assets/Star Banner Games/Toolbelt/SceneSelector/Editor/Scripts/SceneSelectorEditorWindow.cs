@@ -8,176 +8,176 @@ using UnityEngine;
 
 namespace SBG.Toolbelt.Editor
 {
-	public class SceneSelectorEditorWindow : EditorWindow
-	{
-		[System.Serializable]
-		private class SceneData
+    public class SceneSelectorEditorWindow : EditorWindow
+    {
+        [System.Serializable]
+        private class SceneData
         {
-			public List<CachedScene> VisibleScenes;
-			public List<CachedScene> HiddenScenes;
+            public List<CachedScene> VisibleScenes;
+            public List<CachedScene> HiddenScenes;
 
-			public SceneData()
+            public SceneData()
             {
-				VisibleScenes = new List<CachedScene>();
-				HiddenScenes = new List<CachedScene>();
+                VisibleScenes = new List<CachedScene>();
+                HiddenScenes = new List<CachedScene>();
             }
 
-			public void RefreshData()
+            public void RefreshData()
             {
-				ValidateAction<CachedScene> isSceneInvalid = (target) => !target.Refresh();
+                ValidateAction<CachedScene> isSceneInvalid = (target) => !target.Refresh();
 
-				VisibleScenes = THelper.RemoveCollectionElements(VisibleScenes, isSceneInvalid).ToList();
-				HiddenScenes = THelper.RemoveCollectionElements(HiddenScenes, isSceneInvalid).ToList();
-			}
+                VisibleScenes = THelper.RemoveCollectionElements(VisibleScenes, isSceneInvalid).ToList();
+                HiddenScenes = THelper.RemoveCollectionElements(HiddenScenes, isSceneInvalid).ToList();
+            }
         }
 
-		private const string JSON_FILENAME = "SceneSelectorData.json";
+        private const string JSON_FILENAME = "SceneSelectorData.json";
 
-		private SceneData Scenes;
+        private SceneData Scenes;
 
-		private ReorderableList _sceneList;
-		private ReorderableList _hiddenSceneList;
+        private ReorderableList _sceneList;
+        private ReorderableList _hiddenSceneList;
 
-		private Queue<int> _scenesToHide = new Queue<int>();
-		private Queue<int> _scenesToShow = new Queue<int>();
+        private readonly Queue<int> _scenesToHide = new();
+        private readonly Queue<int> _scenesToShow = new();
 
-		private Vector2 _scrollPos = Vector2.zero;
-		private bool _isEditing = false;
+        private Vector2 _scrollPos = Vector2.zero;
+        private bool _isEditing = false;
 
-		private GUIStyle _sceneNameStyle;
-		private GUIStyle _hiddenNameStyle;
-		private Texture2D _hoverTexture;
+        private GUIStyle _sceneNameStyle;
+        private GUIStyle _hiddenNameStyle;
+        private Texture2D _hoverTexture;
 
-		private bool _stylesBuilt = false;
-		private bool _showHiddenList = false;
+        private bool _stylesBuilt = false;
+        private bool _showHiddenList = false;
 
 
-		[MenuItem("Window/Star Banner Games/Toolbelt/Scene Selector")]
-		public static void ShowWindow()
-		{
-			var window = GetWindow<SceneSelectorEditorWindow>("Scene Selector");
-		}
+        [MenuItem("Window/Star Banner Games/Toolbelt/Scene Selector")]
+        public static void ShowWindow()
+        {
+            var window = GetWindow<SceneSelectorEditorWindow>("Scene Selector");
+        }
 
         private void OnEnable()
         {
             UpdateScenes();
-			EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-		}
+            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+        }
 
         private void OnDisable()
         {
-			EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
-		}
+            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+        }
 
-		private void OnPlayModeStateChanged(PlayModeStateChange change)
+        private void OnPlayModeStateChanged(PlayModeStateChange change)
         {
-			if (change == PlayModeStateChange.EnteredEditMode)
+            if (change == PlayModeStateChange.EnteredEditMode)
             {
-				UpdateScenes();
-				_stylesBuilt = false;
-				Repaint();
-			}
-		}
+                UpdateScenes();
+                _stylesBuilt = false;
+                Repaint();
+            }
+        }
 
         private void OnGUI()
-		{
-			if (!_stylesBuilt) BuildStyles();
-
-			//HEADER GUI
-			EditorGUILayout.BeginHorizontal();
-			EditorGUILayout.LabelField("Scenes", EditorStyles.largeLabel);
-
-			if (GUILayout.Button("Refresh")) UpdateScenes();
-
-			//EDIT OR APPLY BUTTON
-			string editButtonName = _isEditing ? "Apply" : "Edit";
-			if (GUILayout.Button(editButtonName))
-			{
-				_isEditing = !_isEditing;
-
-				if (!_isEditing) SaveSceneData();
-			}
-
-			EditorGUILayout.EndHorizontal();
-
-			if (Scenes.VisibleScenes == null) return;
-
-			//SCENE LIST
-			_scrollPos = EditorGUILayout.BeginScrollView(_scrollPos, EditorStyles.helpBox);
-
-			if (_isEditing) //EDIT MODE
-            {
-				if (_sceneList != null) _sceneList.DoLayoutList();
-
-				if (GUILayout.Button("Toggle Hidden")) _showHiddenList = !_showHiddenList;
-				if (_showHiddenList && _hiddenSceneList != null) _hiddenSceneList.DoLayoutList();
-
-				ProcessRemoveQueue();
-			}
-            else //DEFAULT MODE
-            {
-				for (int i = 0; i < Scenes.VisibleScenes.Count; i++)
-				{
-					if (Scenes.VisibleScenes[i].Asset == null)
-					{
-						Scenes.VisibleScenes.RemoveAt(i);
-						break;
-					}
-
-					EditorGUILayout.BeginHorizontal(EditorStyles.toolbarButton);
-
-					if (GUILayout.Button(Scenes.VisibleScenes[i].DisplayName, GetNameStyle(Scenes.VisibleScenes[i])))
-					{
-						if (EditorApplication.isPlaying) return;
-						string scenePath = AssetDatabase.GUIDToAssetPath(Scenes.VisibleScenes[i].SceneGUID);
-						EditorSceneManager.OpenScene(scenePath);
-						UpdateScenes();
-						_stylesBuilt = false;
-					}
-
-					EditorGUILayout.EndHorizontal();
-				}
-			}
-
-			EditorGUILayout.EndScrollView();
-		}
-
-		private GUIStyle GetNameStyle(CachedScene button)
         {
-			float h, s, v;
-			Color textColor = Color.black;
+            if (!_stylesBuilt) BuildStyles();
 
-			Color.RGBToHSV(button.BackgroundColor, out h, out s, out v);
+            //HEADER GUI
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Scenes", EditorStyles.largeLabel);
 
-			if (v < 0.5f)
+            if (GUILayout.Button("Refresh")) UpdateScenes();
+
+            //EDIT OR APPLY BUTTON
+            string editButtonName = _isEditing ? "Apply" : "Edit";
+            if (GUILayout.Button(editButtonName))
             {
-				textColor = Color.white;
+                _isEditing = !_isEditing;
+
+                if (!_isEditing) SaveSceneData();
             }
 
-			_sceneNameStyle.normal.textColor = textColor;
-			_sceneNameStyle.normal.background = button.ColorTexture;
+            EditorGUILayout.EndHorizontal();
 
-			return _sceneNameStyle;
-		}
+            if (Scenes.VisibleScenes == null) return;
 
-		private void BuildStyles()
+            //SCENE LIST
+            _scrollPos = EditorGUILayout.BeginScrollView(_scrollPos, EditorStyles.helpBox);
+
+            if (_isEditing) //EDIT MODE
+            {
+                if (_sceneList != null) _sceneList.DoLayoutList();
+
+                if (GUILayout.Button("Toggle Hidden")) _showHiddenList = !_showHiddenList;
+                if (_showHiddenList && _hiddenSceneList != null) _hiddenSceneList.DoLayoutList();
+
+                ProcessRemoveQueue();
+            }
+            else //DEFAULT MODE
+            {
+                for (int i = 0; i < Scenes.VisibleScenes.Count; i++)
+                {
+                    if (Scenes.VisibleScenes[i].Asset == null)
+                    {
+                        Scenes.VisibleScenes.RemoveAt(i);
+                        break;
+                    }
+
+                    EditorGUILayout.BeginHorizontal(EditorStyles.toolbarButton);
+
+                    if (GUILayout.Button(Scenes.VisibleScenes[i].DisplayName, GetNameStyle(Scenes.VisibleScenes[i])))
+                    {
+                        if (EditorApplication.isPlaying) return;
+                        string scenePath = AssetDatabase.GUIDToAssetPath(Scenes.VisibleScenes[i].SceneGUID);
+                        EditorSceneManager.OpenScene(scenePath);
+                        UpdateScenes();
+                        _stylesBuilt = false;
+                    }
+
+                    EditorGUILayout.EndHorizontal();
+                }
+            }
+
+            EditorGUILayout.EndScrollView();
+        }
+
+        private GUIStyle GetNameStyle(CachedScene button)
         {
-			_hoverTexture = new Texture2D(1, 1);
-			_hoverTexture.SetPixel(0, 0, Color.black);
-			_hoverTexture.Apply();
+            float h, s, v;
+            Color textColor = Color.black;
 
-			_sceneNameStyle = new GUIStyle(EditorStyles.toolbarButton);
-			_sceneNameStyle.hover.textColor = Color.white;
-			_sceneNameStyle.hover.background = _hoverTexture;
-			_sceneNameStyle.alignment = TextAnchor.MiddleLeft;
+            Color.RGBToHSV(button.BackgroundColor, out h, out s, out v);
 
-			_hiddenNameStyle = new GUIStyle(EditorStyles.label);
-			_hiddenNameStyle.normal.textColor = Color.gray;
-			_hiddenNameStyle.hover.textColor = Color.gray;
-			_hiddenNameStyle.active.textColor = Color.gray;
+            if (v < 0.5f)
+            {
+                textColor = Color.white;
+            }
 
-			_stylesBuilt = true;
-		}
+            _sceneNameStyle.normal.textColor = textColor;
+            _sceneNameStyle.normal.background = button.ColorTexture;
+
+            return _sceneNameStyle;
+        }
+
+        private void BuildStyles()
+        {
+            _hoverTexture = new Texture2D(1, 1);
+            _hoverTexture.SetPixel(0, 0, Color.black);
+            _hoverTexture.Apply();
+
+            _sceneNameStyle = new GUIStyle(EditorStyles.toolbarButton);
+            _sceneNameStyle.hover.textColor = Color.white;
+            _sceneNameStyle.hover.background = _hoverTexture;
+            _sceneNameStyle.alignment = TextAnchor.MiddleLeft;
+
+            _hiddenNameStyle = new GUIStyle(EditorStyles.label);
+            _hiddenNameStyle.normal.textColor = Color.gray;
+            _hiddenNameStyle.hover.textColor = Color.gray;
+            _hiddenNameStyle.active.textColor = Color.gray;
+
+            _stylesBuilt = true;
+        }
 
         private void UpdateScenes()
         {
@@ -232,121 +232,121 @@ namespace SBG.Toolbelt.Editor
         }
 
         private void DrawSceneListHeader(Rect rect)
-		{
-			EditorGUI.LabelField(rect, "Visible Scenes");
-		}
-
-		private void DrawSceneListElement(Rect rect, int index, bool isActive, bool isFocused)
         {
-			Rect labelRect = new Rect(rect.x, rect.y, 150, EditorGUIUtility.singleLineHeight);
-			Rect useAssetNameRect = new Rect(rect.x+160, rect.y, 120, EditorGUIUtility.singleLineHeight);
-			Rect colorRect = new Rect(rect.x+rect.width-110, rect.y, 50, EditorGUIUtility.singleLineHeight);
-			Rect hideRect = new Rect(rect.x+rect.width-50, rect.y, 50, EditorGUIUtility.singleLineHeight);
+            EditorGUI.LabelField(rect, "Visible Scenes");
+        }
+
+        private void DrawSceneListElement(Rect rect, int index, bool isActive, bool isFocused)
+        {
+            Rect labelRect = new(rect.x, rect.y, 150, EditorGUIUtility.singleLineHeight);
+            Rect useAssetNameRect = new(rect.x + 160, rect.y, 120, EditorGUIUtility.singleLineHeight);
+            Rect colorRect = new(rect.x + rect.width - 110, rect.y, 50, EditorGUIUtility.singleLineHeight);
+            Rect hideRect = new(rect.x + rect.width - 50, rect.y, 50, EditorGUIUtility.singleLineHeight);
 
 
-			CachedScene scene = Scenes.VisibleScenes[index];
+            CachedScene scene = Scenes.VisibleScenes[index];
 
-			Color softCol = scene.BackgroundColor;
-			softCol.a = 0.1f;
-			EditorGUI.DrawRect(rect, softCol);
+            Color softCol = scene.BackgroundColor;
+            softCol.a = 0.1f;
+            EditorGUI.DrawRect(rect, softCol);
 
-			if (scene.UseCustomName) scene.CustomName = EditorGUI.TextField(labelRect, scene.CustomName);
-			else EditorGUI.LabelField(labelRect, scene.DisplayName);
+            if (scene.UseCustomName) scene.CustomName = EditorGUI.TextField(labelRect, scene.CustomName);
+            else EditorGUI.LabelField(labelRect, scene.DisplayName);
 
-			bool useCustomName = EditorGUI.ToggleLeft(useAssetNameRect, "Custom Name", scene.UseCustomName);
-			
-			if (useCustomName != scene.UseCustomName)
+            bool useCustomName = EditorGUI.ToggleLeft(useAssetNameRect, "Custom Name", scene.UseCustomName);
+
+            if (useCustomName != scene.UseCustomName)
             {
-				scene.UseCustomName = useCustomName;
-				scene.Refresh();
+                scene.UseCustomName = useCustomName;
+                scene.Refresh();
             }
 
-			scene.SetColor(EditorGUI.ColorField(colorRect, scene.BackgroundColor));
+            scene.SetColor(EditorGUI.ColorField(colorRect, scene.BackgroundColor));
 
             if (GUI.Button(hideRect, "Hide"))
             {
-				Scenes.HiddenScenes.Add(scene);
-				_scenesToHide.Enqueue(index);
+                Scenes.HiddenScenes.Add(scene);
+                _scenesToHide.Enqueue(index);
             }
         }
 
-		private void DrawHiddenListHeader(Rect rect)
+        private void DrawHiddenListHeader(Rect rect)
         {
-			EditorGUI.LabelField(rect, "Hidden Scenes");
-		}
+            EditorGUI.LabelField(rect, "Hidden Scenes");
+        }
 
-		private void DrawHiddenListElement(Rect rect, int index, bool isActive, bool isFocused)
-		{
-			if (Scenes.HiddenScenes[index].Asset == null) return;
+        private void DrawHiddenListElement(Rect rect, int index, bool isActive, bool isFocused)
+        {
+            if (Scenes.HiddenScenes[index].Asset == null) return;
 
-			Rect labelRect = new Rect(rect.x, rect.y, 400, EditorGUIUtility.singleLineHeight);
-			Rect hideRect = new Rect(rect.x + rect.width - 50, rect.y, 50, EditorGUIUtility.singleLineHeight);
+            Rect labelRect = new(rect.x, rect.y, 400, EditorGUIUtility.singleLineHeight);
+            Rect hideRect = new(rect.x + rect.width - 50, rect.y, 50, EditorGUIUtility.singleLineHeight);
 
-			EditorGUI.LabelField(labelRect, Scenes.HiddenScenes[index].DisplayName, _hiddenNameStyle);
+            EditorGUI.LabelField(labelRect, Scenes.HiddenScenes[index].DisplayName, _hiddenNameStyle);
 
-			if (GUI.Button(hideRect, "Show"))
-			{
-				Scenes.VisibleScenes.Add(Scenes.HiddenScenes[index]);
-				_scenesToShow.Enqueue(index);
-			}
-		}
+            if (GUI.Button(hideRect, "Show"))
+            {
+                Scenes.VisibleScenes.Add(Scenes.HiddenScenes[index]);
+                _scenesToShow.Enqueue(index);
+            }
+        }
 
-		private void ProcessRemoveQueue()
+        private void ProcessRemoveQueue()
         {
             while (_scenesToHide.Count > 0)
             {
-				int index = _scenesToHide.Dequeue();
+                int index = _scenesToHide.Dequeue();
 
-				Scenes.VisibleScenes.RemoveAt(index);
+                Scenes.VisibleScenes.RemoveAt(index);
             }
 
-			while (_scenesToShow.Count > 0)
-			{
-				int index = _scenesToShow.Dequeue();
-
-				Scenes.HiddenScenes.RemoveAt(index);
-			}
-		}
-
-		private void LoadSceneData()
-        {
-			string dataPath = GetSceneDataPath();
-
-			if (!File.Exists(dataPath)) return;
-
-			string data = File.ReadAllText(dataPath);
-
-			if (string.IsNullOrEmpty(data))
+            while (_scenesToShow.Count > 0)
             {
-				Scenes = new SceneData();
-				return;
+                int index = _scenesToShow.Dequeue();
+
+                Scenes.HiddenScenes.RemoveAt(index);
+            }
+        }
+
+        private void LoadSceneData()
+        {
+            string dataPath = GetSceneDataPath();
+
+            if (!File.Exists(dataPath)) return;
+
+            string data = File.ReadAllText(dataPath);
+
+            if (string.IsNullOrEmpty(data))
+            {
+                Scenes = new SceneData();
+                return;
             }
 
-			Scenes = JsonUtility.FromJson<SceneData>(data);
-		}
+            Scenes = JsonUtility.FromJson<SceneData>(data);
+        }
 
-		private void SaveSceneData()
+        private void SaveSceneData()
         {
-			string filePath = GetSceneDataPath();
+            string filePath = GetSceneDataPath();
 
-			if (string.IsNullOrEmpty(filePath)) return;
+            if (string.IsNullOrEmpty(filePath)) return;
 
-			string fileText = JsonUtility.ToJson(Scenes, true);
+            string fileText = JsonUtility.ToJson(Scenes, true);
 
-			File.WriteAllText(filePath, fileText);
-		}
+            File.WriteAllText(filePath, fileText);
+        }
 
-		private string GetSceneDataPath()
+        private string GetSceneDataPath()
         {
-			string[] files = Directory.GetFiles(Application.dataPath, JSON_FILENAME, SearchOption.AllDirectories);
+            string[] files = Directory.GetFiles(Application.dataPath, JSON_FILENAME, SearchOption.AllDirectories);
 
-			if (files.Length == 0)
-			{
-				Debug.LogError("SceneSelector is missing an important script! Try reimporting it.");
-				return null;
-			}
+            if (files.Length == 0)
+            {
+                Debug.LogError("SceneSelector is missing an important script! Try reimporting it.");
+                return null;
+            }
 
-			return files[0].Replace("\\", "/");
-		}
-	}
+            return files[0].Replace("\\", "/");
+        }
+    }
 }

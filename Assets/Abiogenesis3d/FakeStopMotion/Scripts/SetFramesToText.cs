@@ -9,7 +9,7 @@ namespace Abiogenesis3d
         public Text text;
         public FakeStopMotion fakeStopMotion;
 
-        void Update()
+        private void Update()
         {
             if (!text) text = GetComponent<Text>();
             if (!fakeStopMotion) fakeStopMotion = GetComponentInParent<FakeStopMotion>();

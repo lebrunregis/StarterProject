@@ -1,11 +1,8 @@
 #if GRIFFIN
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
-using UnityEditor.SceneManagement;
 #endif
-using UnityEngine.Rendering;
 #if GRIFFIN_URP
 using UnityEngine.Rendering.Universal;
 #endif
@@ -205,9 +202,9 @@ namespace Pinwheel.Griffin.SplineTool
                 throw new System.IndexOutOfRangeException("segmentIndex is out of range");
 
             GSplineSegment s = segments[sIndex];
-            List<Vector3> vertices = new List<Vector3>();
-            List<Color> colors = new List<Color>();
-            List<int> triangles = new List<int>();
+            List<Vector3> vertices = new();
+            List<Color> colors = new();
+            List<int> triangles = new();
 
             float tStep = 1f / (Smoothness - 1);
             for (int tIndex = 0; tIndex < Smoothness - 1; ++tIndex)
@@ -325,7 +322,7 @@ namespace Pinwheel.Griffin.SplineTool
         [System.Obsolete]
         public List<Vector4> GenerateVerticesWithFalloff()
         {
-            List<Vector4> vertices = new List<Vector4>();
+            List<Vector4> vertices = new();
 
             return vertices;
         }
@@ -335,7 +332,7 @@ namespace Pinwheel.Griffin.SplineTool
             if (terrain.TerrainData == null)
                 return new List<Rect>();
             int gridSize = terrain.TerrainData.Geometry.ChunkGridSize;
-            List<Rect> uvRects = new List<Rect>();
+            List<Rect> uvRects = new();
             for (int x = 0; x < gridSize; ++x)
             {
                 for (int z = 0; z < gridSize; ++z)
@@ -344,16 +341,16 @@ namespace Pinwheel.Griffin.SplineTool
                 }
             }
 
-            HashSet<Rect> dirtyRects = new HashSet<Rect>();
-            Vector3 terrainSize = new Vector3(
+            HashSet<Rect> dirtyRects = new();
+            Vector3 terrainSize = new(
                 terrain.TerrainData.Geometry.Width,
                 terrain.TerrainData.Geometry.Height,
                 terrain.TerrainData.Geometry.Length);
             float splineSize = Mathf.Max(1, Width + FalloffWidth * 2);
-            Vector2 sweepRectSize = new Vector2(
+            Vector2 sweepRectSize = new(
                 Mathf.InverseLerp(0, terrainSize.x, splineSize),
                 Mathf.InverseLerp(0, terrainSize.z, splineSize));
-            Rect sweepRect = new Rect();
+            Rect sweepRect = new();
             sweepRect.size = sweepRectSize;
 
             int segmentCount = Spline.Segments.Count;
@@ -387,7 +384,7 @@ namespace Pinwheel.Griffin.SplineTool
             Rect terrainRect = terrain.Rect;
             float splineSize = Mathf.Max(1, Width + FalloffWidth * 2);
             Vector2 sweepRectSize = Vector2.one * splineSize;
-            Rect sweepRect = new Rect();
+            Rect sweepRect = new();
             sweepRect.size = sweepRectSize;
 
             int segmentCount = Spline.Segments.Count;
@@ -421,7 +418,7 @@ namespace Pinwheel.Griffin.SplineTool
         }
 
         public void DrawOnTexture(RenderTexture rt, Bounds worldBounds, Material mat)
-        {            
+        {
             Matrix4x4 worldToNormalized = Matrix4x4.TRS(
                 worldBounds.min,
                 Quaternion.identity,

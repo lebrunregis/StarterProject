@@ -1,9 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Callbacks;
 using UnityEditor;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.Wizard
 {

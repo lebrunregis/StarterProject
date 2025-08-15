@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace SBG.Toolbelt.DebugTools.Editor
 {
-	[CustomEditor(typeof(CircleGizmo))]
-	public class CircleGizmoInspector : GizmoDisplayInspector
-	{
+    [CustomEditor(typeof(CircleGizmo))]
+    public class CircleGizmoInspector : GizmoDisplayInspector
+    {
         private SerializedProperty _applyRot;
         private SerializedProperty _rotOffset;
         private SerializedProperty _radius;

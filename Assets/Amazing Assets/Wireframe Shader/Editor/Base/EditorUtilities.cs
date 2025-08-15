@@ -2,22 +2,21 @@
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Diagnostics;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor
 {
     static internal class EditorUtilities
     {
-        static string thisAssetPath = string.Empty;
+        private static string thisAssetPath = string.Empty;
 
         static public char[] invalidFileNameCharachters = Path.GetInvalidFileNameChars();
 
@@ -52,7 +51,7 @@ namespace AmazingAssets.WireframeShader.Editor
                 iconPath += ".png";
 
             byte[] bytes = File.ReadAllBytes(iconPath);
-            Texture2D icon = new Texture2D(2, 2);
+            Texture2D icon = new(2, 2);
             icon.LoadImage(bytes);
 
             return icon;
@@ -198,7 +197,7 @@ namespace AmazingAssets.WireframeShader.Editor
                 return;
 
 
-            List<string> assets = new List<string>();
+            List<string> assets = new();
             for (int i = 0; i < dependences.Length; i++)
             {
                 assets.Add(AssetDatabase.GetAssetPath(dependences[i]));
@@ -241,9 +240,9 @@ namespace AmazingAssets.WireframeShader.Editor
             //Open folder and select file
             SelectFile(savePath);
         }
-        static string GetSystemInfo()
+        private static string GetSystemInfo()
         {
-            List<string> info = new List<string>();
+            List<string> info = new();
 
             info.Add($"{WireframeShaderAbout.name}: {WireframeShaderAbout.version}\n");
             info.Add($"Unity Version: {Application.unityVersion}\n");
@@ -311,7 +310,7 @@ namespace AmazingAssets.WireframeShader.Editor
                 {
                     string args = string.Format("/e, /select, \"{0}\"", filePath);
 
-                    System.Diagnostics.ProcessStartInfo info = new System.Diagnostics.ProcessStartInfo();
+                    System.Diagnostics.ProcessStartInfo info = new();
                     info.FileName = "explorer";
                     info.Arguments = args;
                     System.Diagnostics.Process.Start(info);
@@ -410,7 +409,7 @@ namespace AmazingAssets.WireframeShader.Editor
                     if (Path.GetExtension(assetPath) == ".asset")
                     {
                         string fileText = File.ReadAllText(assetPath);
-                        if(readable == true)
+                        if (readable == true)
                             fileText = fileText.Replace("m_IsReadable: 0", "m_IsReadable: 1");
                         else
                             fileText = fileText.Replace("m_IsReadable: 1", "m_IsReadable: 0");

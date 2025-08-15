@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 namespace SBG.Toolbelt.DebugTools.Editor
 {
-	[CustomPropertyDrawer(typeof(ShowIfAttribute))]
-	public class ShowIfDrawer : PropertyDrawer
-	{
+    [CustomPropertyDrawer(typeof(ShowIfAttribute))]
+    public class ShowIfDrawer : PropertyDrawer
+    {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             ShowIfAttribute showIf = attribute as ShowIfAttribute;

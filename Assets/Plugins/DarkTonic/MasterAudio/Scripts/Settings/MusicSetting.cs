@@ -7,25 +7,27 @@ using UnityEngine.AddressableAssets;
 
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     /// <summary>
     /// This class is used to populate a song for a PlaylistController through code if necessary.
     /// </summary>
     [Serializable]
     // ReSharper disable once CheckNamespace
-    public class MusicSetting {
+    public class MusicSetting
+    {
         // ReSharper disable InconsistentNaming
-        
+
         /// <summary>
         /// The alias for the song
         /// </summary>
         public string alias = string.Empty;
-        
+
         /// <summary>
         /// This setting allows you to choose Audio Clip, Resource File or Addressable
         /// </summary>
         public MasterAudio.AudioLocation audLocation = MasterAudio.AudioLocation.Clip;
-        
+
         /// <summary>
         /// The Audio Clip for the song, if you're using AudioLocation of Clip
         /// </summary>
@@ -75,22 +77,22 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// Do not set this, it is for Inspector only
         /// </summary>
-        public List<SongMetadataStringValue> metadataStringValues = new List<SongMetadataStringValue>();
+        public List<SongMetadataStringValue> metadataStringValues = new();
 
         /// <summary>
         /// Do not set this, it is for Inspector only
         /// </summary>
-        public List<SongMetadataBoolValue> metadataBoolValues = new List<SongMetadataBoolValue>();
+        public List<SongMetadataBoolValue> metadataBoolValues = new();
 
         /// <summary>
         /// Do not set this, it is for Inspector only
         /// </summary>
-        public List<SongMetadataIntValue> metadataIntValues = new List<SongMetadataIntValue>();
+        public List<SongMetadataIntValue> metadataIntValues = new();
 
         /// <summary>
         /// Do not set this, it is for Inspector only
         /// </summary>
-        public List<SongMetadataFloatValue> metadataFloatValues = new List<SongMetadataFloatValue>();
+        public List<SongMetadataFloatValue> metadataFloatValues = new();
 
         /// <summary>
         /// Do not set this, it is for Inspector only
@@ -101,7 +103,7 @@ namespace DarkTonic.MasterAudio {
         /// This controls where the song starts from.
         /// </summary>
         public MasterAudio.CustomSongStartTimeMode songStartTimeMode = MasterAudio.CustomSongStartTimeMode.Beginning;
-        
+
         /// <summary>
         /// If you choose Random Time for Begin Song Time Node, it will start between customStartTime (min) and customStartTimeMax, randomly.
         /// </summary>
@@ -146,7 +148,7 @@ namespace DarkTonic.MasterAudio {
         /// This is the name of a Custom Event to fire when the song is started.
         /// </summary>
         public string songStartedCustomEvent = string.Empty;
-        
+
         /// <summary>
         /// Set this to true if you are going to use songChangedCustomEvent
         /// </summary>
@@ -157,26 +159,34 @@ namespace DarkTonic.MasterAudio {
         /// </summary>
         public string songChangedCustomEvent = string.Empty;
 
-        public MusicSetting() {
+        public MusicSetting()
+        {
             songChangedEventExpanded = false;
         }
 
         /*! \cond PRIVATE */
-        public bool HasMetadataProperties {
-            get {
+        public bool HasMetadataProperties
+        {
+            get
+            {
                 return MetadataPropertyCount > 0;
             }
         }
 
-        public int MetadataPropertyCount {
-            get {
+        public int MetadataPropertyCount
+        {
+            get
+            {
                 return metadataStringValues.Count + metadataBoolValues.Count + metadataIntValues.Count + metadataFloatValues.Count;
             }
         }
 
-        public float SongStartTime {
-            get {
-                switch (songStartTimeMode) {
+        public float SongStartTime
+        {
+            get
+            {
+                switch (songStartTimeMode)
+                {
                     default:
                     case MasterAudio.CustomSongStartTimeMode.Beginning:
                         return 0f;
@@ -192,8 +202,10 @@ namespace DarkTonic.MasterAudio {
         /*! \endcond */
 
         /*! \cond PRIVATE */
-        public static MusicSetting Clone(MusicSetting mus, MasterAudio.Playlist aList) {
-            var clone = new MusicSetting {
+        public static MusicSetting Clone(MusicSetting mus, MasterAudio.Playlist aList)
+        {
+            var clone = new MusicSetting
+            {
                 alias = mus.alias,
                 audLocation = mus.audLocation,
                 clip = mus.clip,
@@ -214,9 +226,11 @@ namespace DarkTonic.MasterAudio {
 
             SongMetadataProperty prop = null;
 
-            for (var i = 0; i < mus.metadataStringValues.Count; i++) {
+            for (var i = 0; i < mus.metadataStringValues.Count; i++)
+            {
                 var valToClone = mus.metadataStringValues[i];
-                prop = aList.songMetadataProps.Find(delegate (SongMetadataProperty p) {
+                prop = aList.songMetadataProps.Find(delegate (SongMetadataProperty p)
+                {
                     return p.PropertyName == valToClone.PropertyName;
                 });
                 var sVal = new SongMetadataStringValue(prop);
@@ -224,9 +238,11 @@ namespace DarkTonic.MasterAudio {
                 clone.metadataStringValues.Add(sVal);
             }
 
-            for (var i = 0; i < mus.metadataFloatValues.Count; i++) {
+            for (var i = 0; i < mus.metadataFloatValues.Count; i++)
+            {
                 var valToClone = mus.metadataFloatValues[i];
-                prop = aList.songMetadataProps.Find(delegate (SongMetadataProperty p) {
+                prop = aList.songMetadataProps.Find(delegate (SongMetadataProperty p)
+                {
                     return p.PropertyName == valToClone.PropertyName;
                 });
                 var fVal = new SongMetadataFloatValue(prop);
@@ -234,9 +250,11 @@ namespace DarkTonic.MasterAudio {
                 clone.metadataFloatValues.Add(fVal);
             }
 
-            for (var i = 0; i < mus.metadataBoolValues.Count; i++) {
+            for (var i = 0; i < mus.metadataBoolValues.Count; i++)
+            {
                 var valToClone = mus.metadataBoolValues[i];
-                prop = aList.songMetadataProps.Find(delegate (SongMetadataProperty p) {
+                prop = aList.songMetadataProps.Find(delegate (SongMetadataProperty p)
+                {
                     return p.PropertyName == valToClone.PropertyName;
                 });
                 var bVal = new SongMetadataBoolValue(prop);
@@ -244,9 +262,11 @@ namespace DarkTonic.MasterAudio {
                 clone.metadataBoolValues.Add(bVal);
             }
 
-            for (var i = 0; i < mus.metadataIntValues.Count; i++) {
+            for (var i = 0; i < mus.metadataIntValues.Count; i++)
+            {
                 var valToClone = mus.metadataIntValues[i];
-                prop = aList.songMetadataProps.Find(delegate (SongMetadataProperty p) {
+                prop = aList.songMetadataProps.Find(delegate (SongMetadataProperty p)
+                {
                     return p.PropertyName == valToClone.PropertyName;
                 });
                 var iVal = new SongMetadataIntValue(prop);

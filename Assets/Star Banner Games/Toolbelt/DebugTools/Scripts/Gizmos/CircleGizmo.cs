@@ -7,7 +7,7 @@ namespace SBG.Toolbelt.DebugTools
 #if UNITY_EDITOR
         [Min(0)]
         [SerializeField] private float radius = 0.5f;
-        [Range(3,100)]
+        [Range(3, 100)]
         [SerializeField] private int segments = 30;
 
 

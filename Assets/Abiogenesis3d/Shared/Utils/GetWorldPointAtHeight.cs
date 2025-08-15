@@ -6,7 +6,7 @@ namespace Abiogenesis3d
     {
         public static Vector3 GetWorldPointAtHeight(Camera cam, Vector3 point, float height, Vector3 defaultValue = default)
         {
-            Plane plane = new Plane(Vector3.down, height);
+            Plane plane = new(Vector3.down, height);
 
             Ray ray = cam.ScreenPointToRay(point);
 

@@ -5,8 +5,6 @@ using UnityEngine.Serialization;
 using JBooth.MicroSplat;
 #endif
 #if UNITY_EDITOR
-using UnityEditor;
-using System.IO;
 #endif
 
 namespace Pinwheel.Griffin
@@ -649,7 +647,7 @@ namespace Pinwheel.Griffin
             if (albedoMap == null)
                 return;
             Texture2D tmp = GCommon.CreateTexture(AlbedoMapResolution, Color.clear);
-            RenderTexture rt = new RenderTexture(AlbedoMapResolution, AlbedoMapResolution, 32, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture rt = new(AlbedoMapResolution, AlbedoMapResolution, 32, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             GCommon.CopyToRT(albedoMap, rt);
             GCommon.CopyFromRT(tmp, rt);
             rt.Release();
@@ -698,7 +696,7 @@ namespace Pinwheel.Griffin
 
                 if (MaterialToRender.HasProperty(DimensionPropertyName))
                 {
-                    Vector4 dim = new Vector4(
+                    Vector4 dim = new(
                         TerrainData.Geometry.Width,
                         TerrainData.Geometry.Height,
                         TerrainData.Geometry.Length,
@@ -727,11 +725,11 @@ namespace Pinwheel.Griffin
                         if (MaterialToRender.HasProperty(SplatMapPropertyName + i))
                         {
                             MaterialToRender.SetTexture(SplatMapPropertyName + i, p.Texture);
-                            Vector2 terrainSize = new Vector2(TerrainData.Geometry.Width, TerrainData.Geometry.Length);
-                            Vector2 textureScale = new Vector2(
+                            Vector2 terrainSize = new(TerrainData.Geometry.Width, TerrainData.Geometry.Length);
+                            Vector2 textureScale = new(
                                 p.TileSize.x != 0 ? terrainSize.x / p.TileSize.x : 0,
                                 p.TileSize.y != 0 ? terrainSize.y / p.TileSize.y : 0);
-                            Vector2 textureOffset = new Vector2(
+                            Vector2 textureOffset = new(
                                 p.TileOffset.x != 0 ? terrainSize.x / p.TileOffset.x : 0,
                                 p.TileOffset.y != 0 ? terrainSize.y / p.TileOffset.y : 0);
                             MaterialToRender.SetTextureScale(SplatMapPropertyName + i, textureScale);
@@ -759,7 +757,7 @@ namespace Pinwheel.Griffin
             if (metallicMap == null)
                 return;
             Texture2D tmp = GCommon.CreateTexture(MetallicMapResolution, Color.black);
-            RenderTexture rt = new RenderTexture(MetallicMapResolution, MetallicMapResolution, 32, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture rt = new(MetallicMapResolution, MetallicMapResolution, 32, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             GCommon.CopyToRT(metallicMap, rt);
             GCommon.CopyFromRT(tmp, rt);
             rt.Release();
@@ -879,7 +877,7 @@ namespace Pinwheel.Griffin
                 if (t == null)
                     return;
                 Texture2D tmp = GCommon.CreateTexture(SplatControlResolution, Color.clear);
-                RenderTexture rt = new RenderTexture(SplatControlResolution, SplatControlResolution, 32, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(SplatControlResolution, SplatControlResolution, 32, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 GCommon.CopyToRT(t, rt);
                 GCommon.CopyFromRT(tmp, rt);
                 rt.Release();
@@ -900,7 +898,7 @@ namespace Pinwheel.Griffin
         {
             if (Splats == null)
                 return;
-            RenderTexture albedoRt = new RenderTexture(AlbedoMapResolution, AlbedoMapResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture albedoRt = new(AlbedoMapResolution, AlbedoMapResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             Material mat = GInternalMaterials.SplatsToAlbedoMaterial;
 
             for (int i = 0; i < SplatControlMapCount; ++i)
@@ -914,11 +912,11 @@ namespace Pinwheel.Griffin
                     {
                         GSplatPrototype p = Splats.Prototypes[prototypeIndex];
                         mat.SetTexture("_Splat" + channel, p.Texture);
-                        Vector2 terrainSize = new Vector2(TerrainData.Geometry.Width, TerrainData.Geometry.Length);
-                        Vector2 textureScale = new Vector2(
+                        Vector2 terrainSize = new(TerrainData.Geometry.Width, TerrainData.Geometry.Length);
+                        Vector2 textureScale = new(
                             p.TileSize.x != 0 ? terrainSize.x / p.TileSize.x : 0,
                             p.TileSize.y != 0 ? terrainSize.y / p.TileSize.y : 0);
-                        Vector2 textureOffset = new Vector2(
+                        Vector2 textureOffset = new(
                             p.TileOffset.x != 0 ? terrainSize.x / p.TileOffset.x : 0,
                             p.TileOffset.y != 0 ? terrainSize.y / p.TileOffset.y : 0);
                         mat.SetTextureScale("_Splat" + channel, textureScale);

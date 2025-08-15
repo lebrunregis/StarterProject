@@ -1,10 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Jobs;
 using Unity.Collections;
-using Unity.Burst;
+using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.Physic
 {
@@ -19,7 +16,7 @@ namespace Pinwheel.Griffin.Physic
         public void Execute(int index)
         {
             GTreeInstance tree = instances[index];
-            Vector3 pos = new Vector3(
+            Vector3 pos = new(
                 tree.position.x * terrainSize.x,
                 tree.position.y * terrainSize.y,
                 tree.position.z * terrainSize.z);

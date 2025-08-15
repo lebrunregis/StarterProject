@@ -12,7 +12,7 @@ namespace Pinwheel.Griffin.PaintTool
     public class GTerrainPainterInspector : Editor
     {
         private GTerrainTexturePainter painter;
-        private Vector3[] worldPoints = new Vector3[4];
+        private readonly Vector3[] worldPoints = new Vector3[4];
         private bool isColorSamplingEnable;
 
         private void OnEnable()
@@ -49,14 +49,14 @@ namespace Pinwheel.Griffin.PaintTool
 
         private class GBaseGUI
         {
-            public static readonly GUIContent GROUP_ID = new GUIContent("Group Id", "Id of the terrain group this painter will work on");
-            public static readonly GUIContent FORCE_UPDATE_GEOMETRY = new GUIContent("Force Update Geometry", "Update terrain geometry even when the painter doesn't modify the height map. Turn this on when you're using Albedo To Vertex Color");
-            public static readonly GUIContent ENABLE_HISTORY = new GUIContent("Enable History", "Enable history recording for undo. History recording may get slow when working with a large group of terrains");
-            public static readonly GUIContent ENABLE_LIVE_PREVIEW = new GUIContent("Enable Live Preview", "Draw a preview on the terrain surface showing the painter effect");
-            public static readonly GUIContent ENABLE_TERRAIN_MASK = new GUIContent("Enable Terrain Mask", "Use the terrain's Mask texture (R channel) to lock particular regions from being edited");
-            public static readonly GUIContent SHOW_TERRAIN_MASK = new GUIContent("Show Terrain Mask", "Draw the terrain mask overlay in the scene view. Disable this toggle if you are experiencing some frame rate drop");
-            public static readonly GUIContent ENABLE_TOPOGRAPHIC = new GUIContent("Enable Topographic", "Render a topographic view for better sense of elevation change");
-            public static readonly GUIContent NO_PAINTER_FOUND = new GUIContent("No painter found!");
+            public static readonly GUIContent GROUP_ID = new("Group Id", "Id of the terrain group this painter will work on");
+            public static readonly GUIContent FORCE_UPDATE_GEOMETRY = new("Force Update Geometry", "Update terrain geometry even when the painter doesn't modify the height map. Turn this on when you're using Albedo To Vertex Color");
+            public static readonly GUIContent ENABLE_HISTORY = new("Enable History", "Enable history recording for undo. History recording may get slow when working with a large group of terrains");
+            public static readonly GUIContent ENABLE_LIVE_PREVIEW = new("Enable Live Preview", "Draw a preview on the terrain surface showing the painter effect");
+            public static readonly GUIContent ENABLE_TERRAIN_MASK = new("Enable Terrain Mask", "Use the terrain's Mask texture (R channel) to lock particular regions from being edited");
+            public static readonly GUIContent SHOW_TERRAIN_MASK = new("Show Terrain Mask", "Draw the terrain mask overlay in the scene view. Disable this toggle if you are experiencing some frame rate drop");
+            public static readonly GUIContent ENABLE_TOPOGRAPHIC = new("Enable Topographic", "Render a topographic view for better sense of elevation change");
+            public static readonly GUIContent NO_PAINTER_FOUND = new("No painter found!");
         }
 
         public override void OnInspectorGUI()
@@ -69,7 +69,7 @@ namespace Pinwheel.Griffin.PaintTool
             Rect r0 = EditorGUILayout.GetControlRect();
             if (!GEditorSettings.Instance.paintTools.enableHistory)
             {
-                GUI.contentColor = Color.red*1.5f;
+                GUI.contentColor = Color.red * 1.5f;
             }
             GEditorSettings.Instance.paintTools.enableHistory = EditorGUI.Toggle(r0, GBaseGUI.ENABLE_HISTORY, GEditorSettings.Instance.paintTools.enableHistory);
             GUI.contentColor = txtColor;
@@ -157,8 +157,8 @@ namespace Pinwheel.Griffin.PaintTool
         {
             public static readonly string LABEL = "Brush Masks";
             public static readonly string ID = "texture-painter-brush-masks";
-            public static readonly GUIContent NEW_BRUSH = new GUIContent("New Brush");
-            public static readonly GUIContent REFRESH = new GUIContent("Refresh");
+            public static readonly GUIContent NEW_BRUSH = new("New Brush");
+            public static readonly GUIContent REFRESH = new("Refresh");
             public static readonly string NEW_BRUSH_DIALOG_TITLE = "Info";
             public static readonly string NEW_BRUSH_DIALOG_INSTRUCTION = "To add a new brush, copy your brush texture to a Resources/PolarisBrushes/ folder, then Refresh.";
             public static readonly string OK = "OK";
@@ -166,7 +166,7 @@ namespace Pinwheel.Griffin.PaintTool
 
         private void DrawBrushMaskGUI()
         {
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 GBrushMaskGUI.NEW_BRUSH,
                 false,
@@ -178,7 +178,7 @@ namespace Pinwheel.Griffin.PaintTool
 
             GEditorCommon.Foldout(GBrushMaskGUI.LABEL, true, GBrushMaskGUI.ID, () =>
             {
-                GSelectionGridArgs args = new GSelectionGridArgs();
+                GSelectionGridArgs args = new();
                 args.selectedIndex = painter.SelectedBrushMaskIndex;
                 args.collection = painter.BrushMasks;
                 args.itemSize = GEditorCommon.selectionGridTileSizeSmall;
@@ -214,7 +214,7 @@ namespace Pinwheel.Griffin.PaintTool
         {
             public static readonly string LABEL = "Splats";
             public static readonly string ID = "texture-painter-splats";
-            public static readonly GUIContent MULTI_SELECTION = new GUIContent("Multi Selection", "Select multiple splats by setting their probability");
+            public static readonly GUIContent MULTI_SELECTION = new("Multi Selection", "Select multiple splats by setting their probability");
         }
 
         private void DrawSplatGUI()
@@ -240,16 +240,16 @@ namespace Pinwheel.Griffin.PaintTool
             public static readonly string LABEL = "Brush";
             public static readonly string ID = "texture-painter-brush";
 
-            public static readonly GUIContent JITTER = new GUIContent("Jitter", "Randomness factor for the value");
-            public static readonly GUIContent RADIUS = new GUIContent("Radius", "Radius of the brush stroke. Shortcut: - =");
-            public static readonly GUIContent ROTATION = new GUIContent("Rotation", "Rotation of the brush stroke. Shortcut: [ ]");
-            public static readonly GUIContent OPACITY = new GUIContent("Opacity", "Opacity of the brush stroke. Shortcut: ; '");
-            public static readonly GUIContent TARGET_STRENGTH = new GUIContent("Target Strength", "Maximum intensity of the brush");
-            public static readonly GUIContent SCATTER = new GUIContent("Scatter", "Pick a random position for the brush around your cursor position");
-            public static readonly GUIContent COLOR = new GUIContent("Color", "Color of the brush. Mainly used for Albedo, Metallic (R) and Smoothness (A) painter");
-            public static readonly GUIContent SAMPLE_POINT = new GUIContent("Sample Point", "A point in the scene for sample height. Mainly use for Height Sampling (Y) painter.");
+            public static readonly GUIContent JITTER = new("Jitter", "Randomness factor for the value");
+            public static readonly GUIContent RADIUS = new("Radius", "Radius of the brush stroke. Shortcut: - =");
+            public static readonly GUIContent ROTATION = new("Rotation", "Rotation of the brush stroke. Shortcut: [ ]");
+            public static readonly GUIContent OPACITY = new("Opacity", "Opacity of the brush stroke. Shortcut: ; '");
+            public static readonly GUIContent TARGET_STRENGTH = new("Target Strength", "Maximum intensity of the brush");
+            public static readonly GUIContent SCATTER = new("Scatter", "Pick a random position for the brush around your cursor position");
+            public static readonly GUIContent COLOR = new("Color", "Color of the brush. Mainly used for Albedo, Metallic (R) and Smoothness (A) painter");
+            public static readonly GUIContent SAMPLE_POINT = new("Sample Point", "A point in the scene for sample height. Mainly use for Height Sampling (Y) painter.");
 
-            public static readonly GUIContent TRIANGLE_SAMPLER = new GUIContent(GEditorSkin.Instance.GetTexture("TriangleSamplerIcon"), "Sample terrain Albedo color, Metallic or Smoothness value based on the current paint mode");
+            public static readonly GUIContent TRIANGLE_SAMPLER = new(GEditorSkin.Instance.GetTexture("TriangleSamplerIcon"), "Sample terrain Albedo color, Metallic or Smoothness value based on the current paint mode");
         }
 
         private void DrawBrushGUI()
@@ -263,7 +263,7 @@ namespace Pinwheel.Griffin.PaintTool
                 painter.BrushRotation = EditorGUILayout.Slider(GBrushGUI.ROTATION, painter.BrushRotation, -360f, 360f);
                 painter.BrushRotationJitter = EditorGUILayout.Slider(GBrushGUI.JITTER, painter.BrushRotationJitter, 0f, 1f);
                 GEditorCommon.Separator();
-                
+
                 Color txtColor = GUI.contentColor;
                 Rect r0 = EditorGUILayout.GetControlRect();
                 if (painter.BrushOpacity <= 0 || painter.BrushOpacity >= 1)
@@ -280,7 +280,7 @@ namespace Pinwheel.Griffin.PaintTool
                 {
                     GUI.contentColor = Color.red * 1.5f;
                 }
-                painter.BrushTargetStrength = EditorGUI.Slider(r1, GBrushGUI.TARGET_STRENGTH, painter.BrushTargetStrength, 0f, 1f); 
+                painter.BrushTargetStrength = EditorGUI.Slider(r1, GBrushGUI.TARGET_STRENGTH, painter.BrushTargetStrength, 0f, 1f);
                 GUI.contentColor = txtColor;
                 GEditorCommon.Separator();
 
@@ -313,26 +313,26 @@ namespace Pinwheel.Griffin.PaintTool
             public static readonly string ID = "texture-painter-rules";
 
             public static readonly string HEIGHT_RULE_HEADER = "Height";
-            public static readonly GUIContent ENABLE_HEIGHT_RULE = new GUIContent("Enable", "Enable height rule");
-            public static readonly GUIContent MIN_HEIGHT = new GUIContent("Min", "Minimum height in meter for the painter to take effect");
-            public static readonly GUIContent MAX_HEIGHT = new GUIContent("Max", "Maximum height in meter for the painter to take effect");
-            public static readonly GUIContent HEIGHT_TRANSITION = new GUIContent("Transition", "Intensity of the height blend in the range of [min,max]");
+            public static readonly GUIContent ENABLE_HEIGHT_RULE = new("Enable", "Enable height rule");
+            public static readonly GUIContent MIN_HEIGHT = new("Min", "Minimum height in meter for the painter to take effect");
+            public static readonly GUIContent MAX_HEIGHT = new("Max", "Maximum height in meter for the painter to take effect");
+            public static readonly GUIContent HEIGHT_TRANSITION = new("Transition", "Intensity of the height blend in the range of [min,max]");
 
             public static readonly string SLOPE_RULE_HEADER = "Slope";
-            public static readonly GUIContent ENABLE_SLOPE_RULE = new GUIContent("Enable", "Enable slope rule");
-            public static readonly GUIContent NORMAL_MAP_MODE = new GUIContent("Mode", "Slope mode to use");
-            public static readonly GUIContent MIN_SLOPE = new GUIContent("Min", "Minimum angle between surface normal and the up vector for the painter to take effect");
-            public static readonly GUIContent MAX_SLOPE = new GUIContent("Max", "Maximum angle between surface normal and the up vector for the painter to take effect");
-            public static readonly GUIContent SLOPE_TRANSITION = new GUIContent("Transition", "Intensity of the slope blend in the range of [min,max]");
+            public static readonly GUIContent ENABLE_SLOPE_RULE = new("Enable", "Enable slope rule");
+            public static readonly GUIContent NORMAL_MAP_MODE = new("Mode", "Slope mode to use");
+            public static readonly GUIContent MIN_SLOPE = new("Min", "Minimum angle between surface normal and the up vector for the painter to take effect");
+            public static readonly GUIContent MAX_SLOPE = new("Max", "Maximum angle between surface normal and the up vector for the painter to take effect");
+            public static readonly GUIContent SLOPE_TRANSITION = new("Transition", "Intensity of the slope blend in the range of [min,max]");
 
             public static readonly string NOISE_RULE_HEADER = "Noise";
-            public static readonly GUIContent ENABLE_NOISE_RULE = new GUIContent("Enable", "Enable noise rule");
-            public static readonly GUIContent NOISE_ORIGIN = new GUIContent("Origin", "The origin point of the noise map");
-            public static readonly GUIContent NOISE_FREQUENCY = new GUIContent("Frequency", "Frequency of the noise pattern, higher value gives thicker noise");
-            public static readonly GUIContent NOISE_OCTAVES = new GUIContent("Octaves", "The number of noise layers to stack on top of each others");
-            public static readonly GUIContent NOISE_LACUNARITY = new GUIContent("Lacunarity", "The change in frequency of each noise layer");
-            public static readonly GUIContent NOISE_PERSISTENCE = new GUIContent("Persistence", "The change in amplitude of each noise layer");
-            public static readonly GUIContent NOISE_REMAP = new GUIContent("Remap", "Remap the generated noise value");
+            public static readonly GUIContent ENABLE_NOISE_RULE = new("Enable", "Enable noise rule");
+            public static readonly GUIContent NOISE_ORIGIN = new("Origin", "The origin point of the noise map");
+            public static readonly GUIContent NOISE_FREQUENCY = new("Frequency", "Frequency of the noise pattern, higher value gives thicker noise");
+            public static readonly GUIContent NOISE_OCTAVES = new("Octaves", "The number of noise layers to stack on top of each others");
+            public static readonly GUIContent NOISE_LACUNARITY = new("Lacunarity", "The change in frequency of each noise layer");
+            public static readonly GUIContent NOISE_PERSISTENCE = new("Persistence", "The change in amplitude of each noise layer");
+            public static readonly GUIContent NOISE_REMAP = new("Remap", "Remap the generated noise value");
         }
 
         private void DrawRulesGUI()
@@ -547,9 +547,9 @@ namespace Pinwheel.Griffin.PaintTool
 
         private GTexturePainterArgs CreateBasicArgs(RaycastHit hit)
         {
-            GTexturePainterArgs args = new GTexturePainterArgs();
+            GTexturePainterArgs args = new();
             args.HitPoint = hit.point;
-            
+
             args.MouseEventType =
                 Event.current.type == EventType.MouseDown ? GPainterMouseEventType.Down :
                 Event.current.type == EventType.MouseDrag ? GPainterMouseEventType.Drag :
@@ -634,8 +634,8 @@ namespace Pinwheel.Griffin.PaintTool
             public static readonly string LABEL = "Mode";
             public static readonly string ID = "texture-painter-mode";
 
-            public static readonly GUIContent NO_CUSTOM_PAINTER = new GUIContent("No Custom Painter defined!");
-            public static readonly GUIContent CUSTOM_ARGS = new GUIContent("Custom Args");
+            public static readonly GUIContent NO_CUSTOM_PAINTER = new("No Custom Painter defined!");
+            public static readonly GUIContent CUSTOM_ARGS = new("Custom Args");
         }
 
         private void DrawPaintMode()
@@ -648,7 +648,7 @@ namespace Pinwheel.Griffin.PaintTool
 
         private void ShowPaintModeAsGrid()
         {
-            GSelectionGridArgs args0 = new GSelectionGridArgs();
+            GSelectionGridArgs args0 = new();
             args0.selectedIndex = (int)painter.Mode;
             args0.collection = Enum.GetValues(typeof(GTexturePaintingMode));
             args0.itemSize = GEditorCommon.selectionGridTileSizeWide;
@@ -670,7 +670,7 @@ namespace Pinwheel.Griffin.PaintTool
                 }
                 else
                 {
-                    GSelectionGridArgs args1 = new GSelectionGridArgs();
+                    GSelectionGridArgs args1 = new();
                     args1.selectedIndex = painter.CustomPainterIndex;
                     args1.collection = customPainterTypes;
                     args1.itemSize = GEditorCommon.selectionGridTileSizeWide;
@@ -710,15 +710,15 @@ namespace Pinwheel.Griffin.PaintTool
         private void DrawMode(Rect r, string label, Texture icon)
         {
             GUIStyle labelStyle = EditorStyles.miniLabel;
-            Rect iconRect = new Rect(r.min.x, r.min.y, r.height, r.height);
-            Rect labelRect = new Rect(r.min.x + r.height + 1, r.min.y, r.width - r.height, r.height);
+            Rect iconRect = new(r.min.x, r.min.y, r.height, r.height);
+            Rect labelRect = new(r.min.x + r.height + 1, r.min.y, r.width - r.height, r.height);
 
             GEditorCommon.DrawBodyBox(r);
             GEditorCommon.DrawHeaderBox(iconRect);
             if (icon != null)
             {
                 GUI.color = labelStyle.normal.textColor;
-                RectOffset offset = new RectOffset(3, 3, 3, 3);
+                RectOffset offset = new(3, 3, 3, 3);
                 GUI.DrawTexture(offset.Remove(iconRect), icon);
                 GUI.color = Color.white;
             }

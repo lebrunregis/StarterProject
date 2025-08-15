@@ -61,10 +61,10 @@ namespace Pinwheel.Griffin.StampTool
 
         private class GBaseGUI
         {
-            public static readonly GUIContent GROUP_ID = new GUIContent("Group Id", "Id of the terrain group which is edited by this tool");
-            public static readonly GUIContent ENABLE_TERRAIN_MASK = new GUIContent("Enable Terrain Mask", "Use terrain mask (R) to lock a particular region from editing");
-            public static readonly GUIContent SHOW_TERRAIN_MASK = new GUIContent("Show Terrain Mask", "Draw an overlay of the terrain mask in the scene view");
-            public static readonly GUIContent ENABLE_TOPOGRAPHIC = new GUIContent("Enable Topographic", "Draw topographic view over the terrain for better sense of altitude");
+            public static readonly GUIContent GROUP_ID = new("Group Id", "Id of the terrain group which is edited by this tool");
+            public static readonly GUIContent ENABLE_TERRAIN_MASK = new("Enable Terrain Mask", "Use terrain mask (R) to lock a particular region from editing");
+            public static readonly GUIContent SHOW_TERRAIN_MASK = new("Show Terrain Mask", "Draw an overlay of the terrain mask in the scene view");
+            public static readonly GUIContent ENABLE_TOPOGRAPHIC = new("Enable Topographic", "Draw topographic view over the terrain for better sense of altitude");
         }
 
         public override void OnInspectorGUI()
@@ -120,9 +120,9 @@ namespace Pinwheel.Griffin.StampTool
             public static readonly string LABEL = "Transform";
             public static readonly string ID = "geo-stamper-transform";
 
-            public static readonly GUIContent POSITION = new GUIContent("Position", "Position of the stamper");
-            public static readonly GUIContent ROTATION = new GUIContent("Rotation", "Rotation of the stamper");
-            public static readonly GUIContent SCALE = new GUIContent("Scale", "Scale of the stamper");
+            public static readonly GUIContent POSITION = new("Position", "Position of the stamper");
+            public static readonly GUIContent ROTATION = new("Rotation", "Rotation of the stamper");
+            public static readonly GUIContent SCALE = new("Scale", "Scale of the stamper");
         }
 
         private void DrawTransformGUI()
@@ -144,14 +144,14 @@ namespace Pinwheel.Griffin.StampTool
             public static readonly string LABEL = "Stamp";
             public static readonly string ID = "geo-stamper-stamp";
 
-            public static readonly GUIContent MASK = new GUIContent("Mask", "A texture defines the geometry feature to stamp, only R channel is used");
-            public static readonly GUIContent CHANNEL = new GUIContent("Channel", "Choose whether to stamp to height or visibility data");
-            public static readonly GUIContent FALLOFF = new GUIContent("Falloff", "Gradually decrease the mask intensity over its edge");
-            public static readonly GUIContent OPERATION = new GUIContent("Operation", "The math operation to perform on the terrain, please see the documentation for detail");
-            public static readonly GUIContent LERP_FACTOR = new GUIContent("Lerp Factor", "The interpolation factor");
-            public static readonly GUIContent ADDITIONAL_MESH_RESOLUTION = new GUIContent("Additional Mesh Resolution", "Add more polygons to the stamp area");
-            public static readonly GUIContent INVERSE = new GUIContent("Inverse the stamp mask");
-            public static readonly GUIContent BLEND_USING_FALLOFF = new GUIContent("Blend Using Falloff", "Blend the stamp result with the current terrain using Falloff curve");
+            public static readonly GUIContent MASK = new("Mask", "A texture defines the geometry feature to stamp, only R channel is used");
+            public static readonly GUIContent CHANNEL = new("Channel", "Choose whether to stamp to height or visibility data");
+            public static readonly GUIContent FALLOFF = new("Falloff", "Gradually decrease the mask intensity over its edge");
+            public static readonly GUIContent OPERATION = new("Operation", "The math operation to perform on the terrain, please see the documentation for detail");
+            public static readonly GUIContent LERP_FACTOR = new("Lerp Factor", "The interpolation factor");
+            public static readonly GUIContent ADDITIONAL_MESH_RESOLUTION = new("Additional Mesh Resolution", "Add more polygons to the stamp area");
+            public static readonly GUIContent INVERSE = new("Inverse the stamp mask");
+            public static readonly GUIContent BLEND_USING_FALLOFF = new("Blend Using Falloff", "Blend the stamp result with the current terrain using Falloff curve");
         }
 
         private void DrawStampGUI()
@@ -183,8 +183,8 @@ namespace Pinwheel.Griffin.StampTool
             public static readonly string LABEL = "Gizmos";
             public static readonly string ID = "geo-stamper-gizmos";
 
-            public static readonly GUIContent LIVE_PREVIEW = new GUIContent("Live Preview", "Draw a preview in the scene view");
-            public static readonly GUIContent BOUNDS = new GUIContent("Bounds", "Show the stamper bounds in the scene view");
+            public static readonly GUIContent LIVE_PREVIEW = new("Live Preview", "Draw a preview in the scene view");
+            public static readonly GUIContent BOUNDS = new("Bounds", "Show the stamper bounds in the scene view");
         }
 
         private void DrawGizmosGUI()
@@ -200,9 +200,9 @@ namespace Pinwheel.Griffin.StampTool
         {
             public static readonly string LABEL = "Action";
             public static readonly string ID = "geo-stamper-action";
-            public static readonly GUIContent SNAP_TO_TERRAIN = new GUIContent("Snap To Terrain","Fit the stamper to the underneath terrain");
-            public static readonly GUIContent SNAP_TO_LEVEL_BOUNDS = new GUIContent("Snap To Level Bounds", "Fit the stamper to cover all terrains in the level");
-            public static readonly GUIContent APPLY = new GUIContent("Apply", "Stamp on the terrains");
+            public static readonly GUIContent SNAP_TO_TERRAIN = new("Snap To Terrain", "Fit the stamper to the underneath terrain");
+            public static readonly GUIContent SNAP_TO_LEVEL_BOUNDS = new("Snap To Level Bounds", "Fit the stamper to cover all terrains in the level");
+            public static readonly GUIContent APPLY = new("Apply", "Stamp on the terrains");
         }
 
         private void DrawActionGUI()
@@ -217,8 +217,8 @@ namespace Pinwheel.Griffin.StampTool
                     {
                         GStylizedTerrain t = terrains.Current;
                         Bounds b = t.Bounds;
-                        Rect r = new Rect(new Vector2(b.min.x, b.min.z), new Vector2(b.size.x, b.size.z));
-                        Vector2 p = new Vector2(instance.Position.x, instance.Position.z);
+                        Rect r = new(new Vector2(b.min.x, b.min.z), new Vector2(b.size.x, b.size.z));
+                        Vector2 p = new(instance.Position.x, instance.Position.z);
                         if (r.Contains(p))
                         {
                             instance.Position = new Vector3(r.center.x, b.min.y, r.center.y);
@@ -393,7 +393,7 @@ namespace Pinwheel.Griffin.StampTool
             if (!previewTextures.ContainsKey(t) ||
                 previewTextures[t] == null)
             {
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, GGeometry.HeightMapRTFormat, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, GGeometry.HeightMapRTFormat, RenderTextureReadWrite.Linear);
                 previewTextures[t] = rt;
             }
             else if (previewTextures[t].width != resolution ||
@@ -402,7 +402,7 @@ namespace Pinwheel.Griffin.StampTool
             {
                 previewTextures[t].Release();
                 Object.DestroyImmediate(previewTextures[t]);
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, GGeometry.HeightMapRTFormat, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, GGeometry.HeightMapRTFormat, RenderTextureReadWrite.Linear);
                 previewTextures[t] = rt;
             }
 

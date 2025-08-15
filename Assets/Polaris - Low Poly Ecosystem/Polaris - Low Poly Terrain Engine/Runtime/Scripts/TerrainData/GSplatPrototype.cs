@@ -113,7 +113,7 @@ namespace Pinwheel.Griffin
 
         public static explicit operator GSplatPrototype(SplatPrototype layer)
         {
-            GSplatPrototype proto = new GSplatPrototype();
+            GSplatPrototype proto = new();
             proto.Texture = layer.texture;
             proto.NormalMap = layer.normalMap;
             proto.TileSize = layer.tileSize;
@@ -125,7 +125,7 @@ namespace Pinwheel.Griffin
 
         public static explicit operator SplatPrototype(GSplatPrototype proto)
         {
-            SplatPrototype layer = new SplatPrototype();
+            SplatPrototype layer = new();
             layer.texture = proto.Texture;
             layer.normalMap = proto.NormalMap;
             layer.tileSize = proto.TileSize;
@@ -159,7 +159,7 @@ namespace Pinwheel.Griffin
 
         public static explicit operator GSplatPrototype(TerrainLayer layer)
         {
-            GSplatPrototype proto = new GSplatPrototype();
+            GSplatPrototype proto = new();
             proto.Texture = layer.diffuseTexture;
             proto.NormalMap = layer.normalMapTexture;
             proto.TileSize = layer.tileSize;
@@ -171,7 +171,7 @@ namespace Pinwheel.Griffin
 
         public static explicit operator TerrainLayer(GSplatPrototype proto)
         {
-            TerrainLayer layer = new TerrainLayer();
+            TerrainLayer layer = new();
             layer.diffuseTexture = proto.Texture;
             layer.normalMapTexture = proto.NormalMap;
             layer.tileSize = proto.TileSize;

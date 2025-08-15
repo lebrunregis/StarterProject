@@ -14,7 +14,7 @@ namespace MagicaCloth2
     /// <typeparam name="T"></typeparam>
     public class MultiDataBuilder<T> : IDisposable where T : unmanaged
     {
-        int indexCount;
+        private readonly int indexCount;
 
         public NativeParallelMultiHashMap<int, T> Map;
 

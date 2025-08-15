@@ -15,7 +15,7 @@ namespace BrainFailProductions.PolyFew
 #if UNITY_2019_1_OR_NEWER
 
         [MenuItem("Window/Brainfail Products/PolyFew/Cleanup Missing Scripts")]
-        static void CleanupMissingScripts()
+        private static void CleanupMissingScripts()
         {
             int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCount;
 
@@ -29,7 +29,7 @@ namespace BrainFailProductions.PolyFew
                 if (rootGameObjects != null && rootGameObjects.Length > 0)
                 {
 
-                    List<GameObject> allObjectsinScene = new List<GameObject>();
+                    List<GameObject> allObjectsinScene = new();
 
 
                     EditorUtility.DisplayProgressBar("Preprocessing", $"Fetching GameObjects in active scene \"{scene.name}\"", 0);
@@ -84,7 +84,7 @@ namespace BrainFailProductions.PolyFew
 
 
         [MenuItem("Window/Brainfail Products/PolyFew/Remove All Scripts")]
-        static void RemoveAllPolyFewScripts()
+        private static void RemoveAllPolyFewScripts()
         {
             int sceneCount = UnityEngine.SceneManagement.SceneManager.sceneCount;
 
@@ -98,7 +98,7 @@ namespace BrainFailProductions.PolyFew
                 if (rootGameObjects != null && rootGameObjects.Length > 0)
                 {
 
-                    List<GameObject> allObjectsinScene = new List<GameObject>();
+                    List<GameObject> allObjectsinScene = new();
 
 
                     EditorUtility.DisplayProgressBar("Preprocessing", $"Fetching GameObjects in active scene \"{scene.name}\"", 0);
@@ -122,12 +122,12 @@ namespace BrainFailProductions.PolyFew
                     for (int b = 0; b < allObjectsinScene.Count; b++)
                     {
                         var polyfewComponent = allObjectsinScene[b].GetComponent<PolyFew>();
-                        var objectMatLinks  = allObjectsinScene[b].GetComponent<ObjectMaterialLinks>();
+                        var objectMatLinks = allObjectsinScene[b].GetComponent<ObjectMaterialLinks>();
 
                         EditorUtility.DisplayProgressBar("Removing polyfew components", $"Inspecting GameObject  {b + 1}/{allObjectsinScene.Count} in active scene \"{scene.name}\"", (float)(b) / allObjectsinScene.Count);
 
-                        if(polyfewComponent != null) { DestroyImmediate(polyfewComponent); }
-                        if(objectMatLinks != null)  { DestroyImmediate(objectMatLinks); }
+                        if (polyfewComponent != null) { DestroyImmediate(polyfewComponent); }
+                        if (objectMatLinks != null) { DestroyImmediate(objectMatLinks); }
                     }
 
                     EditorSceneManager.MarkSceneDirty(scene);
@@ -160,7 +160,7 @@ namespace BrainFailProductions.PolyFew
                 folderPath = AssetDatabase.GetAssetPath(Selection.activeObject.GetInstanceID());
             }
 
-            if(!string.IsNullOrWhiteSpace(folderPath))
+            if (!string.IsNullOrWhiteSpace(folderPath))
             {
                 assetPaths = AssetDatabase.FindAssets("t:GameObject", new string[] { folderPath });
             }
@@ -174,7 +174,7 @@ namespace BrainFailProductions.PolyFew
             EditorUtility.DisplayProgressBar("Removing missing components", "Please wait...", 0);
 
 
-            foreach(var guid in assetPaths)
+            foreach (var guid in assetPaths)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var obj = AssetDatabase.LoadAssetAtPath<GameObject>(path);
@@ -266,11 +266,11 @@ namespace BrainFailProductions.PolyFew
                     var children = transform.GetComponentsInChildren<Transform>();
 
                     foreach (Transform child in children)
-                    { 
+                    {
                         var host = child.GetComponent<PolyFew>();
                         var objectMatLinks = child.GetComponent<ObjectMaterialLinks>();
                         if (host != null) { DestroyImmediate(host); }
-                        if(objectMatLinks != null) { DestroyImmediate(objectMatLinks); }
+                        if (objectMatLinks != null) { DestroyImmediate(objectMatLinks); }
                     }
 
                     string fileName = Path.GetFileNameWithoutExtension(path);

@@ -3,84 +3,84 @@ using UnityEngine;
 
 namespace SBG.Toolbelt.Editor
 {
-	[System.Serializable]
-	public class CachedScene
-	{
-		private static float _randHue = 0;
+    [System.Serializable]
+    public class CachedScene
+    {
+        private static float _randHue = 0;
 
-		public SceneAsset Asset;
-		public string SceneGUID;
+        public SceneAsset Asset;
+        public string SceneGUID;
 
-		public string CustomName;
-		public bool IsHidden;
-		public bool UseCustomName;
+        public string CustomName;
+        public bool IsHidden;
+        public bool UseCustomName;
 
-		[SerializeField] private Color _color;
+        [SerializeField] private Color _color;
 
-		public Texture2D ColorTexture { get; private set; }
-		public Color BackgroundColor => _color;
+        public Texture2D ColorTexture { get; private set; }
+        public Color BackgroundColor => _color;
 
-		public string DisplayName
+        public string DisplayName
         {
             get
             {
-				if (UseCustomName || Asset == null)
+                if (UseCustomName || Asset == null)
                 {
-					return CustomName;
+                    return CustomName;
                 }
                 else
                 {
-					return Asset.name;
+                    return Asset.name;
                 }
-			}
+            }
         }
 
 
-		public CachedScene(string guid)
-		{
-			SceneGUID = guid;
-			string assetPath = AssetDatabase.GUIDToAssetPath(guid);
-
-			if (string.IsNullOrEmpty(assetPath)) return;
-
-			Asset = AssetDatabase.LoadAssetAtPath<SceneAsset>(assetPath);
-
-			Color col = Color.HSVToRGB(_randHue, 0.5f, 1f);
-			SetColor(col);
-
-			_randHue += 0.1f;
-			if (_randHue > 1) _randHue = 0;
-
-			IsHidden = false;
-			UseCustomName = false;
-
-			if (Asset != null) CustomName = Asset.name;
-		}
-
-		public void SetColor(Color col)
+        public CachedScene(string guid)
         {
-			_color = col;
-			ColorTexture = new Texture2D(1, 1);
-			ColorTexture.SetPixel(0, 0, col);
-			ColorTexture.Apply();
-		}
+            SceneGUID = guid;
+            string assetPath = AssetDatabase.GUIDToAssetPath(guid);
 
-		/// <summary>
-		/// Returns true if the Asset still exists
-		/// </summary>
-		public bool Refresh()
+            if (string.IsNullOrEmpty(assetPath)) return;
+
+            Asset = AssetDatabase.LoadAssetAtPath<SceneAsset>(assetPath);
+
+            Color col = Color.HSVToRGB(_randHue, 0.5f, 1f);
+            SetColor(col);
+
+            _randHue += 0.1f;
+            if (_randHue > 1) _randHue = 0;
+
+            IsHidden = false;
+            UseCustomName = false;
+
+            if (Asset != null) CustomName = Asset.name;
+        }
+
+        public void SetColor(Color col)
         {
-			//Try to get Asset
-			string assetPath = AssetDatabase.GUIDToAssetPath(SceneGUID);
-			if (string.IsNullOrEmpty(assetPath)) return false;
+            _color = col;
+            ColorTexture = new Texture2D(1, 1);
+            ColorTexture.SetPixel(0, 0, col);
+            ColorTexture.Apply();
+        }
 
-			Asset = AssetDatabase.LoadAssetAtPath<SceneAsset>(assetPath);
-			if (Asset == null) return false;
+        /// <summary>
+        /// Returns true if the Asset still exists
+        /// </summary>
+        public bool Refresh()
+        {
+            //Try to get Asset
+            string assetPath = AssetDatabase.GUIDToAssetPath(SceneGUID);
+            if (string.IsNullOrEmpty(assetPath)) return false;
 
-			//Set Display Parameters
-			SetColor(_color);
+            Asset = AssetDatabase.LoadAssetAtPath<SceneAsset>(assetPath);
+            if (Asset == null) return false;
 
-			return true;
-		}
-	}
+            //Set Display Parameters
+            SetColor(_color);
+
+            return true;
+        }
+    }
 }

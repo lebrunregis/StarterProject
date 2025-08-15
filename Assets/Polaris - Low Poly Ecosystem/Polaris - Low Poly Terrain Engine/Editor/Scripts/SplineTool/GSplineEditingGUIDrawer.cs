@@ -1,9 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.EditorTools;
 using UnityEditor;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.SplineTool
 {
@@ -15,9 +13,9 @@ namespace Pinwheel.Griffin.SplineTool
         public int selectedAnchorIndex = -1;
         public int selectedSegmentIndex = -1;
 
-        private GSplineCreator splineCreator;
-        bool autoTangent;
-        bool showTransformGizmos;
+        private readonly GSplineCreator splineCreator;
+        private bool autoTangent;
+        private bool showTransformGizmos;
 
         public GSplineEditingGUIDrawer(GSplineCreator splineCreator)
         {
@@ -160,7 +158,7 @@ namespace Pinwheel.Griffin.SplineTool
                 Vector3 offset = splineCreator.PositionOffset;
                 Vector3 worldPos = hit.point + offset;
                 Vector3 localPos = splineCreator.transform.InverseTransformPoint(worldPos);
-                GSplineAnchor a = new GSplineAnchor(localPos);
+                GSplineAnchor a = new(localPos);
                 splineCreator.Spline.AddAnchor(a);
 
                 if (selectedAnchorIndex >= 0 && selectedAnchorIndex < splineCreator.Spline.Anchors.Count - 1)
@@ -208,7 +206,7 @@ namespace Pinwheel.Griffin.SplineTool
                 Color color = (i == selectedSegmentIndex) ?
                     GEditorSettings.Instance.splineTools.selectedElementColor :
                     GEditorSettings.Instance.splineTools.segmentColor; ;
-                Color colorFade = new Color(color.r, color.g, color.b, color.a * 0.3f);
+                Color colorFade = new(color.r, color.g, color.b, color.a * 0.3f);
 
                 Vector3[] bezierPoints = Handles.MakeBezierPoints(startPosition, endPosition, startTangent, endTangent, Mathf.Min(5, splineCreator.Smoothness));
                 Handles.zTest = UnityEngine.Rendering.CompareFunction.LessEqual;

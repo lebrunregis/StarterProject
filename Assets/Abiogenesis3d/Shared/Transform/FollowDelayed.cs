@@ -8,7 +8,7 @@ namespace Abiogenesis3d
         public Transform target;
         public float speed = 10;
 
-        void Update()
+        private void Update()
         {
             transform.position = Vector3.Lerp(transform.position, target.position, Time.deltaTime * speed);
 

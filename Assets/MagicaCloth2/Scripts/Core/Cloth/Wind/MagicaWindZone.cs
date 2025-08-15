@@ -48,7 +48,7 @@ namespace MagicaCloth2
         /// Box size.
         /// [OK] Runtime changes.
         /// </summary>
-        public Vector3 size = new Vector3(10.0f, 10.0f, 10.0f);
+        public Vector3 size = new(10.0f, 10.0f, 10.0f);
 
         /// <summary>
         /// Sphere size.

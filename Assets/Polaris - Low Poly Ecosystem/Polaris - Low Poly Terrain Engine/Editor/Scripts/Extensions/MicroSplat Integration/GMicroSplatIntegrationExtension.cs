@@ -1,11 +1,6 @@
 #if GRIFFIN
 #if GRIFFIN && UNITY_EDITOR
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEditor.Callbacks;
-using System.IO;
 #if __MICROSPLAT__
 using JBooth.MicroSplat;
 #endif

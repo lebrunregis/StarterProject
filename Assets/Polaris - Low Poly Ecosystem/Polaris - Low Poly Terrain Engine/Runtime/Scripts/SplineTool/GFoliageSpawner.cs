@@ -1,10 +1,8 @@
 #if GRIFFIN
 using System.Collections.Generic;
-using UnityEngine;
-using Unity.Jobs;
-using Unity.Burst;
 using Unity.Collections;
-using UnityEngine.Rendering;
+using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.SplineTool
 {
@@ -257,7 +255,7 @@ namespace Pinwheel.Griffin.SplineTool
         {
             if (t.TerrainData == null)
                 return;
-            RenderTexture rt = new RenderTexture(MaskResolution, MaskResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture rt = new(MaskResolution, MaskResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             Internal_Apply(t, rt);
             Texture2D mask = GCommon.CreateTexture(MaskResolution, Color.clear);
             GCommon.CopyFromRT(mask, rt);
@@ -292,12 +290,12 @@ namespace Pinwheel.Griffin.SplineTool
         private void SpawnTreesOnTerrain(GStylizedTerrain t, Texture2D mask)
         {
             int sampleCount = Mathf.FloorToInt(TreeDensity * t.TerrainData.Geometry.Width * t.TerrainData.Geometry.Length);
-            NativeArray<bool> cullResult = new NativeArray<bool>(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<GPrototypeInstanceInfo> foliageInfo = new NativeArray<GPrototypeInstanceInfo>(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<int> selectedPrototypeIndices = new NativeArray<int>(TreePrototypeIndices.ToArray(), Allocator.TempJob);
-            GTextureNativeDataDescriptor<Color32> maskHandle = new GTextureNativeDataDescriptor<Color32>(mask);
+            NativeArray<bool> cullResult = new(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<GPrototypeInstanceInfo> foliageInfo = new(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<int> selectedPrototypeIndices = new(TreePrototypeIndices.ToArray(), Allocator.TempJob);
+            GTextureNativeDataDescriptor<Color32> maskHandle = new(mask);
 
-            GSampleInstanceJob job = new GSampleInstanceJob()
+            GSampleInstanceJob job = new()
             {
                 cullResult = cullResult,
                 instanceInfo = foliageInfo,
@@ -316,7 +314,7 @@ namespace Pinwheel.Griffin.SplineTool
             JobHandle jHandle = job.Schedule(sampleCount, 100);
             jHandle.Complete();
 
-            List<GTreeInstance> instances = new List<GTreeInstance>();
+            List<GTreeInstance> instances = new();
             for (int i = 0; i < sampleCount; ++i)
             {
                 if (cullResult[i] == false)
@@ -334,12 +332,12 @@ namespace Pinwheel.Griffin.SplineTool
         private void SpawnGrassesOnTerrain(GStylizedTerrain t, Texture2D mask)
         {
             int sampleCount = Mathf.FloorToInt(GrassDensity * t.TerrainData.Geometry.Width * t.TerrainData.Geometry.Length);
-            NativeArray<bool> cullResultNA = new NativeArray<bool>(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<GPrototypeInstanceInfo> foliageInfoNA = new NativeArray<GPrototypeInstanceInfo>(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<int> selectedPrototypeIndicesNA = new NativeArray<int>(GrassPrototypeIndices.ToArray(), Allocator.TempJob);
-            GTextureNativeDataDescriptor<Color32> maskHandleNA = new GTextureNativeDataDescriptor<Color32>(mask);
+            NativeArray<bool> cullResultNA = new(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<GPrototypeInstanceInfo> foliageInfoNA = new(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<int> selectedPrototypeIndicesNA = new(GrassPrototypeIndices.ToArray(), Allocator.TempJob);
+            GTextureNativeDataDescriptor<Color32> maskHandleNA = new(mask);
 
-            GSampleInstanceJob job = new GSampleInstanceJob()
+            GSampleInstanceJob job = new()
             {
                 cullResult = cullResultNA,
                 instanceInfo = foliageInfoNA,

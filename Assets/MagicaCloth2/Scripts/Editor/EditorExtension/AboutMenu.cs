@@ -24,7 +24,7 @@ namespace MagicaCloth2
 
         //=========================================================================================
         [MenuItem("Tools/Magica Cloth2/About", false)]
-        static void InitWindow()
+        private static void InitWindow()
         {
             if (AboutWindow)
                 return;
@@ -59,7 +59,7 @@ namespace MagicaCloth2
             EditorGUILayout.Space();
             EditorGUILayout.Space();
 
-            GUIStyle myStyle = new GUIStyle();
+            GUIStyle myStyle = new();
             myStyle.alignment = TextAnchor.MiddleCenter;
             myStyle.fontSize = 20;
             myStyle.normal.textColor = Color.white;

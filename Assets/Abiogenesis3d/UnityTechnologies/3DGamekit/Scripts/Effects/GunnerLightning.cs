@@ -1,27 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Gamekit3D
 {
     public class GunnerLightning : MonoBehaviour
     {
 
-        LineRenderer LR;
+        private LineRenderer LR;
 
         //public Transform start;
         public Transform end;
-        Transform[] branch;
+        private readonly Transform[] branch;
 
         public float updateInterval = 0.5f;
-        float updateTime = 0;
+        private float updateTime = 0;
 
         public int pointCount = 10;
         public float randomOffset = 0.5f;
-        Vector3[] points;
+        private Vector3[] points;
 
         // Use this for initialization
-        void Start()
+        private void Start()
         {
             LR = GetComponent<LineRenderer>();
             points = new Vector3[pointCount];
@@ -29,7 +27,7 @@ namespace Gamekit3D
             LR.useWorldSpace = false;
         }
 
-        void Update()
+        private void Update()
         {
 
 

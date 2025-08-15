@@ -14,7 +14,7 @@ namespace Pinwheel.Griffin.PaintTool
         private static readonly int MASK = Shader.PropertyToID("_Mask");
         private static readonly int OPACITY = Shader.PropertyToID("_Opacity");
         private static readonly int TERRAIN_MASK = Shader.PropertyToID("_TerrainMask");
-        
+
         private static Material painterMaterial;
         public static Material PainterMaterial
         {

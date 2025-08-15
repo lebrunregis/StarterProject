@@ -77,7 +77,7 @@ namespace Pinwheel.Griffin.DataTool
                 h = GCommon.DecodeTerrainHeight(enc);
                 colors[i] = new Color(h, 0, 0, 0);
             }
-            Texture2D tex = new Texture2D(SrcData.Geometry.HeightMapResolution, SrcData.Geometry.HeightMapResolution, TextureFormat.RGBAFloat, false);
+            Texture2D tex = new(SrcData.Geometry.HeightMapResolution, SrcData.Geometry.HeightMapResolution, TextureFormat.RGBAFloat, false);
             tex.SetPixels(colors);
             tex.Apply();
             byte[] data = tex.EncodeToPNG();
@@ -95,7 +95,7 @@ namespace Pinwheel.Griffin.DataTool
             {
                 colors[i] = new Color(1 - colors[i].a, 0, 0, 0);
             }
-            Texture2D tex = new Texture2D(SrcData.Geometry.HeightMapResolution, SrcData.Geometry.HeightMapResolution);
+            Texture2D tex = new(SrcData.Geometry.HeightMapResolution, SrcData.Geometry.HeightMapResolution);
             tex.SetPixels(colors);
             tex.Apply();
             byte[] data = tex.EncodeToPNG();

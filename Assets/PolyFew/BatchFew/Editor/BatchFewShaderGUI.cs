@@ -32,62 +32,62 @@ namespace UnityEditor
 
             private static class Styles
             {
-                public static GUIContent uvSetLabel = new GUIContent("UV Set");
-                public static GUIContent detailMode = new GUIContent("Detail Texture Mode");
-                public static GUIContent albedoText = new GUIContent("Albedo", "Albedo (RGB) and Transparency (A)");
-                public static GUIContent alphaCutoffText = new GUIContent("Alpha Cutoff", "Threshold for alpha cutoff");
-                public static GUIContent specularMapText = new GUIContent("Specular", "Specular (RGB) and Smoothness (A)");
-                public static GUIContent metallicMapText = new GUIContent("Metallic", "Metallic (R) and Smoothness (A)");
-                public static GUIContent smoothnessMapChannelText = new GUIContent("Source", "Smoothness texture and channel");
-                public static GUIContent highlightsText = new GUIContent("Specular Highlights", "Specular Highlights");
-                public static GUIContent reflectionsText = new GUIContent("Reflections", "Glossy Reflections");
-                public static GUIContent normalMapText = new GUIContent("Normal Map", "Normal Map");
-                public static GUIContent heightMapText = new GUIContent("Height Map", "Height Map (G)");
-                public static GUIContent occlusionText = new GUIContent("Occlusion", "Occlusion (G)");
-                public static GUIContent emissionText = new GUIContent("Emission", "Emission (RGB)");
-                public static GUIContent detailMaskText = new GUIContent("Detail Mask", "Mask for Secondary Maps (A)");
-                public static GUIContent detailAlbedoText = new GUIContent("Detail Albedo x2", "Albedo (RGB) multiplied by 2");
-                public static GUIContent detailNormalMapText = new GUIContent("Normal Map", "Normal Map");
-                public static GUIContent propertyMapText = new GUIContent("Attributes Texture", "Texture which holds attributes for individual materials");
-                public static GUIContent emissionMode = new GUIContent("Emission Mode", "None, color, or array based emission");
-                public static GUIContent parallaxMode = new GUIContent("Parallax Mode", "None, Offset, or POM");
-                public static GUIContent parallaxSteps = new GUIContent("Parallax Steps", "Number of taps to perform in Parallax Occlusion Mapping, more is more expensive");
+                public static GUIContent uvSetLabel = new("UV Set");
+                public static GUIContent detailMode = new("Detail Texture Mode");
+                public static GUIContent albedoText = new("Albedo", "Albedo (RGB) and Transparency (A)");
+                public static GUIContent alphaCutoffText = new("Alpha Cutoff", "Threshold for alpha cutoff");
+                public static GUIContent specularMapText = new("Specular", "Specular (RGB) and Smoothness (A)");
+                public static GUIContent metallicMapText = new("Metallic", "Metallic (R) and Smoothness (A)");
+                public static GUIContent smoothnessMapChannelText = new("Source", "Smoothness texture and channel");
+                public static GUIContent highlightsText = new("Specular Highlights", "Specular Highlights");
+                public static GUIContent reflectionsText = new("Reflections", "Glossy Reflections");
+                public static GUIContent normalMapText = new("Normal Map", "Normal Map");
+                public static GUIContent heightMapText = new("Height Map", "Height Map (G)");
+                public static GUIContent occlusionText = new("Occlusion", "Occlusion (G)");
+                public static GUIContent emissionText = new("Emission", "Emission (RGB)");
+                public static GUIContent detailMaskText = new("Detail Mask", "Mask for Secondary Maps (A)");
+                public static GUIContent detailAlbedoText = new("Detail Albedo x2", "Albedo (RGB) multiplied by 2");
+                public static GUIContent detailNormalMapText = new("Normal Map", "Normal Map");
+                public static GUIContent propertyMapText = new("Attributes Texture", "Texture which holds attributes for individual materials");
+                public static GUIContent emissionMode = new("Emission Mode", "None, color, or array based emission");
+                public static GUIContent parallaxMode = new("Parallax Mode", "None, Offset, or POM");
+                public static GUIContent parallaxSteps = new("Parallax Steps", "Number of taps to perform in Parallax Occlusion Mapping, more is more expensive");
                 public static string primaryMapsText = "Main Maps";
                 public static string secondaryMapsText = "Secondary Maps";
                 public static string forwardText = "Forward Rendering Options";
                 public static string renderingMode = "Rendering Mode";
                 public static string advancedText = "Advanced Options";
-                public static GUIContent emissiveWarning = new GUIContent("Emissive value is animated but the material has not been configured to support emissive. Please make sure the material itself has some amount of emissive.");
+                public static GUIContent emissiveWarning = new("Emissive value is animated but the material has not been configured to support emissive. Please make sure the material itself has some amount of emissive.");
                 public static readonly string[] blendNames = Enum.GetNames(typeof(BlendMode));
             }
 
-            MaterialProperty blendMode = null;
-            MaterialProperty albedoMap = null;
-            MaterialProperty specularMap = null;
-            MaterialProperty metallicMap = null;
-            MaterialProperty smoothnessMapChannel = null;
-            MaterialProperty highlights = null;
-            MaterialProperty reflections = null;
-            MaterialProperty bumpMap = null;
-            MaterialProperty occlusionMap = null;
-            MaterialProperty heightMap = null;
-            MaterialProperty emissionMap = null;
-            MaterialProperty detailMask = null;
-            MaterialProperty detailAlbedoMap = null;
-            MaterialProperty detailNormalMap = null;
-            MaterialProperty uvSetSecondary = null;
-            MaterialProperty attrImg = null;
-            MaterialProperty detailMode = null;
-            MaterialProperty emissionMode = null;
-            MaterialProperty parallaxMode = null;
-            MaterialProperty parallaxSteps = null;
-            MaterialProperty detailAlbedoSingle = null;
-            MaterialProperty detailNormalSingle = null;
-            MaterialProperty alphaCutoff = null;
+            private MaterialProperty blendMode = null;
+            private MaterialProperty albedoMap = null;
+            private MaterialProperty specularMap = null;
+            private MaterialProperty metallicMap = null;
+            private MaterialProperty smoothnessMapChannel = null;
+            private MaterialProperty highlights = null;
+            private MaterialProperty reflections = null;
+            private MaterialProperty bumpMap = null;
+            private MaterialProperty occlusionMap = null;
+            private MaterialProperty heightMap = null;
+            private MaterialProperty emissionMap = null;
+            private MaterialProperty detailMask = null;
+            private MaterialProperty detailAlbedoMap = null;
+            private MaterialProperty detailNormalMap = null;
+            private MaterialProperty uvSetSecondary = null;
+            private MaterialProperty attrImg = null;
+            private MaterialProperty detailMode = null;
+            private MaterialProperty emissionMode = null;
+            private MaterialProperty parallaxMode = null;
+            private MaterialProperty parallaxSteps = null;
+            private MaterialProperty detailAlbedoSingle = null;
+            private MaterialProperty detailNormalSingle = null;
+            private MaterialProperty alphaCutoff = null;
 
-            MaterialEditor m_MaterialEditor;
-            WorkflowMode m_WorkflowMode = WorkflowMode.Specular;
-            bool m_FirstTimeApply = true;
+            private MaterialEditor m_MaterialEditor;
+            private WorkflowMode m_WorkflowMode = WorkflowMode.Specular;
+            private bool m_FirstTimeApply = true;
 
             public void FindProperties(MaterialProperty[] props)
             {
@@ -249,7 +249,7 @@ namespace UnityEditor
                 MaterialChanged(material, m_WorkflowMode);
             }
 
-            void BlendModePopup()
+            private void BlendModePopup()
             {
                 EditorGUI.showMixedValue = blendMode.hasMixedValue;
                 var mode = (BlendMode)blendMode.floatValue;
@@ -265,7 +265,7 @@ namespace UnityEditor
                 EditorGUI.showMixedValue = false;
             }
 
-            void DoAlbedoArea(Material material)
+            private void DoAlbedoArea(Material material)
             {
                 m_MaterialEditor.TexturePropertySingleLine(Styles.albedoText, albedoMap);
                 if (((BlendMode)material.GetFloat("_Mode") == BlendMode.Cutout))
@@ -274,7 +274,7 @@ namespace UnityEditor
                 }
             }
 
-            void DoEmissionArea(Material material)
+            private void DoEmissionArea(Material material)
             {
                 m_MaterialEditor.ShaderProperty(emissionMode, Styles.emissionMode.text);
                 // Texture and HDR color controls
@@ -288,7 +288,7 @@ namespace UnityEditor
 
             }
 
-            void DoSpecularMetallicArea()
+            private void DoSpecularMetallicArea()
             {
                 if (m_WorkflowMode == WorkflowMode.Specular)
                 {
@@ -306,7 +306,7 @@ namespace UnityEditor
                     m_MaterialEditor.ShaderProperty(smoothnessMapChannel, Styles.smoothnessMapChannelText, indentation);
             }
 
-            static void SetupMaterialWithBlendMode(Material material, BlendMode blendMode)
+            private static void SetupMaterialWithBlendMode(Material material, BlendMode blendMode)
             {
                 switch (blendMode)
                 {
@@ -353,7 +353,7 @@ namespace UnityEditor
                 }
             }
 
-            static SmoothnessMapChannel GetSmoothnessMapChannel(Material material)
+            private static SmoothnessMapChannel GetSmoothnessMapChannel(Material material)
             {
                 int ch = (int)material.GetFloat("_SmoothnessTextureChannel");
                 if (ch == (int)SmoothnessMapChannel.AlbedoAlpha)
@@ -362,7 +362,7 @@ namespace UnityEditor
                     return SmoothnessMapChannel.SpecularMetallicAlpha;
             }
 
-            static void SetMaterialKeywords(Material material, WorkflowMode workflowMode)
+            private static void SetMaterialKeywords(Material material, WorkflowMode workflowMode)
             {
                 // Note: keywords must be based on Material value not on MaterialProperty due to multi-edit & material animation
                 // (MaterialProperty value might come from renderer material property block)
@@ -413,7 +413,7 @@ namespace UnityEditor
                 SetMaterialKeywords(material, workflowMode);
             }
 
-            static void SetKeyword(Material m, string keyword, bool state)
+            private static void SetKeyword(Material m, string keyword, bool state)
             {
                 if (state)
                     m.EnableKeyword(keyword);

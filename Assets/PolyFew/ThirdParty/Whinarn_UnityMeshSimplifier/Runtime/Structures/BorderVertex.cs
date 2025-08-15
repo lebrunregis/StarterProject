@@ -40,7 +40,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
 
     internal class BorderVertexComparer : IComparer<BorderVertex>
     {
-        public static readonly BorderVertexComparer instance = new BorderVertexComparer();
+        public static readonly BorderVertexComparer instance = new();
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int Compare(BorderVertex x, BorderVertex y)

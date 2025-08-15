@@ -19,7 +19,7 @@ namespace MagicaCloth2
         /// 検証結果
         /// Verification Results.
         /// </summary>
-        ResultCode verificationResult;
+        private ResultCode verificationResult;
         public Define.Result VerificationResult => verificationResult.Result;
 
 
@@ -200,32 +200,32 @@ namespace MagicaCloth2
             return cparams;
         }
 
-        class TempBuffer
+        private class TempBuffer
         {
-            ClothProcess.ClothType clothType;
-            List<Renderer> sourceRenderers;
-            ClothMeshWriteMode meshWriteMode;
-            PaintMode paintMode;
-            List<Texture2D> paintMaps;
-            int paintMapUvChannel;
-            List<Transform> rootBones;
-            RenderSetupData.BoneConnectionMode connectionMode;
-            float rotationalInterpolation;
-            float rootRotation;
-            ClothUpdateMode updateMode;
-            float animationPoseRatio;
-            ReductionSettings reductionSetting;
-            CustomSkinningSettings customSkinningSetting;
-            NormalAlignmentSettings normalAlignmentSetting;
-            ClothNormalAxis normalAxis;
-            List<ColliderComponent> colliderList;
-            List<Transform> collisionBones;
-            MagicaCloth synchronization;
-            float stablizationTimeAfterReset;
-            float blendWeight;
-            CullingSettings cullingSetting;
-            Transform anchor;
-            float anchorInertia;
+            private ClothProcess.ClothType clothType;
+            private List<Renderer> sourceRenderers;
+            private ClothMeshWriteMode meshWriteMode;
+            private PaintMode paintMode;
+            private List<Texture2D> paintMaps;
+            private int paintMapUvChannel;
+            private List<Transform> rootBones;
+            private RenderSetupData.BoneConnectionMode connectionMode;
+            private float rotationalInterpolation;
+            private float rootRotation;
+            private ClothUpdateMode updateMode;
+            private float animationPoseRatio;
+            private ReductionSettings reductionSetting;
+            private CustomSkinningSettings customSkinningSetting;
+            private NormalAlignmentSettings normalAlignmentSetting;
+            private ClothNormalAxis normalAxis;
+            private List<ColliderComponent> colliderList;
+            private List<Transform> collisionBones;
+            private MagicaCloth synchronization;
+            private float stablizationTimeAfterReset;
+            private float blendWeight;
+            private CullingSettings cullingSetting;
+            private Transform anchor;
+            private float anchorInertia;
 
             internal TempBuffer(ClothSerializeData sdata)
             {

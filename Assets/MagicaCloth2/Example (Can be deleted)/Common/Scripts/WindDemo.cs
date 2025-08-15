@@ -15,16 +15,16 @@ namespace MagicaCloth2
         [SerializeField]
         private Renderer arrowRenderer = null;
         [SerializeField]
-        private Gradient arrowGradient = new Gradient();
+        private Gradient arrowGradient = new();
         [SerializeField]
-        private List<Transform> rotationTransforms = new List<Transform>();
+        private List<Transform> rotationTransforms = new();
 
         private float angleY = 0.0f;
         private float angleX = 0.0f;
         private float main = 0.0f;
         private float turbulence = 0.0f;
 
-        void Start()
+        private void Start()
         {
 
         }
@@ -56,7 +56,7 @@ namespace MagicaCloth2
         }
 
         //=========================================================================================
-        void UpdateArrowColor()
+        private void UpdateArrowColor()
         {
             if (arrowRenderer)
             {
@@ -67,7 +67,7 @@ namespace MagicaCloth2
             }
         }
 
-        void UpdateDirection()
+        private void UpdateDirection()
         {
             var lrot = Quaternion.Euler(angleX, angleY, 0.0f);
             foreach (var t in rotationTransforms)
@@ -77,7 +77,7 @@ namespace MagicaCloth2
             UpdateMagicaWindZone();
         }
 
-        void UpdateMagicaWindZone()
+        private void UpdateMagicaWindZone()
         {
             if (magicaWindZone)
             {
@@ -88,7 +88,7 @@ namespace MagicaCloth2
             }
         }
 
-        void UpdateUnityWindZone()
+        private void UpdateUnityWindZone()
         {
             if (unityWindZone)
             {

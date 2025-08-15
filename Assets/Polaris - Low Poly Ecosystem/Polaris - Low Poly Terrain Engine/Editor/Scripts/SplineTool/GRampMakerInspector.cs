@@ -69,8 +69,8 @@ namespace Pinwheel.Griffin.SplineTool
 
         private class GBaseGUI
         {
-            public static readonly GUIContent SPLINE_CREATOR = new GUIContent("Spline Creator", "The Spline Creator component this modifier belongs to");
-            public static readonly GUIContent LIVE_PREVIEW = new GUIContent("Live Preview", "Draw a preview over the terrain");
+            public static readonly GUIContent SPLINE_CREATOR = new("Spline Creator", "The Spline Creator component this modifier belongs to");
+            public static readonly GUIContent LIVE_PREVIEW = new("Live Preview", "Draw a preview over the terrain");
         }
 
         private void DrawBaseGUI()
@@ -89,9 +89,9 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Falloff";
             public static readonly string ID = "spline-ramp-maker-falloff";
 
-            public static readonly GUIContent FALL_OFF = new GUIContent("Falloff", "Falloff factor of the spline effect, from the center to the edge");
-            public static readonly GUIContent FALL_OFF_NOISE = new GUIContent("Falloff Noise", "Noise map in world space to blend with the falloff curve");
-            public static readonly GUIContent FALL_OFF_NOISE_SIZE = new GUIContent("Falloff Noise Size", "Size of the falloff noise in world space");
+            public static readonly GUIContent FALL_OFF = new("Falloff", "Falloff factor of the spline effect, from the center to the edge");
+            public static readonly GUIContent FALL_OFF_NOISE = new("Falloff Noise", "Noise map in world space to blend with the falloff curve");
+            public static readonly GUIContent FALL_OFF_NOISE_SIZE = new("Falloff Noise Size", "Size of the falloff noise in world space");
         }
 
         private void DrawFalloffGUI()
@@ -115,11 +115,11 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Ramp";
             public static readonly string ID = "spline-ramp-maker-ramp";
 
-            public static readonly GUIContent ADDITIONAL_MESH_RESOLUTION = new GUIContent("Additional Mesh Resolution", "Add more mesh detail to the ramp");
-            public static readonly GUIContent HEIGHT_OFFSET = new GUIContent("Height Offset", "Offset the ramp height on Y axis, useful for making rivers");
-            public static readonly GUIContent STEP_COUNT = new GUIContent("Step Count", "Adding a quantize/step effect to the ramp");
-            public static readonly GUIContent RAISE_HEIGHT = new GUIContent("Raise Height", "Toggle height raising");
-            public static readonly GUIContent LOWER_HEIGHT = new GUIContent("Lower Height", "Toggle height lowering");
+            public static readonly GUIContent ADDITIONAL_MESH_RESOLUTION = new("Additional Mesh Resolution", "Add more mesh detail to the ramp");
+            public static readonly GUIContent HEIGHT_OFFSET = new("Height Offset", "Offset the ramp height on Y axis, useful for making rivers");
+            public static readonly GUIContent STEP_COUNT = new("Step Count", "Adding a quantize/step effect to the ramp");
+            public static readonly GUIContent RAISE_HEIGHT = new("Raise Height", "Toggle height raising");
+            public static readonly GUIContent LOWER_HEIGHT = new("Lower Height", "Toggle height lowering");
         }
 
         private void DrawRampGUI()
@@ -139,7 +139,7 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Action";
             public static readonly string ID = "spline-ramp-maker-action";
 
-            public static readonly GUIContent APPLY_BTN = new GUIContent("Apply");
+            public static readonly GUIContent APPLY_BTN = new("Apply");
         }
 
         private void DrawActionGUI()
@@ -236,7 +236,7 @@ namespace Pinwheel.Griffin.SplineTool
             if (!previewTextures.ContainsKey(t) ||
                 previewTextures[t] == null)
             {
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, GGeometry.HeightMapRTFormat, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, GGeometry.HeightMapRTFormat, RenderTextureReadWrite.Linear);
                 previewTextures[t] = rt;
             }
             else if (previewTextures[t].width != resolution ||
@@ -245,7 +245,7 @@ namespace Pinwheel.Griffin.SplineTool
             {
                 previewTextures[t].Release();
                 Object.DestroyImmediate(previewTextures[t]);
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, GGeometry.HeightMapRTFormat, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, GGeometry.HeightMapRTFormat, RenderTextureReadWrite.Linear);
                 previewTextures[t] = rt;
             }
 

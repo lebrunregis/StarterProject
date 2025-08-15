@@ -22,7 +22,7 @@ namespace Pinwheel.Griffin.TextureTool
 
         public static GBlurParams Create()
         {
-            GBlurParams param = new GBlurParams();
+            GBlurParams param = new();
             param.radius = 10;
             return param;
         }

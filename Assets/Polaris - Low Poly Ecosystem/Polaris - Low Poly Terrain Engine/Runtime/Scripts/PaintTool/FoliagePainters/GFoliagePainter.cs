@@ -13,7 +13,7 @@ namespace Pinwheel.Griffin.PaintTool
     [ExecuteInEditMode]
     public class GFoliagePainter : MonoBehaviour
     {
-        private static readonly List<string> BUILTIN_PAINTER_NAME = new List<string>(new string[]
+        private static readonly List<string> BUILTIN_PAINTER_NAME = new(new string[]
         {
             "GTreePainter",
             "GTreeScaler",
@@ -478,7 +478,7 @@ namespace Pinwheel.Griffin.PaintTool
             if (overlappedTerrains.Count == 0)
                 return;
 
-            List<GTerrainResourceFlag> flags = new List<GTerrainResourceFlag>();
+            List<GTerrainResourceFlag> flags = new();
             flags.AddRange(ActivePainter.GetResourceFlagForHistory(args));
 
             if (InitialRecordedTerrains.Count == 0)
@@ -511,10 +511,10 @@ namespace Pinwheel.Griffin.PaintTool
             if (EditedTerrains.Count == 0)
                 return;
 
-            List<GTerrainResourceFlag> flags = new List<GTerrainResourceFlag>();
+            List<GTerrainResourceFlag> flags = new();
             flags.AddRange(ActivePainter.GetResourceFlagForHistory(args));
 
-            List<GStylizedTerrain> terrainList = new List<GStylizedTerrain>(EditedTerrains);
+            List<GStylizedTerrain> terrainList = new(EditedTerrains);
             string backupName = GBackup.TryCreateBackup(ActivePainter.HistoryPrefix, terrainList[0], flags, false);
             if (!string.IsNullOrEmpty(backupName))
             {

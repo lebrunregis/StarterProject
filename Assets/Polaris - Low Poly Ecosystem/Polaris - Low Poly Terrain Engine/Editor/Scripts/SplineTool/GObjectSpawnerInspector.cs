@@ -57,8 +57,8 @@ namespace Pinwheel.Griffin.SplineTool
 
         private class GBaseGUI
         {
-            public static readonly GUIContent SPLINE_CREATOR = new GUIContent("Spline Creator", "The Spline Creator component which this modifier belongs to");
-            public static readonly GUIContent LIVE_PREVIEW = new GUIContent("Live Preview", "Draw a preview on the terrain");
+            public static readonly GUIContent SPLINE_CREATOR = new("Spline Creator", "The Spline Creator component which this modifier belongs to");
+            public static readonly GUIContent LIVE_PREVIEW = new("Live Preview", "Draw a preview on the terrain");
         }
 
         private void DrawBaseGUI()
@@ -78,9 +78,9 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Falloff";
             public static readonly string ID = "spline-object-spawner-falloff";
 
-            public static readonly GUIContent FALL_OFF = new GUIContent("Falloff", "Falloff factor of the spline effect, from the center to the edge");
-            public static readonly GUIContent FALL_OFF_NOISE = new GUIContent("Falloff Noise", "Noise map in world space to blend with the falloff curve");
-            public static readonly GUIContent FALL_OFF_NOISE_SIZE = new GUIContent("Falloff Noise Size", "Size of the falloff noise in world space");
+            public static readonly GUIContent FALL_OFF = new("Falloff", "Falloff factor of the spline effect, from the center to the edge");
+            public static readonly GUIContent FALL_OFF_NOISE = new("Falloff Noise", "Noise map in world space to blend with the falloff curve");
+            public static readonly GUIContent FALL_OFF_NOISE_SIZE = new("Falloff Noise Size", "Size of the falloff noise in world space");
         }
 
         private void DrawFalloffGUI()
@@ -103,7 +103,7 @@ namespace Pinwheel.Griffin.SplineTool
         {
             public static readonly string LABEL = "Mask";
             public static readonly string ID = "spline-object-spawner-mask";
-            public static readonly GUIContent MASK_RESOLUTION = new GUIContent("Mask Resolution", "Resolution of the mask which is rendered by the spline, this mask will be used for sample object instances");
+            public static readonly GUIContent MASK_RESOLUTION = new("Mask Resolution", "Resolution of the mask which is rendered by the spline, this mask will be used for sample object instances");
         }
 
         private void DrawMaskGUI()
@@ -119,13 +119,13 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Objects";
             public static readonly string ID = "spline-object-spawner-objects";
 
-            public static readonly GUIContent MIN_ROTATION = new GUIContent("Min Rotation", "Minimum rotation of each instance, in degree, on Y axis");
-            public static readonly GUIContent MAX_ROTATION = new GUIContent("Max Rotation", "Maximum rotation of each instance, in degree, on Y axis");
-            public static readonly GUIContent MIN_SCALE = new GUIContent("Min Scale", "Minimum scale of each instance");
-            public static readonly GUIContent MAX_SCALE = new GUIContent("Max Scale", "Maximum scale of each instance");
-            public static readonly GUIContent RAYCAST_LAYER = new GUIContent("Raycast Layer", "Object layer to perform raycast for snapping");
-            public static readonly GUIContent ALIGN_TO_SURFACE = new GUIContent("Align To Surface", "Align the object for terrain surface");
-            public static readonly GUIContent DENSITY = new GUIContent("Density", "Number of object instances per a meter-squared");
+            public static readonly GUIContent MIN_ROTATION = new("Min Rotation", "Minimum rotation of each instance, in degree, on Y axis");
+            public static readonly GUIContent MAX_ROTATION = new("Max Rotation", "Maximum rotation of each instance, in degree, on Y axis");
+            public static readonly GUIContent MIN_SCALE = new("Min Scale", "Minimum scale of each instance");
+            public static readonly GUIContent MAX_SCALE = new("Max Scale", "Maximum scale of each instance");
+            public static readonly GUIContent RAYCAST_LAYER = new("Raycast Layer", "Object layer to perform raycast for snapping");
+            public static readonly GUIContent ALIGN_TO_SURFACE = new("Align To Surface", "Align the object for terrain surface");
+            public static readonly GUIContent DENSITY = new("Density", "Number of object instances per a meter-squared");
         }
 
         private void DrawObjectGUI()
@@ -147,7 +147,7 @@ namespace Pinwheel.Griffin.SplineTool
         {
             if (instance.Prototypes.Count > 0)
             {
-                GSelectionGridArgs args = new GSelectionGridArgs();
+                GSelectionGridArgs args = new();
                 args.collection = instance.Prototypes;
                 args.selectedIndices = instance.PrototypeIndices;
                 args.itemSize = GEditorCommon.selectionGridTileSizeSmall;
@@ -180,7 +180,7 @@ namespace Pinwheel.Griffin.SplineTool
 
         private void OnObjectSelectorContextClick(Rect r, int index, ICollection collection)
         {
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 new GUIContent("Remove"),
                 false,
@@ -197,7 +197,7 @@ namespace Pinwheel.Griffin.SplineTool
             public static readonly string LABEL = "Action";
             public static readonly string ID = "spline-object-spawner-action";
 
-            public static readonly GUIContent SPAWN = new GUIContent("Spawn");
+            public static readonly GUIContent SPAWN = new("Spawn");
         }
 
         private void DrawActionGUI()
@@ -287,14 +287,14 @@ namespace Pinwheel.Griffin.SplineTool
             if (!previewTextures.ContainsKey(t) ||
                 previewTextures[t] == null)
             {
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 previewTextures[t] = rt;
             }
             else if (previewTextures[t].width != resolution || previewTextures[t].height != resolution)
             {
                 previewTextures[t].Release();
                 Object.DestroyImmediate(previewTextures[t]);
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 previewTextures[t] = rt;
             }
 

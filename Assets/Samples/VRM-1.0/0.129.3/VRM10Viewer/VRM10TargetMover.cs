@@ -7,16 +7,16 @@ namespace UniVRM10.VRM10Viewer
     public class VRM10TargetMover : MonoBehaviour
     {
         [SerializeField]
-        float m_radius = 5.0f;
+        private float m_radius = 5.0f;
 
         [SerializeField]
-        float m_angularVelocity = 40.0f;
+        private float m_angularVelocity = 40.0f;
 
         [SerializeField]
-        float m_y = 1.5f;
+        private float m_y = 1.5f;
 
         [SerializeField]
-        float m_height = 3.0f;
+        private float m_height = 3.0f;
 
         public IEnumerator Start()
         {

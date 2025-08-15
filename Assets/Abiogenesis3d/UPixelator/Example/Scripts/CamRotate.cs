@@ -2,78 +2,78 @@ using UnityEngine;
 
 namespace Abiogenesis3d.UPixelator_Demo
 {
-[ExecuteInEditMode]
-public class CamRotate : MonoBehaviour
-{
-    [HideInInspector]
-    public Quaternion value;
-
-    [Range(0, 100)]
-    public int dragRotateBuffer = 20;
-    Vector2 startRotateMousePosition;
-    bool isRotating;
-
-    public KeyCode rotateKey = KeyCode.Mouse1;
-
-    Camera cam;
-
-    Vector3 eulerAngles;
-
-    public float minAngleX = 10;
-    public float maxAngleX = 89;
-
-    public float rotationSpeed = 200;
-
-    // TODO: move to module
-    // public Vector2 mousePosition;
-
-    void Start()
+    [ExecuteInEditMode]
+    public class CamRotate : MonoBehaviour
     {
-        cam = Camera.main;
+        [HideInInspector]
+        public Quaternion value;
 
-        eulerAngles = cam.transform.eulerAngles;
-        Rotate();
-    }
+        [Range(0, 100)]
+        public int dragRotateBuffer = 20;
+        private Vector2 startRotateMousePosition;
+        private bool isRotating;
 
-    void Update()
-    {
-        if (!Application.isPlaying) isRotating = true;
+        public KeyCode rotateKey = KeyCode.Mouse1;
 
-        if (Input.GetKeyDown(rotateKey))
+        private Camera cam;
+
+        private Vector3 eulerAngles;
+
+        public float minAngleX = 10;
+        public float maxAngleX = 89;
+
+        public float rotationSpeed = 200;
+
+        // TODO: move to module
+        // public Vector2 mousePosition;
+
+        private void Start()
         {
-            startRotateMousePosition = Input.mousePosition;
-        }
-        else if (Input.GetKey(rotateKey))
-        {
-            if (Vector2.Distance(startRotateMousePosition, Input.mousePosition) > dragRotateBuffer)
-                isRotating = true;
-        }
-        else if (Input.GetKeyUp(rotateKey))
-        {
-            isRotating = false;
+            cam = Camera.main;
+
+            eulerAngles = cam.transform.eulerAngles;
+            Rotate();
         }
 
-        if (isRotating) Rotate();
-    }
+        private void Update()
+        {
+            if (!Application.isPlaying) isRotating = true;
 
-    void Rotate()
-    {
-        float dt = Time.deltaTime;
+            if (Input.GetKeyDown(rotateKey))
+            {
+                startRotateMousePosition = Input.mousePosition;
+            }
+            else if (Input.GetKey(rotateKey))
+            {
+                if (Vector2.Distance(startRotateMousePosition, Input.mousePosition) > dragRotateBuffer)
+                    isRotating = true;
+            }
+            else if (Input.GetKeyUp(rotateKey))
+            {
+                isRotating = false;
+            }
 
-        eulerAngles.y += Input.GetAxis("Mouse X") * rotationSpeed * dt;
-        eulerAngles.x -= Input.GetAxis("Mouse Y") * rotationSpeed * dt;
+            if (isRotating) Rotate();
+        }
+
+        private void Rotate()
+        {
+            float dt = Time.deltaTime;
+
+            eulerAngles.y += Input.GetAxis("Mouse X") * rotationSpeed * dt;
+            eulerAngles.x -= Input.GetAxis("Mouse Y") * rotationSpeed * dt;
 
 #if UNITY_EDITOR
-        if (!Application.isPlaying && cam) eulerAngles = cam.transform.eulerAngles;
+            if (!Application.isPlaying && cam) eulerAngles = cam.transform.eulerAngles;
 #endif
-        eulerAngles.x = ClampAngle(eulerAngles.x, minAngleX, maxAngleX);
+            eulerAngles.x = ClampAngle(eulerAngles.x, minAngleX, maxAngleX);
 
-        value = Quaternion.Euler(eulerAngles);
-    }
+            value = Quaternion.Euler(eulerAngles);
+        }
 
-    public static float ClampAngle(float angle, float min, float max)
-    {
-        return Mathf.Clamp(angle % 360, min, max);
+        public static float ClampAngle(float angle, float min, float max)
+        {
+            return Mathf.Clamp(angle % 360, min, max);
+        }
     }
-}
 }

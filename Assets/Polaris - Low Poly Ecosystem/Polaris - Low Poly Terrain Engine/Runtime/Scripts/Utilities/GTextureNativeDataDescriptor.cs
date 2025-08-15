@@ -1,8 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Collections;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -13,7 +11,7 @@ namespace Pinwheel.Griffin
         public int width;
         public int height;
 
-        private bool isValid;
+        private readonly bool isValid;
         public bool IsValid
         {
             get

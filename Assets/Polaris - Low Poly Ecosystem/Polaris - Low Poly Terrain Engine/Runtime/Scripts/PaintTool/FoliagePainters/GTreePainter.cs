@@ -32,7 +32,7 @@ namespace Pinwheel.Griffin.PaintTool
         {
             get
             {
-                List<Type> types = new List<Type>(new Type[]
+                List<Type> types = new(new Type[]
                 {
                     typeof(GHeightConstraintFilter),
                     typeof(GSlopeConstraintFilter),
@@ -100,7 +100,7 @@ namespace Pinwheel.Griffin.PaintTool
             Vector3 rayOrigin = Vector3.zero;
             Vector3 rayDirection = Vector3.down;
             float sqrtTwo = Mathf.Sqrt(2);
-            Ray ray = new Ray();
+            Ray ray = new();
             RaycastHit samplePoint;
             Vector3 bary0 = Vector3.zero;
             Vector3 bary1 = Vector3.zero;
@@ -119,7 +119,7 @@ namespace Pinwheel.Griffin.PaintTool
             }
 
             int prototypeCount = terrain.TerrainData.Foliage.Trees.Prototypes.Count;
-            List<GTreeInstance> newInstances = new List<GTreeInstance>();
+            List<GTreeInstance> newInstances = new();
             for (int i = 0; i < args.Density; ++i)
             {
                 treeIndex = args.TreeIndices[Random.Range(0, args.TreeIndices.Count)];
@@ -234,7 +234,7 @@ namespace Pinwheel.Griffin.PaintTool
         private void HandleEraseTree(GStylizedTerrain terrain, GFoliagePainterArgs args)
         {
             int treeIndex = -1;
-            Vector3 terrainSize = new Vector3(
+            Vector3 terrainSize = new(
                 terrain.TerrainData.Geometry.Width,
                 terrain.TerrainData.Geometry.Height,
                 terrain.TerrainData.Geometry.Length);

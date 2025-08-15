@@ -4,19 +4,19 @@ using UnityEngine;
 
 namespace CitrioN.SettingsMenuCreator
 {
-  [ExcludeFromMenuSelection]
-  public abstract class Setting_CustomOptions : Setting
-  {
-    [SerializeField]
-    [Tooltip("Click to show/hide available input element options")]
-    protected List<StringToStringRelation> options = new List<StringToStringRelation>();
-
-    public Setting_CustomOptions() { }
-
-    public override List<StringToStringRelation> Options
+    [ExcludeFromMenuSelection]
+    public abstract class Setting_CustomOptions : Setting
     {
-      get { return options; }
-      set { options = value; }
+        [SerializeField]
+        [Tooltip("Click to show/hide available input element options")]
+        protected List<StringToStringRelation> options = new();
+
+        public Setting_CustomOptions() { }
+
+        public override List<StringToStringRelation> Options
+        {
+            get { return options; }
+            set { options = value; }
+        }
     }
-  }
 }

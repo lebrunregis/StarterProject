@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 #if ADDRESSABLES_ENABLED
-    using UnityEngine.AddressableAssets;
+using UnityEngine.AddressableAssets;
 #endif
 using Object = UnityEngine.Object;
 
@@ -22,32 +22,32 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
         // ReSharper disable InconsistentNaming
         // COLORS FOR DARK SCHEME
-        private static readonly Color DarkSkin_OuterGroupBoxColor = new Color(.7f, 1f, 1f);
-        private static readonly Color DarkSkin_SecondaryHeaderColor = new Color(.8f, .8f, .8f);
-        private static readonly Color DarkSkin_GroupBoxColor = new Color(.6f, .6f, .6f);
-        private static readonly Color DarkSkin_SecondaryGroupBoxColor = new Color(.5f, .8f, 1f);
+        private static readonly Color DarkSkin_OuterGroupBoxColor = new(.7f, 1f, 1f);
+        private static readonly Color DarkSkin_SecondaryHeaderColor = new(.8f, .8f, .8f);
+        private static readonly Color DarkSkin_GroupBoxColor = new(.6f, .6f, .6f);
+        private static readonly Color DarkSkin_SecondaryGroupBoxColor = new(.5f, .8f, 1f);
         private static readonly Color DarkSkin_BrightButtonColor = Color.cyan;
         private static readonly Color DarkSkin_BrightTextColor = Color.yellow;
         private static readonly Color DarkSkin_DragAreaColor = Color.yellow;
-        private static readonly Color DarkSkin_InactiveHeaderColor = new Color(.6f, .6f, .6f);
-        private static readonly Color DarkSkin_ActiveHeaderColor = new Color(.3f, .8f, 1f);
-        private static readonly Color DarkSkin_HelpIconColor = new Color(.2f, 1f, .2f);
-        private static readonly Color DarkSkin_DeleteButtonColor = new Color(1f, .2f, .2f);
+        private static readonly Color DarkSkin_InactiveHeaderColor = new(.6f, .6f, .6f);
+        private static readonly Color DarkSkin_ActiveHeaderColor = new(.3f, .8f, 1f);
+        private static readonly Color DarkSkin_HelpIconColor = new(.2f, 1f, .2f);
+        private static readonly Color DarkSkin_DeleteButtonColor = new(1f, .2f, .2f);
         private static readonly Color DarkSkin_DividerColor = Color.gray;
 
         // COLORS FOR LIGHT SCHEME
         private static readonly Color LightSkin_OuterGroupBoxColor = Color.white;
         private static readonly Color LightSkin_SecondaryHeaderColor = Color.white;
-        private static readonly Color LightSkin_GroupBoxColor = new Color(.7f, .7f, .8f);
-        private static readonly Color LightSkin_SecondaryGroupBoxColor = new Color(.6f, 1f, 1f);
-        private static readonly Color LightSkin_BrightButtonColor = new Color(0f, 1f, 1f);
+        private static readonly Color LightSkin_GroupBoxColor = new(.7f, .7f, .8f);
+        private static readonly Color LightSkin_SecondaryGroupBoxColor = new(.6f, 1f, 1f);
+        private static readonly Color LightSkin_BrightButtonColor = new(0f, 1f, 1f);
         private static readonly Color LightSkin_BrightTextColor = Color.yellow;
-        private static readonly Color LightSkin_DragAreaColor = new Color(1f, 1f, .3f);
-        private static readonly Color LightSkin_InactiveHeaderColor = new Color(.6f, .6f, .6f);
-        private static readonly Color LightSkin_ActiveHeaderColor = new Color(.3f, .8f, 1f);
+        private static readonly Color LightSkin_DragAreaColor = new(1f, 1f, .3f);
+        private static readonly Color LightSkin_InactiveHeaderColor = new(.6f, .6f, .6f);
+        private static readonly Color LightSkin_ActiveHeaderColor = new(.3f, .8f, 1f);
         private static readonly Color LightSkin_HelpIconColor = Color.green;
-        private static readonly Color LightSkin_DeleteButtonColor = new Color(1f, .2f, .2f);
-        private static readonly Color LightSkin_DividerColor = new Color(.4f, .4f, .4f);
+        private static readonly Color LightSkin_DeleteButtonColor = new(1f, .2f, .2f);
+        private static readonly Color LightSkin_DividerColor = new(.4f, .4f, .4f);
         // ReSharper restore InconsistentNaming
 
         private static List<string> _layers;
@@ -150,92 +150,122 @@ namespace DarkTonic.MasterAudio.EditorScripts
             GUI.backgroundColor = Color.white;
         }
 
-        private static bool IsDarkSkin {
-            get {
+        private static bool IsDarkSkin
+        {
+            get
+            {
                 return EditorPrefs.GetInt("UserSkin") == 1;
             }
         }
 
-        public static Color DividerColor {
-            get {
+        public static Color DividerColor
+        {
+            get
+            {
                 return IsDarkSkin ? DarkSkin_DividerColor : LightSkin_DividerColor;
             }
         }
 
-        public static Color DeleteButtonColor {
-            get {
+        public static Color DeleteButtonColor
+        {
+            get
+            {
                 return IsDarkSkin ? DarkSkin_DeleteButtonColor : LightSkin_DeleteButtonColor;
             }
         }
 
-        public static Color InactiveMixerGroupColor {
-            get {
+        public static Color InactiveMixerGroupColor
+        {
+            get
+            {
                 return new Color(.5f, .5f, .5f);
             }
         }
 
-        public static Color InactiveHeaderColor {
-            get {
+        public static Color InactiveHeaderColor
+        {
+            get
+            {
                 return IsDarkSkin ? DarkSkin_InactiveHeaderColor : LightSkin_InactiveHeaderColor;
             }
         }
 
-        public static Color ActiveHeaderColor {
-            get {
+        public static Color ActiveHeaderColor
+        {
+            get
+            {
                 return IsDarkSkin ? DarkSkin_ActiveHeaderColor : LightSkin_ActiveHeaderColor;
             }
         }
 
-        public static Color DragAreaColor {
-            get {
+        public static Color DragAreaColor
+        {
+            get
+            {
                 return IsDarkSkin ? DarkSkin_DragAreaColor : LightSkin_DragAreaColor;
             }
         }
 
-        public static Color BrightButtonColor {
-            get {
+        public static Color BrightButtonColor
+        {
+            get
+            {
                 return IsDarkSkin ? DarkSkin_BrightButtonColor : LightSkin_BrightButtonColor;
             }
         }
 
-        public static Color BrightTextColor {
-            get {
+        public static Color BrightTextColor
+        {
+            get
+            {
                 return IsDarkSkin ? DarkSkin_BrightTextColor : LightSkin_BrightTextColor;
             }
         }
 
-        private static Color GroupBoxColor {
-            get {
+        private static Color GroupBoxColor
+        {
+            get
+            {
                 return IsDarkSkin ? DarkSkin_GroupBoxColor : LightSkin_GroupBoxColor;
             }
         }
 
-        private static Color SecondaryHeaderColor {
-            get {
+        private static Color SecondaryHeaderColor
+        {
+            get
+            {
                 return IsDarkSkin ? DarkSkin_SecondaryHeaderColor : LightSkin_SecondaryHeaderColor;
             }
         }
 
-        private static Color HelpIconColor {
-            get {
+        private static Color HelpIconColor
+        {
+            get
+            {
                 return IsDarkSkin ? DarkSkin_HelpIconColor : LightSkin_HelpIconColor;
             }
         }
 
-        private static Color OuterGroupBoxColor {
-            get {
+        private static Color OuterGroupBoxColor
+        {
+            get
+            {
                 return IsDarkSkin ? DarkSkin_OuterGroupBoxColor : LightSkin_OuterGroupBoxColor;
             }
         }
 
-        private static Color SecondaryGroupBoxColor {
-            get {
+        private static Color SecondaryGroupBoxColor
+        {
+            get
+            {
                 return IsDarkSkin ? DarkSkin_SecondaryGroupBoxColor : LightSkin_SecondaryGroupBoxColor;
             }
         }
 
-        public static GUIStyle CornerGUIStyle {
-            get {
+        public static GUIStyle CornerGUIStyle
+        {
+            get
+            {
                 return EditorStyles.helpBox;
             }
 
@@ -252,50 +282,59 @@ namespace DarkTonic.MasterAudio.EditorScripts
         }
 
 #if ADDRESSABLES_ENABLED
-    public static bool IsAddressableTypeValid(AssetReference assetRef, string goName) {
-        if (!AudioAddressableOptimizer.IsAddressableValid(assetRef)) {
+        public static bool IsAddressableTypeValid(AssetReference assetRef, string goName)
+        {
+            if (!AudioAddressableOptimizer.IsAddressableValid(assetRef))
+            {
+                return true;
+            }
+            var path = AssetDatabase.GUIDToAssetPath(assetRef.RuntimeKey.ToString());
+            var type = AssetDatabase.GetMainAssetTypeAtPath(path);
+            if (type != typeof(AudioClip))
+            {
+                var message = "Your addressable for '" + goName + "' is not an Audio Clip. Removing.";
+                Debug.Log(message);
+                return false;
+            }
+
             return true;
         }
-        var path = AssetDatabase.GUIDToAssetPath(assetRef.RuntimeKey.ToString());
-        var type = AssetDatabase.GetMainAssetTypeAtPath(path);
-        if (type != typeof(AudioClip)) {
-            var message = "Your addressable for '" + goName + "' is not an Audio Clip. Removing.";
-            Debug.Log(message);
-            return false;
+
+        public static AudioClip EditModeLoadAddressable(AssetReference assetRef)
+        {
+            if (!AudioAddressableOptimizer.IsAddressableValid(assetRef))
+            { // seems a good way to check if you chose something other than "none".
+                return null;
+            }
+
+            var path = AssetDatabase.GUIDToAssetPath(assetRef.RuntimeKey.ToString());
+            var type = AssetDatabase.GetMainAssetTypeAtPath(path);
+            if (type != typeof(AudioClip))
+            {
+                Debug.Log("Your addressable is not an Audio Clip. Can't play.");
+                return null;
+            }
+            var clip = AssetDatabase.LoadAssetAtPath<AudioClip>(path);
+            return clip;
         }
 
-        return true;
-    }
+        public static void PreviewAddressable(AssetReference assetRef, AudioSource previewer, float volume)
+        {
+            if (previewer == null)
+            {
+                return;
+            }
+            var clip = EditModeLoadAddressable(assetRef);
 
-    public static AudioClip EditModeLoadAddressable(AssetReference assetRef) {
-        if (!AudioAddressableOptimizer.IsAddressableValid(assetRef)) { // seems a good way to check if you chose something other than "none".
-            return null;
+            if (clip == null)
+            {
+                return;
+            }
+
+            PlaySilentWakeUpPreview(previewer, clip);
+
+            previewer.PlayOneShot(clip, volume);
         }
-
-        var path = AssetDatabase.GUIDToAssetPath(assetRef.RuntimeKey.ToString());
-        var type = AssetDatabase.GetMainAssetTypeAtPath(path);
-        if (type != typeof(AudioClip)) {
-            Debug.Log("Your addressable is not an Audio Clip. Can't play.");
-            return null;
-        }
-        var clip = AssetDatabase.LoadAssetAtPath<AudioClip>(path);
-        return clip;
-    }
-
-    public static void PreviewAddressable(AssetReference assetRef, AudioSource previewer, float volume) {
-        if (previewer == null) {
-            return;
-        }
-        var clip = EditModeLoadAddressable(assetRef);
-
-        if (clip == null) {
-            return;
-        }
-
-        PlaySilentWakeUpPreview(previewer, clip);
-
-        previewer.PlayOneShot(clip, volume);
-    }
 #endif
 
         public static void ShowCollapsibleSection(ref bool state, string text, bool showArrow = true)
@@ -311,9 +350,12 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
             GUILayout.BeginHorizontal(style);
 
-            if (!state) {
+            if (!state)
+            {
                 GUI.backgroundColor = InactiveHeaderColor;
-            } else {
+            }
+            else
+            {
                 GUI.backgroundColor = ActiveHeaderColor;
             }
 
@@ -459,7 +501,8 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
             GUIStyle style = EditorStyles.objectFieldThumb;
 
-            switch (level) {
+            switch (level)
+            {
                 case 0:
                 case 1:
                     break;
@@ -468,7 +511,8 @@ namespace DarkTonic.MasterAudio.EditorScripts
                     break;
             }
 
-            GUIStyle textureStyle = new GUIStyle(style) {
+            GUIStyle textureStyle = new(style)
+            {
                 padding = new RectOffset(0, 3, 3, 4),
                 margin = new RectOffset(0, 0, 0, 0)
             };
@@ -508,7 +552,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
         public static void AddMiddleHelpIcon(string helpUrl)
         {
             Texture2D backgroundTexture = Texture2D.blackTexture;
-            GUIStyle textureStyle = new GUIStyle(EditorStyles.miniButtonMid)
+            GUIStyle textureStyle = new(EditorStyles.miniButtonMid)
             {
                 padding = new RectOffset(0, 0, 0, 0),
                 margin = new RectOffset(0, 0, 3, 0),
@@ -529,7 +573,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
         public static GUIStyle NoBorderButtonStyle()
         {
             Texture2D backgroundTexture = Texture2D.blackTexture;
-            GUIStyle textureStyle = new GUIStyle(EditorStyles.miniButtonMid)
+            GUIStyle textureStyle = new(EditorStyles.miniButtonMid)
             {
                 padding = new RectOffset(0, 0, 0, 0),
                 margin = new RectOffset(0, 0, 0, 0),
@@ -545,7 +589,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
         public static void AddHelpIconNoStyle(string helpUrl, int topMargin = 3)
         {
             Texture2D backgroundTexture = Texture2D.blackTexture;
-            GUIStyle textureStyle = new GUIStyle(EditorStyles.miniButtonMid)
+            GUIStyle textureStyle = new(EditorStyles.miniButtonMid)
             {
                 padding = new RectOffset(0, 0, 0, 0),
                 margin = new RectOffset(0, 0, topMargin, 0),
@@ -640,12 +684,16 @@ namespace DarkTonic.MasterAudio.EditorScripts
             return DTFunctionButtons.None;
         }
 
-        public static bool AddPreviewIcon(string itemName) {
+        public static bool AddPreviewIcon(string itemName)
+        {
             GUIContent previewIcon;
 
-            if (MasterAudioInspectorResources.PreviewTexture != null) {
+            if (MasterAudioInspectorResources.PreviewTexture != null)
+            {
                 previewIcon = new GUIContent(MasterAudioInspectorResources.PreviewTexture, "Click to preview " + itemName);
-            } else {
+            }
+            else
+            {
                 previewIcon = new GUIContent("Preview", "Click to preview " + itemName);
             }
             return GUILayout.Button(previewIcon, EditorStyles.toolbarButton, GUILayout.MaxWidth(30));
@@ -1360,7 +1408,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
             }
             else
             {
-                var grp = MasterAudio.FindGroupTransform(sType); 
+                var grp = MasterAudio.FindGroupTransform(sType);
                 if (grp == null)
                 {
                     return;
@@ -1401,12 +1449,12 @@ namespace DarkTonic.MasterAudio.EditorScripts
                             {
                                 PlaySilentWakeUpPreview(previewer, rndVar.VarAudio.clip);
                                 rndVar.VarAudio.PlayOneShot(rndVar.VarAudio.clip, 1);
-                            } 
+                            }
                             break;
 #if ADDRESSABLES_ENABLED
-                    case MasterAudio.AudioLocation.Addressable:
-                        PreviewAddressable(rndVar.audioClipAddressable, previewer, calcVolume);
-                        break;
+                        case MasterAudio.AudioLocation.Addressable:
+                            PreviewAddressable(rndVar.audioClipAddressable, previewer, calcVolume);
+                            break;
 #endif
 
                     }
@@ -1450,9 +1498,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                             }
                             break;
 #if ADDRESSABLES_ENABLED
-                    case MasterAudio.AudioLocation.Addressable:
-                        PreviewAddressable(rndVar.audioClipAddressable, previewer, calcVolume);
-                        break;
+                        case MasterAudio.AudioLocation.Addressable:
+                            PreviewAddressable(rndVar.audioClipAddressable, previewer, calcVolume);
+                            break;
 #endif
                     }
                 }
@@ -1834,39 +1882,47 @@ namespace DarkTonic.MasterAudio.EditorScripts
             return EditorSceneManager.IsPreviewScene(gameObject.scene);
         }
 
-        public static bool IsPrefabInProjectView(GameObject gObject) {
+        public static bool IsPrefabInProjectView(GameObject gObject)
+        {
             return gObject.scene.name == null;
         }
 
-        public static void PlaySilentWakeUpPreview(AudioSource previewer, AudioClip clip) {
+        public static void PlaySilentWakeUpPreview(AudioSource previewer, AudioClip clip)
+        {
             previewer.volume = 0;
             previewer.clip = clip;
             previewer.Play();
-            
+
             previewer.Stop();
             previewer.clip = null;
             previewer.volume = 1;
         }
 
-        public static GameObject DuplicateGameObject(GameObject gameObj, string baseName, int? optionalCountSuffix) {
+        public static GameObject DuplicateGameObject(GameObject gameObj, string baseName, int? optionalCountSuffix)
+        {
             var prefabRoot = PrefabUtility.GetCorrespondingObjectFromSource(gameObj);
 
             GameObject dupe;
 
-            if (prefabRoot != null) {
+            if (prefabRoot != null)
+            {
                 dupe = (GameObject)PrefabUtility.InstantiatePrefab(prefabRoot);
-            } else {
+            }
+            else
+            {
                 // ReSharper disable RedundantCast
                 // ReSharper disable once AccessToStaticMemberViaDerivedType
-                dupe = (GameObject)GameObject.Instantiate(gameObj);
+                dupe = GameObject.Instantiate(gameObj);
                 // ReSharper restore RedundantCast
             }
 
-            if (dupe == null) {
+            if (dupe == null)
+            {
                 return null;
             }
             var newName = baseName;
-            if (optionalCountSuffix.HasValue) {
+            if (optionalCountSuffix.HasValue)
+            {
                 newName += optionalCountSuffix.Value;
             }
             dupe.name = newName;
@@ -1874,7 +1930,8 @@ namespace DarkTonic.MasterAudio.EditorScripts
             return dupe;
         }
 
-        private static PrefabAssetType GetPrefabType(Object gObject) {
+        private static PrefabAssetType GetPrefabType(Object gObject)
+        {
             return PrefabUtility.GetPrefabAssetType(gObject);
         }
 

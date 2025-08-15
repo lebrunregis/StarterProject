@@ -6,8 +6,8 @@ using UnityEngine.UI;
 namespace SBG.Toolbelt.UI
 {
     [Serializable]
-	public class ScreenWipe
-	{
+    public class ScreenWipe
+    {
         public enum WipeDirection
         {
             RightToLeft,
@@ -118,7 +118,7 @@ namespace SBG.Toolbelt.UI
             switch (direction)
             {
                 case WipeDirection.RightToLeft:
-                    ConfigureEdge(this.leftEdge, _leadingSprite, 0, 90, new Vector2(-screenHalfSize.x,0), new Vector2(screenSize.y, _edgeSize));
+                    ConfigureEdge(this.leftEdge, _leadingSprite, 0, 90, new Vector2(-screenHalfSize.x, 0), new Vector2(screenSize.y, _edgeSize));
                     ConfigureEdge(this.rightEdge, _trailingSprite, 1, 90, new Vector2(screenHalfSize.x, 0), new Vector2(screenSize.y, _edgeSize));
                     break;
                 case WipeDirection.LeftToRight:

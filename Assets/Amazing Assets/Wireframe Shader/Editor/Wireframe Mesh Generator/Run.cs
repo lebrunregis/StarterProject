@@ -1,29 +1,28 @@
 // Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
- 
+
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Collections.Generic;
-
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 {
     internal static class Run
     {
-        static List<BatchObject> listBatchObjects;
-        static EditorSettings editorSettings;
+        private static List<BatchObject> listBatchObjects;
+        private static EditorSettings editorSettings;
 
 
-        static int progressBarTotalMeshCount;
-        static int progressBarCurrentMeshIndex;
-        static bool progressBarCanceled;
+        private static int progressBarTotalMeshCount;
+        private static int progressBarCurrentMeshIndex;
+        private static bool progressBarCanceled;
 
 
-        static GameObject cloneGameObject;   //Hold instantiated clone gameObject, to make it possible to clear scene in the case of error during conversion
+        private static GameObject cloneGameObject;   //Hold instantiated clone gameObject, to make it possible to clear scene in the case of error during conversion
 
 
         static public void RunConverter()
@@ -115,7 +114,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
             UnityEditor.EditorUtility.ClearProgressBar();
         }
-        static void RunLoopConverter(int loopIndex)
+        private static void RunLoopConverter(int loopIndex)
         {
             if (listBatchObjects[loopIndex] == null || listBatchObjects[loopIndex].gameObject == null)
                 return;
@@ -198,7 +197,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
         }
 
-        static bool GetPrefabNameAndSaveDirectory(GameObject currentBatchGameObject, out string prefabName, out string prefabSaveDirectory)
+        private static bool GetPrefabNameAndSaveDirectory(GameObject currentBatchGameObject, out string prefabName, out string prefabSaveDirectory)
         {
             prefabName = string.Empty;
             prefabSaveDirectory = string.Empty;
@@ -228,7 +227,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
             return true;
         }
-        static bool CreateCloneGameObject(GameObject source, string name)
+        private static bool CreateCloneGameObject(GameObject source, string name)
         {
             //Remove all non-asset meshes
             if (editorSettings.generateAssetSaveType == EditorSettings.Enum.AssetSaveType.OverwriteOriginalMesh)
@@ -286,7 +285,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                 {
                     for (int i = 0; i < skinnedMeshrenderers.Length; i++)
                     {
-                        Mesh mesh = new Mesh();
+                        Mesh mesh = new();
 #if UNITY_2020_2_OR_NEWER
                         skinnedMeshrenderers[i].BakeMesh(mesh, true);
 #else
@@ -316,11 +315,11 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             return true;
         }
 
-        static bool GenerateWireframe()
+        private static bool GenerateWireframe()
         {
             //Key - source mesh InstanceID
             //Value - generated mesh
-            Dictionary<int, Mesh> bakedMeshes = new Dictionary<int, Mesh>();
+            Dictionary<int, Mesh> bakedMeshes = new();
 
             bool mergeSubMeshes = editorSettings.generateMeshCombineType == EditorSettings.Enum.MeshCombineType.Submeshes || editorSettings.generateMeshCombineType == EditorSettings.Enum.MeshCombineType.Everything;
 
@@ -409,7 +408,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
             return bakedMeshes.Count == 0 ? false : true;
         }
-        static Mesh GenerateWireframe(Mesh sourceMesh, bool mergeSubmeshes)
+        private static Mesh GenerateWireframe(Mesh sourceMesh, bool mergeSubmeshes)
         {
             CallBackConversionyProgress(sourceMesh.name);
 
@@ -433,7 +432,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
         {
             List<BatchObject> listBatchObjects = EditorWindow.active.listBatchObjects;
 
-            List<ModelImporter> modelImporters = new List<ModelImporter>();
+            List<ModelImporter> modelImporters = new();
 
 
             for (int i = 0; i < listBatchObjects.Count; i++)
@@ -455,7 +454,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
             UnityEditor.EditorUtility.ClearProgressBar();
         }
-        static void PreparePrefabMaterials(ref GameObject gameObject, out Dictionary<int, Material> prefabMaterials, string prefabSaveDirectory, string prefabName)
+        private static void PreparePrefabMaterials(ref GameObject gameObject, out Dictionary<int, Material> prefabMaterials, string prefabSaveDirectory, string prefabName)
         {
             prefabMaterials = new Dictionary<int, Material>();
 
@@ -498,8 +497,8 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
                                 case EditorSettings.Enum.MeshCombineType.Everything:
                                     {
-                                        List<Material> listMaterials = new List<Material>();
-                                        List<MeshRenderer> listMeshRenderers = new List<MeshRenderer>();
+                                        List<Material> listMaterials = new();
+                                        List<MeshRenderer> listMeshRenderers = new();
 
                                         //If meshes are using only one material, keep it. Otherwise create new material.
                                         foreach (var meshFilter in gameObject.GetComponentsInChildren<MeshFilter>(true))
@@ -793,8 +792,8 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
                                 case EditorSettings.Enum.MeshCombineType.Everything:
                                     {
-                                        List<Material> listMaterials = new List<Material>();
-                                        List<MeshRenderer> listMeshRenderers = new List<MeshRenderer>();
+                                        List<Material> listMaterials = new();
+                                        List<MeshRenderer> listMeshRenderers = new();
 
                                         //If meshes are using only one material, duplicate only it. Otherwise create new material.
                                         foreach (var meshFilter in gameObject.GetComponentsInChildren<MeshFilter>(true))
@@ -845,7 +844,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             if (prefabMaterials.Count == 0)
                 prefabMaterials = null;
         }
-        static Material CreateDefaultMaterial()
+        private static Material CreateDefaultMaterial()
         {
             if (editorSettings.generateDefaultShader == null)
                 return null;
@@ -853,7 +852,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             return new Material(editorSettings.generateDefaultShader);
         }
 
-        static GameObject SaveMainPrefab(GameObject gameObject, string saveDirectory, string prefabName)
+        private static GameObject SaveMainPrefab(GameObject gameObject, string saveDirectory, string prefabName)
         {
             //Remove missing scripts
             EditorUtilities.RemoveMissingScripts(gameObject);
@@ -877,7 +876,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
             return prefab;
         }
-        static Material SaveMaterialAsset(Material material, string savePath)
+        private static Material SaveMaterialAsset(Material material, string savePath)
         {
             if (material != null)
             {
@@ -912,7 +911,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
             return null;
         }
-        static UnityAssetFile CreateRootUnityMeshAsset(string saveDirectory, string prefabName, string fileName)
+        private static UnityAssetFile CreateRootUnityMeshAsset(string saveDirectory, string prefabName, string fileName)
         {
             string assetSavePath = Path.Combine(saveDirectory, prefabName + fileName + ".asset");
 
@@ -934,7 +933,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
             return rootObject;
         }
-        static void AddMeshToRootUnityAsset(Mesh mesh, UnityEngine.Object assetObject, ModelImporterMeshCompression meshCompression)
+        private static void AddMeshToRootUnityAsset(Mesh mesh, UnityEngine.Object assetObject, ModelImporterMeshCompression meshCompression)
         {
             if (mesh != null)
             {
@@ -947,7 +946,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             }
         }
 
-        static void RemoveAttributesFromMesh(ref Mesh mesh)
+        private static void RemoveAttributesFromMesh(ref Mesh mesh)
         {
             if (editorSettings.saveUseDefaultFlagsForVertexAttribute == false)
             {
@@ -1008,7 +1007,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                 }
             }
         }
-        static Mesh SaveMeshAsset(Mesh mesh, string assetSavePath)
+        private static Mesh SaveMeshAsset(Mesh mesh, string assetSavePath)
         {
             if (mesh != null)
             {
@@ -1067,7 +1066,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             return null;
         }
 
-        static bool CombineMeshesAndSave(GameObject gameObject, Dictionary<int, Material> prefabMainMaterials, string prefabSaveDirectory, string prefabName)
+        private static bool CombineMeshesAndSave(GameObject gameObject, Dictionary<int, Material> prefabMainMaterials, string prefabSaveDirectory, string prefabName)
         {
             List<Material> subMeshesMaterials;
             Mesh combinedMesh = WireframeShaderUtilities.CombineGameObjects(gameObject, editorSettings.generateMeshCombineType == EditorSettings.Enum.MeshCombineType.OneMeshWithSubmeshes, out subMeshesMaterials, prefabName);
@@ -1142,15 +1141,15 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
 
             return true;
         }
-        static void SaveMeshesSeparetly(GameObject gameObject, string prefabSaveDirectory, string prefabName)
+        private static void SaveMeshesSeparetly(GameObject gameObject, string prefabSaveDirectory, string prefabName)
         {
             if (editorSettings.generateAssetSaveType == EditorSettings.Enum.AssetSaveType.OverwriteOriginalMesh)
                 return;
 
 
-            List<Mesh> allMeshes = new List<Mesh>();
-            Dictionary<int, List<MeshFilter>> dictionaryMeshFilters = new Dictionary<int, List<MeshFilter>>();
-            Dictionary<int, List<SkinnedMeshRenderer>> dictionarySkinnedMeshRenderer = new Dictionary<int, List<SkinnedMeshRenderer>>();
+            List<Mesh> allMeshes = new();
+            Dictionary<int, List<MeshFilter>> dictionaryMeshFilters = new();
+            Dictionary<int, List<SkinnedMeshRenderer>> dictionarySkinnedMeshRenderer = new();
 
             foreach (var meshFilter in gameObject.GetComponentsInChildren<MeshFilter>(true))
             {
@@ -1227,7 +1226,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                 }
             }
         }
-        static void SetupColliders(GameObject gameObject)
+        private static void SetupColliders(GameObject gameObject)
         {
             if (editorSettings.generateReplaceMeshColliders)
             {
@@ -1269,7 +1268,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                 }
             }
         }
-        static void SetFlags(GameObject mainPrefab)
+        private static void SetFlags(GameObject mainPrefab)
         {
             //Flags
             if (editorSettings.saveUseStaticEditorFlags)
@@ -1316,7 +1315,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             }
         }
 
-        static bool IsSaveLocationProjectRelative()
+        private static bool IsSaveLocationProjectRelative()
         {
             switch (editorSettings.prefabSaveIn)
             {
@@ -1331,7 +1330,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
                 default: return false;
             }
         }
-        static int CountPrefabReferencesInThisScene(GameObject prefab)
+        private static int CountPrefabReferencesInThisScene(GameObject prefab)
         {
             int counter = 0;
 
@@ -1358,7 +1357,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeMeshGenerator
             return counter;
         }
 
-        static void CallBackConversionyProgress(string meshName)
+        private static void CallBackConversionyProgress(string meshName)
         {
             progressBarCurrentMeshIndex += 1;
 

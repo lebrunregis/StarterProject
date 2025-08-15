@@ -1,10 +1,9 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using Pinwheel.Griffin.ExtensionSystem;
+using System.Collections.Generic;
 using System.Reflection;
+using UnityEditor;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.Wizard
 {
@@ -92,10 +91,10 @@ namespace Pinwheel.Griffin.Wizard
                     {
                         EditorGUILayout.BeginHorizontal();
                         EditorGUILayout.PrefixLabel(GExtensionGUI.LINK);
-                        using (EditorGUI.IndentLevelScope level = new EditorGUI.IndentLevelScope(-1))
+                        using (EditorGUI.IndentLevelScope level = new(-1))
                         {
                             Rect r = EditorGUILayout.GetControlRect();
-                            List<string> linkLabels = new List<string>();
+                            List<string> linkLabels = new();
                             linkLabels.Add(GExtensionGUI.SUPPORT);
                             if (ex.OpenUserGuideMethod != null)
                             {

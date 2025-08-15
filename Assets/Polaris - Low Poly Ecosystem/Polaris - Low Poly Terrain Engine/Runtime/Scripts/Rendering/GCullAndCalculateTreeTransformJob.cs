@@ -1,10 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Jobs;
 using Unity.Collections;
-using Unity.Burst;
+using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.Rendering
 {
@@ -66,7 +63,7 @@ namespace Pinwheel.Griffin.Rendering
             }
 
             float pivotOffset = prototypePivotOffset[tree.prototypeIndex];
-            Vector3 worldPos = new Vector3(
+            Vector3 worldPos = new(
                 tree.position.x * terrainSize.x + terrainPos.x,
                 tree.position.y * terrainSize.y + terrainPos.y + pivotOffset,
                 tree.position.z * terrainSize.z + terrainPos.z);
@@ -80,7 +77,7 @@ namespace Pinwheel.Griffin.Rendering
             }
 
             Vector3 baseScale = prototypeBaseScale[tree.prototypeIndex];
-            Vector3 worldScale = new Vector3(
+            Vector3 worldScale = new(
                 tree.scale.x * baseScale.x,
                 tree.scale.y * baseScale.y,
                 tree.scale.z * baseScale.z);

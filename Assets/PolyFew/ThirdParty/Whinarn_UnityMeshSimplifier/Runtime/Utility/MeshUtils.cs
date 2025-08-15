@@ -253,7 +253,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
 
                 blendShapes[blendShapeIndex] = new BlendShape(shapeName, frames);
             }
-            
+
             return blendShapes;
         }
         public static void LOG(string s) { Debug.Log(s); }
@@ -288,11 +288,11 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
                         {
 
                             // Make the name of the blendshape unique and then try to add
-                            for(int a = 0; a < mesh.blendShapeCount; a++)
+                            for (int a = 0; a < mesh.blendShapeCount; a++)
                             {
                                 string thisShapeName = mesh.GetBlendShapeName(a);
 
-                                if(shapeName == thisShapeName)
+                                if (shapeName == thisShapeName)
                                 {
                                     shapeName += "_" + Guid.NewGuid().ToString("N");
 

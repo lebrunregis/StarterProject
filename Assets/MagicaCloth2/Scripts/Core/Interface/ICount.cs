@@ -7,7 +7,7 @@ namespace MagicaCloth2
     /// <summary>
     /// データカウントを返すインターフェース
     /// </summary>
-    interface ICount
+    internal interface ICount
     {
         int Count();
     }

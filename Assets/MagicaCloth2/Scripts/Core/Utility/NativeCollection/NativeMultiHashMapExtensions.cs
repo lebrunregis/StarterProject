@@ -186,6 +186,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
+        private
 #if MC2_COLLECTIONS_200
         struct SetParallelMultiHashMapJob<TKey, TValue> : IJob where TKey : unmanaged, IEquatable<TKey> where TValue : unmanaged
 #else

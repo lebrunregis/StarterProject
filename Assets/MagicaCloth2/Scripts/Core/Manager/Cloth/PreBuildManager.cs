@@ -23,9 +23,9 @@ namespace MagicaCloth2
             internal ResultCode result;
             internal int referenceCount;
 
-            internal List<RenderSetupData> renderSetupDataList = new List<RenderSetupData>();
+            internal List<RenderSetupData> renderSetupDataList = new();
             internal VirtualMesh proxyMesh = null;
-            internal List<VirtualMesh> renderMeshList = new List<VirtualMesh>();
+            internal List<VirtualMesh> renderMeshList = new();
 
             internal DistanceConstraint.ConstraintData distanceConstraintData;
             internal TriangleBendingConstraint.ConstraintData bendingConstraintData;
@@ -133,8 +133,8 @@ namespace MagicaCloth2
             }
         }
 
-        Dictionary<SharePreBuildData, ShareDeserializationData> deserializationDict = new Dictionary<SharePreBuildData, ShareDeserializationData>();
-        bool isValid = false;
+        private readonly Dictionary<SharePreBuildData, ShareDeserializationData> deserializationDict = new();
+        private bool isValid = false;
 
         //=========================================================================================
         public void Dispose()
@@ -165,7 +165,7 @@ namespace MagicaCloth2
 
         public void InformationLog(StringBuilder allsb)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine($"========== PreBuild Manager ==========");
             if (IsValid() == false)
             {
@@ -188,7 +188,7 @@ namespace MagicaCloth2
         }
 
         //=========================================================================================
-        static readonly ProfilerMarker deserializationProfiler = new ProfilerMarker("PreBuild.Deserialization");
+        private static readonly ProfilerMarker deserializationProfiler = new("PreBuild.Deserialization");
 
         /// <summary>
         /// PreBuildDataをデシリアライズし登録する

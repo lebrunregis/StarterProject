@@ -2,11 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     /// <summary>
     /// This class contains settings for the basic sound effects unit in Master Audio, known on the Sound Group.
     /// </summary>
-    public class MasterAudioGroup : MonoBehaviour {
+    public class MasterAudioGroup : MonoBehaviour
+    {
         /*! \cond PRIVATE */
         // ReSharper disable InconsistentNaming
 #pragma warning disable 1591
@@ -49,7 +51,7 @@ namespace DarkTonic.MasterAudio {
         public bool useNoRepeatRefill = true;
         public bool useInactivePeriodPoolRefill = false;
         public float inactivePeriodSeconds = 5f;
-        public List<SoundGroupVariation> groupVariations = new List<SoundGroupVariation>();
+        public List<SoundGroupVariation> groupVariations = new();
         public MasterAudio.AudioLocation bulkVariationMode = MasterAudio.AudioLocation.Clip;
         public string comments;
         public bool logSound = false;
@@ -57,8 +59,8 @@ namespace DarkTonic.MasterAudio {
         public bool copySettingsExpanded = false;
 
         public bool expandLinkedGroups = false;
-        public List<string> childSoundGroups = new List<string>();
-        public List<string> endLinkedGroups = new List<string>();
+        public List<string> childSoundGroups = new();
+        public List<string> endLinkedGroups = new();
         public MasterAudio.LinkedGroupSelectionType linkedStartGroupSelectionType = MasterAudio.LinkedGroupSelectionType.All;
         public MasterAudio.LinkedGroupSelectionType linkedStopGroupSelectionType = MasterAudio.LinkedGroupSelectionType.All;
 
@@ -102,35 +104,40 @@ namespace DarkTonic.MasterAudio {
         public int frames = 0;
         // ReSharper restore InconsistentNaming
 
-        private List<int> _activeAudioSourcesIds = new List<int>();
+        private List<int> _activeAudioSourcesIds = new();
         private string _objectName = string.Empty;
         private Transform _trans;
         private float _originalVolume = 1;
-        private readonly List<int> _actorInstanceIds = new List<int>();
+        private readonly List<int> _actorInstanceIds = new();
 
-        public enum TargetDespawnedBehavior {
+        public enum TargetDespawnedBehavior
+        {
             None,
             Stop,
             FadeOut
         }
 
-        public enum VariationSequence {
+        public enum VariationSequence
+        {
             Randomized,
             TopToBottom
         }
 
-        public enum VariationMode {
+        public enum VariationMode
+        {
             Normal,
             LoopedChain,
             Dialog
         }
 
-        public enum ChainedLoopLoopMode {
+        public enum ChainedLoopLoopMode
+        {
             Endless,
             NumberOfLoops
         }
 
-        public enum LimitMode {
+        public enum LimitMode
+        {
             None,
             FrameBased,
             TimeBased
@@ -139,36 +146,44 @@ namespace DarkTonic.MasterAudio {
         // ReSharper restore InconsistentNaming
 
         // ReSharper disable once UnusedMember.Local
-        private void Start() {
+        private void Start()
+        {
             // time to rename!
             _objectName = name;
             var childCount = ActiveAudioSourceIds.Count; // time to create clones
-            if (childCount > 0) {
+            if (childCount > 0)
+            {
             } // to get rid of warning
 
-            if (Trans.parent != null) {
+            if (Trans.parent != null)
+            {
                 gameObject.layer = Trans.parent.gameObject.layer;
             }
         }
 
-        public void AddActiveAudioSourceId(int varInstanceId) {
-            if (ActiveAudioSourceIds.Contains(varInstanceId)) {
+        public void AddActiveAudioSourceId(int varInstanceId)
+        {
+            if (ActiveAudioSourceIds.Contains(varInstanceId))
+            {
                 return;
             }
 
             ActiveAudioSourceIds.Add(varInstanceId);
 
             var bus = BusForGroup;
-            if (bus != null) {
+            if (bus != null)
+            {
                 bus.AddActiveAudioSourceId(varInstanceId);
             }
         }
 
-        public void RemoveActiveAudioSourceId(int varInstanceId) {
+        public void RemoveActiveAudioSourceId(int varInstanceId)
+        {
             ActiveAudioSourceIds.Remove(varInstanceId);
 
             var bus = BusForGroup;
-            if (bus != null) {
+            if (bus != null)
+            {
                 bus.RemoveActiveAudioSourceId(varInstanceId);
             }
         }
@@ -188,12 +203,15 @@ namespace DarkTonic.MasterAudio {
             _actorInstanceIds.Remove(instanceId);
         }
 
-        public float SpatialBlendForGroup {
-            get {
+        public float SpatialBlendForGroup
+        {
+            get
+            {
 #if DISABLE_3D_SOUND
                 return MasterAudio.SpatialBlend_2DValue;
 #else
-                switch (MasterAudio.Instance.mixerSpatialBlendType) {
+                switch (MasterAudio.Instance.mixerSpatialBlendType)
+                {
                     case MasterAudio.AllMixerSpatialBlendType.ForceAllTo2D:
                         return MasterAudio.SpatialBlend_2DValue;
                     case MasterAudio.AllMixerSpatialBlendType.ForceAllTo3D:
@@ -203,7 +221,8 @@ namespace DarkTonic.MasterAudio {
                     // ReSharper disable once RedundantCaseLabel
                     case MasterAudio.AllMixerSpatialBlendType.AllowDifferentPerGroup:
                     default:
-                        switch (spatialBlendType) {
+                        switch (spatialBlendType)
+                        {
                             case MasterAudio.ItemSpatialBlendType.ForceTo2D:
                                 return MasterAudio.SpatialBlend_2DValue;
                             case MasterAudio.ItemSpatialBlendType.ForceTo3D:
@@ -221,11 +240,12 @@ namespace DarkTonic.MasterAudio {
         }
         /*! \endcond */
 
-#region public properties
+        #region public properties
         /// <summary>
         /// This property will return the number of Activate voices in this Sound Group.
         /// </summary>
-        public int ActiveVoices {
+        public int ActiveVoices
+        {
             get { return ActiveAudioSourceIds.Count; }
         }
 
@@ -233,8 +253,10 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property will return the number of seconds the unused Addressable (if this Variation uses Addressables) will wait before being released from memory.
         /// </summary>
-        public int AddressableUnusedSecondsLifespan {
-            get {
+        public int AddressableUnusedSecondsLifespan
+        {
+            get
+            {
                 return addressableUnusedSecondsLifespan;
             }
         }
@@ -243,15 +265,18 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property will return the total number of voices available in this Sound Group.
         /// </summary>
-        public int TotalVoices {
+        public int TotalVoices
+        {
             get { return transform.childCount; }
         }
 
         /// <summary>
         /// This property can be set to false to cancel the auto-delegate cleanup on all Variations in this Sound Group. So if you subscribe to SoundFinished, you will get notified of all times it finishes until you unsubscribe.
         /// </summary>
-        public bool WillCleanUpDelegatesAfterStop {
-            set {
+        public bool WillCleanUpDelegatesAfterStop
+        {
+            set
+            {
                 willCleanUpDelegatesAfterStop = value;
             }
         }
@@ -259,15 +284,19 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property will return the Bus for the Sound Group, if any is assigned.
         /// </summary>
-        public GroupBus BusForGroup {
-            get {
-                if (busIndex < MasterAudio.HardCodedBusOptions) {
+        public GroupBus BusForGroup
+        {
+            get
+            {
+                if (busIndex < MasterAudio.HardCodedBusOptions)
+                {
                     return null; // no bus
                 }
 
                 var index = busIndex - MasterAudio.HardCodedBusOptions;
 
-                if (index >= MasterAudio.GroupBuses.Count) {
+                if (index >= MasterAudio.GroupBuses.Count)
+                {
                     // this happens only with Dynamic SGC item removal
                     return null;
                 }
@@ -279,54 +308,70 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property will return the original volume of the Sound Group.
         /// </summary>
-        public float OriginalVolume {
-            get {
+        public float OriginalVolume
+        {
+            get
+            {
                 // ReSharper disable once PossibleInvalidOperationException
                 return _originalVolume;
             }
-            set {
+            set
+            {
                 _originalVolume = value;
             }
         }
 
         /*! \cond PRIVATE */
-        public bool LoggingEnabledForGroup {
+        public bool LoggingEnabledForGroup
+        {
             get { return logSound || MasterAudio.LogSoundsEnabled; }
         }
 
-        public void FireLastVariationFinishedPlay() {
-            if (LastVariationFinishedPlay != null) {
+        public void FireLastVariationFinishedPlay()
+        {
+            if (LastVariationFinishedPlay != null)
+            {
                 LastVariationFinishedPlay();
             }
         }
 
-        public void SubscribeToLastVariationFinishedPlay(System.Action finishedCallback) {
+        public void SubscribeToLastVariationFinishedPlay(System.Action finishedCallback)
+        {
             LastVariationFinishedPlay = null; // clear any old subscribers
             LastVariationFinishedPlay += finishedCallback;
         }
 
-        public void UnsubscribeFromLastVariationFinishedPlay() {
+        public void UnsubscribeFromLastVariationFinishedPlay()
+        {
             LastVariationFinishedPlay = null; // clear any old subscribers
         }
 
         public int ChainLoopCount { get; set; }
 
-        public string GameObjectName {
-            get {
-                if (Application.isPlaying) {
-                    if (string.IsNullOrEmpty(_objectName)) {
+        public string GameObjectName
+        {
+            get
+            {
+                if (Application.isPlaying)
+                {
+                    if (string.IsNullOrEmpty(_objectName))
+                    {
                         _objectName = name;
                     }
 
                     return _objectName;
-                } else {
+                }
+                else
+                {
                     return name;
                 }
             }
         }
 
-        public MasterAudio.GroupPlayType GroupPlayType {
-            get {
+        public MasterAudio.GroupPlayType GroupPlayType
+        {
+            get
+            {
                 if (MasterAudio.Instance.groupPlayType != MasterAudio.GroupPlayType.AllowDifferentPerGroup)
                 {
                     return MasterAudio.Instance.groupPlayType;
@@ -347,22 +392,28 @@ namespace DarkTonic.MasterAudio {
         /// <summary>
         /// This property returns the number of live actors (Dynamic Sound Group Creators) still in the Scene.
         /// </summary>
-        public bool HasLiveActors {
-            get {
+        public bool HasLiveActors
+        {
+            get
+            {
                 return _actorInstanceIds.Count > 0;
             }
         }
 
-        public bool UsesNoRepeat {
+        public bool UsesNoRepeat
+        {
             get { return curVariationSequence == VariationSequence.Randomized && groupVariations.Count >= MinNoRepeatVariations && useNoRepeatRefill; }
         }
 
-#endregion
+        #endregion
 
-#region private properties
-        private Transform Trans {
-            get {
-                if (_trans != null) {
+        #region private properties
+        private Transform Trans
+        {
+            get
+            {
+                if (_trans != null)
+                {
                     return _trans;
                 }
                 _trans = transform;
@@ -371,9 +422,12 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        private List<int> ActiveAudioSourceIds {
-            get {
-                if (_activeAudioSourcesIds != null) {
+        private List<int> ActiveAudioSourceIds
+        {
+            get
+            {
+                if (_activeAudioSourcesIds != null)
+                {
                     return _activeAudioSourcesIds;
                 }
                 _activeAudioSourcesIds = new List<int>(Trans.childCount);
@@ -381,7 +435,7 @@ namespace DarkTonic.MasterAudio {
                 return _activeAudioSourcesIds;
             }
         }
-#endregion
+        #endregion
         /*! \endcond */
     }
 }

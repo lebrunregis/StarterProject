@@ -13,20 +13,20 @@ namespace MagicaCloth2
     public struct ResultCode
     {
         [SerializeField]
-        volatile Define.Result result;
+        private volatile Define.Result result;
 
         /// <summary>
         /// 警告：警告は１つのみ保持
         /// </summary>
         [SerializeField]
-        volatile Define.Result warning;
+        private volatile Define.Result warning;
 
         public Define.Result Result => result;
 
-        public static ResultCode None => new ResultCode(Define.Result.None);
-        public static ResultCode Empty => new ResultCode(Define.Result.Empty);
-        public static ResultCode Success => new ResultCode(Define.Result.Success);
-        public static ResultCode Error => new ResultCode(Define.Result.Error);
+        public static ResultCode None => new(Define.Result.None);
+        public static ResultCode Empty => new(Define.Result.Empty);
+        public static ResultCode Success => new(Define.Result.Success);
+        public static ResultCode Error => new(Define.Result.Error);
 
         public ResultCode(Define.Result initResult)
         {

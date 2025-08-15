@@ -2,17 +2,15 @@
 using Pinwheel.Griffin.BackupTool;
 using Pinwheel.Griffin.BillboardTool;
 using Pinwheel.Griffin.DataTool;
-using Pinwheel.Griffin.ExtensionSystem;
+using Pinwheel.Griffin.ErosionTool;
 using Pinwheel.Griffin.GroupTool;
 using Pinwheel.Griffin.HelpTool;
 using Pinwheel.Griffin.PaintTool;
+using Pinwheel.Griffin.Physic;
 using Pinwheel.Griffin.SplineTool;
 using Pinwheel.Griffin.StampTool;
 using Pinwheel.Griffin.TextureTool;
-using Pinwheel.Griffin.ErosionTool;
-using Pinwheel.Griffin.Physic;
 using Pinwheel.Griffin.Wizard;
-using System.IO;
 using UnityEditor;
 using UnityEngine;
 
@@ -29,7 +27,7 @@ namespace Pinwheel.Griffin
         [MenuItem("GameObject/3D Object/Polaris/Tree Collider", false, -10)]
         public static void CreateTreeCollider(MenuCommand menuCmd)
         {
-            GameObject g = new GameObject("Tree Collider");
+            GameObject g = new("Tree Collider");
             if (menuCmd != null)
                 GameObjectUtility.SetParentAndAlign(g, menuCmd.context as GameObject);
             g.transform.localPosition = Vector3.zero;
@@ -56,7 +54,7 @@ namespace Pinwheel.Griffin
                 root = menuCmd.context as GameObject;
             }
 
-            GameObject windZoneGO = new GameObject("Wind Zone");
+            GameObject windZoneGO = new("Wind Zone");
             GWindZone windZone = windZoneGO.AddComponent<GWindZone>();
             GameObjectUtility.SetParentAndAlign(windZoneGO, root);
 
@@ -66,7 +64,7 @@ namespace Pinwheel.Griffin
         [MenuItem("GameObject/3D Object/Polaris/Tools/Basic Tools", false, -10)]
         public static void CreateTerrainTools(MenuCommand menuCmd)
         {
-            GameObject g = new GameObject("Polaris Tools");
+            GameObject g = new("Polaris Tools");
             if (menuCmd != null)
                 GameObjectUtility.SetParentAndAlign(g, menuCmd.context as GameObject);
             g.transform.localPosition = Vector3.zero;
@@ -77,19 +75,19 @@ namespace Pinwheel.Griffin
             GTerrainTools tools = g.AddComponent<GTerrainTools>();
             tools.hideFlags = HideFlags.HideInInspector;
 
-            GameObject terrainGroup = new GameObject("Terrain Group");
+            GameObject terrainGroup = new("Terrain Group");
             GUtilities.ResetTransform(terrainGroup.transform, g.transform);
             terrainGroup.transform.hideFlags = HideFlags.HideInInspector;
             GTerrainGroup group = terrainGroup.AddComponent<GTerrainGroup>();
             group.GroupId = -1;
 
-            GameObject texturePainter = new GameObject("Geometry & Texture Painter");
+            GameObject texturePainter = new("Geometry & Texture Painter");
             GUtilities.ResetTransform(texturePainter.transform, g.transform);
             texturePainter.transform.hideFlags = HideFlags.HideInInspector;
             GTerrainTexturePainter texturePainterComponent = texturePainter.AddComponent<GTerrainTexturePainter>();
             texturePainterComponent.GroupId = -1;
 
-            GameObject foliagePainter = new GameObject("Foliage Painter");
+            GameObject foliagePainter = new("Foliage Painter");
             GUtilities.ResetTransform(foliagePainter.transform, g.transform);
             foliagePainter.transform.hideFlags = HideFlags.HideInInspector;
             GFoliagePainter foliagePainterComponent = foliagePainter.AddComponent<GFoliagePainter>();
@@ -97,7 +95,7 @@ namespace Pinwheel.Griffin
             foliagePainterComponent.gameObject.AddComponent<GRotationRandomizeFilter>();
             foliagePainterComponent.gameObject.AddComponent<GScaleRandomizeFilter>();
 
-            GameObject objectPainter = new GameObject("Object Painter");
+            GameObject objectPainter = new("Object Painter");
             GUtilities.ResetTransform(objectPainter.transform, g.transform);
             objectPainter.transform.hideFlags = HideFlags.HideInInspector;
             GObjectPainter objectPainterComponent = objectPainter.AddComponent<GObjectPainter>();
@@ -105,12 +103,12 @@ namespace Pinwheel.Griffin
             objectPainterComponent.gameObject.AddComponent<GRotationRandomizeFilter>();
             objectPainterComponent.gameObject.AddComponent<GScaleRandomizeFilter>();
 
-            GameObject assetExplorer = new GameObject("Asset Explorer");
+            GameObject assetExplorer = new("Asset Explorer");
             GUtilities.ResetTransform(assetExplorer.transform, g.transform);
             assetExplorer.transform.hideFlags = HideFlags.HideInInspector;
             assetExplorer.AddComponent<GAssetExplorer>();
 
-            GameObject helpTool = new GameObject("Help");
+            GameObject helpTool = new("Help");
             GUtilities.ResetTransform(helpTool.transform, g.transform);
             helpTool.transform.hideFlags = HideFlags.HideInInspector;
             helpTool.AddComponent<GHelpComponent>();
@@ -122,7 +120,7 @@ namespace Pinwheel.Griffin
         [MenuItem("GameObject/3D Object/Polaris/Tools/Group", false, 10)]
         public static void CreateGroupTool(MenuCommand menuCmd)
         {
-            GameObject g = new GameObject("Terrain Group");
+            GameObject g = new("Terrain Group");
             if (menuCmd != null)
                 GameObjectUtility.SetParentAndAlign(g, menuCmd.context as GameObject);
             g.transform.localPosition = Vector3.zero;
@@ -137,7 +135,7 @@ namespace Pinwheel.Griffin
         [MenuItem("GameObject/3D Object/Polaris/Tools/Geometry - Texture Painter", false, 10)]
         public static void CreateTexturePainter(MenuCommand menuCmd)
         {
-            GameObject g = new GameObject("Geometry & Texture Painter");
+            GameObject g = new("Geometry & Texture Painter");
             if (menuCmd != null)
                 GameObjectUtility.SetParentAndAlign(g, menuCmd.context as GameObject);
             g.transform.localPosition = Vector3.zero;
@@ -152,7 +150,7 @@ namespace Pinwheel.Griffin
         [MenuItem("GameObject/3D Object/Polaris/Tools/Foliage Painter", false, 10)]
         public static void CreateFoliagePainter(MenuCommand menuCmd)
         {
-            GameObject g = new GameObject("Foliage Painter");
+            GameObject g = new("Foliage Painter");
             if (menuCmd != null)
                 GameObjectUtility.SetParentAndAlign(g, menuCmd.context as GameObject);
             g.transform.localPosition = Vector3.zero;
@@ -169,7 +167,7 @@ namespace Pinwheel.Griffin
         [MenuItem("GameObject/3D Object/Polaris/Tools/Object Painter", false, 10)]
         public static void CreateObjectPainter(MenuCommand menuCmd)
         {
-            GameObject g = new GameObject("Object Painter");
+            GameObject g = new("Object Painter");
             if (menuCmd != null)
                 GameObjectUtility.SetParentAndAlign(g, menuCmd.context as GameObject);
             g.transform.localPosition = Vector3.zero;
@@ -186,7 +184,7 @@ namespace Pinwheel.Griffin
         [MenuItem("GameObject/3D Object/Polaris/Tools/Spline", false, 10)]
         public static void CreateSpline(MenuCommand menuCmd)
         {
-            GameObject g = new GameObject("Spline");
+            GameObject g = new("Spline");
             if (menuCmd != null)
                 GameObjectUtility.SetParentAndAlign(g, menuCmd.context as GameObject);
             g.transform.localPosition = Vector3.zero;
@@ -201,7 +199,7 @@ namespace Pinwheel.Griffin
         [MenuItem("GameObject/3D Object/Polaris/Tools/Geometry Stamper", false, 10)]
         public static void CreateGeometryStamper(MenuCommand menuCmd)
         {
-            GameObject geometryStamperGO = new GameObject("Geometry Stamper");
+            GameObject geometryStamperGO = new("Geometry Stamper");
             if (menuCmd != null)
                 GameObjectUtility.SetParentAndAlign(geometryStamperGO, menuCmd.context as GameObject);
             geometryStamperGO.transform.localPosition = Vector3.zero;
@@ -216,7 +214,7 @@ namespace Pinwheel.Griffin
         [MenuItem("GameObject/3D Object/Polaris/Tools/Texture Stamper", false, 10)]
         public static void CreateTextureStamper(MenuCommand menuCmd)
         {
-            GameObject textureStamperGO = new GameObject("Texture Stamper");
+            GameObject textureStamperGO = new("Texture Stamper");
             if (menuCmd != null)
                 GameObjectUtility.SetParentAndAlign(textureStamperGO, menuCmd.context as GameObject);
             textureStamperGO.transform.localPosition = Vector3.zero;
@@ -231,7 +229,7 @@ namespace Pinwheel.Griffin
         [MenuItem("GameObject/3D Object/Polaris/Tools/Foliage Stamper", false, 10)]
         public static void CreateFoliageStamper(MenuCommand menuCmd)
         {
-            GameObject foliageStamperGO = new GameObject("Foliage Stamper");
+            GameObject foliageStamperGO = new("Foliage Stamper");
             if (menuCmd != null)
                 GameObjectUtility.SetParentAndAlign(foliageStamperGO, menuCmd.context as GameObject);
             foliageStamperGO.transform.localPosition = Vector3.zero;
@@ -246,7 +244,7 @@ namespace Pinwheel.Griffin
         [MenuItem("GameObject/3D Object/Polaris/Tools/Object Stamper", false, 10)]
         public static void CreateObjectStamper(MenuCommand menuCmd)
         {
-            GameObject objectStamperGO = new GameObject("Object Stamper");
+            GameObject objectStamperGO = new("Object Stamper");
             if (menuCmd != null)
                 GameObjectUtility.SetParentAndAlign(objectStamperGO, menuCmd.context as GameObject);
             objectStamperGO.transform.localPosition = Vector3.zero;
@@ -261,7 +259,7 @@ namespace Pinwheel.Griffin
         [MenuItem("GameObject/3D Object/Polaris/Tools/Erosion Simulator", false, 10)]
         public static void CreateErosionSimulator(MenuCommand menuCmd)
         {
-            GameObject simulatorGO = new GameObject("Erosion Simulator");
+            GameObject simulatorGO = new("Erosion Simulator");
             if (menuCmd != null)
                 GameObjectUtility.SetParentAndAlign(simulatorGO, menuCmd.context as GameObject);
             simulatorGO.transform.localPosition = Vector3.zero;
@@ -277,7 +275,7 @@ namespace Pinwheel.Griffin
         [MenuItem("GameObject/3D Object/Polaris/Tools/Navigation Helper", false, 10)]
         public static void CreateNavigationHelper(MenuCommand menuCmd)
         {
-            GameObject navHelperGO = new GameObject("Navigation Helper");
+            GameObject navHelperGO = new("Navigation Helper");
             if (menuCmd != null)
                 GameObjectUtility.SetParentAndAlign(navHelperGO, menuCmd.context as GameObject);
             navHelperGO.transform.localPosition = Vector3.zero;

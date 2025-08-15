@@ -6,6 +6,7 @@
 #if UNITY_EDITOR
 
 
+using BrainFailProductions.PolyFew.UnityMeshSimplifier;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -17,7 +18,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
-using BrainFailProductions.PolyFew.UnityMeshSimplifier;
 using static BrainFailProductions.PolyFew.DataContainer;
 
 
@@ -41,8 +41,8 @@ namespace BrainFailProductions.PolyFew
         //GetProcessorCount is not allowed to be called from a ScriptableObject constructor (or instance field initializer), call it in OnEnable instead.
 
         public const string LOD_PARENT_OBJECT_NAME = "(POLY FEW)_LODS-DON'T-DELETE-MANUALLY";
-        public const string LOD_ASSETS_DEFAULT_SAVE_PATH = "Assets/POLYFEW_LODs";   
-        public const string BATCHFEW_ASSETS_DEFAULT_SAVE_PATH = "Assets/BATCHFEW_COMBINED_ASSETS";   
+        public const string LOD_ASSETS_DEFAULT_SAVE_PATH = "Assets/POLYFEW_LODs";
+        public const string BATCHFEW_ASSETS_DEFAULT_SAVE_PATH = "Assets/BATCHFEW_COMBINED_ASSETS";
         public static DataContainer dataContainer;
         public static string AutoLODSavePath { get { return EditorPrefs.GetString("autoLODSavePath"); } set { dataContainer.autoLODSavePath = value; } }
         public static string BatchFewSavePath { get { return EditorPrefs.GetString("batchFewSavePath"); } set { dataContainer.batchFewSavePath = value; } }
@@ -158,7 +158,7 @@ namespace BrainFailProductions.PolyFew
                         meshSimplifier.toleranceSpheres = tSpheres;
                     }
 
-                    else if(meshRendererPair.attachedToMeshFilter && isToleranceActive)
+                    else if (meshRendererPair.attachedToMeshFilter && isToleranceActive)
                     {
                         int a = 0;
 
@@ -205,10 +205,10 @@ namespace BrainFailProductions.PolyFew
                             () =>
                             {
                                 var reducedMesh = meshSimplifier.ToMesh();
-                                 
+
                                 AssignReducedMesh(gameObject, meshRendererPair.mesh, reducedMesh, meshRendererPair.attachedToMeshFilter, true);
 
-                                if(meshSimplifier.RecalculateNormals)
+                                if (meshSimplifier.RecalculateNormals)
                                 {
                                     reducedMesh.RecalculateNormals();
                                     reducedMesh.RecalculateTangents();
@@ -233,7 +233,7 @@ namespace BrainFailProductions.PolyFew
                             {
                                 meshSimplifier.SimplifyMesh(quality);
                             }
-                           
+
 
                             // Create cannot be called from a background thread
                             lock (threadLock1)
@@ -344,7 +344,7 @@ namespace BrainFailProductions.PolyFew
                                 preservationStrength = sphere.preservationStrength
                             };
 
-                            tSpheres[a] = toleranceSphere; 
+                            tSpheres[a] = toleranceSphere;
                             a++;
                         }
 
@@ -388,7 +388,7 @@ namespace BrainFailProductions.PolyFew
                         reducedMesh.RecalculateNormals();
                         reducedMesh.RecalculateTangents();
                     }
-     
+
                     triangleCount += reducedMesh.triangles.Length / 3;
                 }
             }
@@ -461,7 +461,7 @@ namespace BrainFailProductions.PolyFew
 
                 }
 
-                meshSimplifier.toleranceSpheres = tSpheres; 
+                meshSimplifier.toleranceSpheres = tSpheres;
 
             }
 
@@ -482,7 +482,7 @@ namespace BrainFailProductions.PolyFew
 
             var reducedMesh = meshSimplifier.ToMesh();
 
-            reducedMesh.bindposes = meshRendererPair.mesh.bindposes;   
+            reducedMesh.bindposes = meshRendererPair.mesh.bindposes;
 
             reducedMesh.name = meshRendererPair.mesh.name.Replace("-POLY_REDUCED", "") + "-POLY_REDUCED";
             reducedMesh.name = reducedMesh.name.Replace("-BLENDSHAPES_SIMPLIFIED", "");
@@ -620,7 +620,7 @@ namespace BrainFailProductions.PolyFew
 
                             threadsRunning++;
 
-                            if(lodLevelSettings.regardTolerance)
+                            if (lodLevelSettings.regardTolerance)
                             {
 
                                 UnityMeshSimplifier.ToleranceSphere[] tSpheres = new UnityMeshSimplifier.ToleranceSphere[toleranceSpheres.Count];
@@ -675,7 +675,7 @@ namespace BrainFailProductions.PolyFew
                                 {
 
                                     meshSimplifier.SimplifyMesh(quality);
-          
+
                                     // Create cannot be called from a background thread
                                     lock (threadLock1)
                                     {
@@ -684,7 +684,7 @@ namespace BrainFailProductions.PolyFew
                                         {
                                             Mesh reducedMesh = meshSimplifier.ToMesh();
                                             reducedMesh.bindposes = meshToReduce.bindposes;
-                                            
+
                                             reducedMesh.name = meshToReduce.name.Replace("-POLY_REDUCED", "") + "-POLY_REDUCED";
                                             reducedMesh.name = reducedMesh.name.Replace("-BLENDSHAPES_SIMPLIFIED", "");
 
@@ -757,7 +757,7 @@ namespace BrainFailProductions.PolyFew
                                 meshSimplifier.bonesOriginal = smr.bones;
                                 initializedAlready = true;
                                 int index = 0;
-                                
+
                                 foreach (var sphere in toleranceSpheres)
                                 {
 
@@ -832,7 +832,7 @@ namespace BrainFailProductions.PolyFew
 
                                             reducedSkinnedMeshes[meshToReduceIndex] = reducedMesh;
                                             associatedSkinRenderers[meshToReduceIndex] = assoicatedSRenderer;
-                                            
+
                                         });
 
                                         threadsRunning--;
@@ -915,7 +915,7 @@ namespace BrainFailProductions.PolyFew
 
                 OnError?.Invoke(error);
 
-                if(displayErrorBox)
+                if (displayErrorBox)
                 {
                     EditorUtility.DisplayDialog("Failed to generate LODs", error, "Ok");
                 }
@@ -1010,7 +1010,7 @@ namespace BrainFailProductions.PolyFew
 
                 if (AssetDatabase.IsValidFolder(saveAssetsPath))
                 {
-                    rootPath = saveAssetsPath + "/" + forObject.name + "_LOD_Meshes"; 
+                    rootPath = saveAssetsPath + "/" + forObject.name + "_LOD_Meshes";
                 }
 
                 else
@@ -1090,14 +1090,14 @@ namespace BrainFailProductions.PolyFew
 
 
 
-            
+
             Tuple<Mesh[], Mesh[], MeshFilter[], SkinnedMeshRenderer[]>[] allLevelsReducedMeshes;
             allLevelsReducedMeshes = GetReducedMeshes(ref staticRenderers, ref skinnedRenderers, forObject, lodLevelSettings.ToArray(), toleranceSpheres);
 
             List<PolyFewRuntime.MeshCombiner.StaticRenderer[]> levelsStaticCombinedRenderers = null;
             List<PolyFewRuntime.MeshCombiner.SkinnedRenderer[]> levelsSkinnedCombinedRenderers = null;
 
-            levelsStaticCombinedRenderers  = new List<PolyFewRuntime.MeshCombiner.StaticRenderer[]>();
+            levelsStaticCombinedRenderers = new List<PolyFewRuntime.MeshCombiner.StaticRenderer[]>();
             levelsSkinnedCombinedRenderers = new List<PolyFewRuntime.MeshCombiner.SkinnedRenderer[]>();
 
 
@@ -1109,7 +1109,7 @@ namespace BrainFailProductions.PolyFew
 
                 List<Mesh> meshesChangedToReadible = new List<Mesh>();
 
-                foreach(var renderer in originalMeshRenderers)
+                foreach (var renderer in originalMeshRenderers)
                 {
                     var meshFilter = renderer.GetComponent<MeshFilter>();
 
@@ -1120,7 +1120,7 @@ namespace BrainFailProductions.PolyFew
 
                     if (!meshFilter.sharedMesh.isReadable)
                     {
-                        
+
                         ChangeMeshReadability(meshFilter.sharedMesh, true, false);
 
                         if (meshFilter.sharedMesh.isReadable)
@@ -1129,7 +1129,7 @@ namespace BrainFailProductions.PolyFew
                         }
                     }
                 }
-                
+
 
                 foreach (var renderer in originalSkinnedMeshRenderers)
                 {
@@ -1138,7 +1138,7 @@ namespace BrainFailProductions.PolyFew
                         continue;
                     }
 
-                    if(!renderer.sharedMesh.isReadable)
+                    if (!renderer.sharedMesh.isReadable)
                     {
                         ChangeMeshReadability(renderer.sharedMesh, true, false);
 
@@ -1148,7 +1148,7 @@ namespace BrainFailProductions.PolyFew
                         }
                     }
                 }
-                
+
 
                 int a = 0;
                 bool ranOnce = false;
@@ -1156,7 +1156,7 @@ namespace BrainFailProductions.PolyFew
                 foreach (var settings in lodLevelSettings)
                 {
                     // iterate only over the meshes with combined levels
-                    if(!settings.combineMeshes) { a++; continue; }
+                    if (!settings.combineMeshes) { a++; continue; }
 
 #if !UNITY_2017_3_OR_NEWER
                     // Check if we are in older versions of Unity with max vertex limit <= 65534 
@@ -1246,7 +1246,7 @@ namespace BrainFailProductions.PolyFew
                         Mesh reducedMesh = reducedStaticMeshes[b];
                         MeshFilter associatedFilter = associatedMeshFilters[b];
 
-                        if(associatedFilter != null)
+                        if (associatedFilter != null)
                         {
                             associatedFilter.sharedMesh = reducedMesh;
                         }
@@ -1268,7 +1268,7 @@ namespace BrainFailProductions.PolyFew
 
                     SkinnedMeshRenderer[] skinnedRenderersActuallyCombined = null;
 
-                    var staticCombinedRenderer  = PolyFewRuntime.MeshCombiner.CombineStaticMeshes(forObject.transform, -1, originalMeshRenderers, false);
+                    var staticCombinedRenderer = PolyFewRuntime.MeshCombiner.CombineStaticMeshes(forObject.transform, -1, originalMeshRenderers, false);
                     var skinnedCombinedRenderer = PolyFewRuntime.MeshCombiner.CombineSkinnedMeshes(forObject.transform, -1, originalSkinnedMeshRenderers, ref skinnedRenderersActuallyCombined, false);
 
                     if (staticCombinedRenderer != null)
@@ -1276,9 +1276,9 @@ namespace BrainFailProductions.PolyFew
                         levelsStaticCombinedRenderers.Add(staticCombinedRenderer);
                     }
 
-                    if(skinnedCombinedRenderer != null)
+                    if (skinnedCombinedRenderer != null)
                     {
-                        levelsSkinnedCombinedRenderers.Add(skinnedCombinedRenderer);                      
+                        levelsSkinnedCombinedRenderers.Add(skinnedCombinedRenderer);
                     }
 
 
@@ -1288,7 +1288,7 @@ namespace BrainFailProductions.PolyFew
                 }
 
                 // Change back the meshes readibility State
-                foreach(var mesh in meshesChangedToReadible)
+                foreach (var mesh in meshesChangedToReadible)
                 {
                     Debug.LogWarning($"Mesh \"{mesh.name}\" was not readible so we marked it readible for the mesh combining process to complete and changed it back to non-readible after completion. This process can slow down LOD generation. You may want to mark this mesh Read/Write enabled in the model import settings, so that next time LOD generation on this model can be faster.");
                     ChangeMeshReadability(mesh, false, false);
@@ -1298,14 +1298,14 @@ namespace BrainFailProductions.PolyFew
 
             }
 
-#endregion Combining meshes
+            #endregion Combining meshes
 
 
 
-            if(levelsStaticCombinedRenderers.Count == 0)  { levelsStaticCombinedRenderers = null; }
-            if(levelsSkinnedCombinedRenderers.Count == 0) { levelsSkinnedCombinedRenderers = null; }
+            if (levelsStaticCombinedRenderers.Count == 0) { levelsStaticCombinedRenderers = null; }
+            if (levelsSkinnedCombinedRenderers.Count == 0) { levelsSkinnedCombinedRenderers = null; }
 
-            
+
             int totalCombinedStaticMeshes = levelsStaticCombinedRenderers == null ? 0 : levelsStaticCombinedRenderers[0].Length;
             int totalCombinedSkinnedMeshes = levelsSkinnedCombinedRenderers == null ? 0 : levelsSkinnedCombinedRenderers[0].Length;
 
@@ -1325,7 +1325,7 @@ namespace BrainFailProductions.PolyFew
                 var levelSettings = lodLevelSettings[levelIndex];
 
                 var levelRenderers = new List<Renderer>((allRenderers != null ? allRenderers.Length : 0));
-          
+
 
                 if (levelSettings.combineMeshes)
                 {
@@ -1405,7 +1405,7 @@ namespace BrainFailProductions.PolyFew
                             if (!Mathf.Approximately(quality, 1))
                             {
                                 mesh = reducedMesh;
-                                totalMeshesToSave++;   
+                                totalMeshesToSave++;
                             }
                         }
                     }
@@ -1433,7 +1433,7 @@ namespace BrainFailProductions.PolyFew
                 }
             }
 
-            if(skinnedRenderers != null)
+            if (skinnedRenderers != null)
             {
                 for (int rendererIndex = 0; rendererIndex < skinnedRenderers.Length; rendererIndex++)
                 {
@@ -1467,7 +1467,7 @@ namespace BrainFailProductions.PolyFew
 
                     if (levelsStaticCombinedRenderers != null)
                     {
-                        var staticCombinedRenderers  = levelsStaticCombinedRenderers[combinedLvlIndex];
+                        var staticCombinedRenderers = levelsStaticCombinedRenderers[combinedLvlIndex];
 
                         for (int rendererIndex = 0; rendererIndex < staticCombinedRenderers.Length; rendererIndex++)
                         {
@@ -1498,7 +1498,7 @@ namespace BrainFailProductions.PolyFew
 
                                 if (!lightMapGenerated)
                                 {
-                                    EditorUtility.DisplayProgressBar("Generating LODs", $"Saving Mesh Assets {++meshesHandled}/{totalMeshesToSave}", (float)meshesHandled / totalMeshesToSave);      
+                                    EditorUtility.DisplayProgressBar("Generating LODs", $"Saving Mesh Assets {++meshesHandled}/{totalMeshesToSave}", (float)meshesHandled / totalMeshesToSave);
                                 }
 
                                 SaveLODMeshAsset(reducedMesh, forObject.name, staticCombinedRenderer.name, levelIndex, staticCombinedRenderer.mesh.name, rootPath);
@@ -1530,10 +1530,10 @@ namespace BrainFailProductions.PolyFew
                             // Simplify the mesh if necessary
                             //if (!Mathf.Approximately(quality, 1))
                             //{
-                            
+
                             // In case of combined levels with reduction strength 0 some meshes might not be combined and will not be reduced
                             // as well and hence will just refer to the original meshes of the model, so we don't save them as they already exist in the asset database and will throw error if tried to save
-                            if(!Mathf.Approximately(quality, 1) || !AssetDatabase.Contains(reducedMesh))
+                            if (!Mathf.Approximately(quality, 1) || !AssetDatabase.Contains(reducedMesh))
                             {
 
                                 bool lightMapGenerated = false;
@@ -1561,7 +1561,7 @@ namespace BrainFailProductions.PolyFew
                                     //renderer.mesh = null;
                                 }
                             }
-       
+
                             //}
 
                             string rendererName = string.Format("{0:000}_skinned_{1}", rendererIndex, skinnedCombinedRenderer.name);
@@ -1583,7 +1583,7 @@ namespace BrainFailProductions.PolyFew
 
                     float quality = (1f - (levelSettings.reductionStrength / 100f));
 
-                    
+
                     if (staticRenderers != null)
                     {
 
@@ -1630,7 +1630,7 @@ namespace BrainFailProductions.PolyFew
 
                             string rendererName = string.Format("{0:000}_static_{1}", rendererIndex, renderer.name);
                             var levelRenderer = CreateStaticLevelRenderer(rendererName, levelTransform, renderer.transform, mesh, renderer.materials);
-                            levelRenderers.Add(levelRenderer);           
+                            levelRenderers.Add(levelRenderer);
 
                         }
                     }
@@ -1669,7 +1669,7 @@ namespace BrainFailProductions.PolyFew
 
 
                                 SaveLODMeshAsset(mesh, forObject.name, renderer.name, levelIndex, renderer.mesh.name, rootPath);
-                                
+
                                 if (renderer.isNewMesh)
                                 {
                                     DestroyObject(renderer.mesh);
@@ -1681,7 +1681,7 @@ namespace BrainFailProductions.PolyFew
                             string rendererName = string.Format("{0:000}_skinned_{1}", rendererIndex, renderer.name);
                             var levelRenderer = CreateSkinnedLevelRenderer(rendererName, levelTransform, renderer.transform, mesh, renderer.materials, renderer.rootBone, renderer.bones);
                             levelRenderers.Add(levelRenderer);
-                            
+
                         }
                     }
 
@@ -1839,7 +1839,7 @@ namespace BrainFailProductions.PolyFew
             }
 
 
-            if(originalMeshRenderers.Length == 1)
+            if (originalMeshRenderers.Length == 1)
             {
                 // if it has submeshes
                 if (originalMeshRenderers[0].sharedMaterials.Length > 1)
@@ -1848,9 +1848,9 @@ namespace BrainFailProductions.PolyFew
                     HashSet<int> materials = new HashSet<int>();
 
                     //if all the submeshes share the same material or at least 2 do
-                    foreach(var mat in originalMeshRenderers[0].sharedMaterials)
+                    foreach (var mat in originalMeshRenderers[0].sharedMaterials)
                     {
-                        if(mat == null) { continue; }
+                        if (mat == null) { continue; }
                         int hash = mat.GetHashCode();
                         if (materials.Contains(hash))
                         {
@@ -1861,8 +1861,8 @@ namespace BrainFailProductions.PolyFew
 
                         materials.Add(hash);
                     }
-                    
-                    if(isFeasible)
+
+                    if (isFeasible)
                     {
                         dummyStatic = GameObject.CreatePrimitive(PrimitiveType.Quad);
                         MeshRenderer mr = dummyStatic.GetComponent<MeshRenderer>();
@@ -1913,7 +1913,7 @@ namespace BrainFailProductions.PolyFew
                         SkinnedMeshRenderer smr = dummySkinned.AddComponent<SkinnedMeshRenderer>();
                         smr.sharedMesh = new Mesh();
                         smr.sharedMaterials = new Material[1] { dummySkinnedMat };
-                        
+
                         dummySkinnedMat.name = "dummy-material";
                         dummySkinned.name = "";
                         dummySkinned.hideFlags = HideFlags.HideAndDontSave;
@@ -2177,7 +2177,7 @@ namespace BrainFailProductions.PolyFew
             EditorUtility.DisplayProgressBar("Combining Meshes", $"Combining Skinned Meshes and SkinnedMeshRenderers", 0);
             PolyFewRuntime.MeshCombiner.SkinnedRenderer[] skinnedCombinedRenderers = PolyFewRuntime.MeshCombiner.CombineSkinnedMeshes(forObject.transform, -1, originalSkinnedMeshRenderers, ref skinnedRenderersActuallyCombined, false, combinedBaseName);
 
-            
+
 
             if (skinnedRenderersActuallyCombined != null)
             {
@@ -2336,7 +2336,7 @@ namespace BrainFailProductions.PolyFew
             MeshRenderer mrend = null;
             Material[] staticMats = null;
 
-            if(combinedStaticObjects != null && combinedStaticObjects.Count > 0)
+            if (combinedStaticObjects != null && combinedStaticObjects.Count > 0)
             {
                 mrend = combinedStaticObjects.ToArray()[0].GetComponent<MeshRenderer>();
                 staticMats = mrend?.sharedMaterials;
@@ -2346,15 +2346,15 @@ namespace BrainFailProductions.PolyFew
             {
                 Material[] sharedMats = new Material[staticMats.Length];
 
-                for(int a = 0; a < staticMats.Length - 1; a++)
+                for (int a = 0; a < staticMats.Length - 1; a++)
                 {
-                    if(staticMats[a].GetHashCode().Equals(dummyStaticMat.GetHashCode()))
+                    if (staticMats[a].GetHashCode().Equals(dummyStaticMat.GetHashCode()))
                     {
                         a--;
-                        continue;     
+                        continue;
                     }
 
-                    sharedMats[a] = staticMats[a];    
+                    sharedMats[a] = staticMats[a];
                 }
 
                 mrend.sharedMaterials = sharedMats;
@@ -2427,10 +2427,10 @@ namespace BrainFailProductions.PolyFew
             else
             {
                 var smr = forObject.GetComponent<SkinnedMeshRenderer>();
-                if(smr != null) { renderersToConvert = new SkinnedMeshRenderer[] { smr }; }   
+                if (smr != null) { renderersToConvert = new SkinnedMeshRenderer[] { smr }; }
             }
 
-            
+
             if (renderersToConvert == null || renderersToConvert.Length == 0)
             {
                 string error = "";
@@ -2448,9 +2448,9 @@ namespace BrainFailProductions.PolyFew
             }
 
 
-            renderersToConvert = ( from renderer in renderersToConvert
-                                   where renderer.sharedMesh != null
-                                   select renderer ).ToArray();
+            renderersToConvert = (from renderer in renderersToConvert
+                                  where renderer.sharedMesh != null
+                                  select renderer).ToArray();
 
 
             if (renderersToConvert == null || renderersToConvert.Length == 0)
@@ -2514,11 +2514,11 @@ namespace BrainFailProductions.PolyFew
             int count = 0;
             Mesh[] convertedMeshes = new Mesh[renderersToConvert.Length];
             List<GameObject> bonesToDelete = new List<GameObject>();
-            
+
             foreach (var smr in renderersToConvert)
             {
 
-                EditorUtility.DisplayProgressBar("Converting Skinned Meshes", $"Converting Skinned Meshes {++count}/{renderersToConvert.Length}",  (float)count / renderersToConvert.Length);
+                EditorUtility.DisplayProgressBar("Converting Skinned Meshes", $"Converting Skinned Meshes {++count}/{renderersToConvert.Length}", (float)count / renderersToConvert.Length);
 
                 Mesh convertedMesh = new Mesh();
                 convertedMesh.name = smr.sharedMesh.name + "-Skinned_Converted_Mesh";
@@ -2549,7 +2549,7 @@ namespace BrainFailProductions.PolyFew
 
                 if (rootBone != null && rootBone.parent != null)
                 {
-                    if(rootBone.parent.gameObject.GetHashCode() != smr.gameObject.GetHashCode())
+                    if (rootBone.parent.gameObject.GetHashCode() != smr.gameObject.GetHashCode())
                     {
                         bonesToDelete.Add(rootBone.parent.gameObject);
                     }
@@ -2581,8 +2581,8 @@ namespace BrainFailProductions.PolyFew
             int totalMeshesToSave = convertedMeshes.Length;
             int meshesHandled = 0;
 
-        
-            foreach(var convertedMesh in convertedMeshes)
+
+            foreach (var convertedMesh in convertedMeshes)
             {
 
                 EditorUtility.DisplayProgressBar("Converting Skinned Meshes", $"Saving Mesh Assets {++meshesHandled}/{totalMeshesToSave}", (float)meshesHandled / totalMeshesToSave);
@@ -2755,7 +2755,7 @@ namespace BrainFailProductions.PolyFew
             string oldName = meshName;
             meshName = MakeNameSafe(meshName);
             string path;
-            path = $"{rootFolderPath}/{meshName}.mesh";  
+            path = $"{rootFolderPath}/{meshName}.mesh";
             SaveAsset(asset, path);
         }
 
@@ -3044,7 +3044,7 @@ namespace BrainFailProductions.PolyFew
             }
         }
 
-#endregion From MeshSimplifier
+        #endregion From MeshSimplifier
 
 
 
@@ -3481,7 +3481,7 @@ namespace BrainFailProductions.PolyFew
 
                 if (mesh == null) { continue; }
 
-                if(generateUV2)
+                if (generateUV2)
                 {
                     EditorUtility.DisplayProgressBar("Saving Object", $"Generating UV2 and writing mesh assets to disk {currentIteration}/{meshes.Count}", (float)(currentIteration - 1) / totalIterations);
                 }
@@ -3681,7 +3681,7 @@ namespace BrainFailProductions.PolyFew
             {
                 string toOverwriteName = Path.GetFileNameWithoutExtension(toOverwritePath);
                 string overwriteWithName = Path.GetFileNameWithoutExtension(overwriteWithPath);
- 
+
 
                 if (refreshAssetdb) { AssetDatabase.Refresh(); }
                 File.WriteAllBytes(toOverwritePath, File.ReadAllBytes(overwriteWithPath));
@@ -3815,7 +3815,7 @@ namespace BrainFailProductions.PolyFew
             if (mRendererPair.attachedToMeshFilter)
             {
                 MeshFilter filter = gameObject.GetComponent<MeshFilter>();
-                reducedMesh  = filter?.sharedMesh;
+                reducedMesh = filter?.sharedMesh;
                 originalMesh = mRendererPair.mesh;
 
                 if (originalMesh != null && reducedMesh != null)
@@ -3968,9 +3968,9 @@ namespace BrainFailProductions.PolyFew
                         Mesh reducedMesh = filter.sharedMesh;
                         Mesh originalMesh = kvp.Value.mesh;
 
-                        if(reducedMesh != null && originalMesh != null)
+                        if (reducedMesh != null && originalMesh != null)
                         {
-                            if(!reducedMesh.GetHashCode().Equals(originalMesh.GetHashCode()))
+                            if (!reducedMesh.GetHashCode().Equals(originalMesh.GetHashCode()))
                             {
                                 if (!IsMeshSavedAsAsset(originalMesh))
                                 {
@@ -4103,7 +4103,7 @@ namespace BrainFailProductions.PolyFew
 
             DataContainer.ObjectMeshPair objectMeshPairs = new DataContainer.ObjectMeshPair();
 
-            if(forObject == null) { return null; }
+            if (forObject == null) { return null; }
 
             MeshFilter[] meshFilters = forObject.GetComponentsInChildren<MeshFilter>(includeInactive);
 
@@ -4268,7 +4268,7 @@ namespace BrainFailProductions.PolyFew
 
         public static void RestorePolyFewGameObjects(GameObject[] torestore)
         {
-            if(torestore == null)
+            if (torestore == null)
             {
                 return;
             }
@@ -4421,8 +4421,8 @@ namespace BrainFailProductions.PolyFew
         public static bool SimplifyBlendShapes(ref Mesh forMesh, int? rendererHashCode, BlendShapeClearType clearType)
         {
             if (forMesh == null) { return false; }
-            if(forMesh.blendShapeCount == 0) { return false; }
-            if(rendererHashCode == null) { return false; }
+            if (forMesh.blendShapeCount == 0) { return false; }
+            if (rendererHashCode == null) { return false; }
 
             Dictionary<String, UnityMeshSimplifier.BlendShapeFrame> blendShapes = new Dictionary<string, UnityMeshSimplifier.BlendShapeFrame>();
             bool alreadyClearedNormals = true;
@@ -4443,7 +4443,7 @@ namespace BrainFailProductions.PolyFew
                         {
                             forMesh.GetBlendShapeFrameVertices(shapeIndex, frameIndex, deltaVertices, deltaNormals, deltaTangents);
                             blendShapes.Add(forMesh.GetBlendShapeName(shapeIndex) + rendererHashCode, new UnityMeshSimplifier.BlendShapeFrame(forMesh.GetBlendShapeName(shapeIndex) + rendererHashCode, forMesh.GetBlendShapeFrameWeight(shapeIndex, frameIndex), deltaVertices, deltaNormals, deltaTangents, 0));
-                            if (deltaNormals != null && deltaNormals.Length > 0) {  alreadyClearedNormals = false; }
+                            if (deltaNormals != null && deltaNormals.Length > 0) { alreadyClearedNormals = false; }
                             if (deltaTangents != null && deltaTangents.Length > 0) { alreadyClearedTangents = false; }
                         }
                     }
@@ -4467,13 +4467,13 @@ namespace BrainFailProductions.PolyFew
                         Vector3[] deltaVertices = new Vector3[blendShape.deltaVertices.Length];
                         Vector3[] deltaNormals = null;
                         Vector3[] deltaTangents = new Vector3[blendShape.deltaTangents.Length];
-                        
+
                         for (int p = 0; p < blendShape.deltaVertices.Length; p++)
                         {
                             deltaVertices.SetValue(blendShape.deltaVertices[p], p + blendShape.vertexOffset);
                             deltaTangents.SetValue(blendShape.deltaTangents[p], p + blendShape.vertexOffset);
                         }
-                        
+
                         simplifiedSomething = true;
                         forMesh.AddBlendShapeFrame(blendShape.shapeName, blendShape.frameWeight, deltaVertices, deltaNormals, deltaTangents);
                         deltaNormals = new Vector3[blendShape.deltaTangents.Length];
@@ -4888,7 +4888,7 @@ namespace BrainFailProductions.PolyFew
             {
                 return false;
             }
-            
+
             folderPath = FileUtil.GetProjectRelativePath(folderPath);
 
             if (!AssetDatabase.IsValidFolder(folderPath))
@@ -4954,7 +4954,7 @@ namespace BrainFailProductions.PolyFew
             EditorWindow.focusedWindow.SendEvent(EditorGUIUtility.CommandEvent("Duplicate"));
 
             duplicated = Selection.gameObjects;
-          
+
             return Tuple.Create<GameObject[], GameObject[]>(oldSelected, duplicated);
         }
 
@@ -5410,14 +5410,14 @@ namespace BrainFailProductions.PolyFew
 
             for (int b = 0; b < bones.Count; b++)
             {
-                if(bones[b] == null) { continue; }
+                if (bones[b] == null) { continue; }
                 bindposes.Add(bones[b].worldToLocalMatrix * transform.worldToLocalMatrix);
             }
 
             SkinnedMeshRenderer r = transform.gameObject.AddComponent<SkinnedMeshRenderer>();
             r.sharedMesh = new Mesh();
             r.sharedMesh.CombineMeshes(combineInstances.ToArray(), true, true);
-            
+
             Texture2D skinnedMeshAtlas = new Texture2D(128, 128);
             Rect[] packingResult = skinnedMeshAtlas.PackTextures(textures.ToArray(), 0);
             Vector2[] originalUVs = r.sharedMesh.uv;
@@ -5477,7 +5477,7 @@ namespace BrainFailProductions.PolyFew
             bool newReadibilityState = mesh.isReadable;
 
 
-            if(prevReadibilityState == newReadibilityState)
+            if (prevReadibilityState == newReadibilityState)
             {
                 importerForAsset.SaveAndReimport();
             }
@@ -5507,11 +5507,11 @@ namespace BrainFailProductions.PolyFew
         {
             Transform topLevelParent = forObject;
 
-            if(forObject == null) { return null; }
+            if (forObject == null) { return null; }
 
             while (topLevelParent.parent != null)
             {
-                if(topLevelParent.parent.parent == null) { return topLevelParent; }
+                if (topLevelParent.parent.parent == null) { return topLevelParent; }
 
                 topLevelParent = topLevelParent.parent;
             }
@@ -5530,7 +5530,7 @@ namespace BrainFailProductions.PolyFew
             while (topLevelParent.parent != null)
             {
                 topLevelParent = topLevelParent.parent;
-                if(allSelectedObjects.Contains(topLevelParent)) { topSelectedParent = topLevelParent; }
+                if (allSelectedObjects.Contains(topLevelParent)) { topSelectedParent = topLevelParent; }
             }
 
             return topSelectedParent;
@@ -5540,7 +5540,7 @@ namespace BrainFailProductions.PolyFew
 
         public static void FillTextureWithColor(ref Texture2D toFill, Color color)
         {
-            if(toFill == null) { return; }
+            if (toFill == null) { return; }
 
             var fillColorArray = toFill.GetPixels();
 
@@ -5559,10 +5559,10 @@ namespace BrainFailProductions.PolyFew
         {
             bool hasUV2 = false;
 
-            if(mesh == null) { return false; }
+            if (mesh == null) { return false; }
 
 #if UNITY_2019_3_OR_NEWER
-            if(mesh.HasVertexAttribute(UnityEngine.Rendering.VertexAttribute.TexCoord1))
+            if (mesh.HasVertexAttribute(UnityEngine.Rendering.VertexAttribute.TexCoord1))
             {
                 hasUV2 = true;
             }
@@ -5599,7 +5599,7 @@ namespace BrainFailProductions.PolyFew
         public class OBJExporterImporter
         {
 
-#region OBJ_EXPORT
+            #region OBJ_EXPORT
 
             private bool applyPosition = true;
             private bool applyRotation = true;
@@ -6093,15 +6093,15 @@ namespace BrainFailProductions.PolyFew
 
 
 
-#endregion OBJ_IMPORT
+            #endregion OBJ_IMPORT
 
 
         }
 
 
-#endregion OBJ_EXPORT_IMPORT
+        #endregion OBJ_EXPORT_IMPORT
 
-}
+    }
 
 }
 

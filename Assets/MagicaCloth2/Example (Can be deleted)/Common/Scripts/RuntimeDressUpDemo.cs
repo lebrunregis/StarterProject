@@ -30,20 +30,20 @@ namespace MagicaCloth2
         /// <summary>
         /// Bones dictionary of avatars to dress up.
         /// </summary>
-        Dictionary<string, Transform> targetAvatarBoneMap = new Dictionary<string, Transform>();
+        private readonly Dictionary<string, Transform> targetAvatarBoneMap = new();
 
         /// <summary>
         /// Information class for canceling dress-up.
         /// </summary>
-        class EquipInfo
+        private class EquipInfo
         {
             public GameObject equipObject;
             public List<ColliderComponent> colliderList;
 
             public bool IsValid() => equipObject != null;
         }
-        EquipInfo hairEquipInfo = new EquipInfo();
-        EquipInfo bodyEquipInfo = new EquipInfo();
+        private readonly EquipInfo hairEquipInfo = new();
+        private readonly EquipInfo bodyEquipInfo = new();
 
         //=========================================================================================
         private void Awake()
@@ -51,11 +51,11 @@ namespace MagicaCloth2
             Init();
         }
 
-        void Start()
+        private void Start()
         {
         }
 
-        void Update()
+        private void Update()
         {
         }
 
@@ -80,7 +80,7 @@ namespace MagicaCloth2
         /// <summary>
         /// Create an avatar bone dictionary in advance.
         /// </summary>
-        void Init()
+        private void Init()
         {
             Debug.Assert(targetAvatar);
 
@@ -103,7 +103,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="equipPrefab"></param>
         /// <param name="einfo"></param>
-        void Equip(GameObject equipPrefab, EquipInfo einfo)
+        private void Equip(GameObject equipPrefab, EquipInfo einfo)
         {
             Debug.Assert(equipPrefab);
 
@@ -205,7 +205,7 @@ namespace MagicaCloth2
         /// Removes equipped clothing.
         /// </summary>
         /// <param name="einfo"></param>
-        void Remove(EquipInfo einfo)
+        private void Remove(EquipInfo einfo)
         {
             Destroy(einfo.equipObject);
             foreach (var c in einfo.colliderList)

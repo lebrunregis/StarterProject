@@ -49,7 +49,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using UnityEngine;
 
 
@@ -73,9 +72,9 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
         private bool verbose = false;
         private int subMeshCount = 0;
         private int[] subMeshOffsets = null;
-        private ResizableArray<Triangle> triangles = null;
-        private ResizableArray<Vertex> vertices = null;
-        private ResizableArray<Ref> vtx2tris = null;
+        private readonly ResizableArray<Triangle> triangles = null;
+        private readonly ResizableArray<Vertex> vertices = null;
+        private readonly ResizableArray<Ref> vtx2tris = null;
         private ResizableArray<Edge> vtx2edges = null;
 
         // Edge based algorithm
@@ -101,8 +100,8 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
         // Pre-allocated buffers
         private readonly double[] errArr = new double[3];
         private readonly int[] attributeIndexArr = new int[3];
-        private readonly HashSet<Triangle> triangleHashSet1 = new HashSet<Triangle>();
-        private readonly HashSet<Triangle> triangleHashSet2 = new HashSet<Triangle>();
+        private readonly HashSet<Triangle> triangleHashSet1 = new();
+        private readonly HashSet<Triangle> triangleHashSet2 = new();
 
 
 
@@ -113,11 +112,11 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
         public Mesh meshToSimplify;
 
         public ToleranceSphere[] toleranceSpheres;
-        private Dictionary<int, Matrix4x4> transformations = new Dictionary<int, Matrix4x4>();
-        private HashSet<object> trianglesInToleranceSpheres = new HashSet<object>();
+        private readonly Dictionary<int, Matrix4x4> transformations = new();
+        private readonly HashSet<object> trianglesInToleranceSpheres = new();
 
         private bool isPreservationActive;
-        private int once;
+        private readonly int once;
 
         private double vertexLinkDistanceSqr = double.Epsilon;
         private bool preserveBorderEdges = false;
@@ -270,7 +269,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
             get { return clearBlendshapesComplete; }
             set { clearBlendshapesComplete = value; }
         }
-        
+
         /// <summary>
         /// Gets or sets if verbose information should be printed to the console.
         /// Default value: false
@@ -964,7 +963,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
                     vertices[i0].p = p;
                     vertices[i0].q += vertices[i1].q;
                     var v = vertices[i0];
-                    
+
                     if (isPreservationActive)
                     {
                         if (spheresToSubtract != null)
@@ -974,7 +973,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
                                 if (sphere != null) { sphere.currentEnclosedTrianglesCount--; }
                             }
                         }
-                        
+
                         spheresToSubtract = null;
                     }
 
@@ -1857,7 +1856,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
                         degeneratedTriangles++;
                         continue;
                     }
-                    
+
                     int va = t[0];
                     for (int j = 0; j < TriangleEdgeCount; j++)
                     {
@@ -1968,17 +1967,17 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
 
 
 
-            List<Edge> edgesLRejected = new List<Edge>();
+            List<Edge> edgesLRejected = new();
             int recycleRejectedEdges = (int)(edgesL.Count * RecycleRejectedEdgesThreshold);
 
-            List<Triangle> trisTouchingSurvivedVertexOnly = new List<Triangle>();
-            List<Triangle> trisTouchingDeletedVertexOnly = new List<Triangle>();
-            List<Triangle> trisTouchingBothVertices = new List<Triangle>();
-            Dictionary<int, int> AttributeMapping = new Dictionary<int, int>();
+            List<Triangle> trisTouchingSurvivedVertexOnly = new();
+            List<Triangle> trisTouchingDeletedVertexOnly = new();
+            List<Triangle> trisTouchingBothVertices = new();
+            Dictionary<int, int> AttributeMapping = new();
 
             Edge edgeAssessed = null, edgeToMove = null, survivedEdge = null;
             Vertex survivedVertex, deletedVertex;
-            Vector3 barycentricCoord = new Vector3();
+            Vector3 barycentricCoord = new();
             int survivedIndex = -1, deletedIndex = -1, thirdIndex = -1;
             int rankSurvivedIndex = -1, rankDeletedIndex = -1, rankThirdIndex = -1;
 
@@ -2030,7 +2029,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
                 {
                     bool ifContinue = false;
 
-                    foreach(var triangle in trisTouchingDeletedVertexOnly)
+                    foreach (var triangle in trisTouchingDeletedVertexOnly)
                     {
                         if (TriangleLiesInSphere(triangle)) { ifContinue = true; }
                     }
@@ -2317,7 +2316,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
             int trisToDelete = (int)(triangleCount * (1.0f - quality));
 
             //DebugMeshPerf.Data.Reset();
-            
+
             UpdateMesh(0);
             InitEdges(out deletedTris);
             RemoveEdgePass(trisToDelete, ref deletedTris);
@@ -2484,7 +2483,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
                     int v1 = subMeshTriangles[offset + 1];
                     int v2 = subMeshTriangles[offset + 2];
                     int triangleIndex = triangleIndexStart + j;
-                    Triangle triangle = new Triangle(triangleIndex, v0, v1, v2, subMeshIndex);
+                    Triangle triangle = new(triangleIndex, v0, v1, v2, subMeshIndex);
                     trisArr[triangleIndex] = triangle;
 
                     if (isPreservationActive)
@@ -2494,7 +2493,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
                         Vertex vert2 = vertices[triangle.v1];
                         Vertex vert3 = vertices[triangle.v2];
 
-                        
+
                         foreach (var sphere in toleranceSpheres)
                         {
                             int count = 0;
@@ -2519,7 +2518,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
                         }
                     }
                 }
-                
+
                 triangleIndexStart += subMeshTriangleCount;
             }
 
@@ -3152,8 +3151,8 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
             quality = Mathf.Clamp01(quality);
 
             int deletedTris = 0;
-            ResizableArray<bool> deleted0 = new ResizableArray<bool>(20);
-            ResizableArray<bool> deleted1 = new ResizableArray<bool>(20);
+            ResizableArray<bool> deleted0 = new(20);
+            ResizableArray<bool> deleted1 = new(20);
             var triangles = this.triangles.Data;
             int triangleCount = this.triangles.Length;
             int startTrisCount = triangleCount;
@@ -3218,8 +3217,8 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
         public void SimplifyMeshLossless()
         {
             int deletedTris = 0;
-            ResizableArray<bool> deleted0 = new ResizableArray<bool>(0);
-            ResizableArray<bool> deleted1 = new ResizableArray<bool>(0);
+            ResizableArray<bool> deleted0 = new(0);
+            ResizableArray<bool> deleted1 = new(0);
             var triangles = this.triangles.Data;
             int triangleCount = this.triangles.Length;
             int startTrisCount = triangleCount;
@@ -3386,7 +3385,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
             if (isSkinned)
             {
 
-                BoneWeight weight = new BoneWeight();
+                BoneWeight weight = new();
                 int iSrc = containingTri.v0;
 
                 if (vertBoneWeights != null)
@@ -3399,7 +3398,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
 
                 if (bonesOriginal.Length == 0)
                 {
-                    Vector3 vertexPosWorld = new Vector3((float)vertex.p.x, (float)vertex.p.y, (float)vertex.p.z);
+                    Vector3 vertexPosWorld = new((float)vertex.p.x, (float)vertex.p.y, (float)vertex.p.z);
 
                     vertexPosWorld = sphere.localToWorldMatrix.MultiplyPoint3x4(vertexPosWorld);
 
@@ -3441,8 +3440,8 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
 
             else
             {
-                
-                Vector3 vertexPosWorld = new Vector3((float)vertex.p.x, (float)vertex.p.y, (float)vertex.p.z);
+
+                Vector3 vertexPosWorld = new((float)vertex.p.x, (float)vertex.p.y, (float)vertex.p.z);
                 vertexPosWorld = sphere.localToWorldMatrix.MultiplyPoint3x4(vertexPosWorld);
 
                 float x1 = (float)Math.Pow((vertexPosWorld.x - sphere.worldPosition.x), 2);
@@ -3474,7 +3473,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
             int trianglesCount = toCheck.tcount;
             int startIndex = toCheck.tstart;
 
-            HashSet<Triangle> tris = new HashSet<Triangle>();
+            HashSet<Triangle> tris = new();
 
             for (int a = startIndex; a < startIndex + trianglesCount; a++)
             {
@@ -3488,7 +3487,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private HashSet<Triangle> GetTrianglesContainingBothVertices(ref Vertex vertex1, ref Vertex vertex2)
         {
-            HashSet<Triangle> tris = new HashSet<Triangle>();
+            HashSet<Triangle> tris = new();
 
 
             int trianglesCount = vertex1.tcount;

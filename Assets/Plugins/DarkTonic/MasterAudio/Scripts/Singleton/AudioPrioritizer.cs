@@ -2,34 +2,42 @@
 using UnityEngine;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     // ReSharper disable once CheckNamespace
-    public static class AudioPrioritizer {
+    public static class AudioPrioritizer
+    {
         private const int MaxPriority = 0;
         private const int HighestPriority = 16;
         private const int LowestPriority = 128;
 
-        public static void Set2DSoundPriority(AudioSource audio) {
+        public static void Set2DSoundPriority(AudioSource audio)
+        {
             audio.priority = HighestPriority;
         }
 
-        public static void SetSoundGroupInitialPriority(AudioSource audio) {
+        public static void SetSoundGroupInitialPriority(AudioSource audio)
+        {
             audio.priority = LowestPriority;
         }
 
-        public static void SetPreviewPriority(AudioSource audio) {
+        public static void SetPreviewPriority(AudioSource audio)
+        {
             audio.priority = MaxPriority;
         }
 
-        public static void Set3DPriority(SoundGroupVariation variation, bool useClipAgePriority) {
-            if (MasterAudio.ListenerTrans == null) {
+        public static void Set3DPriority(SoundGroupVariation variation, bool useClipAgePriority)
+        {
+            if (MasterAudio.ListenerTrans == null)
+            {
                 // can't prioritize.
                 return;
             }
 
             var audio = variation.VarAudio;
 
-            if (audio.spatialBlend == 0f) {
+            if (audio.spatialBlend == 0f)
+            {
                 // handle 2D sound if we end here with it.
                 Set2DSoundPriority(variation.VarAudio);
                 return;
@@ -38,7 +46,8 @@ namespace DarkTonic.MasterAudio {
             var distanceToListener = Vector3.Distance(audio.transform.position, MasterAudio.ListenerTrans.position);
             float perceivedVolume;
 
-            switch (audio.rolloffMode) {
+            switch (audio.rolloffMode)
+            {
                 case AudioRolloffMode.Logarithmic:
                     perceivedVolume = audio.volume / Mathf.Max(audio.minDistance, distanceToListener - audio.minDistance);
                     // Unity seems to just use a 1/distance model for this
@@ -55,7 +64,8 @@ namespace DarkTonic.MasterAudio {
                     break;
             }
 
-            if (useClipAgePriority && !audio.loop) {
+            if (useClipAgePriority && !audio.loop)
+            {
                 //Don't make looping sounds lessen in priority over time
                 perceivedVolume = Mathf.Lerp(perceivedVolume, perceivedVolume * 0.1f,
                     AudioUtil.GetAudioPlayedPercentage(audio) * .01f);

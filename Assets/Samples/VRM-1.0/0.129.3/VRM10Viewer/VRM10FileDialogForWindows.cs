@@ -52,13 +52,13 @@ namespace UniVRM10.VRM10Viewer
         [DllImport("Comdlg32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         private static extern bool GetSaveFileName([In, Out] OpenFileName ofn);
 
-        static string Filter(params string[] filters)
+        private static string Filter(params string[] filters)
         {
             return string.Join("\0", filters) + "\0";
         }
         public static string FileDialog(string title, params string[] extensions)
         {
-            OpenFileName ofn = new OpenFileName();
+            OpenFileName ofn = new();
             ofn.structSize = Marshal.SizeOf(ofn);
 
             var filters = new List<string>();
@@ -87,7 +87,7 @@ namespace UniVRM10.VRM10Viewer
         public static string SaveDialog(string title, string path)
         {
             var extension = Path.GetExtension(path);
-            OpenFileName ofn = new OpenFileName();
+            OpenFileName ofn = new();
             ofn.structSize = Marshal.SizeOf(ofn);
             ofn.filter = Filter("All Files", "*.*", extension, "*" + extension);
             ofn.filterIndex = 2;

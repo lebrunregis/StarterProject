@@ -1,13 +1,9 @@
 #if GRIFFIN
 #if UNITY_EDITOR
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using Pinwheel.Griffin.Rendering;
-using UnityEditor.Build;
-using UnityEditor.Build.Reporting;
 using System.Threading.Tasks;
+using UnityEditor;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -31,18 +27,18 @@ namespace Pinwheel.Griffin
             }
         }
 
-        public GeneralSettings general = new GeneralSettings();
-        public LivePreviewSettings livePreview = new LivePreviewSettings();
-        public PaintToolsSettings paintTools = new PaintToolsSettings();
-        public SplineToolsSettings splineTools = new SplineToolsSettings();
-        public BillboardToolsSettings billboardTools = new BillboardToolsSettings();
-        public StampToolsSettings stampTools = new StampToolsSettings();
-        public WizardToolsSettings wizardTools = new WizardToolsSettings();
-        public RenderPipelinesSettings renderPipelines = new RenderPipelinesSettings();
-        public TopographicSettings topographic = new TopographicSettings();
-        public ErosionToolsSettings erosionTools = new ErosionToolsSettings();
-        public LayerSettings layers = new LayerSettings();
-        public DemoAssetSettings demoAssets = new DemoAssetSettings();
+        public GeneralSettings general = new();
+        public LivePreviewSettings livePreview = new();
+        public PaintToolsSettings paintTools = new();
+        public SplineToolsSettings splineTools = new();
+        public BillboardToolsSettings billboardTools = new();
+        public StampToolsSettings stampTools = new();
+        public WizardToolsSettings wizardTools = new();
+        public RenderPipelinesSettings renderPipelines = new();
+        public TopographicSettings topographic = new();
+        public ErosionToolsSettings erosionTools = new();
+        public LayerSettings layers = new();
+        public DemoAssetSettings demoAssets = new();
 
         #region Serialization Callbacks
         public void OnBeforeSerialize()
@@ -257,7 +253,7 @@ namespace Pinwheel.Griffin
             {
                 bool success = false;
                 Object tagManager = AssetDatabase.LoadAssetAtPath<Object>("ProjectSettings/TagManager.asset");
-                SerializedObject so = new SerializedObject(tagManager);
+                SerializedObject so = new(tagManager);
                 SerializedProperty layers = so.FindProperty("layers");
                 for (int i = 8; i < 32; ++i)
                 {

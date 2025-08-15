@@ -9,10 +9,10 @@ namespace UniVRM10.VRM10Viewer
     /// </summary>
     public class VRM10AutoExpression : MonoBehaviour
     {
-        Coroutine m_coroutine;
+        private Coroutine m_coroutine;
 
         [SerializeField]
-        float m_wait = 0.5f;
+        private float m_wait = 0.5f;
 
         public float Happy = 0.0f;
         public float Angry = 0.0f;
@@ -20,7 +20,7 @@ namespace UniVRM10.VRM10Viewer
         public float Relaxed = 0.0f;
         public float Surprised = 0.0f;
 
-        void SetWeight(ExpressionPreset preset, float value)
+        private void SetWeight(ExpressionPreset preset, float value)
         {
             switch (preset)
             {
@@ -33,7 +33,7 @@ namespace UniVRM10.VRM10Viewer
             }
         }
 
-        IEnumerator RoutineNest(ExpressionPreset preset, float velocity, float wait)
+        private IEnumerator RoutineNest(ExpressionPreset preset, float velocity, float wait)
         {
             for (var value = 0.0f; value <= 1.0f; value += velocity)
             {
@@ -51,7 +51,7 @@ namespace UniVRM10.VRM10Viewer
             yield return new WaitForSeconds(wait * 2);
         }
 
-        IEnumerator Routine()
+        private IEnumerator Routine()
         {
             while (true)
             {

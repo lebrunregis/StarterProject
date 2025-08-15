@@ -27,7 +27,7 @@ using System.Runtime.CompilerServices;
 namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
 {
 
-    
+
     public class Triangle : IEquatable<Triangle>
     {
         #region Fields
@@ -54,7 +54,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
         public Vector3d n;
         public Vector3d nCached;
 
-        public HashSet<ToleranceSphere> enclosingSpheres = new HashSet<ToleranceSphere>();
+        public HashSet<ToleranceSphere> enclosingSpheres = new();
 
         #endregion
 
@@ -168,7 +168,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
         }
 
         public override int GetHashCode()
-        {    
+        {
             return base.GetHashCode();
             //return index;
         }
@@ -196,5 +196,5 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
 
         #endregion
     }
-    
+
 }

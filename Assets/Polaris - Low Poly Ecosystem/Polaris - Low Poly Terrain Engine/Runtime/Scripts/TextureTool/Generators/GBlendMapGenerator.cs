@@ -22,7 +22,7 @@ namespace Pinwheel.Griffin.TextureTool
         {
             GBlendMapGeneratorParams param = GTextureToolParams.Instance.Blend;
 
-            RenderTexture bg = new RenderTexture(targetRt);
+            RenderTexture bg = new(targetRt);
             GCommon.CopyToRT(targetRt, bg);
 
             GCommon.FillTexture(targetRt, Color.black);

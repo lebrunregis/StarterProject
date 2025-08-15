@@ -22,10 +22,10 @@ namespace MagicaCloth2
         public const byte Flag_DisableCollision = 0x10; // コリジョン無効
         public const byte Flag_Triangle = 0x80; // この頂点はトライアングルに属している
 
-        public static readonly VertexAttribute Invalid = new VertexAttribute();
-        public static readonly VertexAttribute Fixed = new VertexAttribute(Flag_Fixed);
-        public static readonly VertexAttribute Move = new VertexAttribute(Flag_Move);
-        public static readonly VertexAttribute DisableCollision = new VertexAttribute(Flag_DisableCollision);
+        public static readonly VertexAttribute Invalid = new();
+        public static readonly VertexAttribute Fixed = new(Flag_Fixed);
+        public static readonly VertexAttribute Move = new(Flag_Move);
+        public static readonly VertexAttribute DisableCollision = new(Flag_DisableCollision);
 
         //=========================================================================================
         /// <summary>

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
 #if MULTIPLAYER_ENABLED
     using DarkTonic.MasterAudio.Multiplayer;
 #endif
@@ -27,7 +27,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
         // ReSharper disable once RedundantDefaultMemberInitializer
         private bool _hasMechanim = false;
-        private readonly List<bool> _changedList = new List<bool>();
+        private readonly List<bool> _changedList = new();
         private bool _isDirty;
 
         public static List<string> GetSoundGroupList()
@@ -88,7 +88,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
             }
 
 #if UNITY_2023_1_OR_NEWER
-            var creators = FindObjectsByType<DynamicSoundGroupCreator>(FindObjectsInactive.Include, FindObjectsSortMode.None) as DynamicSoundGroupCreator[];
+            var creators = FindObjectsByType<DynamicSoundGroupCreator>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 #else
             var creators = FindObjectsOfType(typeof(DynamicSoundGroupCreator)) as DynamicSoundGroupCreator[];
 #endif
@@ -452,7 +452,8 @@ namespace DarkTonic.MasterAudio.EditorScripts
                 _sounds.disableSounds = newDisable;
             }
 
-            if (!_sounds.disableSounds) {
+            if (!_sounds.disableSounds)
+            {
 #if MULTIPLAYER_ENABLED
                 var newMP = EditorGUILayout.Toggle("Multiplayer Broadcast", _sounds.multiplayerBroadcast);
                 if (newMP != _sounds.multiplayerBroadcast) {
@@ -1110,15 +1111,19 @@ namespace DarkTonic.MasterAudio.EditorScripts
             //DrawDefaultInspector();
         }
 
-        private bool HasEventTrigger {
-            get {
+        private bool HasEventTrigger
+        {
+            get
+            {
                 return _sounds.GetComponent<EventTrigger>() != null;
             }
         }
 
         // ReSharper disable once UnusedMember.Local
-        private EventTrigger GetOrCreateEventTrigger {
-            get {
+        private EventTrigger GetOrCreateEventTrigger
+        {
+            get
+            {
                 if (HasEventTrigger)
                 {
                     return _sounds.GetComponent<EventTrigger>();
@@ -1724,7 +1729,8 @@ namespace DarkTonic.MasterAudio.EditorScripts
         }
 
         // ReSharper disable once FunctionComplexityOverflow
-        private bool RenderAudioEvent(AudioEventGroup eventGrp, EventSounds.EventType eType) {
+        private bool RenderAudioEvent(AudioEventGroup eventGrp, EventSounds.EventType eType)
+        {
             DTGUIHelper.BeginGroupedControls();
 
 #if MULTIPLAYER_ENABLED
@@ -3833,7 +3839,8 @@ namespace DarkTonic.MasterAudio.EditorScripts
 
                                         var newLogDupes = EditorGUILayout.Toggle(new GUIContent("Log Dupe Firing Per Frame",
     "Turn this off to disable notification if a Custom Event fires more than once per frame. Only the first firing will do anything regardless."), aEvent.logDupeEventFiring);
-                                        if (newLogDupes != aEvent.logDupeEventFiring) {
+                                        if (newLogDupes != aEvent.logDupeEventFiring)
+                                        {
                                             AudioUndoHelper.RecordObjectPropertyForUndo(ref _isDirty, _sounds, "toggle Log Dupe Firing Per Frame");
                                             aEvent.logDupeEventFiring = newLogDupes;
                                         }
@@ -4444,8 +4451,10 @@ namespace DarkTonic.MasterAudio.EditorScripts
             }
         }
 
-        private string DisabledText {
-            get {
+        private string DisabledText
+        {
+            get
+            {
                 var disabledText = "";
                 if (_sounds.disableSounds)
                 {

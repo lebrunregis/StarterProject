@@ -15,7 +15,7 @@ namespace MagicaCloth2
         /// <summary>
         /// 複数のPreBuildデータを格納可能
         /// </summary>
-        public List<SharePreBuildData> sharePreBuildDataList = new List<SharePreBuildData>();
+        public List<SharePreBuildData> sharePreBuildDataList = new();
 
         //=========================================================================================
         public bool HasPreBuildData(string buildId)

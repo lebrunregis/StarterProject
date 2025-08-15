@@ -140,7 +140,7 @@ namespace Pinwheel.Griffin.DataTool
 
         private void Convert()
         {
-            GUnityTerrainGroupConverter converter = new GUnityTerrainGroupConverter();
+            GUnityTerrainGroupConverter converter = new();
             converter.Root = Root;
             converter.DataTemplate = DataTemplate;
             converter.ImportGeometry = ImportGeometry;

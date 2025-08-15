@@ -19,7 +19,7 @@ namespace MagicaCloth2
         /// Can be rewritten at runtime.
         /// </summary>
         [SerializeField]
-        private ClothSerializeData serializeData = new ClothSerializeData();
+        private ClothSerializeData serializeData = new();
         public ClothSerializeData SerializeData => serializeData;
 
         /// <summary>
@@ -27,21 +27,21 @@ namespace MagicaCloth2
         /// Hidden data that cannot be rewritten at runtime
         /// </summary>
         [SerializeField]
-        internal ClothSerializeData2 serializeData2 = new ClothSerializeData2();
+        internal ClothSerializeData2 serializeData2 = new();
 
 #if UNITY_EDITOR
         /// <summary>
         /// Gizmo display specification when editing.
         /// </summary>
         [SerializeField]
-        private GizmoSerializeData gizmoSerializeData = new GizmoSerializeData();
+        private GizmoSerializeData gizmoSerializeData = new();
         public GizmoSerializeData GizmoSerializeData => gizmoSerializeData;
 #endif
 
         /// <summary>
         /// General processing.
         /// </summary>
-        private ClothProcess process = new ClothProcess();
+        private readonly ClothProcess process = new();
         public ClothProcess Process
         {
             get
@@ -112,7 +112,7 @@ namespace MagicaCloth2
             Process.EndUse();
         }
 
-        void Start()
+        private void Start()
         {
             if (MagicaManager.initializationLocation == MagicaManager.InitializationLocation.Start)
             {

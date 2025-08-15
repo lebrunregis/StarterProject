@@ -1,8 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -26,16 +24,16 @@ namespace Pinwheel.Griffin
             }
         }
 
-        public GeometryDefaultSettings geometryDefault = new GeometryDefaultSettings();
-        public ShadingDefaultSettings shadingDefault = new ShadingDefaultSettings();
-        public RenderingDefaultSettings renderingDefault = new RenderingDefaultSettings();
-        public FoliageDefaultSettings foliageDefault = new FoliageDefaultSettings();
-        public MaskDefaultSettings maskDefault = new MaskDefaultSettings();
-        public GeometryGenerationSettings geometryGeneration = new GeometryGenerationSettings();
-        public TerrainRenderingSettings terrainRendering = new TerrainRenderingSettings();
-        public FoliageRenderingSettings foliageRendering = new FoliageRenderingSettings();
-        public InternalShaderSettings internalShaders = new InternalShaderSettings();
-        public DefaultTexturesSettings defaultTextures = new DefaultTexturesSettings();
+        public GeometryDefaultSettings geometryDefault = new();
+        public ShadingDefaultSettings shadingDefault = new();
+        public RenderingDefaultSettings renderingDefault = new();
+        public FoliageDefaultSettings foliageDefault = new();
+        public MaskDefaultSettings maskDefault = new();
+        public GeometryGenerationSettings geometryGeneration = new();
+        public TerrainRenderingSettings terrainRendering = new();
+        public FoliageRenderingSettings foliageRendering = new();
+        public InternalShaderSettings internalShaders = new();
+        public DefaultTexturesSettings defaultTextures = new();
 
         public bool isEditingGeometry;
         public bool isEditingFoliage;

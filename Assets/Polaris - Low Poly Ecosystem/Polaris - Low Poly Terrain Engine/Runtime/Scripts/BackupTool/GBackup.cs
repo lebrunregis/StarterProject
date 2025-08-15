@@ -1,11 +1,11 @@
 #if GRIFFIN
 #if UNITY_EDITOR
+using Pinwheel.Griffin.Compression;
 using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
-using Pinwheel.Griffin.Compression;
 
 namespace Pinwheel.Griffin.BackupTool
 {
@@ -21,7 +21,7 @@ namespace Pinwheel.Griffin.BackupTool
 
         public static void Create(string backupName, int terrainGroupId)
         {
-            List<GTerrainResourceFlag> flags = new List<GTerrainResourceFlag>();
+            List<GTerrainResourceFlag> flags = new();
             foreach (GTerrainResourceFlag t in System.Enum.GetValues(typeof(GTerrainResourceFlag)))
             {
                 flags.Add(t);
@@ -33,7 +33,7 @@ namespace Pinwheel.Griffin.BackupTool
 
         public static void Create(string backupName, int terrainGroupId, List<GTerrainResourceFlag> flags)
         {
-            List<GStylizedTerrain> terrains = new List<GStylizedTerrain>(GStylizedTerrain.ActiveTerrains);
+            List<GStylizedTerrain> terrains = new(GStylizedTerrain.ActiveTerrains);
             for (int i = 0; i < terrains.Count; ++i)
             {
                 GStylizedTerrain t = terrains[i];
@@ -86,7 +86,7 @@ namespace Pinwheel.Griffin.BackupTool
 
             try
             {
-                List<string> createdBackup = new List<string>(GBackupFile.GetAllBackupNames());
+                List<string> createdBackup = new(GBackupFile.GetAllBackupNames());
                 string prefix = GBackupFile.GetHistoryPrefix(namePrefix);
                 string initialPrefix = GBackupFile.GetInitialHistoryPrefix(namePrefix);
 
@@ -139,7 +139,7 @@ namespace Pinwheel.Griffin.BackupTool
 
             try
             {
-                List<string> createdBackup = new List<string>(GBackupFile.GetAllBackupNames());
+                List<string> createdBackup = new(GBackupFile.GetAllBackupNames());
                 string prefix = GBackupFile.GetHistoryPrefix(namePrefix);
                 string initialPrefix = GBackupFile.GetInitialHistoryPrefix(namePrefix);
 
@@ -535,7 +535,7 @@ namespace Pinwheel.Griffin.BackupTool
         {
             if (t.TerrainData.Foliage.Grasses == null)
                 return;
-            List<GGrassInstance> grasses = new List<GGrassInstance>();
+            List<GGrassInstance> grasses = new();
             GGrassPatch[] patches = t.TerrainData.Foliage.GrassPatches;
             for (int i = 0; i < patches.Length; ++i)
             {
@@ -613,8 +613,8 @@ namespace Pinwheel.Griffin.BackupTool
 
         public static void Restore(string backupName)
         {
-            List<GStylizedTerrain> terrains = new List<GStylizedTerrain>(GStylizedTerrain.ActiveTerrains);
-            List<GStylizedTerrain> dirtyTerrains = new List<GStylizedTerrain>();
+            List<GStylizedTerrain> terrains = new(GStylizedTerrain.ActiveTerrains);
+            List<GStylizedTerrain> dirtyTerrains = new();
             for (int i = 0; i < terrains.Count; ++i)
             {
                 GStylizedTerrain t = terrains[i];
@@ -698,7 +698,7 @@ namespace Pinwheel.Griffin.BackupTool
             t.TerrainData.Geometry.HeightMap.SetPixels32(heightMapColors);
             t.TerrainData.Geometry.HeightMap.Apply();
 
-            List<Rect> dirtyRects = new List<Rect>(GCommon.CompareTerrainTexture(t.TerrainData.Geometry.ChunkGridSize, oldHeightMapColors, heightMapColors));
+            List<Rect> dirtyRects = new(GCommon.CompareTerrainTexture(t.TerrainData.Geometry.ChunkGridSize, oldHeightMapColors, heightMapColors));
             for (int i = 0; i < dirtyRects.Count; ++i)
             {
                 t.TerrainData.Geometry.SetRegionDirty(dirtyRects[i]);
@@ -770,7 +770,7 @@ namespace Pinwheel.Griffin.BackupTool
                 if (willRegenerateGeometry)
                 {
                     Color32[] oldAlbedoColor = t.TerrainData.Shading.AlbedoMap.GetPixels32();
-                    List<Rect> dirtyRects = new List<Rect>(GCommon.CompareTerrainTexture(t.TerrainData.Geometry.ChunkGridSize, oldAlbedoColor, albedoColors));
+                    List<Rect> dirtyRects = new(GCommon.CompareTerrainTexture(t.TerrainData.Geometry.ChunkGridSize, oldAlbedoColor, albedoColors));
                     t.TerrainData.Geometry.SetRegionDirty(dirtyRects);
                     willRegenerateGeometry = true;
 
@@ -881,7 +881,7 @@ namespace Pinwheel.Griffin.BackupTool
                 Buffer.BlockCopy(rotationData, 0, rotations, 0, rotationData.Length);
                 Buffer.BlockCopy(scalesData, 0, scales, 0, scalesData.Length);
 
-                List<GTreeInstance> trees = new List<GTreeInstance>();
+                List<GTreeInstance> trees = new();
                 for (int i = 0; i < indices.Length; ++i)
                 {
                     GTreeInstance tree = GTreeInstance.Create(indices[i]);
@@ -937,7 +937,7 @@ namespace Pinwheel.Griffin.BackupTool
                 Buffer.BlockCopy(rotationData, 0, rotations, 0, rotationData.Length);
                 Buffer.BlockCopy(scalesData, 0, scales, 0, scalesData.Length);
 
-                List<GGrassInstance> grasses = new List<GGrassInstance>();
+                List<GGrassInstance> grasses = new();
                 for (int i = 0; i < indices.Length; ++i)
                 {
                     GGrassInstance grass = GGrassInstance.Create(indices[i]);
@@ -971,7 +971,7 @@ namespace Pinwheel.Griffin.BackupTool
                 //don't log when it is a History backup
                 return;
             }
-            List<string> filePaths = new List<string>(GBackupFile.GetAllFilePaths(backupName));
+            List<string> filePaths = new(GBackupFile.GetAllFilePaths(backupName));
             int backupCount = filePaths.FindAll(p => p.Contains(string.Format("{0}_{1}", t.TerrainData.Id, GBackupFile.CONTROL_R_SUFFIX))).Count;
             int requiredCount = t.TerrainData.Shading.SplatControlMapCount;
             if (backupCount != requiredCount)

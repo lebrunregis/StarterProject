@@ -1,10 +1,8 @@
 #if GRIFFIN
 using System.Collections.Generic;
-using UnityEngine;
-using Unity.Jobs;
 using Unity.Collections;
-using Unity.Burst;
-using UnityEngine.Rendering;
+using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin.SplineTool
 {
@@ -246,7 +244,7 @@ namespace Pinwheel.Griffin.SplineTool
                 return;
             if (Prototypes.Count == 0)
                 return;
-            RenderTexture rt = new RenderTexture(MaskResolution, MaskResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+            RenderTexture rt = new(MaskResolution, MaskResolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
             Internal_Apply(t, rt);
             Texture2D mask = GCommon.CreateTexture(MaskResolution, Color.clear);
             GCommon.CopyFromRT(mask, rt);
@@ -262,13 +260,13 @@ namespace Pinwheel.Griffin.SplineTool
         private void SpawnObjectsOnTerrain(GStylizedTerrain t, Texture2D mask)
         {
             int sampleCount = Mathf.FloorToInt(Density * t.TerrainData.Geometry.Width * t.TerrainData.Geometry.Length);
-            NativeArray<bool> cullResult = new NativeArray<bool>(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<GPrototypeInstanceInfo> instanceInfo = new NativeArray<GPrototypeInstanceInfo>(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<int> selectedPrototypeIndices = new NativeArray<int>(PrototypeIndices.ToArray(), Allocator.TempJob);
-            GTextureNativeDataDescriptor<Color32> maskHandle = new GTextureNativeDataDescriptor<Color32>(mask);
+            NativeArray<bool> cullResult = new(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<GPrototypeInstanceInfo> instanceInfo = new(sampleCount, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<int> selectedPrototypeIndices = new(PrototypeIndices.ToArray(), Allocator.TempJob);
+            GTextureNativeDataDescriptor<Color32> maskHandle = new(mask);
 
             {
-                GSampleInstanceJob job = new GSampleInstanceJob()
+                GSampleInstanceJob job = new()
                 {
                     cullResult = cullResult,
                     instanceInfo = instanceInfo,
@@ -289,15 +287,15 @@ namespace Pinwheel.Griffin.SplineTool
             }
 
             Vector3 terrainSize = t.TerrainData.Geometry.Size;
-            NativeArray<RaycastCommand> raycastCommands = new NativeArray<RaycastCommand>(instanceInfo.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
-            NativeArray<RaycastHit> hits = new NativeArray<RaycastHit>(instanceInfo.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<RaycastCommand> raycastCommands = new(instanceInfo.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
+            NativeArray<RaycastHit> hits = new(instanceInfo.Length, Allocator.TempJob, NativeArrayOptions.UninitializedMemory);
             for (int i = 0; i < raycastCommands.Length; ++i)
             {
                 GPrototypeInstanceInfo info = instanceInfo[i];
-                Vector3 from = new Vector3(t.transform.position.x + info.position.x * terrainSize.x, 10000, t.transform.position.z + info.position.z * terrainSize.z);
+                Vector3 from = new(t.transform.position.x + info.position.x * terrainSize.x, 10000, t.transform.position.z + info.position.z * terrainSize.z);
 #if UNITY_2022_2_OR_NEWER
-                QueryParameters q = new QueryParameters(WorldRaycastMask, false, QueryTriggerInteraction.Ignore, false);
-                RaycastCommand cmd = new RaycastCommand(from, Vector3.down, q, float.MaxValue);
+                QueryParameters q = new(WorldRaycastMask, false, QueryTriggerInteraction.Ignore, false);
+                RaycastCommand cmd = new(from, Vector3.down, q, float.MaxValue);
 #else
                 RaycastCommand cmd = new RaycastCommand(from, Vector3.down, float.MaxValue, WorldRaycastMask, 1);
 #endif

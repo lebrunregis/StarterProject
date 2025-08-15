@@ -1,8 +1,6 @@
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Jobs;
 using Unity.Collections;
+using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {

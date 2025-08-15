@@ -4,13 +4,10 @@ using Pinwheel.Griffin.BackupTool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.AnimatedValues;
 using UnityEngine;
 using Action = System.Action;
 using Type = System.Type;
-using System.IO;
 using System.Linq;
-using UnityEngine.SceneManagement;
 #if GRIFFIN_VEGETATION_STUDIO_PRO
 using AwesomeTechnologies.VegetationStudio;
 using Pinwheel.Griffin.VegetationStudioPro;
@@ -36,10 +33,10 @@ namespace Pinwheel.Griffin
         public static float tinyWidth = EditorGUIUtility.singleLineHeight;
         public static float indentSpace = 11;
         public static float objectSelectorDragDropHeight = 55;
-        public static Vector2 selectionGridTileSizeSmall = new Vector2(50, 50);
-        public static Vector2 selectionGridTileSizeMedium = new Vector2(75, 75);
-        public static Vector2 selectionGridTileSizeLarge = new Vector2(100, 100);
-        public static Vector2 selectionGridTileSizeWide = new Vector2(110, 18);
+        public static Vector2 selectionGridTileSizeSmall = new(50, 50);
+        public static Vector2 selectionGridTileSizeMedium = new(75, 75);
+        public static Vector2 selectionGridTileSizeLarge = new(100, 100);
+        public static Vector2 selectionGridTileSizeWide = new(110, 18);
 
         public static Color oddItemColor = EditorGUIUtility.isProSkin ? new Color32(55, 55, 55, 255) : new Color32(190, 190, 190, 255);
         public static Color evenItemColor = EditorGUIUtility.isProSkin ? new Color32(50, 50, 50, 255) : new Color32(180, 180, 180, 255);
@@ -56,7 +53,7 @@ namespace Pinwheel.Griffin
         public static Color boxHeaderBg = EditorGUIUtility.isProSkin ? new Color32(53, 53, 53, 255) : new Color32(182, 182, 182, 255);
         public static Color boxBodyBg = EditorGUIUtility.isProSkin ? new Color32(65, 65, 65, 255) : new Color32(200, 200, 200, 255);
 
-        public static RectOffset boxOffset = new RectOffset(2, 2, 2, 2);
+        public static RectOffset boxOffset = new(2, 2, 2, 2);
 
         private static GUIStyle centeredMiniLabel;
         public static GUIStyle CenteredMiniLabel
@@ -636,7 +633,7 @@ namespace Pinwheel.Griffin
 
         public static string GetProjectRelatedEditorPrefsKey(params string[] keyElements)
         {
-            System.Text.StringBuilder b = new System.Text.StringBuilder(ProjectName);
+            System.Text.StringBuilder b = new(ProjectName);
             for (int i = 0; i < keyElements.Length; ++i)
             {
                 b.Append("-").Append(keyElements[i]);
@@ -656,7 +653,7 @@ namespace Pinwheel.Griffin
                 return current;
             int padding = 40;
             int tabHeight = 20;
-            RectOffset offset = new RectOffset(2, 2, 0, 2);
+            RectOffset offset = new(2, 2, 0, 2);
 
             int selectedTab = current;
             EditorGUILayout.BeginHorizontal();
@@ -718,8 +715,8 @@ namespace Pinwheel.Griffin
             {
                 r = EditorGUI.IndentedRect(r);
             }
-            Vector2 start = new Vector2(r.min.x, (r.min.y + r.max.y) / 2);
-            Vector2 end = new Vector2(r.max.x, (r.min.y + r.max.y) / 2);
+            Vector2 start = new(r.min.x, (r.min.y + r.max.y) / 2);
+            Vector2 end = new(r.max.x, (r.min.y + r.max.y) / 2);
             Handles.BeginGUI();
             Handles.color = boxBorderColor;
             Handles.DrawLine(start, end);
@@ -856,7 +853,7 @@ namespace Pinwheel.Griffin
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PrefixLabel(label);
             Rect r = EditorGUILayout.GetControlRect();
-            Rect toggleRect = new Rect(r.x, r.y, toggleWidth, r.height);
+            Rect toggleRect = new(r.x, r.y, toggleWidth, r.height);
 
             for (int i = 0; i < toggleLabels.Length; ++i)
             {
@@ -884,7 +881,7 @@ namespace Pinwheel.Griffin
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PrefixLabel(label);
             Rect r = EditorGUILayout.GetControlRect(false, toggleHeight * toggleLabels.Length);
-            Rect toggleRect = new Rect(r.x, r.y, r.width, toggleHeight);
+            Rect toggleRect = new(r.x, r.y, r.width, toggleHeight);
 
             for (int i = 0; i < toggleLabels.Length; ++i)
             {
@@ -939,10 +936,10 @@ namespace Pinwheel.Griffin
             Handles.BeginGUI();
             using (var scope = new Handles.DrawingScope(c))
             {
-                Vector2 p1 = new Vector2(r.xMin, r.yMin);
-                Vector2 p2 = new Vector2(r.xMax, r.yMin);
-                Vector2 p3 = new Vector2(r.xMax, r.yMax);
-                Vector2 p4 = new Vector2(r.xMin, r.yMax);
+                Vector2 p1 = new(r.xMin, r.yMin);
+                Vector2 p2 = new(r.xMax, r.yMin);
+                Vector2 p3 = new(r.xMax, r.yMax);
+                Vector2 p4 = new(r.xMin, r.yMax);
                 Handles.DrawLines(new Vector3[]
                 {
                     p1,p2,
@@ -974,12 +971,12 @@ namespace Pinwheel.Griffin
 
         public static void DrawPlus(Rect r, Color c, float thickness)
         {
-            Rect r0 = new Rect();
+            Rect r0 = new();
             r0.size = new Vector2(thickness, r.height);
             r0.center = r.center;
             EditorGUI.DrawRect(r0, c);
 
-            Rect r1 = new Rect();
+            Rect r1 = new();
             r1.size = new Vector2(r.width, thickness);
             r1.center = r.center;
             EditorGUI.DrawRect(r1, c);
@@ -992,14 +989,14 @@ namespace Pinwheel.Griffin
 
         public static int ActiveTerrainGroupPopup(string label, int selected)
         {
-            List<GStylizedTerrain> terrains = new List<GStylizedTerrain>(GStylizedTerrain.ActiveTerrains);
-            HashSet<int> groupId = new HashSet<int>();
+            List<GStylizedTerrain> terrains = new(GStylizedTerrain.ActiveTerrains);
+            HashSet<int> groupId = new();
             for (int i = 0; i < terrains.Count; ++i)
             {
                 groupId.Add(terrains[i].GroupId);
             }
 
-            List<int> values = new List<int>(groupId);
+            List<int> values = new(groupId);
             values.Sort();
             string[] valueLabels = new string[values.Count];
             for (int i = 0; i < valueLabels.Length; ++i)
@@ -1012,14 +1009,14 @@ namespace Pinwheel.Griffin
 
         public static int ActiveTerrainGroupPopupWithAllOption(string label, int selected)
         {
-            List<GStylizedTerrain> terrains = new List<GStylizedTerrain>(GStylizedTerrain.ActiveTerrains);
-            HashSet<int> groupId = new HashSet<int>();
+            List<GStylizedTerrain> terrains = new(GStylizedTerrain.ActiveTerrains);
+            HashSet<int> groupId = new();
             for (int i = 0; i < terrains.Count; ++i)
             {
                 groupId.Add(terrains[i].GroupId);
             }
 
-            List<int> values = new List<int>(groupId);
+            List<int> values = new(groupId);
             values.Sort();
             values.Insert(0, -1);
             string[] valueLabels = new string[values.Count];
@@ -1034,14 +1031,14 @@ namespace Pinwheel.Griffin
 
         public static int ActiveTerrainGroupPopupWithAllOption(GUIContent label, int selected)
         {
-            List<GStylizedTerrain> terrains = new List<GStylizedTerrain>(GStylizedTerrain.ActiveTerrains);
-            HashSet<int> groupId = new HashSet<int>();
+            List<GStylizedTerrain> terrains = new(GStylizedTerrain.ActiveTerrains);
+            HashSet<int> groupId = new();
             for (int i = 0; i < terrains.Count; ++i)
             {
                 groupId.Add(terrains[i].GroupId);
             }
 
-            List<int> values = new List<int>(groupId);
+            List<int> values = new(groupId);
             values.Sort();
             values.Insert(0, -1);
             GUIContent[] valueLabels = new GUIContent[values.Count];
@@ -1086,7 +1083,7 @@ namespace Pinwheel.Griffin
             int lastIndent = EditorGUI.indentLevel;
             EditorGUI.indentLevel = 0;
             int selectedIndex = args.selectedIndex;
-            List<object> items = new List<object>();
+            List<object> items = new();
             IEnumerator iterator = args.collection.GetEnumerator();
             while (iterator.MoveNext())
             {
@@ -1095,7 +1092,7 @@ namespace Pinwheel.Griffin
             if (items.Count <= 0)
                 return -1;
             EditorGUILayout.BeginVertical();
-            List<object> itemsInCategory = new List<object>();
+            List<object> itemsInCategory = new();
             itemsInCategory.Add(items[0]);
             object currentCategory = args.categorizeFunction(items[0]);
             object lastCategory = currentCategory;
@@ -1108,7 +1105,7 @@ namespace Pinwheel.Griffin
 
                     string header = lastCategory != null ? lastCategory.ToString() : string.Empty;
                     EditorGUILayout.LabelField(header, EditorStyles.boldLabel);
-                    _GSelectionGridArgs tmpArgs = new _GSelectionGridArgs();
+                    _GSelectionGridArgs tmpArgs = new();
                     tmpArgs.selectedIndex = selectedIndex;
                     tmpArgs.collection = itemsInCategory;
                     tmpArgs.tileSize = args.tileSize;
@@ -1167,7 +1164,7 @@ namespace Pinwheel.Griffin
                     Rect buttonRect = EditorGUILayout.GetControlRect(GUILayout.Width(itemSize.x), GUILayout.Height(itemSize.y));
 
                     string tooltip = args.tooltipFunction != null ? args.tooltipFunction(iterator.Current) : string.Empty;
-                    GUIContent content = new GUIContent(string.Empty, tooltip);
+                    GUIContent content = new(string.Empty, tooltip);
                     if (GUI.Button(buttonRect, content, GUIStyle.none))
                     {
                         selectedIndex = currentItemIndex;
@@ -1180,7 +1177,7 @@ namespace Pinwheel.Griffin
                     }
                     if (args.drawPreviewFunction != null)
                     {
-                        Rect previewRect = new Rect(buttonRect.position, itemSize);
+                        Rect previewRect = new(buttonRect.position, itemSize);
                         args.drawPreviewFunction(previewRect, iterator.Current);
                     }
                     if (args.drawLabelFunction != null)
@@ -1190,7 +1187,7 @@ namespace Pinwheel.Griffin
                     }
                     if (args.customDrawFunction != null)
                     {
-                        Rect customDrawRect = new Rect(buttonRect.position, itemSize);
+                        Rect customDrawRect = new(buttonRect.position, itemSize);
                         args.customDrawFunction(customDrawRect, iterator.Current);
                     }
 
@@ -1214,12 +1211,12 @@ namespace Pinwheel.Griffin
 
             DrawBodyBox(r);
 
-            Rect messageRect = new Rect();
+            Rect messageRect = new();
             messageRect.size = new Vector2(r.width, 12);
             messageRect.center = r.center - Vector2.up * (messageRect.size.y * 0.5f + 2);
             EditorGUI.LabelField(messageRect, message, GEditorCommon.CenteredLabel);
 
-            Rect buttonRect = new Rect();
+            Rect buttonRect = new();
             buttonRect.size = new Vector2(47, 15);
             buttonRect.center = r.center + Vector2.up * (buttonRect.size.y * 0.5f + 2);
             if (GUI.Button(buttonRect, "Browse", GEditorCommon.CenteredLabel))
@@ -1329,7 +1326,7 @@ namespace Pinwheel.Griffin
 
             if (previews != null && previews.Count > 0)
             {
-                GSelectionGridArgs args = new GSelectionGridArgs();
+                GSelectionGridArgs args = new();
                 args.collection = previews;
                 args.selectedIndex = selectedIndex;
                 args.itemSize = GEditorCommon.selectionGridTileSizeLarge;
@@ -1351,7 +1348,7 @@ namespace Pinwheel.Griffin
 
             if (previews != null && previews.Count > 0)
             {
-                GSelectionGridArgs args = new GSelectionGridArgs();
+                GSelectionGridArgs args = new();
                 args.collection = previews;
                 args.selectedIndices = selectedIndices;
                 args.itemSize = GEditorCommon.selectionGridTileSizeLarge;
@@ -1372,7 +1369,7 @@ namespace Pinwheel.Griffin
             GSplatPreviewTextures preview = (GSplatPreviewTextures)o;
             if (preview != null)
             {
-                List<Texture> texToDraw = new List<Texture>();
+                List<Texture> texToDraw = new();
                 for (int i = 0; i < preview.TextureArray.Count; ++i)
                 {
                     texToDraw.Add(preview.TextureArray[i]);
@@ -1450,8 +1447,8 @@ namespace Pinwheel.Griffin
                 Texture2D texArrayIcon = GEditorSkin.Instance.GetTexture("TextureArrayIcon");
                 if (texArrayIcon != null)
                 {
-                    GUIContent icon = new GUIContent(texArrayIcon, "This layer is packed in a Texture Array.");
-                    Rect iconRect = new Rect(r.max.x - 22, r.max.y - 22, 20, 20);
+                    GUIContent icon = new(texArrayIcon, "This layer is packed in a Texture Array.");
+                    Rect iconRect = new(r.max.x - 22, r.max.y - 22, 20, 20);
                     GUI.Box(iconRect, icon);
                 }
             }
@@ -1475,7 +1472,7 @@ namespace Pinwheel.Griffin
 
         private static List<GSplatPrototypeGroup> GetSplatsSetOnActiveTerrainGroup(int groupId)
         {
-            HashSet<GSplatPrototypeGroup> set = new HashSet<GSplatPrototypeGroup>();
+            HashSet<GSplatPrototypeGroup> set = new();
             IEnumerator<GStylizedTerrain> terrains = GStylizedTerrain.ActiveTerrains.GetEnumerator();
             while (terrains.MoveNext())
             {
@@ -1521,10 +1518,10 @@ namespace Pinwheel.Griffin
                 }
             });
 
-            List<GSplatPreviewTextures> previews = new List<GSplatPreviewTextures>();
+            List<GSplatPreviewTextures> previews = new();
             for (int i = 0; i < maxLayer; ++i)
             {
-                GSplatPreviewTextures p = new GSplatPreviewTextures(i);
+                GSplatPreviewTextures p = new(i);
                 previews.Add(p);
                 GCommon.ForEachTerrain(-1, (t) =>
                 {
@@ -1569,7 +1566,7 @@ namespace Pinwheel.Griffin
 
             if (previews.Count > 0)
             {
-                GSelectionGridArgs args = new GSelectionGridArgs();
+                GSelectionGridArgs args = new();
                 args.collection = previews;
                 args.selectedIndices = selectedIndices;
                 args.itemSize = GEditorCommon.selectionGridTileSizeLarge;
@@ -1597,7 +1594,7 @@ namespace Pinwheel.Griffin
                 maxPrototypeCount = Mathf.Max(maxPrototypeCount, t.TerrainData.Foliage.Trees.Prototypes.Count);
             });
 
-            List<GSelectionGridPreviews> previews = new List<GSelectionGridPreviews>();
+            List<GSelectionGridPreviews> previews = new();
             for (int i = 0; i < maxPrototypeCount; ++i)
             {
                 previews.Add(new GSelectionGridPreviews());
@@ -1624,7 +1621,7 @@ namespace Pinwheel.Griffin
             GSelectionGridPreviews preview = (GSelectionGridPreviews)o;
             if (preview == null)
                 return;
-            List<Texture> texToDraw = new List<Texture>(preview.Textures);
+            List<Texture> texToDraw = new(preview.Textures);
 
             texToDraw.RemoveAll((t) => t == null);
             texToDraw = new List<Texture>(texToDraw.Distinct(new GObjectComparer<Texture>()));
@@ -1721,7 +1718,7 @@ namespace Pinwheel.Griffin
             List<GSelectionGridPreviews> previews = GetGrassPreviews(groupId);
             if (previews.Count > 0)
             {
-                GSelectionGridArgs args = new GSelectionGridArgs();
+                GSelectionGridArgs args = new();
                 args.collection = previews;
                 args.selectedIndices = selectedIndices;
                 args.itemSize = GEditorCommon.selectionGridTileSizeLarge;
@@ -1749,7 +1746,7 @@ namespace Pinwheel.Griffin
                 maxPrototypeCount = Mathf.Max(maxPrototypeCount, t.TerrainData.Foliage.Grasses.Prototypes.Count);
             });
 
-            List<GSelectionGridPreviews> previews = new List<GSelectionGridPreviews>();
+            List<GSelectionGridPreviews> previews = new();
             for (int i = 0; i < maxPrototypeCount; ++i)
             {
                 previews.Add(new GSelectionGridPreviews());
@@ -1839,7 +1836,7 @@ namespace Pinwheel.Griffin
         private static void MergeGrassPreview(List<Color> colors, List<Texture> textures)
         {
             int count = textures.Count;
-            List<GSelectionGridPreviews.ColorTexturePair> tmpList = new List<GSelectionGridPreviews.ColorTexturePair>();
+            List<GSelectionGridPreviews.ColorTexturePair> tmpList = new();
             for (int i = 0; i < count; ++i)
             {
                 tmpList.Add(new GSelectionGridPreviews.ColorTexturePair(colors[i], textures[i]));
@@ -1873,7 +1870,7 @@ namespace Pinwheel.Griffin
 
         private static List<GGrassPrototypeGroup> GetGrassSetOnActiveTerrainGroup(int groupId)
         {
-            HashSet<GGrassPrototypeGroup> set = new HashSet<GGrassPrototypeGroup>();
+            HashSet<GGrassPrototypeGroup> set = new();
             IEnumerator<GStylizedTerrain> terrains = GStylizedTerrain.ActiveTerrains.GetEnumerator();
             while (terrains.MoveNext())
             {
@@ -1945,7 +1942,7 @@ namespace Pinwheel.Griffin
         {
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.PrefixLabel(label);
-            using (EditorGUI.IndentLevelScope level = new EditorGUI.IndentLevelScope(indentScope))
+            using (EditorGUI.IndentLevelScope level = new(indentScope))
             {
                 value = EditorGUILayout.ObjectField(value, typeof(Texture2D), false) as Texture2D;
             }
@@ -1958,8 +1955,8 @@ namespace Pinwheel.Griffin
             public static readonly string LABEL = "Tip";
             public static readonly string ID = "backup-help-box";
 
-            public static readonly GUIContent TEXT = new GUIContent("Backup System is a great way to manage your Editing History!");
-            public static readonly GUIContent OPEN_EDITOR_BTN = new GUIContent("Open Backup Editor");
+            public static readonly GUIContent TEXT = new("Backup System is a great way to manage your Editing History!");
+            public static readonly GUIContent OPEN_EDITOR_BTN = new("Open Backup Editor");
         }
 
         public static void DrawBackupHelpBox()
@@ -2076,8 +2073,8 @@ namespace Pinwheel.Griffin
 
             if (shadow)
             {
-                Vector2 start = new Vector2(r.min.x + 1, r.max.y + 1);
-                Vector2 end = new Vector2(r.max.x - 1, r.max.y + 1);
+                Vector2 start = new(r.min.x + 1, r.max.y + 1);
+                Vector2 end = new(r.max.x - 1, r.max.y + 1);
                 Color32 color = boxBorderColor;
                 color.a = EditorGUIUtility.isProSkin ? (byte)100 : (byte)135;
                 DrawLine(start, end, color);
@@ -2098,7 +2095,7 @@ namespace Pinwheel.Griffin
             EditorGUILayout.BeginVertical();
 
             Rect headerRect = EditorGUILayout.BeginHorizontal();
-            RectOffset headerBoxOffset = new RectOffset(2, 2, 1, 1);
+            RectOffset headerBoxOffset = new(2, 2, 1, 1);
             DrawHeaderBox(headerBoxOffset.Add(headerRect));
 
             Rect caretRect = EditorGUILayout.GetControlRect(GUILayout.Width(indentSpace));
@@ -2137,7 +2134,7 @@ namespace Pinwheel.Griffin
             if (expanded)
             {
                 Rect bodyRect = EditorGUILayout.BeginVertical();
-                RectOffset bodyBoxOffset = new RectOffset(2, 2, 2, 2);
+                RectOffset bodyBoxOffset = new(2, 2, 2, 2);
                 DrawBodyBox(bodyBoxOffset.Add(bodyRect));
             }
 
@@ -2190,7 +2187,7 @@ namespace Pinwheel.Griffin
         public static void Box(string content)
         {
             Rect r = EditorGUILayout.BeginVertical();
-            RectOffset offset = new RectOffset((int)indentSpace * EditorGUI.indentLevel, 0, 0, 0);
+            RectOffset offset = new((int)indentSpace * EditorGUI.indentLevel, 0, 0, 0);
             GUI.Box(offset.Remove(r), "");
             EditorGUILayout.LabelField(content, WordWrapItalicLabel);
             EditorGUILayout.EndVertical();
@@ -2212,7 +2209,7 @@ namespace Pinwheel.Griffin
             IEnumerator iter = args.collection.GetEnumerator();
             List<int> selected = args.selectedIndices;
             int maxWeight = 0;
-            Dictionary<int, int> weights = new Dictionary<int, int>();
+            Dictionary<int, int> weights = new();
             for (int i = 0; i < selected.Count; ++i)
             {
                 int index = selected[i];
@@ -2298,7 +2295,7 @@ namespace Pinwheel.Griffin
 
                         if (weights.ContainsKey(currentIndex) && !args.simpleMode)
                         {
-                            Rect weightLabelRect = new Rect(itemRect.x, itemRect.max.y - 18, itemRect.width, 18);
+                            Rect weightLabelRect = new(itemRect.x, itemRect.max.y - 18, itemRect.width, 18);
                             weightLabelRect = new RectOffset(2, 2, 2, 2).Remove(weightLabelRect);
                             EditorGUI.LabelField(weightLabelRect, weights[currentIndex].ToString(), RightAlignedWhiteTinyLabel);
                         }
@@ -2420,7 +2417,7 @@ namespace Pinwheel.Griffin
             int offsetX = 5;
             int offsetY = 45;
             Vector2 size = SceneViewBoxContent.CalcSize(content);
-            Rect r = new Rect(Screen.width - size.x - offsetX, Screen.height - size.y - offsetY, size.x, size.y);
+            Rect r = new(Screen.width - size.x - offsetX, Screen.height - size.y - offsetY, size.x, size.y);
             EditorGUI.DrawRect(r, boxBodyBg);
             GUI.Label(r, content, SceneViewBoxContent);
             Handles.EndGUI();
@@ -2432,7 +2429,7 @@ namespace Pinwheel.Griffin
             float offsetX = Event.current.mousePosition.x + 15;
             float offsetY = Event.current.mousePosition.y + 20;
             Vector2 size = SceneViewBoxContent.CalcSize(content);
-            Rect r = new Rect(offsetX, offsetY, size.x, size.y);
+            Rect r = new(offsetX, offsetY, size.x, size.y);
             EditorGUI.DrawRect(r, boxBodyBg);
             GUI.Label(r, content, SceneViewBoxContent);
             Handles.EndGUI();
@@ -2511,7 +2508,7 @@ namespace Pinwheel.Griffin
                 Rect r = EditorGUILayout.GetControlRect();
                 r = EditorGUI.IndentedRect(r);
                 EditorGUIUtility.AddCursorRect(r, MouseCursor.Link);
-                GUIContent content = new GUIContent(
+                GUIContent content = new(
                     text + "→",
                     "This button contains affiliate links and will bring you to the Unity Asset Store.\n" +
                     "You won't have to pay an extra but I can earn a little more which can help me a lot.\n" +
@@ -2532,13 +2529,13 @@ namespace Pinwheel.Griffin
 
         private class CommonLinksUtils
         {
-            private static readonly List<string> s_MenuLabels = new List<string>()
+            private static readonly List<string> s_MenuLabels = new()
             {
                 "Support",
                 "Documentation",
             };
 
-            private static readonly List<string> s_MenuLinks = new List<string>()
+            private static readonly List<string> s_MenuLinks = new()
             {
                 GCommon.CONTACT_PAGE,
                 GCommon.ONLINE_MANUAL,

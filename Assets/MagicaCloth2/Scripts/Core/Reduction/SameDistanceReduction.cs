@@ -18,17 +18,17 @@ namespace MagicaCloth2
     /// </summary>
     public class SameDistanceReduction : IDisposable
     {
-        string name = string.Empty;
-        VirtualMesh vmesh;
-        ReductionWorkData workData;
-        ResultCode result;
-        float mergeLength;
+        private readonly string name = string.Empty;
+        private readonly VirtualMesh vmesh;
+        private readonly ReductionWorkData workData;
+        private ResultCode result;
+        private readonly float mergeLength;
 
         //=========================================================================================
-        GridMap<int> gridMap;
+        private GridMap<int> gridMap;
         //NativeParallelHashSet<int2> joinPairSet;
-        NativeParallelMultiHashMap<ushort, ushort> joinPairMap;
-        NativeReference<int> resultRef;
+        private NativeParallelMultiHashMap<ushort, ushort> joinPairMap;
+        private NativeReference<int> resultRef;
 
         //=========================================================================================
         public SameDistanceReduction() { }
@@ -181,7 +181,7 @@ namespace MagicaCloth2
 
         //=========================================================================================
         [BurstCompile]
-        struct InitGridJob : IJob
+        private struct InitGridJob : IJob
         {
             public int vcnt;
             public float gridSize;
@@ -205,7 +205,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct SearchJoinJob : IJob
+        private struct SearchJoinJob : IJob
         {
             public int vcnt;
             public float gridSize;
@@ -260,7 +260,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct JoinJob2 : IJob
+        private struct JoinJob2 : IJob
         {
             public int vertexCount;
 
@@ -427,7 +427,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="jobHandle"></param>
         /// <returns></returns>
-        void UpdateJoinAndLink()
+        private void UpdateJoinAndLink()
         {
             // JoinIndexの状態を更新する。現在の最新の生存ポイントを指すように変更する
             var updateJoinIndexJob = new UpdateJoinIndexJob()
@@ -446,7 +446,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct UpdateJoinIndexJob : IJobParallelFor
+        private struct UpdateJoinIndexJob : IJobParallelFor
         {
             [NativeDisableParallelForRestriction]
             public NativeArray<int> joinIndices;
@@ -468,7 +468,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct UpdateLinkIndexJob : IJobParallelFor
+        private struct UpdateLinkIndexJob : IJobParallelFor
         {
             [NativeDisableParallelForRestriction]
             public NativeArray<int> joinIndices;
@@ -516,7 +516,7 @@ namespace MagicaCloth2
         /// <summary>
         /// リダクション後のデータを整える
         /// </summary>
-        void UpdateReductionResultJob()
+        private void UpdateReductionResultJob()
         {
             // 頂点法線の単位化、およびボーンウエイトを１に整える
             var finalVertexJob = new FinalMergeVertexJob()
@@ -529,7 +529,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct FinalMergeVertexJob : IJobParallelFor
+        private struct FinalMergeVertexJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<int> joinIndices;

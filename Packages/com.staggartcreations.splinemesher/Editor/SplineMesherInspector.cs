@@ -13,7 +13,6 @@ using UnityEngine;
 
 #if SPLINES
 using UnityEditor.Splines;
-using UnityEngine.Splines;
 #endif
 
 namespace sc.modeling.splines.editor
@@ -24,7 +23,7 @@ namespace sc.modeling.splines.editor
     {
         private SerializedProperty splineContainer;
         private SerializedProperty splineChangeMode;
-        
+
         private SerializedProperty sourceMesh;
         private SerializedProperty rotation;
 
@@ -37,17 +36,17 @@ namespace sc.modeling.splines.editor
         private SerializedProperty colliderType;
         private SerializedProperty colliderBoxSubdivisions;
         private SerializedProperty collisionMesh;
-        
+
         //Distribution
         private SerializedProperty segments;
         private SerializedProperty autoSegmentCount;
-        
+
         private SerializedProperty stretchToFit;
         private SerializedProperty evenOnly;
         private SerializedProperty trimStart;
         private SerializedProperty trimEnd;
         private SerializedProperty spacing;
-        
+
         //Deforming
         private SerializedProperty ignoreKnotRotation;
         private SerializedProperty curveOffset;
@@ -55,16 +54,16 @@ namespace sc.modeling.splines.editor
         private SerializedProperty scale;
         private SerializedProperty scaleDataPathIndexUnit;
         private SerializedProperty scaleInterpolation;
-        
+
         private SerializedProperty rollDataPathIndexUnit;
         private SerializedProperty rollMode;
         private SerializedProperty rollFrequency;
         private SerializedProperty rollAngle;
-        
+
         private SerializedProperty uvScale;
         private SerializedProperty uvOffset;
         private SerializedProperty uvStretchMode;
-        
+
         private SerializedProperty colorPathIndexUnit;
 
         //Conforming
@@ -76,11 +75,11 @@ namespace sc.modeling.splines.editor
         private SerializedProperty blendNormal;
 
         private SerializedProperty meshSettings;
-        
+
         //Caps
         private SerializedProperty startCap;
         private SerializedProperty endCap;
-        
+
         private SerializedProperty onPreRebuild, onPostRebuild;
 
         //Change tracking
@@ -91,17 +90,17 @@ namespace sc.modeling.splines.editor
         private bool meshIsReadable;
         private bool colliderIsReadable;
         private bool isPrefab;
-        
+
         //Validation
         private bool outputHasMeshFilter;
         private bool outputHasMeshRenderer;
-        
+
         private static bool ExpandIndexUnits
         {
             get => SessionState.GetBool("SM_EXPAND_INDEXUNITS", false);
             set => SessionState.SetBool("SM_EXPAND_INDEXUNITS", value);
-        } 
-        
+        }
+
         private static bool ExpandSetup
         {
             get => SessionState.GetBool("SM_EXPAND_SETUP", true);
@@ -119,7 +118,7 @@ namespace sc.modeling.splines.editor
         }
         private MeshPreview sourceMeshPreview;
         private PreviewRenderUtility meshPreviewUtility;
-        
+
         private UI.Section setupSection;
         private UI.Section colliderSection;
         private UI.Section distributionSection;
@@ -127,8 +126,8 @@ namespace sc.modeling.splines.editor
         private UI.Section conformingSection;
         private UI.Section capsSection;
         private UI.Section eventsSection;
-        private List<UI.Section> sections = new List<UI.Section>();
-        
+        private List<UI.Section> sections = new();
+
         private void OnEnable()
         {
             sections = new List<UI.Section>();
@@ -139,15 +138,15 @@ namespace sc.modeling.splines.editor
             sections.Add(conformingSection = new UI.Section(this, "CONFORMING", new GUIContent("Conforming")));
             sections.Add(capsSection = new UI.Section(this, "CAPS", new GUIContent("Caps")));
             sections.Add(eventsSection = new UI.Section(this, "EVENTS", new GUIContent("Events")));
-            
-            #if SPLINES
+
+#if SPLINES
             splineContainer = serializedObject.FindProperty("splineContainer");
             splineChangeMode = serializedObject.FindProperty("splineChangeMode");
-            #endif
-            
+#endif
+
             sourceMesh = serializedObject.FindProperty("sourceMesh");
             rotation = serializedObject.FindProperty("rotation");
-            
+
             outputObject = serializedObject.FindProperty("outputObject");
             rebuildTriggers = serializedObject.FindProperty("rebuildTriggers");
 
@@ -163,33 +162,33 @@ namespace sc.modeling.splines.editor
                 SerializedProperty settingsDistribution = settings.FindPropertyRelative("distribution");
                 segments = settingsDistribution.FindPropertyRelative("segments");
                 autoSegmentCount = settingsDistribution.FindPropertyRelative("autoSegmentCount");
-                
+
                 stretchToFit = settingsDistribution.FindPropertyRelative("stretchToFit");
                 evenOnly = settingsDistribution.FindPropertyRelative("evenOnly");
                 trimStart = settingsDistribution.FindPropertyRelative("trimStart");
                 trimEnd = settingsDistribution.FindPropertyRelative("trimEnd");
                 spacing = settingsDistribution.FindPropertyRelative("spacing");
-                
+
                 SerializedProperty settingsDeforming = settings.FindPropertyRelative("deforming");
                 ignoreKnotRotation = settingsDeforming.FindPropertyRelative("ignoreKnotRotation");
                 curveOffset = settingsDeforming.FindPropertyRelative("curveOffset");
                 pivotOffset = settingsDeforming.FindPropertyRelative("pivotOffset");
                 scale = settingsDeforming.FindPropertyRelative("scale");
-                #if SPLINES
+#if SPLINES
                 scaleDataPathIndexUnit = settingsDeforming.FindPropertyRelative("scalePathIndexUnit");
                 scaleInterpolation = settingsDeforming.FindPropertyRelative("scaleInterpolation");
-                #endif
-                
+#endif
+
                 rollMode = settingsDeforming.FindPropertyRelative("rollMode");
                 rollFrequency = settingsDeforming.FindPropertyRelative("rollFrequency");
                 rollAngle = settingsDeforming.FindPropertyRelative("rollAngle");
-                #if SPLINES
+#if SPLINES
                 rollDataPathIndexUnit = settingsDeforming.FindPropertyRelative("rollPathIndexUnit");
-                
+
                 SerializedProperty settingColor = settings.FindPropertyRelative("color");
                 colorPathIndexUnit = settingColor.FindPropertyRelative("pathIndexUnit");
-                #endif
-                
+#endif
+
                 SerializedProperty settingsUV = settings.FindPropertyRelative("uv");
                 uvScale = settingsUV.FindPropertyRelative("scale");
                 uvOffset = settingsUV.FindPropertyRelative("offset");
@@ -202,19 +201,19 @@ namespace sc.modeling.splines.editor
                 layerMask = settingsConforming.FindPropertyRelative("layerMask");
                 align = settingsConforming.FindPropertyRelative("align");
                 blendNormal = settingsConforming.FindPropertyRelative("blendNormal");
-                
+
                 meshSettings = settings.FindPropertyRelative("mesh");
                 meshSettings.isExpanded = false;
             }
-            
+
             startCap = serializedObject.FindProperty("startCap");
             endCap = serializedObject.FindProperty("endCap");
-            
+
             onPreRebuild = serializedObject.FindProperty("onPreRebuild");
             onPostRebuild = serializedObject.FindProperty("onPostRebuild");
 
             Undo.undoRedoPerformed += OnUndoRedo;
-            
+
             sourceMeshPreview = new MeshPreview(new Mesh());
 
             isPrefab = PrefabUtility.IsPartOfPrefabInstance((SplineMesher)target) || PrefabStageUtility.GetCurrentPrefabStage();
@@ -223,7 +222,7 @@ namespace sc.modeling.splines.editor
 
             CheckInputMeshReadability();
             CheckInputColliderReadability();
-            
+
             //Override zoom level
             meshPreviewUtility = (PreviewRenderUtility)typeof(MeshPreview).GetField("m_PreviewUtility", BindingFlags.Instance | BindingFlags.NonPublic).GetValue(sourceMeshPreview);
             meshPreviewUtility.camera.fieldOfView = 17;
@@ -236,7 +235,7 @@ namespace sc.modeling.splines.editor
         {
             if (sourceMesh.objectReferenceValue) meshIsReadable = SplineMeshEditor.CheckInputMeshReadability(sourceMesh.objectReferenceValue as Mesh);
         }
-        
+
         private void CheckInputColliderReadability()
         {
             if (colliderType.intValue == (int)Settings.ColliderType.Mesh)
@@ -244,17 +243,17 @@ namespace sc.modeling.splines.editor
                 if (collisionMesh.objectReferenceValue) colliderIsReadable = SplineMeshEditor.CheckInputMeshReadability(collisionMesh.objectReferenceValue as Mesh);
             }
         }
-        
+
         private void OnDisable()
         {
             Undo.undoRedoPerformed -= OnUndoRedo;
-            
+
             if (sourceMeshPreview != null)
             {
                 sourceMeshPreview.Dispose();
                 sourceMeshPreview = null;
             }
-            
+
             SceneView.duringSceneGui -= DuringSceneGUI;
         }
 
@@ -264,19 +263,19 @@ namespace sc.modeling.splines.editor
         }
 
         private static string iconPrefix => EditorGUIUtility.isProSkin ? "d_" : string.Empty;
-        
+
         public override void OnInspectorGUI()
         {
-            #if !SPLINES || !MATHEMATICS
-            #if !SPLINES
+#if !SPLINES || !MATHEMATICS
+#if !SPLINES
             EditorGUILayout.HelpBox("The Spline package isn't installed, please install this through the Package Manager", MessageType.Error);
-            #endif
-            #if !MATHEMATICS
+#endif
+#if !MATHEMATICS
             EditorGUILayout.HelpBox("The Mathematics package isn't installed or outdated, please install this through the Package Manager", MessageType.Error);
-            #endif
+#endif
             
             return;
-            #else
+#else
             //Reset
             requiresRebuild = false;
             requiresCapUpdate = false;
@@ -320,7 +319,7 @@ namespace sc.modeling.splines.editor
                 }
                 if (requiresRebuild)
                 {
-                    if(component.rebuildTriggers.HasFlag(SplineMesher.RebuildTriggers.OnUIChange))
+                    if (component.rebuildTriggers.HasFlag(SplineMesher.RebuildTriggers.OnUIChange))
                     {
                         Rebuild();
                     }
@@ -332,7 +331,7 @@ namespace sc.modeling.splines.editor
             if (((SplineMesher)target).rebuildTriggers.HasFlag(SplineMesher.RebuildTriggers.OnUIChange) == false)
             {
                 EditorGUILayout.HelpBox("Auto-rebuilding on UI change is disabled (see Rebuilder Triggers)", MessageType.None);
-                
+
                 using (new EditorGUILayout.HorizontalScope())
                 {
                     GUILayout.FlexibleSpace();
@@ -343,17 +342,17 @@ namespace sc.modeling.splines.editor
                     GUILayout.FlexibleSpace();
                 }
             }
-            
-            #if SM_DEV
+
+#if SM_DEV
             using (new EditorGUILayout.HorizontalScope())
             {
                 EditorGUILayout.LabelField($"{((SplineMesher)target).GetLastRebuildTime()}ms", EditorStyles.centeredGreyMiniLabel);
             }
-            #endif
-            #endif
-            
+#endif
+#endif
+
             EditorGUILayout.Space();
-            
+
             EditorGUILayout.LabelField("- Staggart Creations -", EditorStyles.centeredGreyMiniLabel);
         }
 
@@ -366,21 +365,21 @@ namespace sc.modeling.splines.editor
                 {
                     HelpWindow.ShowWindow();
                 }
-                
+
                 if (GUILayout.Button(new GUIContent(EditorGUIUtility.IconContent(iconPrefix + "Settings").image, "Utility functions"), EditorStyles.miniButtonMid, GUILayout.Width(30f)))
                 {
-                    #if SPLINES
-                    GenericMenu menu = new GenericMenu();
+#if SPLINES
+                    GenericMenu menu = new();
 
                     SplineMesher component = (SplineMesher)target;
-                    
+
                     menu.AddItem(new GUIContent("Open preferences"), false, () =>
                     {
                         SettingsService.OpenUserPreferences(SplineMeshEditor.Preferences.PreferencesPath);
                     });
-                    
+
                     menu.AddSeparator(string.Empty);
-                    
+
                     menu.AddItem(new GUIContent("Clear Scale data"), false, () =>
                     {
                         component.ResetScaleData();
@@ -396,7 +395,7 @@ namespace sc.modeling.splines.editor
                         component.ResetVertexColorData();
                         EditorUtility.SetDirty(component);
                     });
-                    
+
                     menu.AddSeparator(string.Empty);
 
                     menu.AddItem(new GUIContent("Detach caps", "tooltip"), false, () =>
@@ -413,13 +412,13 @@ namespace sc.modeling.splines.editor
                     });
                     menu.AddItem(new GUIContent("Reverse spline"), false, () => component.ReverseSpline());
                     menu.AddItem(new GUIContent("Generate lightmap UVs"), false, () => SplineMeshEditor.GenerateLightmapUV(component));
-                    
+
                     menu.ShowAsContext();
-                    #endif
+#endif
                 }
             }
         }
-        
+
         private void DrawInputOutput()
         {
             //setupSection.DrawHeader(() => SwitchSection(setupSection));
@@ -433,7 +432,7 @@ namespace sc.modeling.splines.editor
                     EditorGUILayout.LabelField("Input", EditorStyles.boldLabel);
                     using (new EditorGUILayout.HorizontalScope())
                     {
-                    #if SPLINES
+#if SPLINES
                         EditorGUI.BeginChangeCheck();
                         {
                             EditorGUILayout.PropertyField(splineContainer);
@@ -466,7 +465,7 @@ namespace sc.modeling.splines.editor
                                 splineContainer.objectReferenceValue = SplineMeshEditor.AddSplineContainer(((SplineMesher)target).gameObject);
                             }
                         }
-                    #endif
+#endif
                     }
                     if (splineContainer.objectReferenceValue == false)
                     {
@@ -566,18 +565,18 @@ namespace sc.modeling.splines.editor
 
                                 if (GUILayout.Button("Enable Read/Write option on mesh"))
                                 {
-                                    if(SplineMeshEditor.SetMeshReadWriteFlag(sourceMesh.objectReferenceValue as Mesh))
+                                    if (SplineMeshEditor.SetMeshReadWriteFlag(sourceMesh.objectReferenceValue as Mesh))
                                         meshIsReadable = true;
                                 }
                             }
-                            
+
                             EditorGUI.BeginChangeCheck();
                             EditorGUI.indentLevel++;
                             EditorGUILayout.PropertyField(rotation);
                             EditorGUI.indentLevel--;
                             if (EditorGUI.EndChangeCheck()) requiresRebuild = true;
 
-                            
+
                         }
 
                         EditorGUILayout.Space();
@@ -620,11 +619,11 @@ namespace sc.modeling.splines.editor
                                 if (requiresLightmapUV)
                                 {
                                     string lightmapNotification = "Output has no or outdated lightmap UVs, they will be generated, once light baking starts.";
-                                    
-                                    #if BAKERY_INCLUDED
+
+#if BAKERY_INCLUDED
                                     lightmapNotification = "[Bakery detected] " + lightmapNotification;
-                                    #endif
-                                    
+#endif
+
                                     EditorGUILayout.HelpBox(lightmapNotification, MessageType.None);
 
                                     if (SplineMeshEditor.Preferences.AutoGeneratedLightmapUV == false)
@@ -649,7 +648,7 @@ namespace sc.modeling.splines.editor
                         }
 
                         int rebuildTrigger = rebuildTriggers.intValue;
-                        
+
                         if ((rebuildTrigger & (int)SplineMesher.RebuildTriggers.OnStart) != (int)SplineMesher.RebuildTriggers.OnStart && isPrefab)
                         {
                             EditorGUILayout.HelpBox("Procedurally created geometry cannot be used in a prefab." +
@@ -669,7 +668,7 @@ namespace sc.modeling.splines.editor
                             }
                             GUILayout.FlexibleSpace();
                         }
-                        
+
                         if ((rebuildTrigger & (int)SplineMesher.RebuildTriggers.OnSplineChanged) == (int)SplineMesher.RebuildTriggers.OnSplineChanged)
                         {
                             EditorGUI.indentLevel++;
@@ -689,7 +688,8 @@ namespace sc.modeling.splines.editor
                                         ((SplineMesher)m_target).ListenForTransformChanges();
                                     }
                                 };
-                            } }
+                            }
+                        }
 
                     }
 
@@ -725,7 +725,7 @@ namespace sc.modeling.splines.editor
                                 {
                                     EditorGUI.BeginChangeCheck();
                                     EditorGUILayout.PropertyField(collisionMesh);
-                                    
+
                                     if (GUILayout.Button(new GUIContent("Same", "Use the same mesh for collision as the source mesh"), EditorStyles.miniButton, GUILayout.Width(50f)))
                                     {
                                         collisionMesh.objectReferenceValue = sourceMesh.objectReferenceValue;
@@ -781,7 +781,7 @@ namespace sc.modeling.splines.editor
             }
             EditorGUILayout.EndFadeGroup();
         }
-        
+
         private void DrawDistribution()
         {
             distributionSection.DrawHeader(() => SwitchSection(distributionSection));
@@ -792,7 +792,7 @@ namespace sc.modeling.splines.editor
                     EditorGUILayout.Space();
 
                     EditorGUI.BeginChangeCheck();
-                    
+
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         EditorGUI.BeginDisabledGroup(autoSegmentCount.boolValue);
@@ -800,10 +800,10 @@ namespace sc.modeling.splines.editor
                             EditorGUILayout.PropertyField(segments, GUILayout.Width(EditorGUIUtility.labelWidth + 60f));
                         }
                         EditorGUI.EndDisabledGroup();
-                        
+
                         autoSegmentCount.boolValue = GUILayout.Toggle(autoSegmentCount.boolValue, new GUIContent(" Auto", autoSegmentCount.tooltip), "Button", GUILayout.MaxWidth(60f), GUILayout.MaxHeight(19f));
                     }
-                    
+
                     EditorGUILayout.Space();
 
                     EditorGUILayout.PropertyField(stretchToFit);
@@ -812,13 +812,13 @@ namespace sc.modeling.splines.editor
                     {
                         EditorGUILayout.PropertyField(evenOnly);
                     }
-                    
+
                     EditorGUILayout.Space();
 
                     EditorGUILayout.LabelField("Trimming", EditorStyles.boldLabel);
                     EditorGUILayout.PropertyField(trimStart, new GUIContent("Start", trimStart.tooltip), GUILayout.Width(EditorGUIUtility.labelWidth + 60f));
                     EditorGUILayout.PropertyField(trimEnd, new GUIContent("End", trimEnd.tooltip), GUILayout.Width(EditorGUIUtility.labelWidth + 60f));
-                    
+
                     EditorGUILayout.Separator();
 
                     EditorGUILayout.PropertyField(spacing, GUILayout.Width(EditorGUIUtility.labelWidth + 60f));
@@ -834,7 +834,7 @@ namespace sc.modeling.splines.editor
             }
             EditorGUILayout.EndFadeGroup();
         }
-        
+
         private void DrawDeforming()
         {
             deformingSection.DrawHeader(() => SwitchSection(deformingSection));
@@ -845,12 +845,12 @@ namespace sc.modeling.splines.editor
                     EditorGUILayout.Space();
 
                     EditorGUI.BeginChangeCheck();
-                    
+
                     EditorGUI.BeginChangeCheck();
-                    
+
                     EditorGUILayout.PropertyField(curveOffset);
                     EditorGUILayout.PropertyField(pivotOffset);
-                    
+
                     EditorGUILayout.Separator();
                     EditorGUILayout.PropertyField(scale);
                     EditorGUI.indentLevel++;
@@ -861,8 +861,8 @@ namespace sc.modeling.splines.editor
                     {
                         requiresCapUpdate = true;
                     }
-                    
-                    #if SPLINES
+
+#if SPLINES
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         GUILayout.FlexibleSpace();
@@ -873,24 +873,24 @@ namespace sc.modeling.splines.editor
                         }
                         if (GUILayout.Button(new GUIContent("▼"), GUILayout.MaxHeight(EditorGUIUtility.singleLineHeight + 5f)))
                         {
-                            GenericMenu menu = new GenericMenu();
+                            GenericMenu menu = new();
 
                             SplineMesher component = (SplineMesher)target;
-                    
+
                             menu.AddItem(new GUIContent("Clear Scale data"), false, () =>
                             {
                                 component.ResetScaleData();
                                 EditorUtility.SetDirty(component);
                             });
-                            
+
                             menu.ShowAsContext();
                         }
                     }
-                    #endif
-                    
+#endif
+
                     EditorGUILayout.LabelField("Roll", EditorStyles.boldLabel);
                     EditorGUILayout.PropertyField(ignoreKnotRotation);
-                    
+
                     EditorGUI.BeginChangeCheck();
                     EditorGUILayout.PropertyField(rollMode, GUILayout.Width(EditorGUIUtility.labelWidth + 180f));
                     EditorGUILayout.PropertyField(rollFrequency, new GUIContent("Frequency", rollFrequency.tooltip));
@@ -910,8 +910,8 @@ namespace sc.modeling.splines.editor
                     {
                         EditorGUILayout.HelpBox("The Conforming feature is enabled, which overrides this rotation completely", MessageType.Warning);
                     }
-                    
-                    #if SPLINES
+
+#if SPLINES
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         GUILayout.FlexibleSpace();
@@ -922,23 +922,23 @@ namespace sc.modeling.splines.editor
                         }
                         if (GUILayout.Button(new GUIContent("▼"), GUILayout.MaxHeight(EditorGUIUtility.singleLineHeight + 5f)))
                         {
-                            GenericMenu menu = new GenericMenu();
+                            GenericMenu menu = new();
 
                             SplineMesher component = (SplineMesher)target;
-                    
+
                             menu.AddItem(new GUIContent("Clear Roll data"), false, () =>
                             {
                                 component.ResetRollData();
                                 EditorUtility.SetDirty(component);
                             });
-                            
+
                             menu.ShowAsContext();
                         }
                     }
-                    #endif
-                    
+#endif
+
                     EditorGUILayout.Space();
-                    
+
                     EditorGUILayout.LabelField("UV", EditorStyles.boldLabel);
                     EditorGUILayout.PropertyField(uvStretchMode, GUILayout.Width(EditorGUIUtility.labelWidth + 180f));
                     EditorGUILayout.PropertyField(uvScale);
@@ -954,7 +954,7 @@ namespace sc.modeling.splines.editor
             }
             EditorGUILayout.EndFadeGroup();
         }
-        
+
         private void DrawConforming()
         {
             conformingSection.DrawHeader(() => SwitchSection(conformingSection));
@@ -971,15 +971,15 @@ namespace sc.modeling.splines.editor
                     if (enableConforming.boolValue)
                     {
                         EditorGUILayout.PropertyField(seekDistance);
-                        
+
                         EditorGUILayout.Separator();
-                        
+
                         EditorGUILayout.LabelField("Filtering", EditorStyles.boldLabel);
                         EditorGUILayout.PropertyField(terrainOnly);
                         EditorGUILayout.PropertyField(layerMask);
-                        
+
                         EditorGUILayout.Separator();
-                        
+
                         EditorGUILayout.LabelField("Operations", EditorStyles.boldLabel);
                         EditorGUILayout.PropertyField(align);
                         EditorGUILayout.PropertyField(blendNormal);
@@ -993,7 +993,7 @@ namespace sc.modeling.splines.editor
             EditorGUILayout.EndFadeGroup();
 
         }
-        
+
         private void DrawCaps()
         {
             void DrawCap(SerializedProperty cap)
@@ -1018,32 +1018,32 @@ namespace sc.modeling.splines.editor
                     EditorGUILayout.LabelField("Position", EditorStyles.boldLabel);
                     EditorGUILayout.PropertyField(cap.FindPropertyRelative("offset"));
                     EditorGUILayout.PropertyField(cap.FindPropertyRelative("shift"));
-                            
+
                     EditorGUILayout.Separator();
 
                     EditorGUILayout.LabelField("Rotation", EditorStyles.boldLabel);
                     EditorGUILayout.PropertyField(cap.FindPropertyRelative("align"));
-                    
+
                     EditorGUILayout.PropertyField(cap.FindPropertyRelative("rotation"));
-                            
+
                     EditorGUILayout.Separator();
 
                     EditorGUILayout.LabelField("Scale", EditorStyles.boldLabel);
                     EditorGUILayout.PropertyField(cap.FindPropertyRelative("matchScale"));
                     EditorGUILayout.PropertyField(cap.FindPropertyRelative("scale"));
-                            
+
                     SerializedProperty instances = cap.FindPropertyRelative("instances");
                     EditorGUILayout.LabelField($"Instances: {instances.arraySize}", EditorStyles.miniLabel);
                 }
             }
-            
+
             capsSection.DrawHeader(() => SwitchSection(capsSection));
             EditorGUILayout.BeginFadeGroup(capsSection.anim.faded);
             {
                 if (capsSection.Expanded)
                 {
                     EditorGUILayout.Space();
-                    
+
                     using (new EditorGUILayout.HorizontalScope())
                     {
                         GUILayout.FlexibleSpace();
@@ -1058,10 +1058,10 @@ namespace sc.modeling.splines.editor
                         EditorGUILayout.HelpBox("Caps cannot be properly positioned if the \"Ignore Knot Rotation\" option is enabled for Deforming." +
                                                 "\n\n" +
                                                 "Instead, ensure knots are correctly rotated as desired.", MessageType.Warning, true);
-                
+
                         EditorGUILayout.Separator();
                     }
-                    
+
                     EditorGUI.BeginChangeCheck();
 
                     EditorGUILayout.LabelField("Start", EditorStyles.boldLabel);
@@ -1069,7 +1069,7 @@ namespace sc.modeling.splines.editor
                     {
                         DrawCap(startCap);
                     }
-                    
+
                     EditorGUILayout.Separator();
 
                     EditorGUILayout.LabelField("End", EditorStyles.boldLabel);
@@ -1077,14 +1077,14 @@ namespace sc.modeling.splines.editor
                     {
                         DrawCap(endCap);
                     }
-                    
+
                     EditorGUILayout.Separator();
-                    
+
                     if (EditorGUI.EndChangeCheck())
                     {
                         requiresCapUpdate = true;
                     }
-                    
+
                     EditorGUILayout.Space();
                 }
             }
@@ -1108,7 +1108,7 @@ namespace sc.modeling.splines.editor
             }
             EditorGUILayout.EndFadeGroup();
         }
-        
+
         private void Rebuild()
         {
             requiresRebuild = false;
@@ -1128,12 +1128,12 @@ namespace sc.modeling.splines.editor
             foreach (var m_target in targets)
             {
                 SplineMesher mesher = (SplineMesher)m_target;
-                
+
                 mesher.Rebuild();
                 EditorUtility.SetDirty(mesher.meshFilter);
             }
         }
-        
+
         private void SwitchSection(UI.Section targetSection)
         {
             if (SplineMeshEditor.Preferences.SectionStyleMode == SplineMeshEditor.Preferences.SectionStyle.Foldouts)
@@ -1151,11 +1151,11 @@ namespace sc.modeling.splines.editor
                 }
             }
         }
-        
+
         private void DuringSceneGUI(SceneView sceneView)
         {
             if (LabelCaps == false || capsSection.Expanded == false) return;
-            
+
             Handles.BeginGUI();
 
             Handles.color = Color.black;
@@ -1167,20 +1167,20 @@ namespace sc.modeling.splines.editor
                 {
                     for (int i = 0; i < splineMesher.startCap.instances.Length; i++)
                     {
-                        if(splineMesher.startCap.instances[i] == null) continue;
-                        
+                        if (splineMesher.startCap.instances[i] == null) continue;
+
                         Vector3 position = splineMesher.startCap.instances[i].transform.position;
 
                         DrawLabel(position, "Start");
                     }
                 }
-                
+
                 if (splineMesher.endCap.prefab)
                 {
                     for (int i = 0; i < splineMesher.endCap.instances.Length; i++)
                     {
-                        if(splineMesher.endCap.instances[i] == null) continue;
-                        
+                        if (splineMesher.endCap.instances[i] == null) continue;
+
                         Vector3 position = splineMesher.endCap.instances[i].transform.position;
 
                         DrawLabel(position, "End");
@@ -1196,11 +1196,11 @@ namespace sc.modeling.splines.editor
             position += new Vector3(0, -labelOffset, 0);
 
             Vector2 screenPos = HandleUtility.WorldToGUIPoint(position);
-            Rect r = new Rect(screenPos.x, screenPos.y, Label.CalcSize(new GUIContent(text)).x, 22f);
-            
+            Rect r = new(screenPos.x, screenPos.y, Label.CalcSize(new GUIContent(text)).x, 22f);
+
             //Center
             r.x -= r.width * 0.5f;
-            
+
             GUI.color = EditorGUIUtility.isProSkin ? Color.white * 0.5f : Color.gray;
             if (EditorGUIUtility.isProSkin)
             {
@@ -1211,7 +1211,7 @@ namespace sc.modeling.splines.editor
             GUI.Label(r, text, Label);
             //Handles.Label(position , "End");
         }
-        
+
         private static GUIStyle _Label;
         public static GUIStyle Label
         {

@@ -20,9 +20,11 @@ using UnityEngine;
 	// can't compile this class
 #else
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
-    public static class FilePlayerPrefs {
-        private static readonly Hashtable PlayerPrefsHashtable = new Hashtable();
+namespace DarkTonic.MasterAudio
+{
+    public static class FilePlayerPrefs
+    {
+        private static readonly Hashtable PlayerPrefsHashtable = new();
 
         private static bool _hashTableChanged;
         private static string _serializedOutput = "";
@@ -33,7 +35,8 @@ namespace DarkTonic.MasterAudio {
 
         private static readonly string FileName = Application.persistentDataPath + "/MAPlayerPrefs.txt";
 
-        static FilePlayerPrefs() {
+        static FilePlayerPrefs()
+        {
             //load previous settings
             // ReSharper disable once JoinDeclarationAndInitializer
             StreamReader fileReader;
@@ -51,69 +54,93 @@ namespace DarkTonic.MasterAudio {
             fileReader.Close();
         }
 
-        public static bool HasKey(string key) {
+        public static bool HasKey(string key)
+        {
             return PlayerPrefsHashtable.ContainsKey(key);
         }
 
-        public static void SetString(string key, string value) {
-            if (!PlayerPrefsHashtable.ContainsKey(key)) {
+        public static void SetString(string key, string value)
+        {
+            if (!PlayerPrefsHashtable.ContainsKey(key))
+            {
                 PlayerPrefsHashtable.Add(key, value);
-            } else {
+            }
+            else
+            {
                 PlayerPrefsHashtable[key] = value;
             }
 
             _hashTableChanged = true;
         }
 
-        public static void SetInt(string key, int value) {
-            if (!PlayerPrefsHashtable.ContainsKey(key)) {
+        public static void SetInt(string key, int value)
+        {
+            if (!PlayerPrefsHashtable.ContainsKey(key))
+            {
                 PlayerPrefsHashtable.Add(key, value);
-            } else {
+            }
+            else
+            {
                 PlayerPrefsHashtable[key] = value;
             }
 
             _hashTableChanged = true;
         }
 
-        public static void SetFloat(string key, float value) {
-            if (!PlayerPrefsHashtable.ContainsKey(key)) {
+        public static void SetFloat(string key, float value)
+        {
+            if (!PlayerPrefsHashtable.ContainsKey(key))
+            {
                 PlayerPrefsHashtable.Add(key, value);
-            } else {
+            }
+            else
+            {
                 PlayerPrefsHashtable[key] = value;
             }
 
             _hashTableChanged = true;
         }
 
-        public static void SetBool(string key, bool value) {
-            if (!PlayerPrefsHashtable.ContainsKey(key)) {
+        public static void SetBool(string key, bool value)
+        {
+            if (!PlayerPrefsHashtable.ContainsKey(key))
+            {
                 PlayerPrefsHashtable.Add(key, value);
-            } else {
+            }
+            else
+            {
                 PlayerPrefsHashtable[key] = value;
             }
 
             _hashTableChanged = true;
         }
 
-        public static string GetString(string key) {
-            if (PlayerPrefsHashtable.ContainsKey(key)) {
+        public static string GetString(string key)
+        {
+            if (PlayerPrefsHashtable.ContainsKey(key))
+            {
                 return PlayerPrefsHashtable[key].ToString();
             }
 
             return null;
         }
 
-        public static string GetString(string key, string defaultValue) {
-            if (PlayerPrefsHashtable.ContainsKey(key)) {
+        public static string GetString(string key, string defaultValue)
+        {
+            if (PlayerPrefsHashtable.ContainsKey(key))
+            {
                 return PlayerPrefsHashtable[key].ToString();
-            } else {
+            }
+            else
+            {
                 PlayerPrefsHashtable.Add(key, defaultValue);
                 _hashTableChanged = true;
                 return defaultValue;
             }
         }
 
-        public static int GetInt(string key) {
+        public static int GetInt(string key)
+        {
             if (!PlayerPrefsHashtable.ContainsKey(key))
             {
                 return 0;
@@ -121,7 +148,7 @@ namespace DarkTonic.MasterAudio {
             var val = PlayerPrefsHashtable[key];
             if (val is int)
             {
-                return (int) val;
+                return (int)val;
             }
             var converted = int.Parse(val.ToString());
             PlayerPrefsHashtable[key] = converted;
@@ -130,17 +157,22 @@ namespace DarkTonic.MasterAudio {
             return (int)val;
         }
 
-        public static int GetInt(string key, int defaultValue) {
-            if (PlayerPrefsHashtable.ContainsKey(key)) {
+        public static int GetInt(string key, int defaultValue)
+        {
+            if (PlayerPrefsHashtable.ContainsKey(key))
+            {
                 return (int)PlayerPrefsHashtable[key];
-            } else {
+            }
+            else
+            {
                 PlayerPrefsHashtable.Add(key, defaultValue);
                 _hashTableChanged = true;
                 return defaultValue;
             }
         }
 
-        public static float GetFloat(string key) {
+        public static float GetFloat(string key)
+        {
             if (!PlayerPrefsHashtable.ContainsKey(key))
             {
                 return 0.0f;
@@ -149,7 +181,7 @@ namespace DarkTonic.MasterAudio {
 
             if (val is float)
             {
-                return (float) val;
+                return (float)val;
             }
             var converted = float.Parse(val.ToString());
             PlayerPrefsHashtable[key] = converted;
@@ -159,43 +191,56 @@ namespace DarkTonic.MasterAudio {
             return (float)val;
         }
 
-        public static float GetFloat(string key, float defaultValue) {
-            if (PlayerPrefsHashtable.ContainsKey(key)) {
+        public static float GetFloat(string key, float defaultValue)
+        {
+            if (PlayerPrefsHashtable.ContainsKey(key))
+            {
                 return (float)PlayerPrefsHashtable[key];
-            } else {
+            }
+            else
+            {
                 PlayerPrefsHashtable.Add(key, defaultValue);
                 _hashTableChanged = true;
                 return defaultValue;
             }
         }
 
-        public static bool GetBool(string key) {
-            if (PlayerPrefsHashtable.ContainsKey(key)) {
+        public static bool GetBool(string key)
+        {
+            if (PlayerPrefsHashtable.ContainsKey(key))
+            {
                 return (bool)PlayerPrefsHashtable[key];
             }
 
             return false;
         }
 
-        public static bool GetBool(string key, bool defaultValue) {
-            if (PlayerPrefsHashtable.ContainsKey(key)) {
+        public static bool GetBool(string key, bool defaultValue)
+        {
+            if (PlayerPrefsHashtable.ContainsKey(key))
+            {
                 return (bool)PlayerPrefsHashtable[key];
-            } else {
+            }
+            else
+            {
                 PlayerPrefsHashtable.Add(key, defaultValue);
                 _hashTableChanged = true;
                 return defaultValue;
             }
         }
 
-        public static void DeleteKey(string key) {
+        public static void DeleteKey(string key)
+        {
             PlayerPrefsHashtable.Remove(key);
         }
 
-        public static void DeleteAll() {
+        public static void DeleteAll()
+        {
             PlayerPrefsHashtable.Clear();
         }
 
-        public static void Flush() {
+        public static void Flush()
+        {
             if (!_hashTableChanged)
             {
                 return;
@@ -206,7 +251,8 @@ namespace DarkTonic.MasterAudio {
 
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             // ReSharper disable HeuristicUnreachableCode
-            if (fileWriter == null) {
+            if (fileWriter == null)
+            {
                 Debug.LogWarning("PlayerPrefs::Flush() opening file for writing failed: " + FileName);
             }
             // ReSharper restore HeuristicUnreachableCode
@@ -218,44 +264,53 @@ namespace DarkTonic.MasterAudio {
             _serializedOutput = "";
         }
 
-        private static void Serialize() {
+        private static void Serialize()
+        {
             var myEnumerator = PlayerPrefsHashtable.GetEnumerator();
 
-            while (myEnumerator.MoveNext()) {
-                if (_serializedOutput != "") {
+            while (myEnumerator.MoveNext())
+            {
+                if (_serializedOutput != "")
+                {
                     _serializedOutput += " " + ParametersSeperator + " ";
                 }
                 _serializedOutput += EscapeNonSeperators(myEnumerator.Key.ToString()) + " " + KeyValueSeperator + " " + EscapeNonSeperators(myEnumerator.Value.ToString()) + " " + KeyValueSeperator + " " + myEnumerator.Value.GetType();
             }
         }
 
-        private static void Deserialize() {
+        private static void Deserialize()
+        {
             var parameters = SerializedInput.Split(new[] { " " + ParametersSeperator + " " }, StringSplitOptions.None);
 
-            foreach (var parameter in parameters) {
+            foreach (var parameter in parameters)
+            {
                 var parameterContent = parameter.Split(new[] { " " + KeyValueSeperator + " " }, StringSplitOptions.None);
 
                 PlayerPrefsHashtable.Add(DeEscapeNonSeperators(parameterContent[0]), GetTypeValue(parameterContent[2], DeEscapeNonSeperators(parameterContent[1])));
 
-                if (parameterContent.Length > 3) {
+                if (parameterContent.Length > 3)
+                {
                     Debug.LogWarning("PlayerPrefs::Deserialize() parameterContent has " + parameterContent.Length + " elements");
                 }
             }
         }
 
-        private static string EscapeNonSeperators(string inputToEscape) {
+        private static string EscapeNonSeperators(string inputToEscape)
+        {
             inputToEscape = inputToEscape.Replace(KeyValueSeperator, "\\" + KeyValueSeperator);
             inputToEscape = inputToEscape.Replace(ParametersSeperator, "\\" + ParametersSeperator);
             return inputToEscape;
         }
 
-        private static string DeEscapeNonSeperators(string inputToDeEscape) {
+        private static string DeEscapeNonSeperators(string inputToDeEscape)
+        {
             inputToDeEscape = inputToDeEscape.Replace("\\" + KeyValueSeperator, KeyValueSeperator);
             inputToDeEscape = inputToDeEscape.Replace("\\" + ParametersSeperator, ParametersSeperator);
             return inputToDeEscape;
         }
 
-        public static object GetTypeValue(string typeName, string value) {
+        public static object GetTypeValue(string typeName, string value)
+        {
             switch (typeName)
             {
                 case "System.String":

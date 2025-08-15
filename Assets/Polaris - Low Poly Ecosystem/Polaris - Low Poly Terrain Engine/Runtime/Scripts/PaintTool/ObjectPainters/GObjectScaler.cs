@@ -22,7 +22,7 @@ namespace Pinwheel.Griffin.PaintTool
         {
             get
             {
-                List<Type> types = new List<Type>(new Type[]
+                List<Type> types = new(new Type[]
                 {
                     typeof(GScaleClampFilter)
                 });

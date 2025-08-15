@@ -31,7 +31,7 @@ namespace MagicaCloth2
         internal UpdateLocation updateLocation = UpdateLocation.AfterLateUpdate;
 
         //=========================================================================================
-        bool isValid = false;
+        private bool isValid = false;
 
         /// <summary>
         /// フレームのFixedUpdate回数
@@ -94,13 +94,13 @@ namespace MagicaCloth2
         }
 
         //=========================================================================================
-        void AfterFixedUpdate()
+        private void AfterFixedUpdate()
         {
             //Debug.Log($"AfterFixedUpdate. F:{Time.frameCount}");
             FixedUpdateCount++;
         }
 
-        void AfterRenderring()
+        private void AfterRenderring()
         {
             //Debug.Log($"AfterRenderring. F:{Time.frameCount}");
             FixedUpdateCount = 0;
@@ -134,7 +134,7 @@ namespace MagicaCloth2
         //=========================================================================================
         public void InformationLog(StringBuilder allsb)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
 
             sb.AppendLine($"========== Time Manager ==========");
             if (IsValid() == false)

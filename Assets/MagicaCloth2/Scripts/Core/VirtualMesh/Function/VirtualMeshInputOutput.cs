@@ -129,7 +129,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="rsetup"></param>
         /// <param name="transformIndices"></param>
-        void ImportMeshType(RenderSetupData rsetup, int[] transformIndices, int uvChannel)
+        private void ImportMeshType(RenderSetupData rsetup, int[] transformIndices, int uvChannel)
         {
             // root bone
             skinRootIndex = transformIndices[rsetup.skinRootBoneIndex];
@@ -249,7 +249,7 @@ namespace MagicaCloth2
         /// このtangentは描画用では無く姿勢制御用なのである意味適当でも大丈夫
         /// </summary>
         [BurstCompile]
-        struct Import_GenerateTangentJob : IJobParallelFor
+        private struct Import_GenerateTangentJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<float3> localNormals;
@@ -276,7 +276,7 @@ namespace MagicaCloth2
         /// <summary>
         /// スキニングメッシュの頂点をスキニングして元のローカル空間に変換する
         /// </summary>
-        void ImportMeshSkinning()
+        private void ImportMeshSkinning()
         {
             var job = new Import_CalcSkinningJob()
             {
@@ -300,7 +300,7 @@ namespace MagicaCloth2
         /// 頂点スキニングを行いワールド座標・法線・接線を求める
         /// </summary>
         [BurstCompile]
-        struct Import_CalcSkinningJob : IJobParallelFor
+        private struct Import_CalcSkinningJob : IJobParallelFor
         {
             //[Unity.Collections.ReadOnly]
             public NativeArray<float3> localPositions;
@@ -336,9 +336,9 @@ namespace MagicaCloth2
 
                     int boneIndex = bw.boneIndices[i];
                     float4x4 bp = bindPoses[boneIndex];
-                    float4 lpos = new float4(localPositions[vindex], 1);
-                    float4 lnor = new float4(localNormals[vindex], 0);
-                    float4 ltan = new float4(localTangents[vindex], 0);
+                    float4 lpos = new(localPositions[vindex], 1);
+                    float4 lnor = new(localNormals[vindex], 0);
+                    float4 ltan = new(localTangents[vindex], 0);
 
                     float3 pos = math.mul(bp, lpos).xyz;
                     float3 nor = math.mul(bp, lnor).xyz;
@@ -364,7 +364,7 @@ namespace MagicaCloth2
 
 
         [BurstCompile]
-        struct Import_BoneWeightJob1 : IJob
+        private struct Import_BoneWeightJob1 : IJob
         {
             public int vcnt;
 
@@ -386,7 +386,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Import_BoneWeightJob2 : IJobParallelFor
+        private struct Import_BoneWeightJob2 : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<int> startBoneWeightIndices;
@@ -432,7 +432,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="rsetup"></param>
         /// <param name="transformIndices"></param>
-        void ImportBoneType(RenderSetupData rsetup, int[] transformIndices)
+        private void ImportBoneType(RenderSetupData rsetup, int[] transformIndices)
         {
             // Transform情報からメッシュを構築する
             int vcnt = rsetup.TransformCount - 1;
@@ -879,7 +879,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Import_BoneVertexJob : IJobParallelFor
+        private struct Import_BoneVertexJob : IJobParallelFor
         {
             public float4x4 WtoL;
             public float4x4 LtoW;
@@ -1112,7 +1112,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Select_PackVertexJob : IJob
+        private struct Select_PackVertexJob : IJob
         {
             public int vertexCount;
             [Unity.Collections.ReadOnly]
@@ -1167,7 +1167,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Select_GridJob : IJob
+        private struct Select_GridJob : IJob
         {
             public float gridSize;
             [Unity.Collections.ReadOnly]
@@ -1535,7 +1535,7 @@ namespace MagicaCloth2
         /// 空間が変更された場合はバインドポーズを再計算する
         /// </summary>
         [BurstCompile]
-        struct Add_CalcBindPoseJob : IJobParallelFor
+        private struct Add_CalcBindPoseJob : IJobParallelFor
         {
             public int skinBoneOffset;
 
@@ -1574,7 +1574,7 @@ namespace MagicaCloth2
         /// 頂点データを新しい領域にコピーする
         /// </summary>
         [BurstCompile]
-        struct Add_CopyVerticesJob : IJobParallelFor
+        private struct Add_CopyVerticesJob : IJobParallelFor
         {
             public int vertexOffset;
             public int skinBoneOffset;

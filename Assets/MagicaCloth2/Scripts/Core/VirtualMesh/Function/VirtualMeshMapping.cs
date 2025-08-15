@@ -12,7 +12,7 @@ namespace MagicaCloth2
 {
     public partial class VirtualMesh
     {
-        struct MappingWorkData
+        private struct MappingWorkData
         {
             public float3 position;
             public int vertexIndex;
@@ -175,7 +175,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Mapping_DirectConnectionVertexDataJob : IJob
+        private struct Mapping_DirectConnectionVertexDataJob : IJob
         {
             // render meshの座標をproxyのローカル空間に変換するTransform
             public float4x4 toP;
@@ -238,7 +238,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Mapping_CalcDirectWeightJob : IJob
+        private struct Mapping_CalcDirectWeightJob : IJob
         {
             // data
             public int vcnt;
@@ -367,7 +367,7 @@ namespace MagicaCloth2
         /// 頂点ごとにproxy頂点を検索しウエイト算出しboneWeightsに格納する
         /// </summary>
         [BurstCompile]
-        struct Mapping_CalcConnectionVertexDataJob : IJob
+        private struct Mapping_CalcConnectionVertexDataJob : IJob
         {
             public float gridSize;
             public float searchRadius;
@@ -510,7 +510,7 @@ namespace MagicaCloth2
         /// 近傍プロキシメッシュ頂点を基準に頂点ウエイトを算出する
         /// </summary>
         [BurstCompile]
-        struct Mapping_CalcWeightJob : IJobParallelFor
+        private struct Mapping_CalcWeightJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<MappingWorkData> mappingWorkData;
@@ -657,7 +657,7 @@ namespace MagicaCloth2
         /// </summary>
         /// <param name="distances"></param>
         /// <returns></returns>
-        static float4 CalcVertexWeights(float4 distances)
+        private static float4 CalcVertexWeights(float4 distances)
         {
             Debug.Assert(distances[0] >= 0.0f);
 

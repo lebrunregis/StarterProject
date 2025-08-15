@@ -7,8 +7,8 @@ namespace DarkTonic.MasterAudio.EditorScripts
     // ReSharper disable once CheckNamespace
     public class MasterAudioHierIcon : MonoBehaviour
     {
-        static readonly Texture2D MAicon;
-        static readonly Texture2D PCicon;
+        private static readonly Texture2D MAicon;
+        private static readonly Texture2D PCicon;
 
         static MasterAudioHierIcon()
         {
@@ -25,7 +25,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
         }
 
         // ReSharper disable once InconsistentNaming
-        static void HierarchyItemCB(int instanceId, Rect selectionRect)
+        private static void HierarchyItemCB(int instanceId, Rect selectionRect)
         {
             var masterAudioGameObject = EditorUtility.InstanceIDToObject(instanceId) as GameObject;
 

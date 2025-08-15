@@ -1,8 +1,8 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor
@@ -22,8 +22,8 @@ namespace AmazingAssets.WireframeShader.Editor
             float left = position.x + labelWidth;
             float x = position.x + EditorGUI.indentLevel * 16f;
 
-            Rect totalPosition = new Rect(x, position.y, labelWidth, 16f);
-            Rect rect2 = new Rect(left, position.y, position.width - labelWidth, 16f);
+            Rect totalPosition = new(x, position.y, labelWidth, 16f);
+            Rect rect2 = new(left, position.y, position.width - labelWidth, 16f);
             EditorGUI.PrefixLabel(totalPosition, new GUIContent(label + "Scroll"));
 
             EditorGUI.BeginChangeCheck();

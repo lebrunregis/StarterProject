@@ -4,8 +4,10 @@ using UnityEngine;
 /*! \cond PRIVATE */
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
-    public static class AmbientUtil {
+namespace DarkTonic.MasterAudio
+{
+    public static class AmbientUtil
+    {
         public const string FollowerHolderName = "_Followers";
         public const string ListenerFollowerName = "~ListenerFollower~";
         public const float ListenerFollowerTrigRadius = .01f;
@@ -16,18 +18,22 @@ namespace DarkTonic.MasterAudio {
 #if PHY3D_ENABLED
         private static Rigidbody _listenerFollowerRB;
 #endif
-        private static List<TransformFollower> _transformFollowers = new List<TransformFollower>();
+        private static readonly List<TransformFollower> _transformFollowers = new();
 
-        public static void InitFollowerHolder() {
+        public static void InitFollowerHolder()
+        {
             var h = FollowerHolder;
-            if (h != null) {
+            if (h != null)
+            {
                 h.DestroyAllChildren();
             }
         }
 
-        public static bool InitListenerFollower() {
+        public static bool InitListenerFollower()
+        {
             var listener = MasterAudio.ListenerTrans;
-            if (listener == null) {
+            if (listener == null)
+            {
                 return false;
             }
 
@@ -44,16 +50,18 @@ namespace DarkTonic.MasterAudio {
 #endif
         }
 
-        public static void RemoveTransformFollower(TransformFollower follower) {
+        public static void RemoveTransformFollower(TransformFollower follower)
+        {
             _transformFollowers.Remove(follower);
         }
 
-        public static Transform InitAudioSourceFollower(Transform transToFollow, string followerName, string soundGroupName, string variationName, 
+        public static Transform InitAudioSourceFollower(Transform transToFollow, string followerName, string soundGroupName, string variationName,
             float volume,
             bool willFollowSource, bool willPositionOnClosestColliderPoint,
-            bool useTopCollider, bool useChildColliders, 
+            bool useTopCollider, bool useChildColliders,
             MasterAudio.AmbientSoundExitMode exitMode, float exitFadeTime,
-            MasterAudio.AmbientSoundReEnterMode reEnterMode, float reEnterFadeTime) {
+            MasterAudio.AmbientSoundReEnterMode reEnterMode, float reEnterFadeTime)
+        {
 
 #if !PHY3D_ENABLED
             return null; // there is no Ambient Sound script functionality without Physics.
@@ -113,25 +121,31 @@ namespace DarkTonic.MasterAudio {
 #endif
         }
 
-        public static ListenerFollower ListenerFollower {
-            get {
-                if (_listenerFollower != null) {
+        public static ListenerFollower ListenerFollower
+        {
+            get
+            {
+                if (_listenerFollower != null)
+                {
                     return _listenerFollower;
                 }
 
-                if (FollowerHolder == null) {
+                if (FollowerHolder == null)
+                {
                     return null;
                 }
 
                 var follower = FollowerHolder.GetChildTransform(ListenerFollowerName);
-                if (follower == null) {
+                if (follower == null)
+                {
                     follower = new GameObject(ListenerFollowerName).transform;
                     follower.parent = FollowerHolder;
                     follower.gameObject.layer = FollowerHolder.gameObject.layer;
                 }
 
                 _listenerFollower = follower.GetComponent<ListenerFollower>();
-                if (_listenerFollower == null) {
+                if (_listenerFollower == null)
+                {
                     _listenerFollower = follower.gameObject.AddComponent<ListenerFollower>();
                 }
 
@@ -150,20 +164,25 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        public static Transform FollowerHolder {
-            get {
-                if (!Application.isPlaying || MasterAudio.SafeInstance == null) {
+        public static Transform FollowerHolder
+        {
+            get
+            {
+                if (!Application.isPlaying || MasterAudio.SafeInstance == null)
+                {
                     return null;
                 }
 
-                if (_followerHolder != null) {
+                if (_followerHolder != null)
+                {
                     return _followerHolder;
                 }
 
                 var ma = MasterAudio.SafeInstance.Trans;
                 _followerHolder = ma.GetChildTransform(FollowerHolderName);
 
-                if (_followerHolder != null) {
+                if (_followerHolder != null)
+                {
                     return _followerHolder;
                 }
 
@@ -175,22 +194,27 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        public static void ManualUpdate() {
+        public static void ManualUpdate()
+        {
             UpdateListenerFollower();
 
             // manually update Transform Followers
-            for (var i = 0; i < _transformFollowers.Count; i++) {
+            for (var i = 0; i < _transformFollowers.Count; i++)
+            {
                 _transformFollowers[i].ManualUpdate();
             }
         }
 
-        private static void UpdateListenerFollower() {
-            if (_listenerFollower != null) {
+        private static void UpdateListenerFollower()
+        {
+            if (_listenerFollower != null)
+            {
                 _listenerFollower.ManualUpdate();
             }
         }
 
-        public static bool HasListenerFollower {
+        public static bool HasListenerFollower
+        {
             get { return _listenerFollower != null; }
         }
 
@@ -202,8 +226,10 @@ namespace DarkTonic.MasterAudio {
             }
         }
 
-        public static bool HasListenerFolowerRigidBody {
-            get {
+        public static bool HasListenerFolowerRigidBody
+        {
+            get
+            {
 #if PHY3D_ENABLED
                 return _listenerFollowerRB != null;
 #else

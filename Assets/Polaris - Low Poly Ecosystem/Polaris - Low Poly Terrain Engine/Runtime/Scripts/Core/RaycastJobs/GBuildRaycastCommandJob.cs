@@ -1,10 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Jobs;
 using Unity.Collections;
-using Unity.Burst;
+using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -30,10 +27,10 @@ namespace Pinwheel.Griffin
         {
             Vector2 pos = positions[index];
 
-            Vector3 from = new Vector3(terrainPosition.x + pos.x * terrainSize.x, 10000, terrainPosition.z + pos.y * terrainSize.z);
+            Vector3 from = new(terrainPosition.x + pos.x * terrainSize.x, 10000, terrainPosition.z + pos.y * terrainSize.z);
 #if UNITY_2022_2_OR_NEWER
-            QueryParameters q = new QueryParameters(mask, false, QueryTriggerInteraction.Ignore, false);
-            RaycastCommand cmd = new RaycastCommand(from, Vector3.down, q, float.MaxValue);
+            QueryParameters q = new(mask, false, QueryTriggerInteraction.Ignore, false);
+            RaycastCommand cmd = new(from, Vector3.down, q, float.MaxValue);
 #else
             RaycastCommand cmd = new RaycastCommand(from, Vector3.down, float.MaxValue, mask, 1);
 #endif

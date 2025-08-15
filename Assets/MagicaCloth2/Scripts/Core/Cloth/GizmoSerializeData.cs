@@ -13,7 +13,7 @@ namespace MagicaCloth2
         public bool always = false;
 
         // Cloth
-        public ClothDebugSettings clothDebugSettings = new ClothDebugSettings();
+        public ClothDebugSettings clothDebugSettings = new();
 
         // Virtual Mesh. これはデバッグ用
 #if MC2_DEBUG

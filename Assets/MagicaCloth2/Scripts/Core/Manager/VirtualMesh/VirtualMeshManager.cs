@@ -203,7 +203,7 @@ namespace MagicaCloth2
         public int MappingVertexCount => mappingIdArray?.Count ?? 0;
 
         //=========================================================================================
-        bool isValid = false;
+        private bool isValid = false;
 
         //=========================================================================================
         public void Dispose()
@@ -1250,7 +1250,7 @@ namespace MagicaCloth2
         /// プロキシメッシュからマッピングメッシュへの変換マトリックスを求める
         /// </summary>
         [BurstCompile]
-        struct CalcMeshConvert_A_Job : IJobParallelFor
+        private struct CalcMeshConvert_A_Job : IJobParallelFor
         {
             // team
             [Unity.Collections.ReadOnly]
@@ -1339,7 +1339,7 @@ namespace MagicaCloth2
         /// 必要があればボーンウエイトも書き込む
         /// </summary>
         [BurstCompile]
-        struct CalcMeshConvert_B_Job : IJobParallelFor
+        private struct CalcMeshConvert_B_Job : IJobParallelFor
         {
             public int workerCount;
 
@@ -1423,7 +1423,7 @@ namespace MagicaCloth2
                 // 接線の有無
                 bool useTangent = tdata.IsTangent;
                 // マイナススケール
-                float4 negativeScl = new float4(tdata.negativeScaleDirection, 1);
+                float4 negativeScl = new(tdata.negativeScaleDirection, 1);
                 // ProxyMeshスケール
                 float3 proxyScl = tdata.initScale * mdata.scaleRatio; // 初期スケール x 現在のスケール比率
                 // ボーンウエイトの書き込み
@@ -1545,7 +1545,7 @@ namespace MagicaCloth2
         /// レンダーメッシュデータの後処理
         /// </summary>
         [BurstCompile]
-        struct PostRenderMeshWorkDataBatchJob : IJobParallelFor
+        private struct PostRenderMeshWorkDataBatchJob : IJobParallelFor
         {
             // render mesh
             public NativeArray<RenderManager.RenderDataWork> renderDataWorkArray;
@@ -1605,7 +1605,7 @@ namespace MagicaCloth2
         //=========================================================================================
         public void InformationLog(StringBuilder allsb)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine($"========== VMesh Manager ==========");
             if (IsValid() == false)
             {

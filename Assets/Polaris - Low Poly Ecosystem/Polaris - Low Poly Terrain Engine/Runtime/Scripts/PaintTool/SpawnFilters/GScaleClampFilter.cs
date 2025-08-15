@@ -36,7 +36,7 @@ namespace Pinwheel.Griffin.PaintTool
 
         public override void Apply(ref GSpawnFilterArgs args)
         {
-            Vector3 scale = new Vector3(
+            Vector3 scale = new(
                 Mathf.Clamp(args.Scale.x, MinScale.x, MaxScale.x),
                 Mathf.Clamp(args.Scale.y, MinScale.y, MaxScale.y),
                 Mathf.Clamp(args.Scale.z, MinScale.z, MaxScale.z));

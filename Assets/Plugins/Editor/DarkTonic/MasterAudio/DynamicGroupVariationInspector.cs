@@ -1,5 +1,5 @@
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 namespace DarkTonic.MasterAudio.EditorScripts
 {
@@ -104,9 +104,9 @@ namespace DarkTonic.MasterAudio.EditorScripts
                             }
                             break;
 #if ADDRESSABLES_ENABLED
-                    case MasterAudio.AudioLocation.Addressable:
-                        DTGUIHelper.PreviewAddressable(_variation.audioClipAddressable, previewer, calcVolume);
-                        break;
+                        case MasterAudio.AudioLocation.Addressable:
+                            DTGUIHelper.PreviewAddressable(_variation.audioClipAddressable, previewer, calcVolume);
+                            break;
 #endif
                     }
 
@@ -169,16 +169,17 @@ namespace DarkTonic.MasterAudio.EditorScripts
                     }
                     break;
 #if ADDRESSABLES_ENABLED
-            case MasterAudio.AudioLocation.Addressable:
-                serializedObject.Update();
-                EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(DynamicGroupVariation.audioClipAddressable)), true);
-                serializedObject.ApplyModifiedProperties();
+                case MasterAudio.AudioLocation.Addressable:
+                    serializedObject.Update();
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty(nameof(DynamicGroupVariation.audioClipAddressable)), true);
+                    serializedObject.ApplyModifiedProperties();
 
-                if (!DTGUIHelper.IsAddressableTypeValid(_variation.audioClipAddressable, _variation.name)) {
-                    _variation.audioClipAddressable = null;
-                    isDirty = true;
-                }
-                break;
+                    if (!DTGUIHelper.IsAddressableTypeValid(_variation.audioClipAddressable, _variation.name))
+                    {
+                        _variation.audioClipAddressable = null;
+                        isDirty = true;
+                    }
+                    break;
 #endif
                 case MasterAudio.AudioLocation.ResourceFile:
                     EditorGUILayout.BeginVertical();

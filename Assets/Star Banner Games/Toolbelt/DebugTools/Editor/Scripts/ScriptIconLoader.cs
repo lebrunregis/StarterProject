@@ -1,14 +1,14 @@
-using UnityEditor;
-using UnityEngine;
 using System.IO;
 using System.Linq;
+using UnityEditor;
+using UnityEngine;
 
 namespace SBG.Toolbelt.DebugTools.Editor
 {
-	public static class ScriptIconLoader
-	{
-		[InitializeOnLoadMethod]
-		public static void SetScriptIcons()
+    public static class ScriptIconLoader
+    {
+        [InitializeOnLoadMethod]
+        public static void SetScriptIcons()
         {
             if (AssetDatabase.IsValidFolder("Assets/Gizmos/SBG/Toolbelt/DebugTools")) return;
 
@@ -20,29 +20,29 @@ namespace SBG.Toolbelt.DebugTools.Editor
 
             string[] iconPaths = GetIconFolderPaths();
 
-			if (iconPaths == null || iconPaths.Length == 0) return;
+            if (iconPaths == null || iconPaths.Length == 0) return;
 
             foreach (string path in iconPaths)
             {
-				string relativePath = path.Replace(Application.dataPath, "Assets");
-				string fileName = Path.GetFileName(path);
+                string relativePath = path.Replace(Application.dataPath, "Assets");
+                string fileName = Path.GetFileName(path);
 
-				AssetDatabase.CopyAsset(relativePath, $"Assets/Gizmos/SBG/Toolbelt/DebugTools/{fileName}");
-			}
+                AssetDatabase.CopyAsset(relativePath, $"Assets/Gizmos/SBG/Toolbelt/DebugTools/{fileName}");
+            }
 
-			AssetDatabase.SaveAssets();
-			AssetDatabase.Refresh();
-		}
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
 
-		private static string[] GetIconFolderPaths()
+        private static string[] GetIconFolderPaths()
         {
-			string targetPath = @"Star Banner Games\Toolbelt\DebugTools\Editor\Icons";
+            string targetPath = @"Star Banner Games\Toolbelt\DebugTools\Editor\Icons";
 
-			string[] dirs = Directory.GetDirectories(Application.dataPath, "*", SearchOption.AllDirectories).Where(s => s.EndsWith(targetPath)).ToArray();
+            string[] dirs = Directory.GetDirectories(Application.dataPath, "*", SearchOption.AllDirectories).Where(s => s.EndsWith(targetPath)).ToArray();
 
-			if (dirs == null || dirs.Length == 0) return null;
+            if (dirs == null || dirs.Length == 0) return null;
 
-			return Directory.GetFiles(dirs[0], "*.png", SearchOption.TopDirectoryOnly);
-		}
-	}
+            return Directory.GetFiles(dirs[0], "*.png", SearchOption.TopDirectoryOnly);
+        }
+    }
 }

@@ -107,7 +107,7 @@ namespace MagicaCloth2
         public bool HasLocalPositions => localPositions.IsCreated;
         public bool HasTangent => localTangents.IsCreated && localTangents.Length > 0;
 
-        static readonly ProfilerMarker readTransformProfiler = new ProfilerMarker("readTransform");
+        private static readonly ProfilerMarker readTransformProfiler = new("readTransform");
 
         //=========================================================================================
         public RenderSetupData() { }
@@ -329,7 +329,7 @@ namespace MagicaCloth2
         /// ５ウエイト以上の検出
         /// </summary>
         [BurstCompile]
-        struct VertexWeight5BoneCheckJob : IJob
+        private struct VertexWeight5BoneCheckJob : IJob
         {
             public int vcnt;
 
@@ -488,7 +488,7 @@ namespace MagicaCloth2
         /// トランスフォーム情報の読み取り（メインスレッドのみ）
         /// この情報だけはキャラクターが動く前に取得する必要がある
         /// </summary>
-        void ReadTransformInformation(bool includeChilds, RenderSetupSerializeData referenceInitSetupData, Transform rendererTransform)
+        private void ReadTransformInformation(bool includeChilds, RenderSetupSerializeData referenceInitSetupData, Transform rendererTransform)
         {
             readTransformProfiler.Begin();
 
@@ -628,7 +628,7 @@ namespace MagicaCloth2
         /// 逆回転を計算で求める
         /// </summary>
         [BurstCompile]
-        struct CalcInverseRotationJob : IJobParallelFor
+        private struct CalcInverseRotationJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<quaternion> rotations;
@@ -652,7 +652,7 @@ namespace MagicaCloth2
         /// 最低限のTransform情報を収集する
         /// </summary>
         [BurstCompile]
-        struct ReadTransformJob : IJobParallelForTransform
+        private struct ReadTransformJob : IJobParallelForTransform
         {
             [NativeDisableParallelForRestriction]
             [Unity.Collections.WriteOnly]
@@ -857,7 +857,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct GetBoneWeightJos : IJob
+        private struct GetBoneWeightJos : IJob
         {
             public int vcnt;
 

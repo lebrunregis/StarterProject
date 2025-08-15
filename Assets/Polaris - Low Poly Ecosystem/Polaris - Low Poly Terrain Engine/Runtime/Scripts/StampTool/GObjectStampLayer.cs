@@ -159,7 +159,7 @@ namespace Pinwheel.Griffin.StampTool
 
         public static GObjectStampLayer Create()
         {
-            GObjectStampLayer layer = new GObjectStampLayer();
+            GObjectStampLayer layer = new();
             layer.Prototypes = null;
             layer.PrototypeIndices = null;
             layer.InstanceCount = 100;

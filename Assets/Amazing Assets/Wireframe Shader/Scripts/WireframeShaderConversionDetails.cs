@@ -5,10 +5,10 @@ using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader
-{ 
+{
     public class WireframeShaderConversionDetails : MonoBehaviour
-    { 
-        [HideInInspector] 
+    {
+        [HideInInspector]
         public string prefabProjectPath;
-    } 
-}   
+    }
+}

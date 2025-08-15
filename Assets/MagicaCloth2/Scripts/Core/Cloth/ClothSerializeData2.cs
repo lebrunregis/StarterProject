@@ -17,14 +17,14 @@ namespace MagicaCloth2
         /// Initialization Data.
         /// </summary>
         [SerializeField]
-        public ClothInitSerializeData initData = new ClothInitSerializeData();
+        public ClothInitSerializeData initData = new();
 
         /// <summary>
         /// 頂点ペイントデータ
         /// vertex paint data.
         /// </summary>
         [SerializeField]
-        public SelectionData selectionData = new SelectionData();
+        public SelectionData selectionData = new();
 
         /// <summary>
         /// Transformと頂点属性辞書データ
@@ -33,7 +33,7 @@ namespace MagicaCloth2
         /// When creating BoneCloth/BoneSpring at runtime, you can store Transform and vertex attribute pairs in this dictionary and use it instead of vertex paint data.
         /// </summary>
         [System.NonSerialized]
-        public Dictionary<Transform, VertexAttribute> boneAttributeDict = new Dictionary<Transform, VertexAttribute>();
+        public Dictionary<Transform, VertexAttribute> boneAttributeDict = new();
 
         /// <summary>
         /// Rendererに対応する頂点属性データ
@@ -42,12 +42,12 @@ namespace MagicaCloth2
         /// When constructing MeshCloth at runtime, you can substitute selection data by storing vertex attributes in this list for the number of mesh vertices per renderer.
         /// </summary>
         [System.NonSerialized]
-        public List<VertexAttribute[]> vertexAttributeList = new List<VertexAttribute[]>();
+        public List<VertexAttribute[]> vertexAttributeList = new();
 
         /// <summary>
         /// PreBuild Data.
         /// </summary>
-        public PreBuildSerializeData preBuildData = new PreBuildSerializeData();
+        public PreBuildSerializeData preBuildData = new();
 
         //=========================================================================================
         public ClothSerializeData2()

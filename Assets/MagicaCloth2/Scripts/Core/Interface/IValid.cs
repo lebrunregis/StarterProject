@@ -7,7 +7,7 @@ namespace MagicaCloth2
     /// <summary>
     /// 対象の有効性を返すインターフェース
     /// </summary>
-    interface IValid
+    internal interface IValid
     {
         bool IsValid();
     }

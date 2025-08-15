@@ -10,7 +10,7 @@ namespace SBG.Toolbelt.DebugTools.Editor
     [CustomEditor(typeof(Object), true, isFallback = true)]
     [CanEditMultipleObjects]
     internal class ObjectEditor : UnityEditor.Editor
-	{
+    {
         private struct FoldoutGroup
         {
             public readonly string Name;
@@ -81,7 +81,7 @@ namespace SBG.Toolbelt.DebugTools.Editor
             DrawFoldouts();
             DrawUngroupedProperties();
             serializedObject.ApplyModifiedProperties();
-            
+
             DrawButtons();
         }
 
@@ -163,10 +163,10 @@ namespace SBG.Toolbelt.DebugTools.Editor
             FieldInfo[] fields = target.GetType().GetFields(flags);
 
             //Create Temp Lists
-            List<FoldoutGroup> groups = new List<FoldoutGroup>();
-            List<SerializedProperty> ungroupedProps = new List<SerializedProperty>();
+            List<FoldoutGroup> groups = new();
+            List<SerializedProperty> ungroupedProps = new();
 
-            FoldoutGroup unnamedGroup = new FoldoutGroup("Unnamed", true, new SerializedProperty[0]);
+            FoldoutGroup unnamedGroup = new("Unnamed", true, new SerializedProperty[0]);
             int lastGroup = -1;
 
             //Add each Field to its Group
@@ -204,14 +204,14 @@ namespace SBG.Toolbelt.DebugTools.Editor
 
                     groupFound = true;
                 }
-                
+
                 //If a group wasn't found, create it and add the property!
                 if (!groupFound)
                 {
                     bool foldoutValue = GetFoldoutKey(foldout.FoldoutGroup);
                     SerializedProperty[] newProps = new SerializedProperty[] { serializedObject.FindProperty(field.Name) };
                     groups.Add(new FoldoutGroup(foldout.FoldoutGroup, foldoutValue, newProps));
-                    lastGroup = groups.Count-1;
+                    lastGroup = groups.Count - 1;
                 }
             }
 
@@ -243,7 +243,7 @@ namespace SBG.Toolbelt.DebugTools.Editor
             const BindingFlags flags = BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
             MethodInfo[] methods = target.GetType().GetMethods(flags);
 
-            List<InspectorButton> newButtons = new List<InspectorButton>();
+            List<InspectorButton> newButtons = new();
 
             //Look for Button Attributes in all Methods
             foreach (MethodInfo method in methods)

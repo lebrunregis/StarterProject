@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.SceneManagement;
 using Enum = System.Enum;
 using Type = System.Type;
 
@@ -16,7 +15,7 @@ namespace Pinwheel.Griffin.PaintTool
         private GFoliagePainter painter;
         private Rect addFilterButtonRect;
 
-        private Vector3[] worldPoints = new Vector3[4];
+        private readonly Vector3[] worldPoints = new Vector3[4];
 
         private void OnEnable()
         {
@@ -58,11 +57,11 @@ namespace Pinwheel.Griffin.PaintTool
 
         private class GBaseGUI
         {
-            public static readonly GUIContent GROUP_ID = new GUIContent("Group Id", "Id of the terrain group this painter will work on");
-            public static readonly GUIContent ENABLE_HISTORY = new GUIContent("Enable History", "Enable history recording for undo. History recording may get slow when working with a large group of terrains");
-            public static readonly GUIContent ENABLE_TERRAIN_MASK = new GUIContent("Enable Terrain Mask", "Use the terrain's Mask texture (R channel) to lock particular regions from being edited");
-            public static readonly GUIContent SHOW_TERRAIN_MASK = new GUIContent("Show Terrain Mask", "Draw the terrain mask overlay in the scene view. Disable this toggle if you are experiencing some frame rate drop");
-            public static readonly GUIContent NO_PAINTER_FOUND = new GUIContent("No painter found!");
+            public static readonly GUIContent GROUP_ID = new("Group Id", "Id of the terrain group this painter will work on");
+            public static readonly GUIContent ENABLE_HISTORY = new("Enable History", "Enable history recording for undo. History recording may get slow when working with a large group of terrains");
+            public static readonly GUIContent ENABLE_TERRAIN_MASK = new("Enable Terrain Mask", "Use the terrain's Mask texture (R channel) to lock particular regions from being edited");
+            public static readonly GUIContent SHOW_TERRAIN_MASK = new("Show Terrain Mask", "Draw the terrain mask overlay in the scene view. Disable this toggle if you are experiencing some frame rate drop");
+            public static readonly GUIContent NO_PAINTER_FOUND = new("No painter found!");
         }
 
         public override void OnInspectorGUI()
@@ -145,8 +144,8 @@ namespace Pinwheel.Griffin.PaintTool
         {
             public static readonly string LABEL = "Brush Masks";
             public static readonly string ID = "foliage-painter-brush-masks";
-            public static readonly GUIContent NEW_BRUSH = new GUIContent("New Brush");
-            public static readonly GUIContent REFRESH = new GUIContent("Refresh");
+            public static readonly GUIContent NEW_BRUSH = new("New Brush");
+            public static readonly GUIContent REFRESH = new("Refresh");
             public static readonly string NEW_BRUSH_DIALOG_TITLE = "Info";
             public static readonly string NEW_BRUSH_DIALOG_INSTRUCTION = "To add a new brush, copy your brush texture to a Resources/PolarisBrushes/ folder, then Refresh.";
             public static readonly string OK = "OK";
@@ -154,7 +153,7 @@ namespace Pinwheel.Griffin.PaintTool
 
         private void DrawBrushMaskGUI()
         {
-            GenericMenu menu = new GenericMenu();
+            GenericMenu menu = new();
             menu.AddItem(
                 GBrushMaskGUI.NEW_BRUSH,
                 false,
@@ -166,7 +165,7 @@ namespace Pinwheel.Griffin.PaintTool
 
             GEditorCommon.Foldout(GBrushMaskGUI.LABEL, true, GBrushMaskGUI.ID, () =>
             {
-                GSelectionGridArgs args = new GSelectionGridArgs();
+                GSelectionGridArgs args = new();
                 args.selectedIndex = painter.SelectedBrushMaskIndex;
                 args.collection = painter.BrushMasks;
                 args.itemSize = GEditorCommon.selectionGridTileSizeSmall;
@@ -231,13 +230,13 @@ namespace Pinwheel.Griffin.PaintTool
             public static readonly string LABEL = "Brush";
             public static readonly string ID = "texture-painter-brush";
 
-            public static readonly GUIContent JITTER = new GUIContent("Jitter", "Randomness factor for the value");
-            public static readonly GUIContent RADIUS = new GUIContent("Radius", "Radius of the brush stroke. Shortcut: - =");
-            public static readonly GUIContent ROTATION = new GUIContent("Rotation", "Rotation of the brush stroke. Shortcut: [ ]");
-            public static readonly GUIContent DENSITY = new GUIContent("Density", "Number of instance to spawn of each stroke. Shortcut: ; '");
-            public static readonly GUIContent SCATTER = new GUIContent("Scatter", "Pick a random position for the brush around your cursor position");
-            public static readonly GUIContent ERASE_RATIO = new GUIContent("Erase Ratio", "Erasing propability, useful for thin out the area");
-            public static readonly GUIContent SCALE_STRENGTH = new GUIContent("Scale Strength", "How fast an instance to scale up and down");
+            public static readonly GUIContent JITTER = new("Jitter", "Randomness factor for the value");
+            public static readonly GUIContent RADIUS = new("Radius", "Radius of the brush stroke. Shortcut: - =");
+            public static readonly GUIContent ROTATION = new("Rotation", "Rotation of the brush stroke. Shortcut: [ ]");
+            public static readonly GUIContent DENSITY = new("Density", "Number of instance to spawn of each stroke. Shortcut: ; '");
+            public static readonly GUIContent SCATTER = new("Scatter", "Pick a random position for the brush around your cursor position");
+            public static readonly GUIContent ERASE_RATIO = new("Erase Ratio", "Erasing propability, useful for thin out the area");
+            public static readonly GUIContent SCALE_STRENGTH = new("Scale Strength", "How fast an instance to scale up and down");
         }
 
         private void DrawBrushGUI()
@@ -274,7 +273,7 @@ namespace Pinwheel.Griffin.PaintTool
                 SceneView.RepaintAll();
             if (Event.current != null && Event.current.type == EventType.MouseLeaveWindow)
             {
-                GFoliagePainterArgs args = new GFoliagePainterArgs();
+                GFoliagePainterArgs args = new();
                 args.ShouldCommitNow = true;
                 painter.Paint(args);
             }
@@ -461,9 +460,9 @@ namespace Pinwheel.Griffin.PaintTool
 
         private void Paint(RaycastHit hit)
         {
-            GFoliagePainterArgs args = new GFoliagePainterArgs();
+            GFoliagePainterArgs args = new();
             args.HitPoint = hit.point;
-            
+
             args.MouseEventType =
                 Event.current.type == EventType.MouseDown ? GPainterMouseEventType.Down :
                 Event.current.type == EventType.MouseDrag ? GPainterMouseEventType.Drag :
@@ -479,8 +478,8 @@ namespace Pinwheel.Griffin.PaintTool
         {
             public static readonly string LABEL = "Filters";
             public static readonly string ID = "foliage-painter-filters";
-            public static readonly GUIContent ADD_FILTER = new GUIContent("Add Filter");
-            public static readonly GUIContent NO_SUITABLE_FILTER = new GUIContent("No suitable filter!");
+            public static readonly GUIContent ADD_FILTER = new("Add Filter");
+            public static readonly GUIContent NO_SUITABLE_FILTER = new("No suitable filter!");
         }
 
         private void DrawFilterGUI()
@@ -515,7 +514,7 @@ namespace Pinwheel.Griffin.PaintTool
                     addFilterButtonRect = r;
                 if (GUI.Button(r, GFilterGUI.ADD_FILTER))
                 {
-                    GenericMenu menu = new GenericMenu();
+                    GenericMenu menu = new();
                     if (suitableFilterTypes.Count == 0)
                     {
                         menu.AddDisabledItem(GFilterGUI.NO_SUITABLE_FILTER);
@@ -549,8 +548,8 @@ namespace Pinwheel.Griffin.PaintTool
             public static readonly string LABEL = "Mode";
             public static readonly string ID = "texture-painter-mode";
 
-            public static readonly GUIContent NO_CUSTOM_PAINTER = new GUIContent("No Custom Painter defined!");
-            public static readonly GUIContent CUSTOM_ARGS = new GUIContent("Custom Args");
+            public static readonly GUIContent NO_CUSTOM_PAINTER = new("No Custom Painter defined!");
+            public static readonly GUIContent CUSTOM_ARGS = new("Custom Args");
         }
 
         private void DrawPaintMode()
@@ -563,7 +562,7 @@ namespace Pinwheel.Griffin.PaintTool
 
         private void ShowPaintModeAsGrid()
         {
-            GSelectionGridArgs args0 = new GSelectionGridArgs();
+            GSelectionGridArgs args0 = new();
             args0.selectedIndex = (int)painter.Mode;
             args0.collection = Enum.GetValues(typeof(GFoliagePaintingMode));
             args0.itemSize = GEditorCommon.selectionGridTileSizeWide;
@@ -585,7 +584,7 @@ namespace Pinwheel.Griffin.PaintTool
                 }
                 else
                 {
-                    GSelectionGridArgs args1 = new GSelectionGridArgs();
+                    GSelectionGridArgs args1 = new();
                     args1.selectedIndex = painter.CustomPainterIndex;
                     args1.collection = customPainterTypes;
                     args1.itemSize = GEditorCommon.selectionGridTileSizeWide;
@@ -624,15 +623,15 @@ namespace Pinwheel.Griffin.PaintTool
         private void DrawMode(Rect r, string label, Texture icon)
         {
             GUIStyle labelStyle = EditorStyles.miniLabel;
-            Rect iconRect = new Rect(r.min.x, r.min.y, r.height, r.height);
-            Rect labelRect = new Rect(r.min.x + r.height + 1, r.min.y, r.width - r.height, r.height);
+            Rect iconRect = new(r.min.x, r.min.y, r.height, r.height);
+            Rect labelRect = new(r.min.x + r.height + 1, r.min.y, r.width - r.height, r.height);
 
             GEditorCommon.DrawBodyBox(r);
             GEditorCommon.DrawHeaderBox(iconRect);
             if (icon != null)
             {
                 GUI.color = labelStyle.normal.textColor;
-                RectOffset offset = new RectOffset(3, 3, 3, 3);
+                RectOffset offset = new(3, 3, 3, 3);
                 GUI.DrawTexture(offset.Remove(iconRect), icon);
                 GUI.color = Color.white;
             }

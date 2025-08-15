@@ -10,7 +10,7 @@ namespace Pinwheel.Griffin.PaintTool
     [ExecuteInEditMode]
     public class GObjectPainter : MonoBehaviour
     {
-        private static readonly List<string> BUILTIN_PAINTER_NAME = new List<string>(new string[]
+        private static readonly List<string> BUILTIN_PAINTER_NAME = new(new string[]
         {
             "GObjectSpawner",
             "GObjectScaler"
@@ -406,7 +406,7 @@ namespace Pinwheel.Griffin.PaintTool
             args.WorldPointCorners = corners;
 
             List<GStylizedTerrain> terrains = GUtilities.ExtractTerrainsFromOverlapTest(GPaintToolUtilities.OverlapTest(groupId, args.HitPoint, args.Radius, args.Rotation));
-            foreach(GStylizedTerrain t in terrains)
+            foreach (GStylizedTerrain t in terrains)
             {
                 p.Paint(t, args);
             }

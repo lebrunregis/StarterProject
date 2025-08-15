@@ -85,7 +85,7 @@ namespace MagicaCloth2
             return sharePreBuildData.buildResult;
         }
 
-        static void MakePreBuildData(MagicaCloth cloth, string buildId, SharePreBuildData sharePreBuildData, UniquePreBuildData uniquePreBuildData)
+        private static void MakePreBuildData(MagicaCloth cloth, string buildId, SharePreBuildData sharePreBuildData, UniquePreBuildData uniquePreBuildData)
         {
             //Debug.Log($"MakePreBuildData().start");
             //var span = new TimeSpan("PreBuild");
@@ -164,7 +164,7 @@ namespace MagicaCloth2
                 }
 
                 // カスタムスキニングのボーン情報
-                List<TransformRecord> customSkinningBoneRecords = new List<TransformRecord>();
+                List<TransformRecord> customSkinningBoneRecords = new();
                 int bcnt = sdata.customSkinningSetting.skinningBones.Count;
                 for (int i = 0; i < bcnt; i++)
                 {

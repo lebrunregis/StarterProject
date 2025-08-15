@@ -8,7 +8,7 @@ namespace Pinwheel.Griffin.BillboardTool
 {
     public class GBillboardEditor : GTwoPaneWindowWindow
     {
-        private int previewPadding = 10;
+        private readonly int previewPadding = 10;
         private bool alphaBlend = true;
 
         private GBillboardRenderMode mode;
@@ -16,7 +16,7 @@ namespace Pinwheel.Griffin.BillboardTool
         private int row = 4;
         private int column = 4;
         private int cellSize = 256;
-        private Vector3 cameraOffset = new Vector3(0, 0, 5);
+        private Vector3 cameraOffset = new(0, 0, 5);
         private float cameraSize = 1;
         private Material atlasMaterial;
         private Material normalMaterial;
@@ -25,9 +25,9 @@ namespace Pinwheel.Griffin.BillboardTool
         private string srcColorProps = "_Color";
         private string desColorProps = "_Color";
         private int cellIndex = 0;
-        private List<Vector2> vertices = new List<Vector2>(new Vector2[] { new Vector2(0.01f, 0.01f), new Vector2(0.01f, 0.99f), new Vector2(0.99f, 0.99f), new Vector2(0.99f, 0.01f) });
+        private List<Vector2> vertices = new(new Vector2[] { new(0.01f, 0.01f), new(0.01f, 0.99f), new(0.99f, 0.99f), new(0.99f, 0.01f) });
         private int selectedVertexIndex = -1;
-        private float vertexClickDistance = 10;
+        private readonly float vertexClickDistance = 10;
         private ushort[] tris = new ushort[0];
         private float bottom = 0;
         private float width = 1;
@@ -36,11 +36,11 @@ namespace Pinwheel.Griffin.BillboardTool
 
         private const int MAX_VERTICES = 10;
 
-        private int[] rowColumnValues = new int[] { 1, 2, 4, 8, 16 };
-        private string[] rowColumnLabels = new string[] { "1", "2", "4", "8", "16" };
+        private readonly int[] rowColumnValues = new int[] { 1, 2, 4, 8, 16 };
+        private readonly string[] rowColumnLabels = new string[] { "1", "2", "4", "8", "16" };
 
-        private int[] cellSizeValues = new int[] { 128, 256, 512 };
-        private string[] cellSizeLabels = new string[] { "128", "256", "512" };
+        private readonly int[] cellSizeValues = new int[] { 128, 256, 512 };
+        private readonly string[] cellSizeLabels = new string[] { "128", "256", "512" };
 
         private RenderTexture previewRt;
 
@@ -207,7 +207,7 @@ namespace Pinwheel.Griffin.BillboardTool
         {
             base.OnToolbarGUI(r);
 
-            List<string> buttonLabels = new List<string>()
+            List<string> buttonLabels = new()
             {
                 "Atlas",
                 "Normal",
@@ -242,7 +242,7 @@ namespace Pinwheel.Griffin.BillboardTool
                 EditorGUI.DrawRect(buttonRects[4], highlightColor);
             }
 
-            Rect saveButtonRect = new Rect(
+            Rect saveButtonRect = new(
                 r.max.x - 100 - 2,
                 r.min.y,
                 100,
@@ -255,7 +255,7 @@ namespace Pinwheel.Griffin.BillboardTool
 
         private GBillboardCreatorArgs ConstructArgs()
         {
-            GBillboardCreatorArgs args = new GBillboardCreatorArgs();
+            GBillboardCreatorArgs args = new();
             args.Mode = mode;
             args.Target = target;
             args.Row = row;
@@ -307,7 +307,7 @@ namespace Pinwheel.Griffin.BillboardTool
         {
             base.OnLeftPaneGUI(r);
 
-            Rect previewRect = new Rect();
+            Rect previewRect = new();
             int size = Mathf.FloorToInt(Mathf.Min(LeftPaneRect.width, LeftPaneRect.height) - 2 * previewPadding);
             previewRect.size = new Vector2(size, size);
             previewRect.center = LeftPaneRect.center;
@@ -342,7 +342,7 @@ namespace Pinwheel.Griffin.BillboardTool
                 DrawBottomLine(previewRect);
                 DrawTriangles(previewRect);
                 DrawVertices(previewRect);
-                Rect pageRect = new Rect(
+                Rect pageRect = new(
                     previewRect.min.x, previewRect.max.y - 20,
                     previewRect.width, 20);
                 EditorGUI.DropShadowLabel(pageRect, string.Format("{0}/{1}", cellIndex + 1, row * column), GEditorCommon.CenteredWhiteLabel);
@@ -447,7 +447,7 @@ namespace Pinwheel.Griffin.BillboardTool
 
             Color handleColor = selectedVertexIndex == vertIndex ? Color.yellow : Color.green;
             float handleSize = 6;
-            Rect handleRect = new Rect();
+            Rect handleRect = new();
             handleRect.size = Vector2.one * handleSize;
             handleRect.center = point;
             EditorGUI.DrawRect(handleRect, handleColor);
@@ -574,7 +574,7 @@ namespace Pinwheel.Griffin.BillboardTool
                 srcColorProps = EditorGUILayout.TextField("Source Color", srcColorProps);
                 if (GUILayout.Button(GEditorCommon.contextIconText, EditorStyles.label, GUILayout.Width(14)))
                 {
-                    GenericMenu menu = new GenericMenu();
+                    GenericMenu menu = new();
                     if (SrcColorSuggestion.Count > 0)
                     {
                         menu.AddDisabledItem(new GUIContent("Suggestion"));
@@ -601,7 +601,7 @@ namespace Pinwheel.Griffin.BillboardTool
                 srcTextureProps = EditorGUILayout.TextField("Source Texture", srcTextureProps);
                 if (GUILayout.Button(GEditorCommon.contextIconText, EditorStyles.label, GUILayout.Width(14)))
                 {
-                    GenericMenu menu = new GenericMenu();
+                    GenericMenu menu = new();
                     if (SrcTextureSuggestion.Count > 0)
                     {
                         menu.AddDisabledItem(new GUIContent("Suggestion"));
@@ -786,7 +786,7 @@ namespace Pinwheel.Griffin.BillboardTool
             }
             else
             {
-                HashSet<Shader> shaders = new HashSet<Shader>();
+                HashSet<Shader> shaders = new();
                 MeshRenderer[] mrs = target.GetComponentsInChildren<MeshRenderer>();
                 for (int i = 0; i < mrs.Length; ++i)
                 {
@@ -797,9 +797,9 @@ namespace Pinwheel.Griffin.BillboardTool
                     }
                 }
 
-                HashSet<string> colorProps = new HashSet<string>();
+                HashSet<string> colorProps = new();
                 colorProps.Add("_Color");
-                HashSet<string> textureProps = new HashSet<string>();
+                HashSet<string> textureProps = new();
                 textureProps.Add("_MainTex");
                 IEnumerator<Shader> shaderIterator = shaders.GetEnumerator();
                 while (shaderIterator.MoveNext())

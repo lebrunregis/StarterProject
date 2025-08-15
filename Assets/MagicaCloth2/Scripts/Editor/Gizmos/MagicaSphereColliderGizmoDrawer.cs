@@ -11,7 +11,7 @@ namespace MagicaCloth2
     public class MagicaSphereColliderGizmoDrawer
     {
         [DrawGizmo(GizmoType.Active | GizmoType.NonSelected | GizmoType.InSelectionHierarchy)]
-        static void DrawGizmo(MagicaSphereCollider scr, GizmoType gizmoType)
+        private static void DrawGizmo(MagicaSphereCollider scr, GizmoType gizmoType)
         {
             ClothEditorManager.RegisterComponent(scr, gizmoType);
         }

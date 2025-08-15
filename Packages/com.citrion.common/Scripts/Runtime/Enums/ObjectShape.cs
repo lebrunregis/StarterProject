@@ -1,13 +1,11 @@
-﻿using UnityEngine;
-
-namespace CitrioN.Common
+﻿namespace CitrioN.Common
 {
-  [SkipObfuscationRename]
-  public enum ObjectShape
-  {
-    Rectangular,
-    Sphere,
-    Capsule,
-    Cone,
-  }
+    [SkipObfuscationRename]
+    public enum ObjectShape
+    {
+        Rectangular,
+        Sphere,
+        Capsule,
+        Cone,
+    }
 }

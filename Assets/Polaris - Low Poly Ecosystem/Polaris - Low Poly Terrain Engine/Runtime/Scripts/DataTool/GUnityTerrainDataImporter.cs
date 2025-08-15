@@ -2,7 +2,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
-using GC = System.GC;
 using Rand = System.Random;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -302,7 +301,7 @@ namespace Pinwheel.Griffin.DataTool
                 GCommon.SetDirty(grassesGroup);
             }
 
-            List<GGrassInstance> grasses = new List<GGrassInstance>();
+            List<GGrassInstance> grasses = new();
             int detailResolution = SrcData.detailResolution;
             int detailLayerCount = SrcData.detailPrototypes.Length;
             for (int layer = 0; layer < detailLayerCount; ++layer)
@@ -328,7 +327,7 @@ namespace Pinwheel.Griffin.DataTool
         {
             GGrassPrototype prototype = DesData.Foliage.Grasses.Prototypes[layerIndex];
 
-            Rand rand = new Rand(layerIndex + SrcData.detailResolution);
+            Rand rand = new(layerIndex + SrcData.detailResolution);
             int resolution = SrcData.detailResolution;
             int d = 0;
             float maxOffset = 1.0f / resolution;

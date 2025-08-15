@@ -80,7 +80,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Work_AverageTriangleDistanceJob : IJob
+        private struct Work_AverageTriangleDistanceJob : IJob
         {
             public int vcnt;
             public int tcnt;
@@ -128,7 +128,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Work_AverageLineDistanceJob : IJob
+        private struct Work_AverageLineDistanceJob : IJob
         {
             public int vcnt;
             public int lcnt;
@@ -195,7 +195,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Work_AddVertexIndexGirdMapJob : IJob
+        private struct Work_AddVertexIndexGirdMapJob : IJob
         {
             public float gridSize;
             public int vcnt;
@@ -302,7 +302,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Work_IntersectTriangleJob : IJobParallelFor
+        private struct Work_IntersectTriangleJob : IJobParallelFor
         {
             public float3 localRayPos;
             public float3 localRayDir;
@@ -358,7 +358,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Work_IntersectEdgeJob : IJobParallelFor
+        private struct Work_IntersectEdgeJob : IJobParallelFor
         {
             public float3 localRayPos;
             public float3 localRayDir;
@@ -409,7 +409,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Work_IntersectPointJob : IJobParallelFor
+        private struct Work_IntersectPointJob : IJobParallelFor
         {
             public float3 localRayPos;
             public float3 localRayDir;
@@ -451,7 +451,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Work_IntersetcSortJob : IJob
+        private struct Work_IntersetcSortJob : IJob
         {
             public NativeList<VirtualMeshRaycastHit> hitList;
 

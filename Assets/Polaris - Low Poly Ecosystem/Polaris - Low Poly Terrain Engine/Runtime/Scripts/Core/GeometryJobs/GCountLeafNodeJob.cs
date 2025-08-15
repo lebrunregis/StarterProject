@@ -1,10 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Jobs;
 using Unity.Collections;
-using Unity.Burst;
+using Unity.Jobs;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -20,7 +17,7 @@ namespace Pinwheel.Griffin
         public int baseResolution;
         public int resolution;
         public int lod;
-         
+
         public void Execute()
         {
             int startIndex = 0;

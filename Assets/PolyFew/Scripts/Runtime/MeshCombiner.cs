@@ -908,7 +908,7 @@ namespace BrainFailProductions.PolyFewRuntime
 
             var bones = new Transform[renderers.Length][];
 
-            Dictionary<string, BlendShapeFrame> blendShapes = new Dictionary<string, BlendShapeFrame>();
+            Dictionary<string, BlendShapeFrame> blendShapes = new();
 
             int vertexOffset = 0;
 
@@ -1807,7 +1807,7 @@ namespace BrainFailProductions.PolyFewRuntime
                     //var combineInstance = new CombineInstance
                     //{ transform = meshFilter.transform.localToWorldMatrix, mesh = newMesh };
                     var combineInstance = new CombineInstance
-                    { transform = (parentTransform.worldToLocalMatrix * meshFilter.transform.localToWorldMatrix) , mesh = newMesh };
+                    { transform = (parentTransform.worldToLocalMatrix * meshFilter.transform.localToWorldMatrix), mesh = newMesh };
 
                     combineMeshInstanceDictionary[material].Add(combineInstance);
                 }
@@ -1837,14 +1837,14 @@ namespace BrainFailProductions.PolyFewRuntime
 
                 meshFilter.sharedMesh = combinedMesh;
 
-//#if UNITY_EDITOR
-//                UnityEditor.MeshUtility.Optimize(meshFilter.sharedMesh);
+                //#if UNITY_EDITOR
+                //                UnityEditor.MeshUtility.Optimize(meshFilter.sharedMesh);
 
-//                if (generateUV2)
-//                {
-//                    UnityEditor.Unwrapping.GenerateSecondaryUVSet(meshFilter.sharedMesh);
-//                }
-//#endif
+                //                if (generateUV2)
+                //                {
+                //                    UnityEditor.Unwrapping.GenerateSecondaryUVSet(meshFilter.sharedMesh);
+                //                }
+                //#endif
 
                 newObject.transform.parent = parentTransform.parent;
 

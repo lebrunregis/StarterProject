@@ -1,20 +1,23 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio { 
+namespace DarkTonic.MasterAudio
+{
     /// <summary>
     /// This class contains extension methods so you can call some Master Audio methods with less parameters directly from the Transform object.
     /// </summary>
-	public static class AudioTransformExtensions {
+    public static class AudioTransformExtensions
+    {
         /// <summary>
         /// This method allows you to fade out all sounds of a particular Sound Group triggered by or following a Transform for X seconds.
         /// </summary>
         /// <param name="sourceTrans">The Transform the sound was triggered to follow or use the position of.</param>
         /// <param name="sType">The name of the Sound Group.</param>
         /// <param name="fadeTime">The amount of seconds the fading will take.</param>
-        public static void FadeOutSoundGroupOfTransform(this Transform sourceTrans, string sType, float fadeTime) {
+        public static void FadeOutSoundGroupOfTransform(this Transform sourceTrans, string sType, float fadeTime)
+        {
             MasterAudio.FadeOutSoundGroupOfTransform(sourceTrans, sType, fadeTime);
         }
 
@@ -23,11 +26,12 @@ namespace DarkTonic.MasterAudio {
         /// </summary>
         /// <param name="sourceTrans">Source transform</param>
         /// <returns>List of SoundGroupVariation</returns>
-        public static List<SoundGroupVariation> GetAllPlayingVariationsOfTransform(this Transform sourceTrans) {
+        public static List<SoundGroupVariation> GetAllPlayingVariationsOfTransform(this Transform sourceTrans)
+        {
             return MasterAudio.GetAllPlayingVariationsOfTransform(sourceTrans);
         }
 
-		#region Play Sound methods
+        #region Play Sound methods
 
         /// <summary>
         /// This method allows you to play a sound in a Sound Group from a specific position - the position of a Transform you pass in. Returns bool indicating success (played) or not.
@@ -40,7 +44,8 @@ namespace DarkTonic.MasterAudio {
         /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
         /// <returns>boolean- true indicating that the sound was either played or scheduled, false otherwise.</returns>
         public static bool PlaySound3DAtTransformAndForget(this Transform sourceTrans, string sType,
-            float volumePercentage = 1f, float? pitch = null, float delaySoundTime = 0f, string variationName = null) {
+            float volumePercentage = 1f, float? pitch = null, float delaySoundTime = 0f, string variationName = null)
+        {
             return MasterAudio.PlaySound3DAtTransformAndForget(sType, sourceTrans, volumePercentage, pitch,
                 delaySoundTime, variationName);
         }
@@ -56,7 +61,8 @@ namespace DarkTonic.MasterAudio {
         /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
         /// <returns>PlaySoundResult - this object can be used to read if the sound played or not and also gives access to the Variation object that was used.</returns>
         public static PlaySoundResult PlaySound3DAtTransform(this Transform sourceTrans, string sType,
-            float volumePercentage = 1f, float? pitch = null, float delaySoundTime = 0f, string variationName = null) {
+            float volumePercentage = 1f, float? pitch = null, float delaySoundTime = 0f, string variationName = null)
+        {
             return MasterAudio.PlaySound3DAtTransform(sType, sourceTrans, volumePercentage, pitch, delaySoundTime,
                 variationName);
         }
@@ -72,7 +78,8 @@ namespace DarkTonic.MasterAudio {
         /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
         /// <returns>boolean- true indicating that the sound was either played or scheduled, false otherwise.</returns>
         public static bool PlaySound3DFollowTransformAndForget(this Transform sourceTrans, string sType,
-            float volumePercentage = 1f, float? pitch = null, float delaySoundTime = 0f, string variationName = null) {
+            float volumePercentage = 1f, float? pitch = null, float delaySoundTime = 0f, string variationName = null)
+        {
             return MasterAudio.PlaySound3DFollowTransformAndForget(sType, sourceTrans, volumePercentage, pitch,
                 delaySoundTime, variationName);
         }
@@ -88,7 +95,8 @@ namespace DarkTonic.MasterAudio {
         /// <param name="variationName"><b>Optional</b> - used if you want to play a specific variation by name. Otherwise a random variation is played.</param>
         /// <returns>PlaySoundResult - this object can be used to read if the sound played or not and also gives access to the Variation object that was used.</returns>
         public static PlaySoundResult PlaySound3DFollowTransform(this Transform sourceTrans, string sType,
-            float volumePercentage = 1f, float? pitch = null, float delaySoundTime = 0f, string variationName = null) {
+            float volumePercentage = 1f, float? pitch = null, float delaySoundTime = 0f, string variationName = null)
+        {
             return MasterAudio.PlaySound3DFollowTransform(sType, sourceTrans, volumePercentage, pitch, delaySoundTime,
                 variationName);
         }
@@ -106,7 +114,8 @@ namespace DarkTonic.MasterAudio {
         /// <param name="completedAction"><b>Optional</b> - Code to execute when the sound is finished.</param>
         public static IEnumerator PlaySound3DAtTransformAndWaitUntilFinished(this Transform sourceTrans, string sType,
             float volumePercentage = 1f, float? pitch = null, float delaySoundTime = 0f, string variationName = null,
-            double? timeToSchedulePlay = null, System.Action completedAction = null) {
+            double? timeToSchedulePlay = null, System.Action completedAction = null)
+        {
 
             return MasterAudio.PlaySound3DAtTransformAndWaitUntilFinished(sType, sourceTrans, volumePercentage, pitch,
                 delaySoundTime, variationName, timeToSchedulePlay, completedAction);
@@ -125,19 +134,21 @@ namespace DarkTonic.MasterAudio {
         /// <param name="completedAction"><b>Optional</b> - Code to execute when the sound is finished.</param>
         public static IEnumerator PlaySound3DFollowTransformAndWaitUntilFinished(this Transform sourceTrans,
             string sType, float volumePercentage = 1f, float? pitch = null, float delaySoundTime = 0f,
-            string variationName = null, double? timeToSchedulePlay = null, System.Action completedAction = null) {
+            string variationName = null, double? timeToSchedulePlay = null, System.Action completedAction = null)
+        {
 
             return MasterAudio.PlaySound3DFollowTransformAndWaitUntilFinished(sType, sourceTrans, volumePercentage,
                 pitch, delaySoundTime, variationName, timeToSchedulePlay, completedAction);
         }
 
-		#endregion
+        #endregion
 
         /// <summary>
         /// This method allows you to pause all sounds triggered by or following a Transform.
         /// </summary>
         /// <param name="sourceTrans">The Transform the sound was triggered to follow or use the position of.</param>
-        public static void PauseAllSoundsOfTransform(Transform sourceTrans) {
+        public static void PauseAllSoundsOfTransform(Transform sourceTrans)
+        {
             MasterAudio.PauseAllSoundsOfTransform(sourceTrans);
         }
 
@@ -146,7 +157,8 @@ namespace DarkTonic.MasterAudio {
         /// </summary>
         /// <param name="sourceTrans">The Transform the sound was triggered to follow or use the position of.</param>
         /// <param name="busName">The name of the Bus.</param>
-        public static void PauseBusOfTransform(this Transform sourceTrans, string busName) {
+        public static void PauseBusOfTransform(this Transform sourceTrans, string busName)
+        {
             MasterAudio.PauseBusOfTransform(sourceTrans, busName);
         }
 
@@ -155,7 +167,8 @@ namespace DarkTonic.MasterAudio {
         /// </summary>
         /// <param name="sourceTrans">The Transform the sound was triggered to follow or use the position of.</param>
         /// <param name="sType">The name of the Sound Group to stop.</param>
-        public static void PauseSoundGroupOfTransform(this Transform sourceTrans, string sType) {
+        public static void PauseSoundGroupOfTransform(this Transform sourceTrans, string sType)
+        {
             MasterAudio.PauseSoundGroupOfTransform(sourceTrans, sType);
         }
 
@@ -163,7 +176,8 @@ namespace DarkTonic.MasterAudio {
         /// This method allows you to abruptly stop all sounds triggered by or following a Transform.
         /// </summary>
         /// <param name="sourceTrans">The Transform the sound was triggered to follow or use the position of.</param>
-        public static void StopAllSoundsOfTransform(this Transform sourceTrans) {
+        public static void StopAllSoundsOfTransform(this Transform sourceTrans)
+        {
             MasterAudio.StopAllSoundsOfTransform(sourceTrans);
         }
 
@@ -172,7 +186,8 @@ namespace DarkTonic.MasterAudio {
         /// </summary>
         /// <param name="sourceTrans">The Transform the sound was triggered to follow or use the position of.</param>
         /// <param name="busName">The name of the Bus.</param>
-        public static void StopBusOfTransform(this Transform sourceTrans, string busName) {
+        public static void StopBusOfTransform(this Transform sourceTrans, string busName)
+        {
             MasterAudio.StopBusOfTransform(sourceTrans, busName);
         }
 
@@ -181,7 +196,8 @@ namespace DarkTonic.MasterAudio {
         /// </summary>
         /// <param name="sourceTrans">The Transform the sound was triggered to follow or use the position of.</param>
         /// <param name="sType">The name of the Sound Group to stop.</param>
-        public static void StopSoundGroupOfTransform(this Transform sourceTrans, string sType) {
+        public static void StopSoundGroupOfTransform(this Transform sourceTrans, string sType)
+        {
             MasterAudio.StopSoundGroupOfTransform(sourceTrans, sType);
         }
 
@@ -189,7 +205,8 @@ namespace DarkTonic.MasterAudio {
         /// This method allows you to unpause all sounds triggered by or following a Transform.
         /// </summary>
         /// <param name="sourceTrans">The Transform the sound was triggered to follow or use the position of.</param>
-        public static void UnpauseAllSoundsOfTransform(this Transform sourceTrans) {
+        public static void UnpauseAllSoundsOfTransform(this Transform sourceTrans)
+        {
             MasterAudio.UnpauseAllSoundsOfTransform(sourceTrans);
         }
 
@@ -198,7 +215,8 @@ namespace DarkTonic.MasterAudio {
         /// </summary>
         /// <param name="sourceTrans">The Transform the sound was triggered to follow or use the position of.</param>
         /// <param name="busName">The name of the Bus.</param>
-        public static void UnpauseBusOfTransform(this Transform sourceTrans, string busName) {
+        public static void UnpauseBusOfTransform(this Transform sourceTrans, string busName)
+        {
             MasterAudio.UnpauseBusOfTransform(sourceTrans, busName);
         }
 
@@ -207,7 +225,8 @@ namespace DarkTonic.MasterAudio {
         /// </summary>
         /// <param name="sourceTrans">The Transform the sound was triggered to follow or use the position of.</param>
         /// <param name="sType">The name of the Sound Group to stop.</param>
-        public static void UnpauseSoundGroupOfTransform(this Transform sourceTrans, string sType) {
+        public static void UnpauseSoundGroupOfTransform(this Transform sourceTrans, string sType)
+        {
             MasterAudio.UnpauseSoundGroupOfTransform(sourceTrans, sType);
         }
 
@@ -217,7 +236,8 @@ namespace DarkTonic.MasterAudio {
         /// <param name="sType">Sound Group name</param>
         /// <param name="sourceTrans">The Transform in question</param>
         /// <returns>boolean</returns>
-        public static bool IsTransformPlayingSoundGroup(this Transform sourceTrans, string sType) {
+        public static bool IsTransformPlayingSoundGroup(this Transform sourceTrans, string sType)
+        {
             return MasterAudio.IsTransformPlayingSoundGroup(sType, sourceTrans);
         }
     }

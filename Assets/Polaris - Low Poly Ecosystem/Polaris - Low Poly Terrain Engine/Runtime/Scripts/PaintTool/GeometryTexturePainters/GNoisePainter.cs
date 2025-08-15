@@ -179,12 +179,12 @@ namespace Pinwheel.Griffin.PaintTool
         private void RenderNoiseTexture(RenderTexture noiseMap, GStylizedTerrain terrain)
         {
             GNoisePainterParams param = GTexturePainterCustomParams.Instance.Noise;
-            GNoiseMapGenerator gen = new GNoiseMapGenerator();
-            GNoiseMapGeneratorParams genParam = new GNoiseMapGeneratorParams();
+            GNoiseMapGenerator gen = new();
+            GNoiseMapGeneratorParams genParam = new();
             genParam.Type = param.Type;
             if (param.UseWorldSpace && terrain != null)
             {
-                Vector3 terrainSize = new Vector3(
+                Vector3 terrainSize = new(
                    terrain.TerrainData.Geometry.Width,
                    terrain.TerrainData.Geometry.Height,
                    terrain.TerrainData.Geometry.Length);

@@ -84,7 +84,7 @@ namespace MagicaCloth2
             int dataIndex = index * 3;
 
             // 集計
-            float3 add = new float3(sumPt[dataIndex], sumPt[dataIndex + 1], sumPt[dataIndex + 2]);
+            float3 add = new(sumPt[dataIndex], sumPt[dataIndex + 1], sumPt[dataIndex + 2]);
             add /= count;
 
             // データは固定小数点なので戻す
@@ -97,7 +97,7 @@ namespace MagicaCloth2
         unsafe internal static float3 ReadFloat3(int index, int* vecPt)
         {
             int dataIndex = index * 3;
-            float3 v = new float3(vecPt[dataIndex], vecPt[dataIndex + 1], vecPt[dataIndex + 2]);
+            float3 v = new(vecPt[dataIndex], vecPt[dataIndex + 1], vecPt[dataIndex + 2]);
 
             // データは固定小数点なので戻す
             v *= ToFloat;

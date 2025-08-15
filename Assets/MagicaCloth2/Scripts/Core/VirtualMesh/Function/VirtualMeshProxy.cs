@@ -315,7 +315,7 @@ namespace MagicaCloth2
         /// <summary>
         /// 法線方向の調整
         /// </summary>
-        void ProxyNormalAdjustment(ClothSerializeData sdata, TransformRecord normalAdjustmentTransformRecord)
+        private void ProxyNormalAdjustment(ClothSerializeData sdata, TransformRecord normalAdjustmentTransformRecord)
         {
             int vcnt = VertexCount;
             if (vcnt == 0)
@@ -356,7 +356,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct ProxyNormalRadiationAdjustmentJob : IJobParallelFor
+        private struct ProxyNormalRadiationAdjustmentJob : IJobParallelFor
         {
             public float3 center;
             [Unity.Collections.ReadOnly]
@@ -409,7 +409,7 @@ namespace MagicaCloth2
         /// <summary>
         /// シミュレーションに関係する頂点からAABBと固定頂点のリストを作成する
         /// </summary>
-        void ProxyCreateFixedListAndAABB()
+        private void ProxyCreateFixedListAndAABB()
         {
             localCenterPosition = new NativeReference<float3>(0, Allocator.Persistent);
 
@@ -441,7 +441,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct ProxyCreateFixedListAndAABBJob : IJob
+        private struct ProxyCreateFixedListAndAABBJob : IJob
         {
             public int vcnt;
             [Unity.Collections.ReadOnly]
@@ -521,7 +521,7 @@ namespace MagicaCloth2
         /// トライアングルの方向を頂点法線に沿うようにできるだけ合わせる
         /// ※この処理はとても重要。この合わせにより法線の計算精度が上がる。
         /// </summary>
-        void OptimizeTriangleDirection(NativeArray<float3> triangleNormals, float sameSurfaceAngle)
+        private void OptimizeTriangleDirection(NativeArray<float3> triangleNormals, float sameSurfaceAngle)
         {
             if (TriangleCount == 0)
                 return;
@@ -562,7 +562,7 @@ namespace MagicaCloth2
                     //Debug.Log($"レイヤー起点:{tindex}, tri:{tri}");
 
                     // 隣接トライアングル
-                    int2x3 edges = new int2x3(
+                    int2x3 edges = new(
                         DataUtility.PackInt2(tri.xy),
                         DataUtility.PackInt2(tri.yz),
                         DataUtility.PackInt2(tri.zx)
@@ -633,7 +633,7 @@ namespace MagicaCloth2
         /// トライアングル法線を求める
         /// </summary>
         [BurstCompile]
-        struct Proxy_CalcTriangleNormalJob : IJobParallelFor
+        private struct Proxy_CalcTriangleNormalJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<int3> triangles;
@@ -660,7 +660,7 @@ namespace MagicaCloth2
         /// トライアングル接線を求める
         /// </summary>
         [BurstCompile]
-        struct Proxy_CalcTriangleTangentJob : IJobParallelFor
+        private struct Proxy_CalcTriangleTangentJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<int3> triangles;
@@ -693,7 +693,7 @@ namespace MagicaCloth2
         /// 頂点ごとに接続するトライアングルを求める（最大７つ）
         /// </summary>
         [BurstCompile]
-        unsafe struct Proxy_CreateVertexToTrianglesJob : IJob
+        private unsafe struct Proxy_CreateVertexToTrianglesJob : IJob
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<int3> triangles;
@@ -728,7 +728,7 @@ namespace MagicaCloth2
         /// またトライアングルに属する頂点にはフラグを立てる
         /// </summary>
         [BurstCompile]
-        struct Proxy_OrganizeVertexToTrianglsJob : IJobParallelFor
+        private struct Proxy_OrganizeVertexToTrianglsJob : IJobParallelFor
         {
             public NativeArray<FixedList32Bytes<uint>> vertexToTriangles;
 
@@ -901,7 +901,7 @@ namespace MagicaCloth2
         /// 現在メッシュの頂点法線接線を接続トライアングル情報から更新する
         /// </summary>
         [BurstCompile]
-        struct Proxy_CalcVertexNormalTangentFromTriangleJob : IJobParallelFor
+        private struct Proxy_CalcVertexNormalTangentFromTriangleJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<float3> triangleNormals;
@@ -956,7 +956,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Proxy_CalcVertexToTransformJob : IJobParallelFor
+        private struct Proxy_CalcVertexToTransformJob : IJobParallelFor
         {
             public quaternion invRot;
 
@@ -991,7 +991,7 @@ namespace MagicaCloth2
         /// エッジごとの接続トライアングルマップを作成する
         /// </summary>
         [BurstCompile]
-        struct Proxy_CalcEdgeToTriangleJob : IJob
+        private struct Proxy_CalcEdgeToTriangleJob : IJob
         {
             public int tcnt;
             [Unity.Collections.ReadOnly]
@@ -1003,7 +1003,7 @@ namespace MagicaCloth2
                 for (int i = 0; i < tcnt; i++)
                 {
                     var tri = triangles[i];
-                    int2x3 edges = new int2x3(
+                    int2x3 edges = new(
                         DataUtility.PackInt2(tri.xy),
                         DataUtility.PackInt2(tri.yz),
                         DataUtility.PackInt2(tri.zx)
@@ -1021,7 +1021,7 @@ namespace MagicaCloth2
         /// 頂点のバインドポーズを求める
         /// </summary>
         [BurstCompile]
-        struct Proxy_CalcVertexBindPoseJob2 : IJobParallelFor
+        private struct Proxy_CalcVertexBindPoseJob2 : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<float3> localPositions;
@@ -1053,7 +1053,7 @@ namespace MagicaCloth2
         /// およびエッジセットを作成する
         /// </summary>
         [BurstCompile]
-        struct Proxy_CalcVertexToVertexFromTriangleJob : IJob
+        private struct Proxy_CalcVertexToVertexFromTriangleJob : IJob
         {
             public int triangleCount;
 
@@ -1091,7 +1091,7 @@ namespace MagicaCloth2
         /// およびエッジセットを作成する
         /// </summary>
         [BurstCompile]
-        struct Proxy_CalcVertexToVertexFromLineJob : IJob
+        private struct Proxy_CalcVertexToVertexFromLineJob : IJob
         {
             public int lineCount;
 
@@ -1115,7 +1115,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Proxy_CreateEdgeFlagJob : IJobParallelFor
+        private struct Proxy_CreateEdgeFlagJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<int2> edges;
@@ -1145,7 +1145,7 @@ namespace MagicaCloth2
         }
 
         //=========================================================================================
-        struct SkinningBoneInfo
+        private struct SkinningBoneInfo
         {
             //public int transformIndex;
             public int parentTransformIndex;
@@ -1157,7 +1157,7 @@ namespace MagicaCloth2
         /// <summary>
         /// カスタムスキニング情報の作成
         /// </summary>
-        void CreateCustomSkinning(CustomSkinningSettings setting, List<TransformRecord> bones)
+        private void CreateCustomSkinning(CustomSkinningSettings setting, List<TransformRecord> bones)
         {
             if (CustomSkinningBoneCount == 0)
                 return;
@@ -1240,7 +1240,7 @@ namespace MagicaCloth2
 #if !MC2_CUSTOM_SKINNING_V1
         // V2
         [BurstCompile]
-        struct Proxy_CalcCustomSkinningWeightsJobV2 : IJobParallelFor
+        private struct Proxy_CalcCustomSkinningWeightsJobV2 : IJobParallelFor
         {
             public bool isBoneCloth;
             public float angularAttenuation;
@@ -1520,7 +1520,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Proxy_ApplySelectionJob : IJobParallelFor
+        private struct Proxy_ApplySelectionJob : IJobParallelFor
         {
             public float gridSize;
             public float radius;
@@ -1581,7 +1581,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct Proxy_BoneClothApplayTransformFlagJob : IJobParallelFor
+        private struct Proxy_BoneClothApplayTransformFlagJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<VertexAttribute> attributes;
@@ -1613,7 +1613,7 @@ namespace MagicaCloth2
         /// [MeshCloth]ベースラインの作成
         /// 頂点接続情報から親情報を作成する
         /// </summary>
-        void CreateMeshBaseLine()
+        private void CreateMeshBaseLine()
         {
             int vcnt = VertexCount;
             vertexParentIndices = new NativeArray<int>(vcnt, Allocator.Persistent);
@@ -1685,7 +1685,7 @@ namespace MagicaCloth2
 
                 ushort start = (ushort)indices.Count;
                 ushort count = 0;
-                ExBitFlag8 lineflag = new ExBitFlag8();
+                ExBitFlag8 lineflag = new();
 
                 while (stack.Count > 0)
                 {
@@ -1724,7 +1724,7 @@ namespace MagicaCloth2
             vertexChildDataArray = new NativeArray<ushort>(dataArry, Allocator.Persistent);
         }
 
-        struct BaseLineWork : IComparable<BaseLineWork>
+        private struct BaseLineWork : IComparable<BaseLineWork>
         {
             public int vindex;
             public float dist;
@@ -1736,7 +1736,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct BaseLine_Mesh_CreateParentJob2 : IJob
+        private struct BaseLine_Mesh_CreateParentJob2 : IJob
         {
             public int vcnt;
             public float avgDist;
@@ -1903,7 +1903,7 @@ namespace MagicaCloth2
         /// (Mesh)固定ポイントをリストにする
         /// </summary>
         [BurstCompile]
-        struct BaseLine_Mesh_CareteFixedListJob : IJob
+        private struct BaseLine_Mesh_CareteFixedListJob : IJob
         {
             public int vcnt;
             [Unity.Collections.ReadOnly]
@@ -1929,7 +1929,7 @@ namespace MagicaCloth2
         /// [BoneCloth]ベースライン情報の作成
         /// BoneClothでは単純にTransformの親子構造がそのままベースラインとなる
         /// </summary>
-        void CreateTransformBaseLine()
+        private void CreateTransformBaseLine()
         {
             int vcnt = VertexCount;
             vertexParentIndices = new NativeArray<int>(vcnt, Allocator.Persistent);
@@ -2009,7 +2009,7 @@ namespace MagicaCloth2
                     stack.Push(index0);
                     ushort start = (ushort)indices.Count;
                     ushort count = 0;
-                    ExBitFlag8 lineflag = new ExBitFlag8();
+                    ExBitFlag8 lineflag = new();
 
                     while (stack.Count > 0)
                     {
@@ -2055,7 +2055,7 @@ namespace MagicaCloth2
         /// (Bone)ベースライン上の頂点ごとの子頂点リストを求める
         /// </summary>
         [BurstCompile]
-        struct BaseLine_Bone_CreateBoneChildInfoJob : IJob
+        private struct BaseLine_Bone_CreateBoneChildInfoJob : IJob
         {
             public int vcnt;
 
@@ -2082,7 +2082,7 @@ namespace MagicaCloth2
         /// <summary>
         /// (Mesh/Bone)ベースラインの基準姿勢を求める
         /// </summary>
-        void CreateBaseLinePose()
+        private void CreateBaseLinePose()
         {
             int dataCount = baseLineData.Length;
             vertexLocalPositions = new NativeArray<float3>(VertexCount, Allocator.Persistent);
@@ -2104,7 +2104,7 @@ namespace MagicaCloth2
         /// ベースラインの基準姿勢を求める
         /// </summary>
         [BurstCompile]
-        struct BaseLine_CalcLocalPositionRotationJob : IJobParallelFor
+        private struct BaseLine_CalcLocalPositionRotationJob : IJobParallelFor
         {
             [Unity.Collections.ReadOnly]
             public NativeArray<int> parentIndices;
@@ -2165,7 +2165,7 @@ namespace MagicaCloth2
         /// <summary>
         /// 頂点ごとのルートインデックスと深さを求める
         /// </summary>
-        void CreateVertexRootAndDepth()
+        private void CreateVertexRootAndDepth()
         {
             // ベースラインが存在しなくとも配列は用意する
             int vcnt = VertexCount;
@@ -2193,7 +2193,7 @@ namespace MagicaCloth2
         }
 
         [BurstCompile]
-        struct BaseLine_CalcMaxBaseLineLengthJob : IJob
+        private struct BaseLine_CalcMaxBaseLineLengthJob : IJob
         {
             public int vcnt;
 

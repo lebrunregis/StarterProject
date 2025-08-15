@@ -1,19 +1,17 @@
 ﻿#if UNITY_EDITOR
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 
 namespace BrainFailProductions.PolyFew
 {
-    public class PolyFewResetter 
+    public class PolyFewResetter
     {
         public static void ResetToInitialState()
         {
             //PolyFew Doesn't show up for multiple objects so don't do anything
-            if(UtilityServices.dataContainer == null) { return; }
+            if (UtilityServices.dataContainer == null) { return; }
             //if (Selection.gameObjects != null && Selection.gameObjects.Length > 1) { return; }
             //if (Selection.activeGameObject == null) { return; }
 
@@ -21,7 +19,7 @@ namespace BrainFailProductions.PolyFew
             UtilityServices.dataContainer.reductionPending = false;
             UtilityServices.dataContainer.reductionStrength = 0;
 
-            if(Selection.activeGameObject != null)
+            if (Selection.activeGameObject != null)
             {
                 UtilityServices.dataContainer.triangleCount = UtilityServices.CountTriangles(UtilityServices.dataContainer.considerChildren, UtilityServices.dataContainer.objectMeshPairs, Selection.activeGameObject);
             }

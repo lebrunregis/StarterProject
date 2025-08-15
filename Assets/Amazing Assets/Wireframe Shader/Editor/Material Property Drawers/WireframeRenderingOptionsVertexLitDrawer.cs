@@ -1,18 +1,19 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
 
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 
 namespace AmazingAssets.WireframeShader.Editor
 {
     public class WireframeRenderingOptionsVertexLitDrawer : WireframeMaterialBasePropertyDrawer
     {
-        static string[] renderingOptions = new string[] { "Opaque", "Transparent", "Cutout" };
-        static int[] renderingOptionsValues = new int[] { 0, 1, 2 };
+        private static readonly string[] renderingOptions = new string[] { "Opaque", "Transparent", "Cutout" };
+        private static readonly int[] renderingOptionsValues = new int[] { 0, 1, 2 };
 
-        enum RENDERING_MODE { Opaque, Transparent, Cutout }
+        private enum RENDERING_MODE
+        { Opaque, Transparent, Cutout }
 
         public override void OnGUI(Rect position, MaterialProperty prop, string label, MaterialEditor editor)
         {

@@ -10,12 +10,12 @@ namespace MagicaCloth2
     public static class GizmoUtility
     {
         // ギズモカラー定義
-        public static readonly Color ColorCollider = new Color(0.0f, 1.0f, 0.0f);
-        public static readonly Color ColorSymmetryCollider = new Color(0.0f, 1.0f, 1.0f);
-        public static readonly Color ColorNonSelectedCollider = new Color(0.5f, 0.3f, 0.0f);
-        public static readonly Color ColorSkinningBone = new Color(1.0f, 0.5f, 0.0f);
-        public static readonly Color ColorWindZone = new Color(1f, 1f, 1f);
-        public static readonly Color ColorWindArrow = new Color(1f, 1f, 0f);
+        public static readonly Color ColorCollider = new(0.0f, 1.0f, 0.0f);
+        public static readonly Color ColorSymmetryCollider = new(0.0f, 1.0f, 1.0f);
+        public static readonly Color ColorNonSelectedCollider = new(0.5f, 0.3f, 0.0f);
+        public static readonly Color ColorSkinningBone = new(1.0f, 0.5f, 0.0f);
+        public static readonly Color ColorWindZone = new(1f, 1f, 1f);
+        public static readonly Color ColorWindArrow = new(1f, 1f, 0f);
 
         public static readonly Quaternion FlipZ = Quaternion.AngleAxis(180.0f, Vector3.up);
 
@@ -281,7 +281,7 @@ namespace MagicaCloth2
             }
         }
 
-        static void DrawColliderInternal(ColliderComponent collider, Quaternion camRot, Vector3 cpos, Quaternion crot, Vector3 cscl, float direction)
+        private static void DrawColliderInternal(ColliderComponent collider, Quaternion camRot, Vector3 cpos, Quaternion crot, Vector3 cscl, float direction)
         {
             var size = collider.GetSize();
             Handles.matrix = Matrix4x4.TRS(cpos, crot, cscl);
@@ -412,7 +412,7 @@ namespace MagicaCloth2
             Vector3 oldpos = epos;
             for (int i = 0; i < div; i++)
             {
-                float t = (float)i / (float)div;
+                float t = i / (float)div;
                 var q = Quaternion.AngleAxis(t * 360.0f, Vector3.forward);
                 var x = q * Vector3.right * radius;
                 Gizmos.DrawLine(Vector3.zero, epos + x);
@@ -444,11 +444,11 @@ namespace MagicaCloth2
 
             Vector3[] points = new Vector3[]
             {
-                new Vector3(0.0f, 0.0f, -1.0f),
-                new Vector3(0.0f, 0.5f, -1.0f),
-                new Vector3(0.0f, 0.5f, 0.0f),
-                new Vector3(0.0f, 1.0f, 0.0f),
-                new Vector3(0.0f, 0.0f, 1.0f),
+                new(0.0f, 0.0f, -1.0f),
+                new(0.0f, 0.5f, -1.0f),
+                new(0.0f, 0.5f, 0.0f),
+                new(0.0f, 1.0f, 0.0f),
+                new(0.0f, 0.0f, 1.0f),
             };
 
             float addAngle = cross ? 90.0f : 180.0f;
@@ -574,7 +574,7 @@ namespace MagicaCloth2
 
             // cone
             Handles.color = coneColor;
-            Vector3 offset = new Vector3(0.0f, 0.0f, -zoffset);
+            Vector3 offset = new(0.0f, 0.0f, -zoffset);
             Handles.ConeHandleCap(
                 controllId,
                 //pos + offset,

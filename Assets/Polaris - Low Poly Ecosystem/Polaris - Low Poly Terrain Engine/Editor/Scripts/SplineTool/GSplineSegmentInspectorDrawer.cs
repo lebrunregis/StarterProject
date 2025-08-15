@@ -5,7 +5,7 @@ namespace Pinwheel.Griffin.SplineTool
 {
     public class GSplineSegmentInspectorDrawer
     {
-        private GSplineSegment instance;
+        private readonly GSplineSegment instance;
 
         public GSplineSegmentInspectorDrawer(GSplineSegment s)
         {

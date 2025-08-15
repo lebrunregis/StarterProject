@@ -18,7 +18,7 @@ namespace Pinwheel.Griffin
             instance.Terrain = EditorGUILayout.ObjectField("Terrain", instance.Terrain, typeof(GStylizedTerrain), true) as GStylizedTerrain;
             instance.SnapMode = (GSnapMode)EditorGUILayout.EnumPopup("Snap Mode", instance.SnapMode);
 
-            SerializedObject so = new SerializedObject(instance);
+            SerializedObject so = new(instance);
             SerializedProperty sp = so.FindProperty("layerMask");
             if (sp != null)
             {

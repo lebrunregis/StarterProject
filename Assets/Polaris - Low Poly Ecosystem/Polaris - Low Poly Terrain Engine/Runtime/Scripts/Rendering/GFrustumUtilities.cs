@@ -1,13 +1,11 @@
 #if GRIFFIN
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace Pinwheel.Griffin.Rendering
 {
     public static class GFrustumUtilities
     {
-        private static Vector3[] corners = new Vector3[4];
+        private static readonly Vector3[] corners = new Vector3[4];
 
         public static void Calculate(Camera cam, Plane[] planes, float zFar)
         {

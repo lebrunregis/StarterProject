@@ -7,17 +7,17 @@ namespace Abiogenesis3d
     {
         public Vector3 position;
 
-        void OnEnable()
+        private void OnEnable()
         {
             position = transform.position;
         }
 
-        void Update()
+        private void Update()
         {
             position = transform.position;
         }
 
-        void LateUpdate()
+        private void LateUpdate()
         {
             transform.position = position;
         }

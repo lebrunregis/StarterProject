@@ -1,8 +1,5 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates. 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Lofelt.NiceVibrations
@@ -13,7 +10,7 @@ namespace Lofelt.NiceVibrations
     public class HapticClipsDemoRotator : MonoBehaviour
     {
         /// the speed at which the image should rotate
-        public Vector3 RotationSpeed = new Vector3(0, 0, 100f);
+        public Vector3 RotationSpeed = new(0, 0, 100f);
 
         /// <summary>
         /// On Update we rotate our image

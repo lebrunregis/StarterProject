@@ -63,7 +63,7 @@ namespace Pinwheel.Griffin.TextureTool
 
         public static GWarpParams Create()
         {
-            GWarpParams param = new GWarpParams();
+            GWarpParams param = new();
             param.Mask = null;
             param.MaskIsNormalMap = false;
             param.Strength = 1;

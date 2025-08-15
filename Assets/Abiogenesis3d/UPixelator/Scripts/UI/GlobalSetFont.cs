@@ -17,13 +17,13 @@ namespace Abiogenesis3d
         public bool applySize = true;
         public int size = 16;
 
-        void Update()
+        private void Update()
         {
             if (enableThisToApply)
             {
                 enableThisToApply = false;
 
-                List<Text> texts = new List<Text>();
+                List<Text> texts = new();
 
                 if (applyToChildrenOnly) texts.AddRange(GetComponentsInChildren<Text>());
                 else texts.AddRange(FindObjectsOfType<Text>());

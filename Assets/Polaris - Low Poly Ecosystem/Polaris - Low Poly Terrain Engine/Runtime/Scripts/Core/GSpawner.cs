@@ -71,7 +71,7 @@ namespace Pinwheel.Griffin
 
         public static void DestroyIf(GStylizedTerrain terrain, System.Predicate<GameObject> condition)
         {
-            List<Transform> parents = new List<Transform>();
+            List<Transform> parents = new();
             foreach (Transform t in terrain.transform)
             {
                 if (t.name.StartsWith("~Root"))
@@ -105,7 +105,7 @@ namespace Pinwheel.Griffin
             Transform t = parent.Find(name);
             if (t == null)
             {
-                GameObject g = new GameObject(name);
+                GameObject g = new(name);
                 g.transform.parent = parent;
                 GUtilities.ResetTransform(g.transform, parent);
                 t = g.transform;

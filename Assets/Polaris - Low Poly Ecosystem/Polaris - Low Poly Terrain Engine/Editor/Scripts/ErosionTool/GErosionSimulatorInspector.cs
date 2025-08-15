@@ -1,10 +1,9 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
+using Pinwheel.Griffin.BackupTool;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.Rendering;
-using Pinwheel.Griffin.BackupTool;
 
 namespace Pinwheel.Griffin.ErosionTool
 {
@@ -55,12 +54,12 @@ namespace Pinwheel.Griffin.ErosionTool
 
         private class GBaseGUI
         {
-            public static readonly GUIContent GROUP_ID = new GUIContent("Group Id", "Id of the terrain group which is edited by this tool");
-            public static readonly GUIContent ENABLE_TERRAIN_MASK = new GUIContent("Enable Terrain Mask", "Use terrain mask (R) to lock a particular region from editing");
-            public static readonly GUIContent SHOW_TERRAIN_MASK = new GUIContent("Show Terrain Mask", "Draw an overlay of the terrain mask in the scene view");
-            public static readonly GUIContent ENABLE_TOPOGRAPHIC = new GUIContent("Enable Topographic", "Draw topographic view over the terrain for better sense of altitude");
-            public static readonly GUIContent LIVE_PREVIEW_MODE = new GUIContent("Live Preview Mode", "Draw a preview over the terrain");
-            public static readonly GUIContent FALLOFF = new GUIContent("Falloff", "Define the blend factor between the simulation result and the existing terrain geometry");
+            public static readonly GUIContent GROUP_ID = new("Group Id", "Id of the terrain group which is edited by this tool");
+            public static readonly GUIContent ENABLE_TERRAIN_MASK = new("Enable Terrain Mask", "Use terrain mask (R) to lock a particular region from editing");
+            public static readonly GUIContent SHOW_TERRAIN_MASK = new("Show Terrain Mask", "Draw an overlay of the terrain mask in the scene view");
+            public static readonly GUIContent ENABLE_TOPOGRAPHIC = new("Enable Topographic", "Draw topographic view over the terrain for better sense of altitude");
+            public static readonly GUIContent LIVE_PREVIEW_MODE = new("Live Preview Mode", "Draw a preview over the terrain");
+            public static readonly GUIContent FALLOFF = new("Falloff", "Define the blend factor between the simulation result and the existing terrain geometry");
         }
 
         public override void OnInspectorGUI()
@@ -118,7 +117,7 @@ namespace Pinwheel.Griffin.ErosionTool
         {
             public static readonly string LABEL = "Initialization";
             public static readonly string ID = "erosion-sim-init";
-            public static readonly GUIContent DETAIL_LEVEL = new GUIContent("Detail Level", "Smaller value runs faster and produces larger features, while larger value is more expensive but produces more micro details");
+            public static readonly GUIContent DETAIL_LEVEL = new("Detail Level", "Smaller value runs faster and produces larger features, while larger value is more expensive but produces more micro details");
             public static readonly string INIT = "Initialize";
         }
 
@@ -145,31 +144,31 @@ namespace Pinwheel.Griffin.ErosionTool
             public static readonly string LABEL = "Hydraulic Erosion";
             public static readonly string ID = "erosion-sim-hydraulic-config";
 
-            public static readonly GUIContent WATER_SOURCE_AMOUNT = new GUIContent("Water Source", "The amount of water pour into the system in each iteration");
-            public static readonly GUIContent WATER_SOURCE_OVER_TIME = new GUIContent(" ", "Strength of the water source that changes over time");
-            public static readonly GUIContent WATER_SOURCE_MULTIPLIER = new GUIContent(" ", "Overall multiplier. Change the water source amount without modifying its base value");
+            public static readonly GUIContent WATER_SOURCE_AMOUNT = new("Water Source", "The amount of water pour into the system in each iteration");
+            public static readonly GUIContent WATER_SOURCE_OVER_TIME = new(" ", "Strength of the water source that changes over time");
+            public static readonly GUIContent WATER_SOURCE_MULTIPLIER = new(" ", "Overall multiplier. Change the water source amount without modifying its base value");
 
-            public static readonly GUIContent RAIN_RATE = new GUIContent("Rain Rate", "Rain probability, more rain causes more erosion");
-            public static readonly GUIContent RAIN_OVER_TIME = new GUIContent(" ", "Strength of the rain that changes over time");
-            public static readonly GUIContent RAIN_MULTIPLIER = new GUIContent(" ", "Overall multiplier. Change the rain amount without modifying its base value");
+            public static readonly GUIContent RAIN_RATE = new("Rain Rate", "Rain probability, more rain causes more erosion");
+            public static readonly GUIContent RAIN_OVER_TIME = new(" ", "Strength of the rain that changes over time");
+            public static readonly GUIContent RAIN_MULTIPLIER = new(" ", "Overall multiplier. Change the rain amount without modifying its base value");
 
-            public static readonly GUIContent FLOW_RATE = new GUIContent("Flow Rate", "Water flow speed. Default value is fine, too high may cause numerical error");
-            public static readonly GUIContent FLOW_OVER_TIME = new GUIContent(" ", "Flow speed of the water that changes over time");
-            public static readonly GUIContent FLOW_MULTIPLIER = new GUIContent(" ", "Overall multiplier. Change the flow speed without modifying its base value");
+            public static readonly GUIContent FLOW_RATE = new("Flow Rate", "Water flow speed. Default value is fine, too high may cause numerical error");
+            public static readonly GUIContent FLOW_OVER_TIME = new(" ", "Flow speed of the water that changes over time");
+            public static readonly GUIContent FLOW_MULTIPLIER = new(" ", "Overall multiplier. Change the flow speed without modifying its base value");
 
-            public static readonly GUIContent EROSION_RATE = new GUIContent("Erosion Rate", "Strength of the erosion, higher value will pick up more soil and carve deeper into the terrain");
-            public static readonly GUIContent EROSION_OVER_TIME = new GUIContent(" ", "Strength of the erosion that changes over time");
-            public static readonly GUIContent EROSION_MULTIPLIER = new GUIContent(" ", "Overall multiplier. Change the erosion strength without modifying its base value");
+            public static readonly GUIContent EROSION_RATE = new("Erosion Rate", "Strength of the erosion, higher value will pick up more soil and carve deeper into the terrain");
+            public static readonly GUIContent EROSION_OVER_TIME = new(" ", "Strength of the erosion that changes over time");
+            public static readonly GUIContent EROSION_MULTIPLIER = new(" ", "Overall multiplier. Change the erosion strength without modifying its base value");
 
-            public static readonly GUIContent DEPOSITION_RATE = new GUIContent("Deposition Rate", "Strength of the deposition, higher value will add more soil back to the terrain, while lower value will make the deposition wide spread");
-            public static readonly GUIContent DEPOSITION_OVER_TIME = new GUIContent(" ", "Strength of the deposition that changes over time");
-            public static readonly GUIContent DEPOSITION_MULTIPLIER = new GUIContent(" ", "Overall multiplier. Change the deposition strength without modifying its base value");
+            public static readonly GUIContent DEPOSITION_RATE = new("Deposition Rate", "Strength of the deposition, higher value will add more soil back to the terrain, while lower value will make the deposition wide spread");
+            public static readonly GUIContent DEPOSITION_OVER_TIME = new(" ", "Strength of the deposition that changes over time");
+            public static readonly GUIContent DEPOSITION_MULTIPLIER = new(" ", "Overall multiplier. Change the deposition strength without modifying its base value");
 
-            public static readonly GUIContent EVAPORATION_RATE = new GUIContent("Evaporation Rate", "Strength of the evaporation that remove water from the system");
-            public static readonly GUIContent EVAPORATION_OVER_TIME = new GUIContent(" ", "Strength of the evaporation that changes over time");
-            public static readonly GUIContent EVAPORATION_MULTIPLIER = new GUIContent(" ", "Overall multiplier. Change the evaporation strength without modifying its base value");
+            public static readonly GUIContent EVAPORATION_RATE = new("Evaporation Rate", "Strength of the evaporation that remove water from the system");
+            public static readonly GUIContent EVAPORATION_OVER_TIME = new(" ", "Strength of the evaporation that changes over time");
+            public static readonly GUIContent EVAPORATION_MULTIPLIER = new(" ", "Overall multiplier. Change the evaporation strength without modifying its base value");
 
-            public static readonly GUIContent ITERATION_COUNT = new GUIContent("Iteration", "The number of simulation step to perform");
+            public static readonly GUIContent ITERATION_COUNT = new("Iteration", "The number of simulation step to perform");
 
             public static readonly string SIMULATE_LABEL = "Simulate";
         }
@@ -217,15 +216,15 @@ namespace Pinwheel.Griffin.ErosionTool
             public static readonly string LABEL = "Thermal Erosion";
             public static readonly string ID = "erosion-sim-thermal-configs";
 
-            public static readonly GUIContent EROSION_RATE = new GUIContent("Erosion Rate", "Strength of the erosion, higher value causes more soil to slide down the slope");
-            public static readonly GUIContent EROSION_OVER_TIME = new GUIContent(" ", "Strength of the erosion that change over time");
-            public static readonly GUIContent EROSION_MULTIPLIER = new GUIContent(" ", "Overall multiplier. Change the erosion strength without modifying its base value");
+            public static readonly GUIContent EROSION_RATE = new("Erosion Rate", "Strength of the erosion, higher value causes more soil to slide down the slope");
+            public static readonly GUIContent EROSION_OVER_TIME = new(" ", "Strength of the erosion that change over time");
+            public static readonly GUIContent EROSION_MULTIPLIER = new(" ", "Overall multiplier. Change the erosion strength without modifying its base value");
 
-            public static readonly GUIContent RESTING_ANGLE = new GUIContent("Resting Angle", "The angle in degree where soil stop sliding");
-            public static readonly GUIContent RESTING_ANGLE_OVER_TIME = new GUIContent(" ", "The resting angle that change over time");
-            public static readonly GUIContent RESTING_ANGLE_MULTIPLIER = new GUIContent(" ", "Overall multiplier. Change the resting angle without modifying its base value");
+            public static readonly GUIContent RESTING_ANGLE = new("Resting Angle", "The angle in degree where soil stop sliding");
+            public static readonly GUIContent RESTING_ANGLE_OVER_TIME = new(" ", "The resting angle that change over time");
+            public static readonly GUIContent RESTING_ANGLE_MULTIPLIER = new(" ", "Overall multiplier. Change the resting angle without modifying its base value");
 
-            public static readonly GUIContent ITERATION_COUNT = new GUIContent("Iteration", "The number of simulation step to perform");
+            public static readonly GUIContent ITERATION_COUNT = new("Iteration", "The number of simulation step to perform");
 
             public static readonly string SIMULATE_LABEL = "Simulate";
         }
@@ -257,23 +256,23 @@ namespace Pinwheel.Griffin.ErosionTool
             public static readonly string LABEL = "Texturing";
             public static readonly string ID = "erosion-sim-texturing";
 
-            public static readonly GUIContent MODE = new GUIContent("Mode", "Texturing mode, depend on which shader your terrains are using");
+            public static readonly GUIContent MODE = new("Mode", "Texturing mode, depend on which shader your terrains are using");
 
             public static readonly string EROSION_HEADER = "Erosion";
-            public static readonly GUIContent EROSION_INTENSITY = new GUIContent("Intensity", "Intensity factor for erosion splat/color");
-            public static readonly GUIContent EROSION_EXPONENT = new GUIContent("Exponent", "Exponential factor for erosion splat/color");
-            public static readonly GUIContent EROSION_SPLAT_INDEX = new GUIContent("Splat", "The splat texture to apply on eroded regions");
-            public static readonly GUIContent EROSION_ALBEDO = new GUIContent("Albedo", "The albedo color for eroded regions");
-            public static readonly GUIContent EROSION_METALLIC = new GUIContent("Metallic", "Metallic value for eroded regions");
-            public static readonly GUIContent EROSION_SMOOTHNESS = new GUIContent("Smoothness", "Smoothness value for eroded regions");
+            public static readonly GUIContent EROSION_INTENSITY = new("Intensity", "Intensity factor for erosion splat/color");
+            public static readonly GUIContent EROSION_EXPONENT = new("Exponent", "Exponential factor for erosion splat/color");
+            public static readonly GUIContent EROSION_SPLAT_INDEX = new("Splat", "The splat texture to apply on eroded regions");
+            public static readonly GUIContent EROSION_ALBEDO = new("Albedo", "The albedo color for eroded regions");
+            public static readonly GUIContent EROSION_METALLIC = new("Metallic", "Metallic value for eroded regions");
+            public static readonly GUIContent EROSION_SMOOTHNESS = new("Smoothness", "Smoothness value for eroded regions");
 
             public static readonly string DEPOSITION_HEADER = "Deposition";
-            public static readonly GUIContent DEPOSITION_INTENSITY = new GUIContent("Intensity", "Intensity factor for deposition splat/color");
-            public static readonly GUIContent DEPOSITION_EXPONENT = new GUIContent("Exponent", "Exponential factor for deposition splat/color");
-            public static readonly GUIContent DEPOSITION_SPLAT_INDEX = new GUIContent("Splat", "The splat texture to apply on deposited regions");
-            public static readonly GUIContent DEPOSITION_ALBEDO = new GUIContent("Albedo", "The albedo color for deposited regions");
-            public static readonly GUIContent DEPOSITION_METALLIC = new GUIContent("Metallic", "Metallic value for deposited regions");
-            public static readonly GUIContent DEPOSITION_SMOOTHNESS = new GUIContent("Smoothness", "Smoothness value for deposited regions");
+            public static readonly GUIContent DEPOSITION_INTENSITY = new("Intensity", "Intensity factor for deposition splat/color");
+            public static readonly GUIContent DEPOSITION_EXPONENT = new("Exponent", "Exponential factor for deposition splat/color");
+            public static readonly GUIContent DEPOSITION_SPLAT_INDEX = new("Splat", "The splat texture to apply on deposited regions");
+            public static readonly GUIContent DEPOSITION_ALBEDO = new("Albedo", "The albedo color for deposited regions");
+            public static readonly GUIContent DEPOSITION_METALLIC = new("Metallic", "Metallic value for deposited regions");
+            public static readonly GUIContent DEPOSITION_SMOOTHNESS = new("Smoothness", "Smoothness value for deposited regions");
         }
 
         private void DrawTexturingConfigs()
@@ -320,12 +319,12 @@ namespace Pinwheel.Griffin.ErosionTool
             public static readonly string LABEL = "Data View";
             public static readonly string ID = "erosion-sim-data-view";
 
-            public static readonly GUIContent DATA_VIEW = new GUIContent("View", "Select the data to view");
-            public static readonly GUIContent DATA_SCALE = new GUIContent("Data Scale", "Scale the data for better view");
-            public static readonly GUIContent DATA_CHANNEL = new GUIContent("Channel", "The channel to view");
-            public static readonly GUIContent SIMULATION_DATA = new GUIContent("Simulation Data", "RGBA (terrain height, dissolved sediment, internal use, water level)");
-            public static readonly GUIContent SIMULATION_MASK = new GUIContent("Simulation Mask", "RGBA (water source, rain, unused, erosion strength)");
-            public static readonly GUIContent EROSION_MAP = new GUIContent("Erosion Map", "RG (erosion, deposition)");
+            public static readonly GUIContent DATA_VIEW = new("View", "Select the data to view");
+            public static readonly GUIContent DATA_SCALE = new("Data Scale", "Scale the data for better view");
+            public static readonly GUIContent DATA_CHANNEL = new("Channel", "The channel to view");
+            public static readonly GUIContent SIMULATION_DATA = new("Simulation Data", "RGBA (terrain height, dissolved sediment, internal use, water level)");
+            public static readonly GUIContent SIMULATION_MASK = new("Simulation Mask", "RGBA (water source, rain, unused, erosion strength)");
+            public static readonly GUIContent EROSION_MAP = new("Erosion Map", "RG (erosion, deposition)");
 
             public static readonly int MAIN_TEX = Shader.PropertyToID("_MainTex");
             public static readonly int SCALE = Shader.PropertyToID("_Scale");
@@ -411,7 +410,7 @@ namespace Pinwheel.Griffin.ErosionTool
                 }
                 if (GUILayout.Button(GFinalizationGUI.APPLY_TEXTURE_LABEL))
                 {
-                    List<GTerrainResourceFlag> flags = new List<GTerrainResourceFlag>();
+                    List<GTerrainResourceFlag> flags = new();
                     if (instance.TexturingConfigs.TexturingMode == GErosionTexturingConfigs.GMode.Splat)
                     {
                         flags.Add(GTerrainResourceFlag.SplatControlMaps);
@@ -433,10 +432,10 @@ namespace Pinwheel.Griffin.ErosionTool
         {
             public static readonly Vector3[] LOCAL_BOX = new Vector3[4]
             {
-                new Vector3(-0.5f, 0, -0.5f),
-                new Vector3(-0.5f, 0, 0.5f),
-                new Vector3(0.5f, 0, 0.5f),
-                new Vector3(0.5f, 0, -0.5f)
+                new(-0.5f, 0, -0.5f),
+                new(-0.5f, 0, 0.5f),
+                new(0.5f, 0, 0.5f),
+                new(0.5f, 0, -0.5f)
             };
         }
 
@@ -554,7 +553,7 @@ namespace Pinwheel.Griffin.ErosionTool
                         GCommon.ClearRT(rtControls[i]);
                     }
 
-                    GErosionApplier applier = new GErosionApplier(instance);
+                    GErosionApplier applier = new(instance);
                     applier.Internal_ApplySplat(t, rtControls);
 
                     GLivePreviewDrawer.DrawSplatLivePreview(t, cam, rtControls, chunkCulling);
@@ -567,7 +566,7 @@ namespace Pinwheel.Griffin.ErosionTool
                     int metallicResolution = t.TerrainData.Shading.MetallicMapResolution;
                     RenderTexture rtMetallic = GetPreviewTexture(t, "metallic", metallicResolution, t.TerrainData.Shading.MetallicMap.filterMode);
 
-                    GErosionApplier applier = new GErosionApplier(instance);
+                    GErosionApplier applier = new(instance);
                     applier.Internal_ApplyAMS(t, rtAlbedo, rtMetallic);
                     GLivePreviewDrawer.DrawAMSLivePreview(t, cam, rtAlbedo, rtMetallic, chunkCulling);
                 }
@@ -598,7 +597,7 @@ namespace Pinwheel.Griffin.ErosionTool
             if (!previewTextures.ContainsKey(key) ||
                 previewTextures[key] == null)
             {
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 rt.wrapMode = TextureWrapMode.Clamp;
                 previewTextures[key] = rt;
             }
@@ -606,7 +605,7 @@ namespace Pinwheel.Griffin.ErosionTool
             {
                 previewTextures[key].Release();
                 Object.DestroyImmediate(previewTextures[key]);
-                RenderTexture rt = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
+                RenderTexture rt = new(resolution, resolution, 0, RenderTextureFormat.ARGB32, RenderTextureReadWrite.Linear);
                 rt.wrapMode = TextureWrapMode.Clamp;
                 previewTextures[key] = rt;
             }

@@ -15,22 +15,22 @@ namespace MagicaCloth2
     /// </summary>
     public static class ClothEditorUtility
     {
-        public static readonly Color MovePointColor = new Color(0.8f, 0.8f, 0.8f, 0.8f);
+        public static readonly Color MovePointColor = new(0.8f, 0.8f, 0.8f, 0.8f);
         //public static readonly Color MovePointColor = Color.white;
-        public static readonly Color FixedPointColor = new Color(1.0f, 0.0f, 0.0f, 0.8f);
-        public static readonly Color InvalidPointColor = new Color(0.0f, 0.0f, 0.0f, 0.8f);
-        public static readonly Color AngleLimitConeColor = new Color(0.0f, 0.349f, 0.725f, 0.325f);
-        public static readonly Color AngleLimitWireColor = new Color(0.0f, 0.843f, 1.0f, 0.313f);
-        public static readonly Color BaseTriangleColor = new Color(204 / 255f, 153 / 255f, 255 / 255f);
-        public static readonly Color BaseLineColor = new Color(153 / 255f, 204 / 255f, 255 / 255f);
-        public static readonly Color TriangleColor = new Color(1.0f, 0.0f, 0.8f, 1f);
+        public static readonly Color FixedPointColor = new(1.0f, 0.0f, 0.0f, 0.8f);
+        public static readonly Color InvalidPointColor = new(0.0f, 0.0f, 0.0f, 0.8f);
+        public static readonly Color AngleLimitConeColor = new(0.0f, 0.349f, 0.725f, 0.325f);
+        public static readonly Color AngleLimitWireColor = new(0.0f, 0.843f, 1.0f, 0.313f);
+        public static readonly Color BaseTriangleColor = new(204 / 255f, 153 / 255f, 255 / 255f);
+        public static readonly Color BaseLineColor = new(153 / 255f, 204 / 255f, 255 / 255f);
+        public static readonly Color TriangleColor = new(1.0f, 0.0f, 0.8f, 1f);
         public static readonly Color LineColor = Color.cyan;
         public static readonly Color SkininngLine = Color.yellow;
 
         /// <summary>
         /// クロスペイント時のギズモ表示設定
         /// </summary>
-        internal static readonly ClothDebugSettings PaintSettings = new ClothDebugSettings()
+        internal static readonly ClothDebugSettings PaintSettings = new()
         {
             enable = true,
             position = false,
@@ -41,12 +41,12 @@ namespace MagicaCloth2
 
 
         //=========================================================================================
-        static List<Vector3> positionBuffer0 = new List<Vector3>(1024);
-        static List<Vector3> positionBuffer1 = new List<Vector3>(1024);
-        static List<Vector3> positionBuffer2 = new List<Vector3>(1024);
-        static List<int> segmentBuffer0 = new List<int>(2048);
-        static List<int> segmentBuffer1 = new List<int>(2048);
-        static List<int> segmentBuffer2 = new List<int>(2048);
+        private static readonly List<Vector3> positionBuffer0 = new(1024);
+        private static readonly List<Vector3> positionBuffer1 = new(1024);
+        private static readonly List<Vector3> positionBuffer2 = new(1024);
+        private static readonly List<int> segmentBuffer0 = new(2048);
+        private static readonly List<int> segmentBuffer1 = new(2048);
+        private static readonly List<int> segmentBuffer2 = new(2048);
 
         //=========================================================================================
         /// <summary>

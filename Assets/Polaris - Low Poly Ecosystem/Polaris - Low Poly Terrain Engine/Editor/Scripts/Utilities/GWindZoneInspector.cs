@@ -2,24 +2,23 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.SceneManagement;
 
 namespace Pinwheel.Griffin
 {
     [CustomEditor(typeof(GWindZone))]
     public class GWindZoneInspector : Editor
     {
-        private static Vector3[] arrowShape = new Vector3[]
+        private static readonly Vector3[] arrowShape = new Vector3[]
         {
-            new Vector3(0, 0, 1),
-            new Vector3(-0.5f, 0, 0.5f),
-            new Vector3(-0.25f, 0, 0.5f),
-            new Vector3(-0.25f, 0, -1),
-            new Vector3(0.25f, 0, -1),
-            new Vector3(0.25f, 0, 0.5f),
-            new Vector3(0.5f, 0, 0.5f),
-            new Vector3(0, 0, 1),
-            new Vector3(0, 0, -1)
+            new(0, 0, 1),
+            new(-0.5f, 0, 0.5f),
+            new(-0.25f, 0, 0.5f),
+            new(-0.25f, 0, -1),
+            new(0.25f, 0, -1),
+            new(0.25f, 0, 0.5f),
+            new(0.5f, 0, 0.5f),
+            new(0, 0, 1),
+            new(0, 0, -1)
         };
 
         private GWindZone instance;

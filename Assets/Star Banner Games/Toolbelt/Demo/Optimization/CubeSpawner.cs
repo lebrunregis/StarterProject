@@ -1,15 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using SBG.Toolbelt.Optimization;
+using System.Collections;
+using UnityEngine;
 
 namespace SBG.Toolbelt.Demo
 {
-	public class CubeSpawner : FrameSkipper
-	{
+    public class CubeSpawner : FrameSkipper
+    {
         [SerializeField] private int cubesToSpawn = 1000;
         [SerializeField] private int cubesPerUpdate = 10;
-       
+
 
         private int _cubeCount = 0;
         private int _frameCount = 0;
@@ -52,7 +51,7 @@ namespace SBG.Toolbelt.Demo
         {
             for (int i = 0; i < cubesPerUpdate; i++)
             {
-                Vector3 pos = new Vector3(xPos, 0, _cubeCount);
+                Vector3 pos = new(xPos, 0, _cubeCount);
                 GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 cube.transform.position = pos;
                 _cubeCount++;
@@ -61,7 +60,7 @@ namespace SBG.Toolbelt.Demo
             if (_cubeCount >= cubesToSpawn)
             {
                 float duration = Time.time - _startTime;
-                Debug.Log($"Finished in {duration} Seconds with an average FPS of {_totalFPS/_frameCount:0}");
+                Debug.Log($"Finished in {duration} Seconds with an average FPS of {_totalFPS / _frameCount:0}");
 
                 _spawnCubes = false;
 

@@ -1,6 +1,6 @@
 ﻿// Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
- 
+
 using System.IO;
 
 using UnityEngine;
@@ -27,7 +27,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
 
         public string savePath;
         public string exception;
-        
+
 
         public BatchObject(Mesh mesh)
         {
@@ -38,7 +38,7 @@ namespace AmazingAssets.WireframeShader.Editor.WireframeTextureGenerator
                 meshSortName = EditorUtilities.PadNumbers(mesh.name);
                 hasUV0 = mesh.HasVertexAttribute(UnityEngine.Rendering.VertexAttribute.TexCoord0);
             }
-            
+
             invalidMeshData = WireframeShaderUtilities.IsMeshValid(mesh, false) == false;
 
             UnityEngine.Rendering.VertexAttributeDescriptor[] vertexAttributeDescriptor = mesh.GetVertexAttributes();

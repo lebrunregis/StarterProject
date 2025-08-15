@@ -6,12 +6,14 @@
 
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     /// <summary>
     /// This class allows you to set defaults that each Master Audio prefab will use during its Start event when the Scene loads up, only if you set the values via code. Useful for setting global SFX and music levels, as well as other more granular settings.
     /// </summary>
     // ReSharper disable once CheckNamespace
-    public static class PersistentAudioSettings {
+    public static class PersistentAudioSettings
+    {
         /*! \cond PRIVATE */
         public const string SfxVolKey = "MA_sfxVolume";
         public const string MusicVolKey = "MA_musicVolume";
@@ -19,7 +21,7 @@ namespace DarkTonic.MasterAudio {
         public const string MusicMuteKey = "MA_musicMute";
         public const string BusVolKey = "MA_BusVolume_";
         public const string GroupVolKey = "MA_GroupVolume_";
-        
+
         public const string BusKeysKey = "MA_BusKeys";
         public const string GroupKeysKey = "MA_GroupsKeys";
         public const string Separator = ";";
@@ -30,20 +32,24 @@ namespace DarkTonic.MasterAudio {
         /// </summary>
         /// <param name="busName">Bus name</param>
         /// <param name="vol">Volume</param>
-        public static void SetBusVolume(string busName, float vol) {
+        public static void SetBusVolume(string busName, float vol)
+        {
             var busKey = MakeBusKey(busName);
 
             PlayerPrefs.SetFloat(busKey, vol);
 
             var ma = MasterAudio.SafeInstance;
-            if (ma == null) {
+            if (ma == null)
+            {
                 return;
             }
-            if (MasterAudio.GrabBusByName(busName) != null) {
+            if (MasterAudio.GrabBusByName(busName) != null)
+            {
                 MasterAudio.SetBusVolumeByName(busName, vol);
             }
 
-            if (BusesUpdatedKeys.Contains(Separator + busName + Separator)) {
+            if (BusesUpdatedKeys.Contains(Separator + busName + Separator))
+            {
                 return;
             }
 
@@ -51,20 +57,25 @@ namespace DarkTonic.MasterAudio {
         }
 
         /*! \cond PRIVATE */
-        public static string BusesUpdatedKeys {
-            get {
-                if (!PlayerPrefs.HasKey(BusKeysKey)) {
+        public static string BusesUpdatedKeys
+        {
+            get
+            {
+                if (!PlayerPrefs.HasKey(BusKeysKey))
+                {
                     PlayerPrefs.SetString(BusKeysKey, ";");
                 }
 
                 return PlayerPrefs.GetString(BusKeysKey);
             }
-            set {
+            set
+            {
                 PlayerPrefs.SetString(BusKeysKey, value);
             }
         }
 
-        public static string MakeBusKey(string busName) {
+        public static string MakeBusKey(string busName)
+        {
             return BusVolKey + busName;
         }
         /*! \endcond */
@@ -74,10 +85,12 @@ namespace DarkTonic.MasterAudio {
         /// </summary>
         /// <returns>The group volume.</returns>
         /// <param name="busName">Group name.</param>
-        public static float? GetBusVolume(string busName) {
+        public static float? GetBusVolume(string busName)
+        {
             var busKey = MakeBusKey(busName);
 
-            if (!PlayerPrefs.HasKey(busKey)) {
+            if (!PlayerPrefs.HasKey(busKey))
+            {
                 return null;
             }
 
@@ -85,19 +98,24 @@ namespace DarkTonic.MasterAudio {
         }
 
         /*! \cond PRIVATE */
-        public static string GetGroupKey(string groupName) {
+        public static string GetGroupKey(string groupName)
+        {
             return GroupVolKey + groupName;
         }
 
-        public static string GroupsUpdatedKeys {
-            get {
-                if (!PlayerPrefs.HasKey(GroupKeysKey)) {
+        public static string GroupsUpdatedKeys
+        {
+            get
+            {
+                if (!PlayerPrefs.HasKey(GroupKeysKey))
+                {
                     PlayerPrefs.SetString(GroupKeysKey, ";");
                 }
 
                 return PlayerPrefs.GetString(GroupKeysKey);
             }
-            set {
+            set
+            {
                 PlayerPrefs.SetString(GroupKeysKey, value);
             }
         }
@@ -108,21 +126,25 @@ namespace DarkTonic.MasterAudio {
         /// </summary>
         /// <param name="grpName">Group name</param>
         /// <param name="vol">Volume</param>
-        public static void SetGroupVolume(string grpName, float vol) {
+        public static void SetGroupVolume(string grpName, float vol)
+        {
             var groupKey = GetGroupKey(grpName);
 
             PlayerPrefs.SetFloat(groupKey, vol);
 
             var ma = MasterAudio.SafeInstance;
-            if (ma == null) {
+            if (ma == null)
+            {
                 return;
             }
 
-            if (MasterAudio.GrabGroup(grpName, false) != null) {
+            if (MasterAudio.GrabGroup(grpName, false) != null)
+            {
                 MasterAudio.SetGroupVolume(grpName, vol);
             }
 
-            if (GroupsUpdatedKeys.Contains(Separator + grpName + Separator)) {
+            if (GroupsUpdatedKeys.Contains(Separator + grpName + Separator))
+            {
                 return;
             }
 
@@ -134,10 +156,12 @@ namespace DarkTonic.MasterAudio {
         /// </summary>
         /// <returns>The group volume.</returns>
         /// <param name="grpName">Group name.</param>
-        public static float? GetGroupVolume(string grpName) {
+        public static float? GetGroupVolume(string grpName)
+        {
             var groupKey = GetGroupKey(grpName);
 
-            if (!PlayerPrefs.HasKey(groupKey)) {
+            if (!PlayerPrefs.HasKey(groupKey))
+            {
                 return null;
             }
 
@@ -148,16 +172,21 @@ namespace DarkTonic.MasterAudio {
         /// Gets or sets the persistent Master Mixer Muted value. If this value is set (via code), each Master Audio prefab will read from it and set the Master Mixer Muted value to this value, during the Scene's start event. This will also set the Master Mixer Muted value in the current Scene's Master Audio prefab, if any.
         /// </summary>
         /// <value>The mixer mute setting.</value>
-        public static bool? MixerMuted {
-            get {
-                if (!PlayerPrefs.HasKey(SfxMuteKey)) {
+        public static bool? MixerMuted
+        {
+            get
+            {
+                if (!PlayerPrefs.HasKey(SfxMuteKey))
+                {
                     return null;
                 }
 
                 return PlayerPrefs.GetInt(SfxMuteKey) != 0;
             }
-            set {
-                if (!value.HasValue) {
+            set
+            {
+                if (!value.HasValue)
+                {
                     PlayerPrefs.DeleteKey(SfxMuteKey);
                     return;
                 }
@@ -165,7 +194,8 @@ namespace DarkTonic.MasterAudio {
                 var newVal = value.Value;
                 PlayerPrefs.SetInt(SfxMuteKey, newVal ? 1 : 0);
                 var ma = MasterAudio.SafeInstance;
-                if (ma != null) {
+                if (ma != null)
+                {
                     MasterAudio.MixerMuted = newVal;
                 }
             }
@@ -175,16 +205,21 @@ namespace DarkTonic.MasterAudio {
         /// Gets or sets the persistent Master Mixer Volume value. If this value is set (via code), each Master Audio prefab will read from it and set the Master Mixer Volume to this value, during the Scene's start event. This will also set the Master Mixer Volume in the current Scene's Master Audio prefab, if any.
         /// </summary>
         /// <value>The mixer volume.</value>
-        public static float? MixerVolume {
-            get {
-                if (!PlayerPrefs.HasKey(SfxVolKey)) {
+        public static float? MixerVolume
+        {
+            get
+            {
+                if (!PlayerPrefs.HasKey(SfxVolKey))
+                {
                     return null;
                 }
 
                 return PlayerPrefs.GetFloat(SfxVolKey);
             }
-            set {
-                if (!value.HasValue) {
+            set
+            {
+                if (!value.HasValue)
+                {
                     PlayerPrefs.DeleteKey(SfxVolKey);
                     return;
                 }
@@ -192,7 +227,8 @@ namespace DarkTonic.MasterAudio {
                 var newVal = value.Value;
                 PlayerPrefs.SetFloat(SfxVolKey, newVal);
                 var ma = MasterAudio.SafeInstance;
-                if (ma != null) {
+                if (ma != null)
+                {
                     MasterAudio.MasterVolumeLevel = newVal;
                 }
             }
@@ -202,16 +238,21 @@ namespace DarkTonic.MasterAudio {
         /// Gets or sets the Master Playlist Muted value. If this value is set, each Master Audio prefab will read from it and set the Master Playlist Muted to this value, during the Scene's start event. This will also set the Master Playlist Muted value in the current Scene's Master Audio prefab, if any.
         /// </summary>
         /// <value>The music mute setting.</value>
-        public static bool? MusicMuted {
-            get {
-                if (!PlayerPrefs.HasKey(MusicMuteKey)) {
+        public static bool? MusicMuted
+        {
+            get
+            {
+                if (!PlayerPrefs.HasKey(MusicMuteKey))
+                {
                     return null;
                 }
 
                 return PlayerPrefs.GetInt(MusicMuteKey) != 0;
             }
-            set {
-                if (!value.HasValue) {
+            set
+            {
+                if (!value.HasValue)
+                {
                     PlayerPrefs.DeleteKey(MusicMuteKey);
                     return;
                 }
@@ -219,7 +260,8 @@ namespace DarkTonic.MasterAudio {
                 var newVal = value.Value;
                 PlayerPrefs.SetInt(MusicMuteKey, newVal ? 1 : 0);
                 var ma = MasterAudio.SafeInstance;
-                if (ma != null) {
+                if (ma != null)
+                {
                     MasterAudio.PlaylistsMuted = newVal;
                 }
             }
@@ -229,16 +271,21 @@ namespace DarkTonic.MasterAudio {
         /// Gets or sets the Master Playlist Volume. If this value is set, each Master Audio prefab will read from it and set the Master Playlist Volume to this value, during the Scene's start event. This will also set the Master Playlist Volume in the current Scene's Master Audio prefab, if any.
         /// </summary>
         /// <value>The mixer volume.</value>
-        public static float? MusicVolume {
-            get {
-                if (!PlayerPrefs.HasKey(MusicVolKey)) {
+        public static float? MusicVolume
+        {
+            get
+            {
+                if (!PlayerPrefs.HasKey(MusicVolKey))
+                {
                     return null;
                 }
 
                 return PlayerPrefs.GetFloat(MusicVolKey);
             }
-            set {
-                if (!value.HasValue) {
+            set
+            {
+                if (!value.HasValue)
+                {
                     PlayerPrefs.DeleteKey(MusicVolKey);
                     return;
                 }
@@ -246,27 +293,33 @@ namespace DarkTonic.MasterAudio {
                 var newVal = value.Value;
                 PlayerPrefs.SetFloat(MusicVolKey, newVal);
                 var ma = MasterAudio.SafeInstance;
-                if (ma != null) {
+                if (ma != null)
+                {
                     MasterAudio.PlaylistMasterVolume = newVal;
                 }
             }
         }
 
         /*! \cond PRIVATE */
-        public static void RestoreMasterSettings() {
-            if (MixerVolume.HasValue) {
+        public static void RestoreMasterSettings()
+        {
+            if (MixerVolume.HasValue)
+            {
                 MasterAudio.MasterVolumeLevel = MixerVolume.Value;
             }
 
-            if (MixerMuted.HasValue) {
+            if (MixerMuted.HasValue)
+            {
                 MasterAudio.MixerMuted = MixerMuted.Value;
             }
 
-            if (MusicVolume.HasValue) {
+            if (MusicVolume.HasValue)
+            {
                 MasterAudio.PlaylistMasterVolume = MusicVolume.Value;
             }
 
-            if (MusicMuted.HasValue) {
+            if (MusicMuted.HasValue)
+            {
                 MasterAudio.PlaylistsMuted = MusicMuted.Value;
             }
         }

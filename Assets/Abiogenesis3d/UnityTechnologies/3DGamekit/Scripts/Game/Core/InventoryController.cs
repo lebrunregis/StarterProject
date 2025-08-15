@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -43,7 +42,7 @@ namespace Gamekit3D
 
         public InventoryEvent[] inventoryEvents;
 
-        HashSet<string> inventoryItems = new HashSet<string>();
+        private readonly HashSet<string> inventoryItems = new();
 
         public void AddItem(string key)
         {
@@ -75,7 +74,7 @@ namespace Gamekit3D
             inventoryItems.Clear();
         }
 
-        InventoryEvent GetInventoryEvent(string key)
+        private InventoryEvent GetInventoryEvent(string key)
         {
             foreach (var iv in inventoryEvents)
             {

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Gamekit3D
@@ -7,10 +6,10 @@ namespace Gamekit3D
     public class TimeEffect : MonoBehaviour
     {
         public Light staffLight;
-        
-        Animation m_Animation;
 
-        void Awake()
+        private Animation m_Animation;
+
+        private void Awake()
         {
             m_Animation = GetComponent<Animation>();
 
@@ -31,7 +30,7 @@ namespace Gamekit3D
             StartCoroutine(DisableAtEndOfAnimation());
         }
 
-        IEnumerator DisableAtEndOfAnimation()
+        private IEnumerator DisableAtEndOfAnimation()
         {
             yield return new WaitForSeconds(m_Animation.clip.length);
 
@@ -40,5 +39,5 @@ namespace Gamekit3D
             if (staffLight != null)
                 staffLight.enabled = false;
         }
-    } 
+    }
 }

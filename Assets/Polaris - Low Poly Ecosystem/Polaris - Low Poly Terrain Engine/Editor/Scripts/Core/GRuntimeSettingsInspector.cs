@@ -1,8 +1,6 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
+using UnityEngine;
 
 namespace Pinwheel.Griffin
 {
@@ -180,7 +178,7 @@ namespace Pinwheel.Griffin
 
             GEditorCommon.Foldout(label, false, id, () =>
             {
-                SerializedObject so = new SerializedObject(instance);
+                SerializedObject so = new(instance);
                 SerializedProperty terrainRenderingSettings = so.FindProperty(nameof(instance.terrainRendering));
                 SerializedProperty builtinMaterials = terrainRenderingSettings.FindPropertyRelative(nameof(instance.terrainRendering.builtinRpMaterials));
                 EditorGUILayout.PropertyField(builtinMaterials, new GUIContent("Builtin RP Materials"), true);
@@ -231,7 +229,7 @@ namespace Pinwheel.Griffin
 
             GEditorCommon.Foldout(label, false, id, () =>
             {
-                SerializedObject so = new SerializedObject(instance);
+                SerializedObject so = new(instance);
                 SerializedProperty internalShaders = so.FindProperty(nameof(instance.internalShaders));
                 EditorGUILayout.PropertyField(internalShaders, new GUIContent("Internal Shaders"), true);
                 so.ApplyModifiedProperties();

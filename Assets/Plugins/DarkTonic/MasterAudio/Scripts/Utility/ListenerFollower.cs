@@ -4,7 +4,8 @@ using UnityEngine;
 
 // ReSharper disable once CheckNamespace
 [AudioScriptOrder(-10)]
-public class ListenerFollower : MonoBehaviour {
+public class ListenerFollower : MonoBehaviour
+{
     private Transform _transToFollow;
     private GameObject _goToFollow;
     private Transform _trans;
@@ -14,14 +15,16 @@ public class ListenerFollower : MonoBehaviour {
 #endif
 
     // ReSharper disable once UnusedMember.Local
-    void Awake() {
+    private void Awake()
+    {
 #if PHY3D_ENABLED
         var trig = Trigger;
         if (trig == null) { } // get rid of warning
 #endif
     }
 
-    public void StartFollowing(Transform transToFollow, float trigRadius) {
+    public void StartFollowing(Transform transToFollow, float trigRadius)
+    {
         _transToFollow = transToFollow;
         _goToFollow = transToFollow.gameObject;
 #if PHY3D_ENABLED
@@ -30,10 +33,12 @@ public class ListenerFollower : MonoBehaviour {
     }
 
     // ReSharper disable once UnusedMember.Local
-    public void ManualUpdate() {
+    public void ManualUpdate()
+    {
         BatchOcclusionRaycasts();
 
-        if (_transToFollow == null || !DTMonoHelper.IsActive(_goToFollow)) {
+        if (_transToFollow == null || !DTMonoHelper.IsActive(_goToFollow))
+        {
             // wait for new AudioListener to show up.
             return;
         }
@@ -42,23 +47,29 @@ public class ListenerFollower : MonoBehaviour {
     }
 
     // ReSharper disable once MemberCanBeMadeStatic.Local
-    private void BatchOcclusionRaycasts() {
-        if (!MasterAudio.Instance.useOcclusion) {
+    private void BatchOcclusionRaycasts()
+    {
+        if (!MasterAudio.Instance.useOcclusion)
+        {
             return; // save them for later when it's turned back on.
         }
 
-        for (var i = 0; i < MasterAudio.Instance.occlusionMaxRayCastsPerFrame;) {
-            if (!MasterAudio.HasQueuedOcclusionRays()) {
+        for (var i = 0; i < MasterAudio.Instance.occlusionMaxRayCastsPerFrame;)
+        {
+            if (!MasterAudio.HasQueuedOcclusionRays())
+            {
                 break; // no more waiting there. Abort
             }
 
             var updater = MasterAudio.OldestQueuedOcclusionRay();
-            if (updater == null || !updater.enabled) { // Updater was destroyed while waiting, or sound is done playing and Updater disabled.
+            if (updater == null || !updater.enabled)
+            { // Updater was destroyed while waiting, or sound is done playing and Updater disabled.
                 continue;
             }
 
             var wasCast = updater.RayCastForOcclusion();
-            if (wasCast) {
+            if (wasCast)
+            {
                 // ray was cast. Increment counter
                 i++;
             }
@@ -80,9 +91,12 @@ public class ListenerFollower : MonoBehaviour {
     }
 #endif
 
-    public GameObject GameObj {
-        get {
-            if (_go != null) {
+    public GameObject GameObj
+    {
+        get
+        {
+            if (_go != null)
+            {
                 return _go;
             }
 
@@ -91,10 +105,13 @@ public class ListenerFollower : MonoBehaviour {
         }
     }
 
-    public Transform Trans {
-        get {
+    public Transform Trans
+    {
+        get
+        {
             // ReSharper disable once ConvertIfStatementToNullCoalescingExpression
-            if (_trans == null) {
+            if (_trans == null)
+            {
                 _trans = transform;
             }
 

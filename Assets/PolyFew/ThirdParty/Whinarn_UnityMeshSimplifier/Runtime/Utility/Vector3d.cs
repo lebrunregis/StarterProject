@@ -39,7 +39,7 @@ namespace BrainFailProductions.PolyFew.UnityMeshSimplifier
         /// <summary>
         /// The zero vector.
         /// </summary>
-        public static readonly Vector3d zero = new Vector3d(0, 0, 0);
+        public static readonly Vector3d zero = new(0, 0, 0);
         #endregion
 
         #region Consts

@@ -54,11 +54,11 @@ namespace Pinwheel.Griffin.ExtensionSystem
         {
             GUI.enabled = !EditorApplication.isCompiling;
             Rect r = EditorGUILayout.GetControlRect();
-            RectOffset offset = new RectOffset(4, 4, 0, 0);
+            RectOffset offset = new(4, 4, 0, 0);
             GUI.Box(offset.Add(r), string.Empty, EditorStyles.toolbar);
 
-            Rect searchBoxRect = new Rect(r.max.x - 200, r.min.y, 200, r.height);
-            RectOffset searchBoxOffset = new RectOffset(0, 0, 2, 2);
+            Rect searchBoxRect = new(r.max.x - 200, r.min.y, 200, r.height);
+            RectOffset searchBoxOffset = new(0, 0, 2, 2);
             SearchString = EditorGUI.TextField(searchBoxOffset.Remove(searchBoxRect), SearchString, EditorStyles.toolbarTextField);
             GUI.enabled = true;
         }
@@ -110,10 +110,10 @@ namespace Pinwheel.Griffin.ExtensionSystem
                     {
                         EditorGUILayout.BeginHorizontal();
                         EditorGUILayout.PrefixLabel("Link");
-                        using (EditorGUI.IndentLevelScope level = new EditorGUI.IndentLevelScope(-1))
+                        using (EditorGUI.IndentLevelScope level = new(-1))
                         {
                             Rect r = EditorGUILayout.GetControlRect();
-                            List<string> linkLabels = new List<string>();
+                            List<string> linkLabels = new();
                             linkLabels.Add("Support");
                             if (ex.OpenUserGuideMethod != null)
                             {

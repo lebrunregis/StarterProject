@@ -3,18 +3,20 @@ using System;
 using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     [Serializable]
     // ReSharper disable once CheckNamespace
-    public class FootstepGroup {
+    public class FootstepGroup
+    {
         // ReSharper disable InconsistentNaming
         public bool isExpanded = true;
 
         // tag / layer filters
         public bool useLayerFilter = false;
         public bool useTagFilter = false;
-        public List<int> matchingLayers = new List<int>() { 0 };
-        public List<string> matchingTags = new List<string>() { "Default" };
+        public List<int> matchingLayers = new() { 0 };
+        public List<string> matchingTags = new() { "Default" };
 
         public string soundType = MasterAudio.NoGroupName;
         public EventSounds.VariationType variationType = EventSounds.VariationType.PlayRandom;

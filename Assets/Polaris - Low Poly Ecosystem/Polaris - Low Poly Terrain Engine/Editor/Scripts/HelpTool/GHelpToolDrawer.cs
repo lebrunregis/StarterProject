@@ -11,7 +11,7 @@ namespace Pinwheel.Griffin.HelpTool
         private static Vector2 scrollPos;
 
         private static int suggestionIndex;
-        private static string[] searchSuggestions = new string[]
+        private static readonly string[] searchSuggestions = new string[]
         {
             "Create a new terrain",
             "Paint texture on terrain",

@@ -1,14 +1,16 @@
 /*! \cond PRIVATE */
-using UnityEngine;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 // ReSharper disable once CheckNamespace
-namespace DarkTonic.MasterAudio {
+namespace DarkTonic.MasterAudio
+{
     [AddComponentMenu("Dark Tonic/Master Audio/Ambient Sound")]
     // ReSharper disable once CheckNamespace
     [AudioScriptOrder(-20)]
-    public class AmbientSound : MonoBehaviour {
+    public class AmbientSound : MonoBehaviour
+    {
         [SoundGroup] public string AmbientSoundGroup = MasterAudio.NoGroupName;
         public EventSounds.VariationType variationType = EventSounds.VariationType.PlayRandom;
         public string variationName = string.Empty;
@@ -19,10 +21,10 @@ namespace DarkTonic.MasterAudio {
         public float reEnterFadeTime = .5f;
 
         [Tooltip("This option is useful if your caller ever moves, as it will make the Audio Source follow to the location of the caller every frame.")]
-		public bool FollowCaller;
+        public bool FollowCaller;
 
         [Tooltip("Using this option, the Audio Source will be updated every frame to the closest position on the caller's collider, if any. This will override the Follow Caller option above and happen instead.")]
-		public bool UseClosestColliderPosition;
+        public bool UseClosestColliderPosition;
 
         public bool UseTopCollider = true;
         public bool IncludeChildColliders = false;
@@ -31,25 +33,30 @@ namespace DarkTonic.MasterAudio {
         public Transform RuntimeFollower;
 
         private Transform _trans;
-		public float colliderMaxDistance;
+        public float colliderMaxDistance;
         public long lastTimeMaxDistanceCalced = 0;
 
         // ReSharper disable once UnusedMember.Local
-        void OnEnable() {
+        private void OnEnable()
+        {
             MasterAudio.SetupAmbientNextFrame(this);
         }
 
         // ReSharper disable once UnusedMember.Local
-        void OnDisable() {
-            if (MasterAudio.AppIsShuttingDown) {
+        private void OnDisable()
+        {
+            if (MasterAudio.AppIsShuttingDown)
+            {
                 return; // do nothing
             }
 
-            if (!IsValidSoundGroup) {
+            if (!IsValidSoundGroup)
+            {
                 return;
             }
 
-            if (MasterAudio.SafeInstance == null) {
+            if (MasterAudio.SafeInstance == null)
+            {
                 return;
             }
 
@@ -57,10 +64,13 @@ namespace DarkTonic.MasterAudio {
             StopTrackers();
         }
 
-        private void StopTrackers() {
+        private void StopTrackers()
+        {
             var grp = MasterAudio.GrabGroup(AmbientSoundGroup, false); // script execution order thing with DGSC. Need to check so warnings don't get logged.
-            if (grp != null) {
-                switch (exitMode) {
+            if (grp != null)
+            {
+                switch (exitMode)
+                {
                     case MasterAudio.AmbientSoundExitMode.StopSound:
                         MasterAudio.StopSoundGroupOfTransform(Trans, AmbientSoundGroup);
                         break;
@@ -74,10 +84,12 @@ namespace DarkTonic.MasterAudio {
         }
 
         /*! \cond PRIVATE */
-        public void CalculateRadius() {
+        public void CalculateRadius()
+        {
             var aud = GetNamedOrFirstAudioSource();
 
-            if (aud == null) {
+            if (aud == null)
+            {
                 colliderMaxDistance = 0f;
                 return;
             }
@@ -86,26 +98,31 @@ namespace DarkTonic.MasterAudio {
             lastTimeMaxDistanceCalced = DateTime.Now.Ticks;
         }
 
-        public AudioSource GetNamedOrFirstAudioSource() {
-            if (string.IsNullOrEmpty(AmbientSoundGroup)) {
+        public AudioSource GetNamedOrFirstAudioSource()
+        {
+            if (string.IsNullOrEmpty(AmbientSoundGroup))
+            {
                 colliderMaxDistance = 0;
                 return null;
             }
 
-            if (MasterAudio.SafeInstance == null) {
+            if (MasterAudio.SafeInstance == null)
+            {
                 colliderMaxDistance = 0;
                 return null;
             }
 
             var grp = MasterAudio.Instance.transform.Find(AmbientSoundGroup);
-            if (grp == null) {
+            if (grp == null)
+            {
                 colliderMaxDistance = 0;
                 return null;
             }
 
             Transform transVar = null;
 
-            switch (variationType) {
+            switch (variationType)
+            {
                 case EventSounds.VariationType.PlayRandom:
                     transVar = grp.GetChild(0);
                     break;
@@ -114,7 +131,8 @@ namespace DarkTonic.MasterAudio {
                     break;
             }
 
-            if (transVar == null) {
+            if (transVar == null)
+            {
                 colliderMaxDistance = 0;
                 return null;
             }
@@ -122,26 +140,31 @@ namespace DarkTonic.MasterAudio {
             return transVar.GetComponent<AudioSource>();
         }
 
-        public List<AudioSource> GetAllVariationAudioSources() {
-            if (string.IsNullOrEmpty(AmbientSoundGroup)) {
+        public List<AudioSource> GetAllVariationAudioSources()
+        {
+            if (string.IsNullOrEmpty(AmbientSoundGroup))
+            {
                 colliderMaxDistance = 0;
                 return null;
             }
 
-            if (MasterAudio.SafeInstance == null) {
+            if (MasterAudio.SafeInstance == null)
+            {
                 colliderMaxDistance = 0;
                 return null;
             }
 
             var grp = MasterAudio.Instance.transform.Find(AmbientSoundGroup);
-            if (grp == null) {
+            if (grp == null)
+            {
                 colliderMaxDistance = 0;
                 return null;
             }
 
             var audioSources = new List<AudioSource>(grp.childCount);
 
-            for (var i = 0; i < grp.childCount; i++) {
+            for (var i = 0; i < grp.childCount; i++)
+            {
                 var a = grp.GetChild(i).GetComponent<AudioSource>();
                 audioSources.Add(a);
             }
@@ -151,54 +174,66 @@ namespace DarkTonic.MasterAudio {
 
         /*! \endcond */
 
-        void OnDrawGizmos() {
-			if (MasterAudio.SafeInstance == null || !MasterAudio.Instance.showRangeSoundGizmos) {
-				return;
-			}
+        private void OnDrawGizmos()
+        {
+            if (MasterAudio.SafeInstance == null || !MasterAudio.Instance.showRangeSoundGizmos)
+            {
+                return;
+            }
 
-            if (lastTimeMaxDistanceCalced < DateTime.Now.AddHours(-1).Ticks) {
+            if (lastTimeMaxDistanceCalced < DateTime.Now.AddHours(-1).Ticks)
+            {
                 lastTimeMaxDistanceCalced = DateTime.Now.Ticks;
                 CalculateRadius();
             }
 
-			if (colliderMaxDistance == 0f) {
-				return;
-			}
-
-			var gizmoColor = Color.green;
-			if (MasterAudio.SafeInstance != null) {
-				gizmoColor = MasterAudio.Instance.rangeGizmoColor;
-			}
-
-			Gizmos.color = gizmoColor; 
-			Gizmos.DrawWireSphere(transform.position, colliderMaxDistance);
-		}
-
-        void OnDrawGizmosSelected() {
-            if (MasterAudio.SafeInstance == null || !MasterAudio.Instance.showSelectedRangeSoundGizmos) {
+            if (colliderMaxDistance == 0f)
+            {
                 return;
             }
 
-            if (lastTimeMaxDistanceCalced < DateTime.Now.AddHours(-1).Ticks) {
-                lastTimeMaxDistanceCalced = DateTime.Now.Ticks;
-                CalculateRadius();
-            }
-
-            if (colliderMaxDistance == 0f) {
-                return;
-            }
-             
             var gizmoColor = Color.green;
-            if (MasterAudio.SafeInstance != null) {
-                gizmoColor = MasterAudio.Instance.selectedRangeGizmoColor;
+            if (MasterAudio.SafeInstance != null)
+            {
+                gizmoColor = MasterAudio.Instance.rangeGizmoColor;
             }
-             
+
             Gizmos.color = gizmoColor;
             Gizmos.DrawWireSphere(transform.position, colliderMaxDistance);
         }
 
-        public void StartTrackers() {
-            if (!IsValidSoundGroup) {
+        private void OnDrawGizmosSelected()
+        {
+            if (MasterAudio.SafeInstance == null || !MasterAudio.Instance.showSelectedRangeSoundGizmos)
+            {
+                return;
+            }
+
+            if (lastTimeMaxDistanceCalced < DateTime.Now.AddHours(-1).Ticks)
+            {
+                lastTimeMaxDistanceCalced = DateTime.Now.Ticks;
+                CalculateRadius();
+            }
+
+            if (colliderMaxDistance == 0f)
+            {
+                return;
+            }
+
+            var gizmoColor = Color.green;
+            if (MasterAudio.SafeInstance != null)
+            {
+                gizmoColor = MasterAudio.Instance.selectedRangeGizmoColor;
+            }
+
+            Gizmos.color = gizmoColor;
+            Gizmos.DrawWireSphere(transform.position, colliderMaxDistance);
+        }
+
+        public void StartTrackers()
+        {
+            if (!IsValidSoundGroup)
+            {
                 return;
             }
 
@@ -213,29 +248,36 @@ namespace DarkTonic.MasterAudio {
 #endif
 
             var isListenerFollowerAvailable = AmbientUtil.InitListenerFollower();
-            if (!isListenerFollowerAvailable) {
+            if (!isListenerFollowerAvailable)
+            {
                 MasterAudio.LogWarning("Your Ambient Sound script on Game Object '" + name + "' will not function because you have no Audio Listener component in any active Game Object in the Scene.");
                 return; // don't bother creating the follower because there's no Listener to collide with.
             }
 
-            if (!AmbientUtil.HasListenerFolowerRigidBody) {
+            if (!AmbientUtil.HasListenerFolowerRigidBody)
+            {
                 MasterAudio.LogWarning("Your Ambient Sound script on Game Object '" + name + "' will not function because you have turned off the Listener Follower RigidBody in Advanced Settings.");
             }
 
-			var followerName = name + "_" + AmbientSoundGroup + "_Follower" + "_" + Guid.NewGuid();
+            var followerName = name + "_" + AmbientSoundGroup + "_Follower" + "_" + Guid.NewGuid();
             RuntimeFollower = AmbientUtil.InitAudioSourceFollower(Trans, followerName, AmbientSoundGroup, variationName, playVolume, FollowCaller, UseClosestColliderPosition, UseTopCollider, IncludeChildColliders, exitMode, exitFadeTime, reEnterMode, reEnterFadeTime);
         }
 
-        public bool IsValidSoundGroup {
-            get {
+        public bool IsValidSoundGroup
+        {
+            get
+            {
                 return !MasterAudio.SoundGroupHardCodedNames.Contains(AmbientSoundGroup);
             }
         }
 
-        public Transform Trans {
-            get {
+        public Transform Trans
+        {
+            get
+            {
                 // ReSharper disable once ConvertIfStatementToNullCoalescingExpression
-                if (_trans == null) {
+                if (_trans == null)
+                {
                     _trans = transform;
                 }
 

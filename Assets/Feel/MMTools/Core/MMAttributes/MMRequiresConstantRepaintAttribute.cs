@@ -2,9 +2,9 @@
 
 namespace MoreMountains.Tools
 {
-	[AttributeUsage(AttributeTargets.Class)]
-	public class MMRequiresConstantRepaintAttribute : Attribute
-	{
+    [AttributeUsage(AttributeTargets.Class)]
+    public class MMRequiresConstantRepaintAttribute : Attribute
+    {
 
-	}
+    }
 }

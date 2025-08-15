@@ -7,31 +7,31 @@ namespace DarkTonic.MasterAudio.Examples
     // ReSharper disable once InconsistentNaming
     public class MA_SampleICustomEventReceiver : MonoBehaviour, ICustomEventReceiver
     {
-        private readonly List<string> _eventsSubscribedTo = new List<string>() {
+        private readonly List<string> _eventsSubscribedTo = new() {
         "PlayerMoved",
         "PlayerStoppedMoving"
     };
 
         // ReSharper disable once UnusedMember.Local
-        void Awake()
+        private void Awake()
         {
         }
 
         // ReSharper disable once UnusedMember.Local
-        void Start()
+        private void Start()
         {
             CheckForIllegalCustomEvents();
         }
 
         // Use this for initialization
         // ReSharper disable once UnusedMember.Local
-        void OnEnable()
+        private void OnEnable()
         {
             RegisterReceiver();
         }
 
         // ReSharper disable once UnusedMember.Local
-        void OnDisable()
+        private void OnDisable()
         {
             if (MasterAudio.SafeInstance == null || MasterAudio.AppIsShuttingDown)
             {

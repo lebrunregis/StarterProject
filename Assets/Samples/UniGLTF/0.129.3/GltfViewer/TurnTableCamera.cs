@@ -17,13 +17,13 @@ namespace UniGLTF.GltfViewer
         [Range(0.1f, 5.0f)]
         public float DollySpeed = 1.0f;
 
-        struct PosRot
+        private struct PosRot
         {
             public Vector3 Position;
             public Quaternion Rotation;
         }
 
-        class TurnTable
+        private class TurnTable
         {
             public float Yaw;
             public float Pitch;
@@ -66,9 +66,9 @@ namespace UniGLTF.GltfViewer
                 };
             }
         }
-        private TurnTable _currentCamera = new TurnTable();
+        private readonly TurnTable _currentCamera = new();
 
-        private List<Coroutine> _activeCoroutines = new List<Coroutine>();
+        private readonly List<Coroutine> _activeCoroutines = new();
         private void OnEnable()
         {
             // left mouse drag

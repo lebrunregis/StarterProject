@@ -11,14 +11,14 @@ public static class JsonUtilityArrays
 
     public static string ToJson<T>(T[] array)
     {
-        Wrapper<T> wrapper = new Wrapper<T>();
+        Wrapper<T> wrapper = new();
         wrapper.Items = array;
         return JsonUtility.ToJson(wrapper);
     }
 
     public static string ToJson<T>(T[] array, bool prettyPrint)
     {
-        Wrapper<T> wrapper = new Wrapper<T>();
+        Wrapper<T> wrapper = new();
         wrapper.Items = array;
         return JsonUtility.ToJson(wrapper, prettyPrint);
     }

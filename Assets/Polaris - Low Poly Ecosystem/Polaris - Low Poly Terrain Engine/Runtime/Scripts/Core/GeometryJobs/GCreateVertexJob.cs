@@ -1,11 +1,7 @@
 #if GRIFFIN
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Jobs;
-using Unity.Burst;
 using Unity.Collections;
-using Unity.Mathematics;
+using Unity.Jobs;
+using UnityEngine;
 using Random = Unity.Mathematics.Random;
 
 namespace Pinwheel.Griffin
@@ -74,7 +70,7 @@ namespace Pinwheel.Griffin
             Vector2 uvc = Vector2.zero;
 
             Vector3 normal = Vector3.zero;
-            Color32 color = new Color32();
+            Color32 color = new();
 
             int i0 = 0;
             int i1 = 0;
@@ -242,11 +238,11 @@ namespace Pinwheel.Griffin
             if (uv.x == 0 || uv.y == 0 || uv.x == 1 || uv.y == 1)
                 return;
 
-            Random rnd = Random.CreateFromIndex((uint)(displacementSeed ^ (uint)(uv.x * 1000) ^ (uint)(uv.y * 1000)));            
+            Random rnd = Random.CreateFromIndex((uint)(displacementSeed ^ (uint)(uv.x * 1000) ^ (uint)(uv.y * 1000)));
             float noise0 = rnd.NextFloat() - 0.5f;
             float noise1 = rnd.NextFloat() - 0.5f;
 
-            Vector2 v = new Vector2(noise0 * displacementStrength / terrainSize.x, noise1 * displacementStrength / terrainSize.z);
+            Vector2 v = new(noise0 * displacementStrength / terrainSize.x, noise1 * displacementStrength / terrainSize.z);
             uv.Set(
                 Mathf.Clamp01(uv.x + v.x),
                 Mathf.Clamp01(uv.y + v.y));
@@ -370,19 +366,19 @@ namespace Pinwheel.Griffin
 
         private float DecodeFloatRG(ref Vector2 enc)
         {
-            Vector2 kDecodeDot = new Vector2(1.0f, 1f / 255.0f);
+            Vector2 kDecodeDot = new(1.0f, 1f / 255.0f);
             return Vector2.Dot(enc, kDecodeDot);
         }
 
         private void GetHeightSample(ref float sample, ref Color data)
         {
-            Vector2 enc = new Vector2(data.r, data.g);
+            Vector2 enc = new(data.r, data.g);
             sample = DecodeFloatRG(ref enc);
         }
 
         private Vector2 Flip(ref Vector2 uv, bool flipX, bool flipY)
         {
-            Vector2 v = new Vector2(
+            Vector2 v = new(
                 flipX ? 1 - uv.x : uv.x,
                 flipY ? 1 - uv.y : uv.y);
             return v;
@@ -398,56 +394,56 @@ namespace Pinwheel.Griffin
             GetHeightMapData(ref hmData, ref sampleUV);
             float h0 = 0;
             GetHeightSample(ref h0, ref hmData);
-            Vector3 v0 = new Vector3(sampleUV.x * terrainSize.x, h0 * terrainSize.y, sampleUV.y * terrainSize.z);
+            Vector3 v0 = new(sampleUV.x * terrainSize.x, h0 * terrainSize.y, sampleUV.y * terrainSize.z);
 
             //l
             sampleUV.Set(uv.x - texelSize, uv.y);
             GetHeightMapData(ref hmData, ref sampleUV);
             float h1 = 0;
             GetHeightSample(ref h1, ref hmData);
-            Vector3 v1 = new Vector3(sampleUV.x * terrainSize.x, h1 * terrainSize.y, sampleUV.y * terrainSize.z);
+            Vector3 v1 = new(sampleUV.x * terrainSize.x, h1 * terrainSize.y, sampleUV.y * terrainSize.z);
 
             //tl
             sampleUV.Set(uv.x - texelSize, uv.y + texelSize);
             GetHeightMapData(ref hmData, ref sampleUV);
             float h2 = 0;
             GetHeightSample(ref h2, ref hmData);
-            Vector3 v2 = new Vector3(sampleUV.x * terrainSize.x, h2 * terrainSize.y, sampleUV.y * terrainSize.z);
+            Vector3 v2 = new(sampleUV.x * terrainSize.x, h2 * terrainSize.y, sampleUV.y * terrainSize.z);
 
             //t
             sampleUV.Set(uv.x, uv.y + texelSize);
             GetHeightMapData(ref hmData, ref sampleUV);
             float h3 = 0;
             GetHeightSample(ref h3, ref hmData);
-            Vector3 v3 = new Vector3(sampleUV.x * terrainSize.x, h3 * terrainSize.y, sampleUV.y * terrainSize.z);
+            Vector3 v3 = new(sampleUV.x * terrainSize.x, h3 * terrainSize.y, sampleUV.y * terrainSize.z);
 
             //tr
             sampleUV.Set(uv.x + texelSize, uv.y + texelSize);
             GetHeightMapData(ref hmData, ref sampleUV);
             float h4 = 0;
             GetHeightSample(ref h4, ref hmData);
-            Vector3 v4 = new Vector3(sampleUV.x * terrainSize.x, h4 * terrainSize.y, sampleUV.y * terrainSize.z);
+            Vector3 v4 = new(sampleUV.x * terrainSize.x, h4 * terrainSize.y, sampleUV.y * terrainSize.z);
 
             //r
             sampleUV.Set(uv.x + texelSize, uv.y);
             GetHeightMapData(ref hmData, ref sampleUV);
             float h5 = 0;
             GetHeightSample(ref h5, ref hmData);
-            Vector3 v5 = new Vector3(sampleUV.x * terrainSize.x, h5 * terrainSize.y, sampleUV.y * terrainSize.z);
+            Vector3 v5 = new(sampleUV.x * terrainSize.x, h5 * terrainSize.y, sampleUV.y * terrainSize.z);
 
             //br
             sampleUV.Set(uv.x + texelSize, uv.y - texelSize);
             GetHeightMapData(ref hmData, ref sampleUV);
             float h6 = 0;
             GetHeightSample(ref h6, ref hmData);
-            Vector3 v6 = new Vector3(sampleUV.x * terrainSize.x, h6 * terrainSize.y, sampleUV.y * terrainSize.z);
+            Vector3 v6 = new(sampleUV.x * terrainSize.x, h6 * terrainSize.y, sampleUV.y * terrainSize.z);
 
             //b
             sampleUV.Set(uv.x, uv.y - texelSize);
             GetHeightMapData(ref hmData, ref sampleUV);
             float h7 = 0;
             GetHeightSample(ref h7, ref hmData);
-            Vector3 v7 = new Vector3(sampleUV.x * terrainSize.x, h7 * terrainSize.y, sampleUV.y * terrainSize.z);
+            Vector3 v7 = new(sampleUV.x * terrainSize.x, h7 * terrainSize.y, sampleUV.y * terrainSize.z);
 
             Vector3 n0 = Vector3.Cross(v0 - v, v1 - v);
             Vector3 n1 = Vector3.Cross(v1 - v, v2 - v);

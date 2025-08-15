@@ -10,9 +10,9 @@ namespace Abiogenesis3d
     public class FitCanvasToScreen : MonoBehaviour
     {
         public Camera cam;
-        Canvas canvas;
-        RectTransform canvasRect;
-        CanvasScaler canvasScaler;
+        private Canvas canvas;
+        private RectTransform canvasRect;
+        private CanvasScaler canvasScaler;
 
         public void Init()
         {
@@ -21,7 +21,7 @@ namespace Abiogenesis3d
             canvasScaler = canvas.GetComponent<CanvasScaler>();
         }
 
-        void OnEnable()
+        private void OnEnable()
         {
             Init();
         }

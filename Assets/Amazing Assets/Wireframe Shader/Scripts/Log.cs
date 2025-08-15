@@ -1,6 +1,6 @@
 // Wireframe Shader <https://u3d.as/26T8>
 // Copyright (c) Amazing Assets <https://amazingassets.world>
- 
+
 using System.Runtime.CompilerServices;
 
 using UnityEngine;
@@ -16,7 +16,7 @@ namespace AmazingAssets.WireframeShader
         {
             Log(LogType.Log, message, null, null);
         }
-        static public void Log(LogType logType, string message) 
+        static public void Log(LogType logType, string message)
         {
             Log(logType, message, null, null);
         }

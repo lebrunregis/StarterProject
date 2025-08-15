@@ -6,13 +6,13 @@ namespace Abiogenesis3d
     {
         public MultiCameraEvents multiCameraEvents;
 
-        void Start()
+        private void Start()
         {
             if (!multiCameraEvents)
                 multiCameraEvents = FindObjectOfType<MultiCameraEvents>();
         }
 
-        void Update()
+        private void Update()
         {
             var hit = multiCameraEvents.raycastHit;
             Debug.Log((hit.collider?.name ?? "null") + ", " + hit.point);

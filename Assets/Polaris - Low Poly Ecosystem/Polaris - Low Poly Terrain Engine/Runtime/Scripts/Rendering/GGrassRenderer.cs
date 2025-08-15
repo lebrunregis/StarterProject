@@ -1,9 +1,8 @@
 #if GRIFFIN
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Unity.Collections;
 using Unity.Jobs;
+using UnityEngine;
 using UnityEngine.Rendering;
 
 namespace Pinwheel.Griffin.Rendering
@@ -13,7 +12,7 @@ namespace Pinwheel.Griffin.Rendering
         public delegate void ConfiguringMaterialHandler(GStylizedTerrain terrain, int prototypeIndex, MaterialPropertyBlock propertyBlock);
         public static event ConfiguringMaterialHandler ConfiguringMaterial;
 
-        private GStylizedTerrain terrain;
+        private readonly GStylizedTerrain terrain;
 
         private Camera camera;
         private Plane[] frustum;
@@ -282,8 +281,8 @@ namespace Pinwheel.Griffin.Rendering
 
             try
             {
-                NativeArray<float> prototypePivotOffset = new NativeArray<float>(prototypes.Count, Allocator.TempJob);
-                NativeArray<Vector3> prototypeSize = new NativeArray<Vector3>(prototypes.Count, Allocator.TempJob);
+                NativeArray<float> prototypePivotOffset = new(prototypes.Count, Allocator.TempJob);
+                NativeArray<Vector3> prototypeSize = new(prototypes.Count, Allocator.TempJob);
                 for (int i = 0; i < prototypes.Count; ++i)
                 {
                     prototypePivotOffset[i] = prototypes[i].pivotOffset;
@@ -295,10 +294,10 @@ namespace Pinwheel.Griffin.Rendering
                 {
                     int cellIndex = cellToProcess[i];
                     GGrassPatch cell = cells[cellIndex];
-                    GGrassPatchNativeData nativeData = new GGrassPatchNativeData(cell.Instances);
+                    GGrassPatchNativeData nativeData = new(cell.Instances);
                     cellsNativeData[cellIndex] = nativeData;
 
-                    GCalculateGrassTransformJob job = new GCalculateGrassTransformJob()
+                    GCalculateGrassTransformJob job = new()
                     {
                         instances = nativeData.instances,
                         transforms = nativeData.trs,
@@ -340,7 +339,7 @@ namespace Pinwheel.Griffin.Rendering
                 GGrassPatchNativeData nativeData = cellsNativeData[cellIndex];
 
                 //GGrassPatch cell = cellToProcess[i];
-                GBuildInstancedBatchJob job = new GBuildInstancedBatchJob()
+                GBuildInstancedBatchJob job = new()
                 {
                     instances = nativeData.instances,
                     batchMetadata = nativeData.metadata,
@@ -373,7 +372,7 @@ namespace Pinwheel.Griffin.Rendering
                 int length = metadata[i + 1].z;
                 int indexLimit = startIndex + length;
 
-                GInstancedBatch batch = new GInstancedBatch(BATCH_MAX_INSTANCE_COUNT);
+                GInstancedBatch batch = new(BATCH_MAX_INSTANCE_COUNT);
                 batch.prototypeIndex = prototypeIndex;
                 for (int j = startIndex; j < indexLimit; ++j)
                 {

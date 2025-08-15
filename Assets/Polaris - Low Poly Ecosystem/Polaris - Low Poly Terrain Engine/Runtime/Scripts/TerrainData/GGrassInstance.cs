@@ -64,7 +64,7 @@ namespace Pinwheel.Griffin
 
         public static GGrassInstance Create(int prototypeIndex)
         {
-            GGrassInstance instance = new GGrassInstance();
+            GGrassInstance instance = new();
             instance.PrototypeIndex = prototypeIndex;
             instance.Position = Vector3.zero;
             instance.Rotation = Quaternion.identity;

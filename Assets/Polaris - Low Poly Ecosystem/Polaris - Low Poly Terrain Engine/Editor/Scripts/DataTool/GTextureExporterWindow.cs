@@ -140,7 +140,7 @@ namespace Pinwheel.Griffin.DataTool
                     if (t == null || t.TerrainData == null)
                         return;
 
-                    GTextureExporter exporter = new GTextureExporter();
+                    GTextureExporter exporter = new();
                     exporter.SrcData = t.TerrainData;
                     exporter.ExportHeightMap = ExportHeightMap;
                     exporter.ExportVisibilityMap = ExportVisibilityMap;
@@ -156,7 +156,7 @@ namespace Pinwheel.Griffin.DataTool
 
         private void DoExport()
         {
-            GTextureExporter exporter = new GTextureExporter();
+            GTextureExporter exporter = new();
             exporter.SrcData = SrcData;
             exporter.ExportHeightMap = ExportHeightMap;
             exporter.ExportVisibilityMap = ExportVisibilityMap;

@@ -141,7 +141,7 @@ namespace MagicaCloth2
         /// </summary>
         internal int splitProxyMeshVertexCount = Define.System.SplitProxyMeshVertexCount;
 
-        bool isValid = false;
+        private bool isValid = false;
 
         //=========================================================================================
         public void Dispose()
@@ -416,10 +416,10 @@ namespace MagicaCloth2
             //Debug.Log($"workerCount:{workerCount}");
 
             // ジョブ連結用
-            JobHandle normalClothJobHandle = new JobHandle();
-            JobHandle splitClothJobHandle = new JobHandle();
-            JobHandle selfIntersectJobHandle = new JobHandle();
-            JobHandle solverIntersectJobHandle = new JobHandle();
+            JobHandle normalClothJobHandle = new();
+            JobHandle splitClothJobHandle = new();
+            JobHandle selfIntersectJobHandle = new();
+            JobHandle solverIntersectJobHandle = new();
 
             // ■分割シミュレーションジョブ
             // セルフコリジョンあり、もしくはプロキシメッシュの頂点数が一定値以上のジョブ
@@ -1409,7 +1409,7 @@ namespace MagicaCloth2
         //=========================================================================================
         public void InformationLog(StringBuilder allsb)
         {
-            StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new();
             sb.AppendLine($"========== Simulation Manager ==========");
             if (IsValid() == false)
             {

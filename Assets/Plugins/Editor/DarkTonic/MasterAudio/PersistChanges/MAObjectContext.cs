@@ -6,7 +6,7 @@ namespace DarkTonic.MasterAudio.EditorScripts
     // ReSharper disable once CheckNamespace
     public class MAObjectContext
     {
-        private static readonly Dictionary<GameObject, MAGOSetting> PersistentSettings = new Dictionary<GameObject, MAGOSetting>();
+        private static readonly Dictionary<GameObject, MAGOSetting> PersistentSettings = new();
 
         public GameObject GameObj { get; private set; }
 

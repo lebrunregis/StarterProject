@@ -1,6 +1,5 @@
 #if GRIFFIN
 using Lzf;
-using UnityEngine;
 
 
 namespace Pinwheel.Griffin.Compression
@@ -29,7 +28,7 @@ namespace Pinwheel.Griffin.Compression
 
             byte[] outputData = new byte[data.Length * 2];
 
-            LZF compressor = new LZF();
+            LZF compressor = new();
             int compressedLength = compressor.Compress(data, data.Length, outputData, outputData.Length);
 
             byte[] result = new byte[compressedLength];
@@ -51,7 +50,7 @@ namespace Pinwheel.Griffin.Compression
                 outputData = DefaultOutputBuffer;
             }
 
-            LZF decompressor = new LZF();
+            LZF decompressor = new();
             int decompressedLength = decompressor.Decompress(data, data.Length, outputData, outputData.Length);
 
             byte[] result = new byte[decompressedLength];

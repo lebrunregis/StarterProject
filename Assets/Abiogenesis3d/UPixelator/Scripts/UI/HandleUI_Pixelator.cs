@@ -17,7 +17,7 @@ namespace Abiogenesis3d.UPixelator_Demo
         public GameObject uPixelatorNoteStabilizeDisabled;
 
         public KeyCode toggleUPixelatorKey = KeyCode.Z;
-        void Start()
+        private void Start()
         {
             uPixelator = FindObjectOfType<UPixelator>(true);
             if (!uPixelator) return;
@@ -31,12 +31,12 @@ namespace Abiogenesis3d.UPixelator_Demo
             uPixelatorStabilize.onValueChanged.AddListener((value) => DoUpdate());
         }
 
-        void Update()
+        private void Update()
         {
             if (Input.GetKeyDown(toggleUPixelatorKey)) uPixelatorEnabled.isOn = !uPixelatorEnabled.isOn;
         }
 
-        void DoUpdate()
+        private void DoUpdate()
         {
             if (!uPixelator) return;
 
@@ -54,11 +54,11 @@ namespace Abiogenesis3d.UPixelator_Demo
             uPixelatorPixelMultiplierNumber.text = value + "";
 
             // disable state
-            uPixelatorPixelMultiplier.transform.parent.SetSiblingIndex(uPixelatorEnabled.isOn ? 100: 0);
-            uPixelatorSnap.transform.parent.SetSiblingIndex(uPixelatorEnabled.isOn ? 100: 0);
+            uPixelatorPixelMultiplier.transform.parent.SetSiblingIndex(uPixelatorEnabled.isOn ? 100 : 0);
+            uPixelatorSnap.transform.parent.SetSiblingIndex(uPixelatorEnabled.isOn ? 100 : 0);
             var snap = uPixelator.cameraInfos[0]?.snap ?? false;
             var stabilize = uPixelator.cameraInfos[0]?.stabilize ?? false;
-            uPixelatorStabilize.transform.parent.SetSiblingIndex(uPixelatorEnabled.isOn && snap ? 100: 0);
+            uPixelatorStabilize.transform.parent.SetSiblingIndex(uPixelatorEnabled.isOn && snap ? 100 : 0);
 
             uPixelatorNoteSnapDisabled.SetActive(uPixelatorEnabled.isOn && !snap);
             uPixelatorNoteStabilizeDisabled.SetActive(uPixelatorEnabled.isOn && !stabilize);

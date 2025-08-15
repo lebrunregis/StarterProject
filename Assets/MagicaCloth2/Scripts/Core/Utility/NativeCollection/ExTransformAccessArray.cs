@@ -15,33 +15,33 @@ namespace MagicaCloth2
     /// </summary>
     public class ExTransformAccessArray : IDisposable
     {
-        TransformAccessArray transformArray;
+        private TransformAccessArray transformArray;
 
         /// <summary>
         /// ネイティブリストの配列数
         /// ※ジョブでエラーが出ないように事前に確保しておく
         /// </summary>
-        int nativeLength;
+        private int nativeLength;
 
         /// <summary>
         /// 空インデックススタック
         /// </summary>
-        Queue<int> emptyStack;
+        private readonly Queue<int> emptyStack;
 
         /// <summary>
         /// 使用インデックス辞書
         /// </summary>
-        Dictionary<int, int> useIndexDict;
+        private readonly Dictionary<int, int> useIndexDict;
 
         /// <summary>
         /// トランスフォームインデックス辞書
         /// </summary>
-        Dictionary<int, int> indexDict;
+        private readonly Dictionary<int, int> indexDict;
 
         /// <summary>
         /// トランスフォーム参照カウンタ辞書
         /// </summary>
-        Dictionary<int, int> referenceDict;
+        private readonly Dictionary<int, int> referenceDict;
 
         //=========================================================================================
         public ExTransformAccessArray(int capacity, int desiredJobCount = -1)
