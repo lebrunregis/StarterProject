@@ -1,3 +1,6 @@
 [submodule "Assets/_/Toolbox"]
 	path = Assets/_/Toolbox
 	url = https://github.com/lebrunregis/Toolbox.git
+[submodule "Assets/_/Synty-Unity"]
+	path = Assets/_/Synty-Unity
+	url = https://github.com/pixl-creator/Synty-Unity.git
