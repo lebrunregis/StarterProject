@@ -4,3 +4,6 @@
 [submodule "Assets/_/Synty-Unity"]
 	path = Assets/_/Synty-Unity
 	url = https://github.com/pixl-creator/Synty-Unity.git
+[submodule "Assets/_/quaternius-lib"]
+	path = Assets/_/quaternius-lib
+	url = https://github.com/pixl-creator/quaternius-lib.git
