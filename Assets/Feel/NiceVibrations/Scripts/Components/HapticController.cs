@@ -1,8 +1,8 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates. 
 
+using UnityEngine;
 using System;
 using System.Timers;
-using UnityEngine;
 
 #if (UNITY_ANDROID && !UNITY_EDITOR)
 using System.Text;
@@ -38,32 +38,32 @@ namespace Lofelt.NiceVibrations
     /// cause undefined behaviour and memory leaks.
     public static class HapticController
     {
-        private static bool lofeltHapticsInitalized = false;
+        static bool lofeltHapticsInitalized = false;
 
         // Timer used to call HandleFinishedPlayback() when playback is complete
-        private static readonly Timer playbackFinishedTimer = new();
+        static Timer playbackFinishedTimer = new Timer();
 
         // Duration of the loaded haptic clip, in seconds
-        private static float clipLoadedDurationSecs = 0.0f;
+        static float clipLoadedDurationSecs = 0.0f;
 
         // Whether Load() has been called before
-        private static bool clipLoaded = false;
+        static bool clipLoaded = false;
 
         // The value of the last call to seek()
-        private static float lastSeekTime = 0.0f;
+        static float lastSeekTime = 0.0f;
 
         // Flag indicating if the device supports playing back .haptic clips
-        private static bool deviceMeetsAdvancedRequirements = false;
+        static bool deviceMeetsAdvancedRequirements = false;
 
         // Flag indicating if the user enabled playback looping.
         // This does not necessarily mean that the currently active playback is looping, for
         // example gamepads don't support looping.
-        private static bool isLoopingEnabledByUser = false;
+        static bool isLoopingEnabledByUser = false;
 
         // Flag indicating if the currently active playback is looping
-        private static bool isPlaybackLooping = false;
+        static bool isPlaybackLooping = false;
 
-        private static HapticPatterns.PresetType _fallbackPreset = HapticPatterns.PresetType.None;
+        static HapticPatterns.PresetType _fallbackPreset = HapticPatterns.PresetType.None;
 
         /// <summary>
         /// The haptic preset to be played when it's not possible to play a haptic clip
@@ -205,10 +205,10 @@ namespace Lofelt.NiceVibrations
         // GamepadRumbler
         private static void ApplyLevelsToGamepadRumbler()
         {
-#if ((!UNITY_ANDROID && !UNITY_IOS) || UNITY_EDITOR) && NICE_VIBRATIONS_INPUTSYSTEM_INSTALLED && ENABLE_INPUT_SYSTEM && !NICE_VIBRATIONS_DISABLE_GAMEPAD_SUPPORT
-            GamepadRumbler.lowFrequencyMotorSpeedMultiplication = _outputLevel * _clipLevel;
-            GamepadRumbler.highFrequencyMotorSpeedMultiplication = _outputLevel * _clipLevel;
-#endif
+            #if ((!UNITY_ANDROID && !UNITY_IOS) || UNITY_EDITOR) && NICE_VIBRATIONS_INPUTSYSTEM_INSTALLED && ENABLE_INPUT_SYSTEM && !NICE_VIBRATIONS_DISABLE_GAMEPAD_SUPPORT
+                            GamepadRumbler.lowFrequencyMotorSpeedMultiplication = _outputLevel * _clipLevel;
+                            GamepadRumbler.highFrequencyMotorSpeedMultiplication = _outputLevel * _clipLevel;
+            #endif
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Lofelt.NiceVibrations
             }
         }
 
-        private static void HandleFinishedPlayback()
+        static void HandleFinishedPlayback()
         {
             lastSeekTime = 0.0f;
             isPlaybackLooping = false;

@@ -27,6 +27,7 @@ using UnityEngine;
 // If any of the 3 conditions is not met, GamepadRumbler doesn't contain any calls into
 // UnityEngine.InputSystem, and CanPlay() always returns false.
 #if ((!UNITY_ANDROID && !UNITY_IOS) || UNITY_EDITOR) && NICE_VIBRATIONS_INPUTSYSTEM_INSTALLED && ENABLE_INPUT_SYSTEM && !NICE_VIBRATIONS_DISABLE_GAMEPAD_SUPPORT
+using UnityEngine.InputSystem;
 #endif
 
 namespace Lofelt.NiceVibrations
@@ -98,23 +99,23 @@ namespace Lofelt.NiceVibrations
     public static class GamepadRumbler
     {
 #if ((!UNITY_ANDROID && !UNITY_IOS) || UNITY_EDITOR) && NICE_VIBRATIONS_INPUTSYSTEM_INSTALLED && ENABLE_INPUT_SYSTEM && !NICE_VIBRATIONS_DISABLE_GAMEPAD_SUPPORT
-        private static GamepadRumble loadedRumble;
+        static GamepadRumble loadedRumble;
 
-        private static bool rumbleLoaded = false;
+        static bool rumbleLoaded = false;
 
         // This Timer is used to wait until it is time to advance to the next entry in loadedRumble.
         // When the Timer is elapsed, ProcessNextRumble() is called to set new motor speeds to the
         // gamepad.
-        private static readonly Timer rumbleTimer = new();
+        static Timer rumbleTimer = new Timer();
 
         // The index of the entry of loadedRumble that is currently being played back
-        private static int rumbleIndex = -1;
+        static int rumbleIndex = -1;
 
         // The total duration of rumble entries that have been played back so far
-        private static long rumblePositionMs = 0;
+        static long rumblePositionMs = 0;
 
         // Keeps track of how much time elapsed since playback was started
-        private static readonly Stopwatch playbackWatch = new();
+        static Stopwatch playbackWatch = new Stopwatch();
 
         /// <summary>
         /// A multiplication factor applied to the motor speeds of the low frequency motor.
@@ -141,7 +142,7 @@ namespace Lofelt.NiceVibrations
         /// </summary>
         public static float highFrequencyMotorSpeedMultiplication = 1.0f;
 
-        private static int currentGamepadID = -1;
+        static int currentGamepadID = -1;
 
 #endif
 
@@ -195,7 +196,7 @@ namespace Lofelt.NiceVibrations
         ///
         /// <param name="gamepadID">The ID of the gamepad to be returned.</c> </param>
         /// <returns> A <c> InputSystem.Gamepad</c> </returns>
-        private static UnityEngine.InputSystem.Gamepad GetGamepad(int gamepadID)
+        static UnityEngine.InputSystem.Gamepad GetGamepad(int gamepadID)
         {
             if (gamepadID >= 0)
             {

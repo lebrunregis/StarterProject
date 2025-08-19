@@ -1,7 +1,9 @@
 // Copyright (c) Meta Platforms, Inc. and affiliates. 
 
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using System.IO;
 
 namespace Lofelt.NiceVibrations
 {
@@ -14,20 +16,20 @@ namespace Lofelt.NiceVibrations
     /// The inspector lets you link a HapticSource to a HapticClip.
     public class HapticSourceInspector : Editor
     {
-        private readonly string hapticsDirectory;
+        string hapticsDirectory;
 
-        private SerializedProperty hapticClip;
-        private SerializedProperty priority;
-        private SerializedProperty level;
-        private SerializedProperty frequencyShift;
-        private SerializedProperty loop;
-        private SerializedProperty fallbackPreset;
+        SerializedProperty hapticClip;
+        SerializedProperty priority;
+        SerializedProperty level;
+        SerializedProperty frequencyShift;
+        SerializedProperty loop;
+        SerializedProperty fallbackPreset;
 
         public static GUIContent hapticClipLabel = EditorGUIUtility.TrTextContent("Haptic Clip", "The HapticClip asset played by the HapticSource.");
         public static GUIContent fallbackPresetLabel = EditorGUIUtility.TrTextContent("Haptic Preset fallback", "Set the haptic preset to play in case the device doesn't support playback of haptic clips");
         public static GUIContent loopLabel = EditorGUIUtility.TrTextContent("Loop", "Set the haptic source to loop playback of the haptic clip");
 
-        private void OnEnable()
+        void OnEnable()
         {
             hapticClip = serializedObject.FindProperty("clip");
             priority = serializedObject.FindProperty("priority");
@@ -62,7 +64,7 @@ namespace Lofelt.NiceVibrations
         }
 
         /// Helper function to create a priority slider for haptic source with High and Max text labels.
-        private void CreatePrioritySlider()
+        void CreatePrioritySlider()
         {
             Rect position = EditorGUILayout.GetControlRect(true, EditorGUIUtility.singleLineHeight);
 
@@ -92,7 +94,7 @@ namespace Lofelt.NiceVibrations
 
         /// Helper function to create a level slider for haptic
         /// source with labels.
-        private void CreateLevelSlider()
+        void CreateLevelSlider()
         {
             Rect position = EditorGUILayout.GetControlRect(true, EditorGUIUtility.singleLineHeight);
 
@@ -122,7 +124,7 @@ namespace Lofelt.NiceVibrations
 
         /// Helper function to create a frequency shift slider for haptic
         /// source with labels.
-        private void CreateFrequencyShiftSlider()
+        void CreateFrequencyShiftSlider()
         {
             Rect position = EditorGUILayout.GetControlRect(true, EditorGUIUtility.singleLineHeight);
 

@@ -1,4 +1,6 @@
-﻿#if MM_UI
+﻿using UnityEditor;
+
+#if MM_UI
 namespace MoreMountains.Tools
 {	
 	[CanEditMultipleObjects]

@@ -1,41 +1,42 @@
 using System;
+using UnityEngine;
 
 namespace MoreMountains.Feedbacks
 {
-    [Serializable]
-    public abstract class MMSpringDefinition<T>
-    {
-        public abstract T CurrentValue { get; set; }
+	[Serializable]
+	public abstract class MMSpringDefinition<T>
+	{
+		public abstract T CurrentValue { get; set; }
+		
+		public abstract T TargetValue { get; set; }
+		
+		public abstract T Velocity { get; set; }
+		
+		public abstract void UpdateSpringValue(float deltaTime);
 
-        public abstract T TargetValue { get; set; }
+		public abstract void MoveToInstant(T newValue);
 
-        public abstract T Velocity { get; set; }
+		public abstract void Stop();
 
-        public abstract void UpdateSpringValue(float deltaTime);
+		public abstract void SetInitialValue(T newInitialValue);
 
-        public abstract void MoveToInstant(T newValue);
+		public abstract void RestoreInitialValue();
 
-        public abstract void Stop();
+		public abstract void SetCurrentValueAsInitialValue();
 
-        public abstract void SetInitialValue(T newInitialValue);
+		public abstract void MoveTo(T newValue);
 
-        public abstract void RestoreInitialValue();
+		public abstract void MoveToAdditive(T newValue);
 
-        public abstract void SetCurrentValueAsInitialValue();
+		public abstract void MoveToSubtractive(T newValue);
 
-        public abstract void MoveTo(T newValue);
+		public abstract void MoveToRandom(T min, T max);
 
-        public abstract void MoveToAdditive(T newValue);
+		public abstract void Bump(T bumpAmount);
 
-        public abstract void MoveToSubtractive(T newValue);
+		public abstract void BumpRandom(T min, T max);
 
-        public abstract void MoveToRandom(T min, T max);
-
-        public abstract void Bump(T bumpAmount);
-
-        public abstract void BumpRandom(T min, T max);
-
-        public abstract void Finish();
-    }
+		public abstract void Finish();
+	}
 }
 

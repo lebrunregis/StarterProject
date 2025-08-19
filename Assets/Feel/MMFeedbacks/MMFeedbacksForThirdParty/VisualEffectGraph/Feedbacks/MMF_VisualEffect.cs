@@ -1,41 +1,43 @@
+using System;
 using UnityEngine;
 #if MM_VISUALEFFECTGRAPH
 using UnityEngine.VFX;
 #endif
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 using UnityEngine.Scripting.APIUpdating;
 
 namespace MoreMountains.FeedbacksForThirdParty
 {
-    /// <summary>
-    /// This feedback will let you apply basic controls to a target VisualEffect
-    /// </summary>
-    [AddComponentMenu("")]
-    [FeedbackHelp("This feedback will let you apply basic controls to a target VisualEffect")]
-#if MM_VISUALEFFECTGRAPH
+	/// <summary>
+	/// This feedback will let you apply basic controls to a target VisualEffect
+	/// </summary>
+	[AddComponentMenu("")]
+	[FeedbackHelp("This feedback will let you apply basic controls to a target VisualEffect")]
+	#if MM_VISUALEFFECTGRAPH
 	[FeedbackPath("Particles/VisualEffect")]
-#endif
-    [MovedFrom(false, null, "MoreMountains.Feedbacks.VisualEffectGraph")]
-    public class MMF_VisualEffect : MMF_Feedback
-    {
-        /// a static bool used to disable all feedbacks of this type at once
-        public static bool FeedbackTypeAuthorized = true;
-        /// sets the inspector color for this feedback
-#if UNITY_EDITOR
-        public override Color FeedbackColor { get { return MMFeedbacksInspectorColors.ParticlesColor; } }
-#endif
+	#endif
+	[MovedFrom(false, null, "MoreMountains.Feedbacks.VisualEffectGraph")]
+	public class MMF_VisualEffect : MMF_Feedback 
+	{
+		/// a static bool used to disable all feedbacks of this type at once
+		public static bool FeedbackTypeAuthorized = true;
+		/// sets the inspector color for this feedback
+		#if UNITY_EDITOR
+		public override Color FeedbackColor { get { return MMFeedbacksInspectorColors.ParticlesColor; } }
+		#endif
 
-        /// the duration of this feedback is the duration of the shake
-        public override float FeedbackDuration { get { return ApplyTimeMultiplier(DeclaredDuration); } set { DeclaredDuration = value; } }
-        public override bool HasChannel => true;
-        public override bool HasRandomness => true;
-
-        [MMFInspectorGroup("Visual Effect", true, 41)]
-        /// the duration for the player to consider. This won't impact your visual effect, but is a way to communicate to the MMF Player the duration of this feedback. Usually you'll want it to match your actual visual effect, and setting it can be useful to have this feedback work with holding pauses.
-        [Tooltip("the duration for the player to consider. This won't impact your visual effect, but is a way to communicate to the MMF Player the duration of this feedback. Usually you'll want it to match your actual visual effect, and setting it can be useful to have this feedback work with holding pauses.")]
-        public float DeclaredDuration = 0f;
-
-#if MM_VISUALEFFECTGRAPH
+		/// the duration of this feedback is the duration of the shake
+		public override float FeedbackDuration { get { return ApplyTimeMultiplier(DeclaredDuration); } set { DeclaredDuration = value;  } }
+		public override bool HasChannel => true;
+		public override bool HasRandomness => true;
+		
+		[MMFInspectorGroup("Visual Effect", true, 41)]
+		/// the duration for the player to consider. This won't impact your visual effect, but is a way to communicate to the MMF Player the duration of this feedback. Usually you'll want it to match your actual visual effect, and setting it can be useful to have this feedback work with holding pauses.
+		[Tooltip("the duration for the player to consider. This won't impact your visual effect, but is a way to communicate to the MMF Player the duration of this feedback. Usually you'll want it to match your actual visual effect, and setting it can be useful to have this feedback work with holding pauses.")]
+		public float DeclaredDuration = 0f;
+		
+		#if MM_VISUALEFFECTGRAPH
 		
 		/// the various modes to control the target visual effect
 		public enum Modes { Play, Stop, Pause, Unpause, AdvanceOneFrame, Reinit, SetPlayRate, Simulate }
@@ -174,8 +176,8 @@ namespace MoreMountains.FeedbacksForThirdParty
 			
 			TargetVisualEffect.Stop();
 		}
-#else
-        protected override void CustomPlayFeedback(Vector3 position, float attenuation = 1.0f) { }
-#endif
-    }
+		#else
+		protected override void CustomPlayFeedback(Vector3 position, float attenuation = 1.0f) { }
+		#endif
+	}
 }

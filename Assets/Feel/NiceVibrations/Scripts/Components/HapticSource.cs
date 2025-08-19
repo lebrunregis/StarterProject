@@ -31,7 +31,7 @@ namespace Lofelt.NiceVibrations
     [AddComponentMenu("Nice Vibrations/Haptic Source")]
     public class HapticSource : MonoBehaviour
     {
-        private const int DEFAULT_PRIORITY = 128;
+        const int DEFAULT_PRIORITY = 128;
 
         /// The HapticClip this HapticSource loads and plays.
         public HapticClip clip;
@@ -52,10 +52,10 @@ namespace Lofelt.NiceVibrations
         ///
         /// Initially set to 0.0 seconds.
         /// This value can only be set when using Seek().
-        private float seekTime = 0.0f;
+        float seekTime = 0.0f;
 
         [SerializeField]
-        private HapticPatterns.PresetType _fallbackPreset = HapticPatterns.PresetType.None;
+        HapticPatterns.PresetType _fallbackPreset = HapticPatterns.PresetType.None;
 
         /// <summary>
         /// The haptic preset to be played when it's not possible to play a haptic clip
@@ -68,7 +68,7 @@ namespace Lofelt.NiceVibrations
         }
 
         [SerializeField]
-        private bool _loop = false;
+        bool _loop = false;
 
         /// <summary>
         /// Set the haptic source to loop playback of the haptic clip.
@@ -85,7 +85,7 @@ namespace Lofelt.NiceVibrations
         }
 
         [SerializeField]
-        private float _level = 1.0f;
+        float _level = 1.0f;
 
         /// <summary>
         /// The level of the haptic source
@@ -112,7 +112,7 @@ namespace Lofelt.NiceVibrations
         }
 
         [SerializeField]
-        private float _frequencyShift = 0.0f;
+        float _frequencyShift = 0.0f;
 
         /// <summary>
         /// This shift is added to the frequency of every breakpoint in the clip, including the
@@ -138,14 +138,14 @@ namespace Lofelt.NiceVibrations
         /// The HapticSource that is currently loaded into HapticController.
         /// This can be null if nothing was ever loaded, or if HapticController::Load()
         /// was called directly, bypassing HapticSource.
-        private static HapticSource loadedHapticSource = null;
+        static HapticSource loadedHapticSource = null;
 
         /// The HapticSource that was last played.
         /// This can be null if nothing was ever player, or if HapticController::Play()
         /// was called directly, bypassing HapticSource.
         /// The lastPlayedHapticSource isn't necessarily playing now, lastPlayedHapticSource
         /// will remain set even if playback has finished or was stopped.
-        private static HapticSource lastPlayedHapticSource = null;
+        static HapticSource lastPlayedHapticSource = null;
 
         static HapticSource()
         {

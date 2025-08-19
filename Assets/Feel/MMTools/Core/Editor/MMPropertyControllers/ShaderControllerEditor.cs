@@ -1,4 +1,7 @@
-﻿#if MM_UI
+﻿using UnityEngine;
+using UnityEditor;
+
+#if MM_UI
 namespace MoreMountains.Tools
 {
 	/// <summary>

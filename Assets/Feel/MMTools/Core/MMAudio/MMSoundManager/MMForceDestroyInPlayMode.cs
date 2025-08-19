@@ -5,50 +5,50 @@ using UnityEditor;
 
 namespace MoreMountains.Tools
 {
-    /// <summary>
-    /// This class will automatically destroy the object when entering play mode, and will destroy it again when exiting play mode.
-    /// This is used for instance by the sound feedbacks to ensure that test audio sources created outside of play mode don't persist in your scene
-    /// </summary>
-    public class MMForceDestroyInPlayMode : MonoBehaviour
-    {
-#if UNITY_EDITOR
-        static MMForceDestroyInPlayMode()
-        {
-            EditorApplication.playModeStateChanged += ModeChanged;
-        }
+	/// <summary>
+	/// This class will automatically destroy the object when entering play mode, and will destroy it again when exiting play mode.
+	/// This is used for instance by the sound feedbacks to ensure that test audio sources created outside of play mode don't persist in your scene
+	/// </summary>
+	public class MMForceDestroyInPlayMode : MonoBehaviour
+	{
+		#if UNITY_EDITOR
+		static MMForceDestroyInPlayMode()
+		{
+			EditorApplication.playModeStateChanged += ModeChanged;
+		}
 
-        private static void ModeChanged(PlayModeStateChange playModeState)
-        {
-            switch (playModeState)
-            {
-                case PlayModeStateChange.EnteredEditMode:
-                    DeleteAll();
-                    break;
-            }
-        }
+		private static void ModeChanged(PlayModeStateChange playModeState)
+		{
+			switch (playModeState)
+			{
+				case PlayModeStateChange.EnteredEditMode:
+					DeleteAll();
+					break;
+			}
+		}
 
-        private static void DeleteAll()
-        {
-            MMForceDestroyInPlayMode[] sounds = FindObjectsByType<MMForceDestroyInPlayMode>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-            foreach (var sound in sounds)
-            {
-                sound.Delete();
-            }
-        }
-#endif
+		static void DeleteAll()
+		{
+			MMForceDestroyInPlayMode[] sounds = FindObjectsByType<MMForceDestroyInPlayMode>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+			foreach (var sound in sounds)
+			{
+				sound.Delete();
+			}
+		}
+		#endif
+	
+		void Awake()
+		{
+			if (Application.isPlaying)
+			{
+				Delete();
+			}
+		}
 
-        private void Awake()
-        {
-            if (Application.isPlaying)
-            {
-                Delete();
-            }
-        }
-
-        private void Delete()
-        {
-            DestroyImmediate(this.gameObject);
-        }
-    }
+		void Delete()
+		{
+			DestroyImmediate(this.gameObject);
+		}
+	}
 }
 

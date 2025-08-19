@@ -1,3 +1,4 @@
+using UnityEngine;
 #if MM_POSTPROCESSING
 using UnityEngine.Rendering.PostProcessing;
 

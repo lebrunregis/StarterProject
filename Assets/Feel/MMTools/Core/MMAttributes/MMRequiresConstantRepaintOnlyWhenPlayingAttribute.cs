@@ -2,9 +2,9 @@
 
 namespace MoreMountains.Tools
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    public class MMRequiresConstantRepaintOnlyWhenPlayingAttribute : Attribute
-    {
+	[AttributeUsage(AttributeTargets.Class)]
+	public class MMRequiresConstantRepaintOnlyWhenPlayingAttribute : Attribute
+	{
 
-    }
+	}
 }

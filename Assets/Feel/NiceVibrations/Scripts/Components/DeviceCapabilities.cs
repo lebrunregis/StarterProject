@@ -82,7 +82,7 @@ namespace Lofelt.NiceVibrations
                 return _hasAmplitudeControl;
             }
         }
-        private static readonly bool _hasAmplitudeControl;
+        private static bool _hasAmplitudeControl;
 
         /// <summary>
         /// Indicates if the device is capable of changing the frequency of haptic signals
@@ -94,7 +94,7 @@ namespace Lofelt.NiceVibrations
                 return _hasFrequencyControl;
             }
         }
-        private static readonly bool _hasFrequencyControl;
+        private static bool _hasFrequencyControl;
 
         /// <summary>
         /// Indicates if the device is capable of real-time amplitude modulation of haptic signals
@@ -106,7 +106,7 @@ namespace Lofelt.NiceVibrations
                 return _hasAmplitudeModulation;
             }
         }
-        private static readonly bool _hasAmplitudeModulation;
+        private static bool _hasAmplitudeModulation;
 
         /// <summary>
         /// Indicates if the device is capable of real-time frequency modulation of haptic signals
@@ -118,7 +118,7 @@ namespace Lofelt.NiceVibrations
                 return _hasFrequencyModulation;
             }
         }
-        private static readonly bool _hasFrequencyModulation;
+        private static bool _hasFrequencyModulation;
 
         /// <summary>
         /// Indicates if the device is capable of natively reproducing emphasized haptics
@@ -130,7 +130,7 @@ namespace Lofelt.NiceVibrations
                 return _hasEmphasis;
             }
         }
-        private static readonly bool _hasEmphasis;
+        private static bool _hasEmphasis;
 
         /// <summary>
         /// Indicates if the device is capable of emulating emphasized haptics
@@ -142,7 +142,7 @@ namespace Lofelt.NiceVibrations
                 return _canEmulateEmphasis;
             }
         }
-        private static readonly bool _canEmulateEmphasis;
+        private static bool _canEmulateEmphasis;
 
         /// <summary>
         /// Indicates if the device is capable of looping haptic clips
@@ -154,7 +154,7 @@ namespace Lofelt.NiceVibrations
                 return _canLoop;
             }
         }
-        private static readonly bool _canLoop;
+        private static bool _canLoop;
 
         /// <summary>
         /// Constructor that fills in the only the DeviceCapabilities platform version properties.
