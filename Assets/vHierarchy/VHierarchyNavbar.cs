@@ -1,13 +1,22 @@
 #if UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using UnityEditor;
+using System.Reflection;
 using UnityEngine;
-using static VHierarchy.Libs.VGUI;
+using UnityEditor;
+using UnityEditor.ShortcutManagement;
+using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
+using UnityEditor.IMGUI.Controls;
+using Type = System.Type;
 using static VHierarchy.Libs.VUtils;
-using static VHierarchy.VHierarchy;
+using static VHierarchy.Libs.VGUI;
 // using static VTools.VDebug;
 using static VHierarchy.VHierarchyData;
+using static VHierarchy.VHierarchy;
 
 
 
@@ -369,26 +378,24 @@ namespace VHierarchy
 
         }
 
-        private bool animatingSearch;
+        bool animatingSearch;
 
-        private readonly float searchAnimationDistance = 90;
-        private float searchAnimationT;
-        private float searchAnimationDerivative;
+        float searchAnimationDistance = 90;
+        float searchAnimationT;
+        float searchAnimationDerivative;
 
-        private readonly string openedFolderPath;
+        string openedFolderPath;
 
         public bool isSearchActive;
 
-        private readonly bool isDefaultParentTextPressed;
+        bool isDefaultParentTextPressed;
 
-        private GameObject defaultParent;
+        GameObject defaultParent;
 
-        private readonly GUIStyle defaultParentTextGUIStyle;
+        GUIStyle defaultParentTextGUIStyle;
 
-        private Rect navbarRect;
-        private Rect bookmarksRect;
-
-
+        Rect navbarRect;
+        Rect bookmarksRect;
 
 
 
@@ -399,7 +406,9 @@ namespace VHierarchy
 
 
 
-        private void BookmarksGUI()
+
+
+        void BookmarksGUI()
         {
             void bookmark(Vector2 centerPosition, Bookmark bookmark)
             {
@@ -674,14 +683,14 @@ namespace VHierarchy
 
         }
 
-        private float bookmarkWidth => 24;
-        private float iconSize => 16;
+        float bookmarkWidth => 24;
+        float iconSize => 16;
 
-        private float lastBookmarkX;
+        float lastBookmarkX;
 
 
 
-        private int GetBookmarkIndex(float mouseX)
+        int GetBookmarkIndex(float mouseX)
         {
             var curBookmarkWidthSum = 0f;
 
@@ -699,7 +708,7 @@ namespace VHierarchy
 
         }
 
-        private float GetBookmarkCenterX(int i, bool includeGaps = true)
+        float GetBookmarkCenterX(int i, bool includeGaps = true)
         {
             return bookmarksRect.xMax
                  - bookmarkWidth / 2
@@ -713,7 +722,7 @@ namespace VHierarchy
 
 
 
-        private void BookmarksMouseState()
+        void BookmarksMouseState()
         {
             void down()
             {
@@ -760,21 +769,21 @@ namespace VHierarchy
 
         }
 
-        private bool mouseHoversBookmark;
-        private bool mousePressed;
-        private bool doubleclickUnhandled;
+        bool mouseHoversBookmark;
+        bool mousePressed;
+        bool doubleclickUnhandled;
 
-        private Vector2 mouseDownPosiion;
+        Vector2 mouseDownPosiion;
 
-        private Bookmark pressedBookmark;
-        private Bookmark lastHoveredBookmark;
-
-
+        Bookmark pressedBookmark;
+        Bookmark lastHoveredBookmark;
 
 
 
 
-        private void BookmarksDragging()
+
+
+        void BookmarksDragging()
         {
             void initFromOutside()
             {
@@ -932,22 +941,22 @@ namespace VHierarchy
 
         }
 
-        private bool draggingBookmark;
-        private bool draggingBookmarkFromInside;
+        bool draggingBookmark;
+        bool draggingBookmarkFromInside;
 
-        private int insertDraggedBookmarkAtIndex;
+        int insertDraggedBookmarkAtIndex;
 
-        private Vector2 draggedBookmarkHoldOffset;
+        Vector2 draggedBookmarkHoldOffset;
 
-        private Bookmark draggedBookmark;
-        private Bookmark droppedBookmark;
-
-
+        Bookmark draggedBookmark;
+        Bookmark droppedBookmark;
 
 
 
 
-        private void BookmarksAnimations()
+
+
+        void BookmarksAnimations()
         {
             if (!curEvent.isLayout) return;
 
@@ -1020,20 +1029,20 @@ namespace VHierarchy
 
         }
 
-        private float droppedBookmarkX;
-        private float droppedBookmarkXDerivative;
+        float droppedBookmarkX;
+        float droppedBookmarkXDerivative;
 
-        private float tooltipOpacity;
-        private float tooltipOpacityDerivative;
+        float tooltipOpacity;
+        float tooltipOpacityDerivative;
 
-        private bool animatingDroppedBookmark;
-        private bool animatingGaps;
-        private bool animatingTooltip;
-        private bool animatingBookmarks => animatingDroppedBookmark || animatingGaps;
+        bool animatingDroppedBookmark;
+        bool animatingGaps;
+        bool animatingTooltip;
+        bool animatingBookmarks => animatingDroppedBookmark || animatingGaps;
 
-        private bool hideTooltip;
+        bool hideTooltip;
 
-        private List<float> gaps
+        List<float> gaps
         {
             get
             {
@@ -1044,9 +1053,9 @@ namespace VHierarchy
 
             }
         }
-        private readonly List<float> _gaps = new();
+        List<float> _gaps = new();
 
-        private Bookmark lastClickedBookmark;
+        Bookmark lastClickedBookmark;
 
 
 

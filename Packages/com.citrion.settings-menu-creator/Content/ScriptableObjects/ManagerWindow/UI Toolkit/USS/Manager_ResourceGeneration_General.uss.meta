@@ -13,7 +13,7 @@ AssetOrigin:
   serializedVersion: 1
   productId: 269528
   packageName: Settings & Options Menu Creator Pro
-  packageVersion: 1.5.2
+  packageVersion: 1.6.0
   assetPath: Packages/com.citrion.settings-menu-creator/Content/ScriptableObjects/ManagerWindow/UI
     Toolkit/USS/Manager_ResourceGeneration_General.uss
-  uploadId: 765336
+  uploadId: 782203

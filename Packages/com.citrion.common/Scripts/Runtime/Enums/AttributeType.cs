@@ -1,9 +1,9 @@
 ﻿namespace CitrioN.Common
 {
-    [SkipObfuscationRename]
-    public enum AttributeType
-    {
-        Single,
-        Group,
-    }
+  [SkipObfuscationRename]
+  public enum AttributeType
+  {
+    Single,
+    Group,
+  }
 }

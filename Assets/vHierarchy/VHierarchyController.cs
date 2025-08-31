@@ -1,14 +1,23 @@
 #if UNITY_EDITOR
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using UnityEditor;
-using UnityEditor.IMGUI.Controls;
-using UnityEditor.SceneManagement;
+using System.Reflection;
 using UnityEngine;
-using static VHierarchy.Libs.VGUI;
+using UnityEditor;
+using UnityEditor.ShortcutManagement;
+using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
+using UnityEditor.IMGUI.Controls;
+using Type = System.Type;
 using static VHierarchy.Libs.VUtils;
+using static VHierarchy.Libs.VGUI;
 // using static VTools.VDebug;
+using static VHierarchy.VHierarchy;
+using static VHierarchy.VHierarchyData;
+using static VHierarchy.VHierarchyCache;
 
 #if UNITY_6000_2_OR_NEWER
 using TreeViewItem = UnityEditor.IMGUI.Controls.TreeViewItem<int>;
@@ -177,8 +186,8 @@ namespace VHierarchy
 
         }
 
-        private object treeViewController;
-        private object treeViewControllerData;
+        object treeViewController;
+        object treeViewControllerData;
 
         public float currentScrollPos;
 
@@ -407,7 +416,7 @@ namespace VHierarchy
 
         public void SetScrollPos(float targetScrollPos)
         {
-            window.GetMemberValue("m_SceneHierarchy").GetMemberValue<UnityEditor.IMGUI.Controls.TreeViewState>("m_TreeViewState").scrollPos = Vector2.up * targetScrollPos;
+            window.GetMemberValue("m_SceneHierarchy").GetMemberValue<TreeViewState>("m_TreeViewState").scrollPos = Vector2.up * targetScrollPos;
         }
 
 

@@ -1,6 +1,18 @@
 #if UNITY_EDITOR
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEditor;
+using UnityEditor.ShortcutManagement;
+using System.Reflection;
+using System.Linq;
+using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
+using Type = System.Type;
+using static VHierarchy.VHierarchyData;
 using static VHierarchy.Libs.VUtils;
+using static VHierarchy.Libs.VGUI;
 // using static VTools.VDebug;
 
 
@@ -16,7 +28,7 @@ namespace VHierarchy
         public SerializableDictionary<string, SceneIdMap> sceneIdMaps_bySceneGuid = new();
 
         // used for fetching icons set inside prefab instances in playmode (when prefabs produce invalid GlobalIDs)
-        public SerializableDictionary<int, GlobalID> prefabInstanceGlobalIds_byInstanceIds = new();
+        public SerializableDictionary<int, GlobalID> prefabInstanceGlobalIds_byInstanceIds = new SerializableDictionary<int, GlobalID>();
 
 
 

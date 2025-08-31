@@ -9,8 +9,8 @@ NativeFormatImporter:
 AssetOrigin:
   serializedVersion: 1
   productId: 275525
-  packageName: Settings Menu Creator - Input Rebinding Addon
-  packageVersion: 1.1.0
+  packageName: Settings & Options Menu Creator - Input Rebinding Addon
+  packageVersion: 1.2.0
   assetPath: Packages/com.citrion.settings-menu-creator.input/Presets/ResourcesCreatorProfile/_Data/Dropdown/UI
     Toolkit/Providers/Default/UIT_Providers_Default_InputRebind.asset
-  uploadId: 685115
+  uploadId: 782205

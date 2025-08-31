@@ -1,9 +1,9 @@
 ﻿namespace CitrioN.Common
 {
-    [SkipObfuscationRename]
-    public enum AccessModifier
-    {
-        Public,
-        Private
-    }
+  [SkipObfuscationRename]
+  public enum AccessModifier
+  {
+    Public,
+    Private
+  }
 }

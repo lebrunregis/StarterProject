@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 5832197170048285739}
     m_Modifications:
     - target: {fileID: 723491969903643127, guid: 6b90ef2d8cfad39419f1c738a7804a27, type: 3}
@@ -100,6 +101,9 @@ PrefabInstance:
       value: Text_Dynamic_Inverted
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b90ef2d8cfad39419f1c738a7804a27, type: 3}
 --- !u!114 &7815920199073376830 stripped
 MonoBehaviour:
@@ -112,11 +116,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &7833133414617829843 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 777160422790541850, guid: 6b90ef2d8cfad39419f1c738a7804a27, type: 3}
+  m_PrefabInstance: {fileID: 7385311987819209673}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9176891481605360606
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 17388808203417975, guid: b4f4d3e24e60dcb4ba7ba28855f85530, type: 3}
@@ -336,6 +346,33 @@ PrefabInstance:
       value: Dropdown_Dyn_Base
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3434837231211214837, guid: b4f4d3e24e60dcb4ba7ba28855f85530, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7833133414617829843}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8272553209169459417, guid: b4f4d3e24e60dcb4ba7ba28855f85530, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5532162271024727030}
+    - targetCorrespondingSourceObject: {fileID: 2798714201611161861, guid: b4f4d3e24e60dcb4ba7ba28855f85530, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 488188309134018013}
+    - targetCorrespondingSourceObject: {fileID: 2798714201611161861, guid: b4f4d3e24e60dcb4ba7ba28855f85530, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7066033349389989661}
+    - targetCorrespondingSourceObject: {fileID: 2798714201611161861, guid: b4f4d3e24e60dcb4ba7ba28855f85530, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1475414623816567237}
+    - targetCorrespondingSourceObject: {fileID: 2798714201611161861, guid: b4f4d3e24e60dcb4ba7ba28855f85530, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4775631684899334734}
+    - targetCorrespondingSourceObject: {fileID: 2798714201611161861, guid: b4f4d3e24e60dcb4ba7ba28855f85530, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6190239397693460598}
+    - targetCorrespondingSourceObject: {fileID: 4864132962796570579, guid: b4f4d3e24e60dcb4ba7ba28855f85530, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4920796116350537108}
   m_SourcePrefab: {fileID: 100100000, guid: b4f4d3e24e60dcb4ba7ba28855f85530, type: 3}
 --- !u!1 &978650553312965383 stripped
 GameObject:
@@ -487,3 +524,75 @@ MonoBehaviour:
   hueOffset: 0
   saturationOffset: 0
   valueOffset: 0
+--- !u!114 &1475414623816567237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6453053064625167067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
+--- !u!114 &4775631684899334734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6453053064625167067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea13c9bb8b2f27a4b9cfc6592076e217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Primary Image Outline
+  styleProfile: {fileID: 0}
+  lastStyleProfile: {fileID: 0}
+  styleProfileIdentifier: 
+  lastProfileIdentifier: 
+  onStyleChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  outline: {fileID: 1475414623816567237}
+  keepAlpha: 0
+  hueOffset: 0
+  saturationOffset: 0
+  valueOffset: 0
+--- !u!114 &6190239397693460598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6453053064625167067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c42f5b31ee59e6439a7974a53aa88d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Primary Image Outline Effect Distance
+  styleProfile: {fileID: 0}
+  lastStyleProfile: {fileID: 0}
+  styleProfileIdentifier: 
+  lastProfileIdentifier: 
+  onStyleChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1475414623816567237}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Shadow, UnityEngine.UI
+        m_MethodName: set_effectDistance
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1

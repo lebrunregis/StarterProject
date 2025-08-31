@@ -1,9 +1,18 @@
 #if UNITY_EDITOR
-using System.Linq;
-using UnityEditor;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using static VHierarchy.Libs.VGUI;
+using UnityEditor;
+using UnityEditor.ShortcutManagement;
+using System.Reflection;
+using System.Linq;
+using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
+using Type = System.Type;
+using static VHierarchy.VHierarchyData;
 using static VHierarchy.Libs.VUtils;
+using static VHierarchy.Libs.VGUI;
 // using static VTools.VDebug;
 
 
@@ -12,7 +21,7 @@ namespace VHierarchy
     public class VHierarchyComponentWindow : EditorWindow
     {
 
-        private void OnGUI()
+        void OnGUI()
         {
             if (!component) component = EditorUtility.InstanceIDToObject(componentIid) as Component;
             if (!component) { Close(); return; }
@@ -484,13 +493,13 @@ namespace VHierarchy
 
         public Vector2 targetPosition;
         public Vector2 currentPosition;
-        private Vector2 positionDeriv;
-        private float deltaTime;
-        private double lastLayoutTime;
+        Vector2 positionDeriv;
+        float deltaTime;
+        double lastLayoutTime;
 
-        private bool isDragged;
-        private Vector2 dragStartMousePos;
-        private Vector2 dragStartWindowPos;
+        bool isDragged;
+        Vector2 dragStartMousePos;
+        Vector2 dragStartWindowPos;
 
         public bool isResizingHorizontally;
         public bool isResizingVertically;
@@ -507,7 +516,7 @@ namespace VHierarchy
 
 
 
-        private void OnLostFocus()
+        void OnLostFocus()
         {
             if (isPinned) return;
 
@@ -518,7 +527,7 @@ namespace VHierarchy
 
         }
 
-        private void CloseNextFrameIfNotRefocused()
+        void CloseNextFrameIfNotRefocused()
         {
             EditorApplication.delayCall += () => { if (EditorWindow.focusedWindow != this) Close(); };
         }
@@ -540,7 +549,7 @@ namespace VHierarchy
 
         }
 
-        private void OnDestroy()
+        void OnDestroy()
         {
             editor?.DestroyImmediate();
 

@@ -12,7 +12,7 @@ MonoImporter:
 AssetOrigin:
   serializedVersion: 1
   productId: 275525
-  packageName: Settings Menu Creator - Input Rebinding Addon
-  packageVersion: 1.1.0
+  packageName: Settings & Options Menu Creator - Input Rebinding Addon
+  packageVersion: 1.2.0
   assetPath: Packages/com.citrion.settings-menu-creator.input/Scripts/Editor/InputActionBindingDrawer.cs
-  uploadId: 685115
+  uploadId: 782205

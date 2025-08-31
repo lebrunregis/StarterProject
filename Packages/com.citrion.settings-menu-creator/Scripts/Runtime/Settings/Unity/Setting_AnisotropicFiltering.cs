@@ -3,19 +3,19 @@ using UnityEngine;
 
 namespace CitrioN.SettingsMenuCreator
 {
-    [MenuPath("Quality/General/")]
-    public class Setting_AnisotropicFiltering : Setting_Quality<AnisotropicFiltering>
+  [MenuPath("Quality/General/")]
+  public class Setting_AnisotropicFiltering : Setting_Quality<AnisotropicFiltering>
+  {
+    public override string PropertyName => nameof(QualitySettings.anisotropicFiltering);
+
+    public Setting_AnisotropicFiltering()
     {
-        public override string PropertyName => nameof(QualitySettings.anisotropicFiltering);
+      options.Clear();
+      options.Add(new StringToStringRelation("Disable", "Disabled"));
+      options.Add(new StringToStringRelation("Enable", "Per Texture"));
+      options.Add(new StringToStringRelation("ForceEnable", "Forced On"));
 
-        public Setting_AnisotropicFiltering()
-        {
-            options.Clear();
-            options.Add(new StringToStringRelation("Disable", "Disabled"));
-            options.Add(new StringToStringRelation("Enable", "Per Texture"));
-            options.Add(new StringToStringRelation("ForceEnable", "Forced On"));
-
-            defaultValue = AnisotropicFiltering.ForceEnable;
-        }
+      defaultValue = AnisotropicFiltering.ForceEnable;
     }
+  } 
 }

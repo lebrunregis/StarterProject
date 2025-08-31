@@ -21,12 +21,12 @@
     "versionDefines": [
         {
             "name": "com.citrion.common",
-            "expression": "1.1",
+            "expression": "1.3.3",
             "define": "CITRION_COMMON"
         },
         {
             "name": "com.citrion.settings-menu-creator",
-            "expression": "1.1",
+            "expression": "1.6",
             "define": "SETTINGS_MENU_CREATOR"
         }
     ],

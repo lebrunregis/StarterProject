@@ -2062,9 +2062,6 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, packedOutput);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(packedOutput);
 
-				inputMesh.tangentOS = float4( 1, 0, 0, -1 );
-				inputMesh.normalOS = float3( 0, 1, 0 );
-
 				/*ase_vert_code:inputMesh=Attributes;packedOutput=PackedVaryings*/
 
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(inputMesh.positionOS.xyz);
@@ -2284,7 +2281,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
             void GetSurfaceData(SurfaceDescription surfaceDescription, float4 positionCS, out DecalSurfaceData surfaceData)
             {
                 #if defined(LOD_FADE_CROSSFADE)
-					LODFadeCrossFade( input.positionCS );
+					LODFadeCrossFade( positionCS );
                 #endif
 
                 half fadeFactor = half(1.0);
@@ -2389,9 +2386,6 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				UNITY_SETUP_INSTANCE_ID(inputMesh);
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, packedOutput);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(packedOutput);
-
-				inputMesh.tangentOS = float4( 1, 0, 0, -1 );
-				inputMesh.normalOS = float3( 0, 1, 0 );
 
 				/*ase_vert_code:inputMesh=Attributes;packedOutput=PackedVaryings*/
 
@@ -2832,9 +2826,6 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				UNITY_SETUP_INSTANCE_ID(inputMesh);
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, packedOutput);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(packedOutput);
-
-				inputMesh.tangentOS = float4( 1, 0, 0, -1 );
-				inputMesh.normalOS = float3( 0, 1, 0 );
 
 				/*ase_vert_code:inputMesh=Attributes;packedOutput=PackedVaryings*/
 
@@ -3312,9 +3303,6 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 				UNITY_TRANSFER_INSTANCE_ID(inputMesh, packedOutput);
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(packedOutput);
 
-				inputMesh.tangentOS = float4( 1, 0, 0, -1 );
-				inputMesh.normalOS = float3( 0, 1, 0 );
-
 				/*ase_vert_code:inputMesh=Attributes;packedOutput=PackedVaryings*/
 
 				VertexPositionInputs vertexInput = GetVertexPositionInputs(inputMesh.positionOS.xyz);
@@ -3630,7 +3618,7 @@ Shader  /*ase_name*/"Hidden/Universal/Decal"/*end*/
 
 				float3 BaseColor = /*ase_frag_out:Base Color;Float3;0;-1;_BaseColor*/IsGammaSpace() ? float3(0.5, 0.5, 0.5) : SRGBToLinear(float3(0.5, 0.5, 0.5))/*end*/;
 
-				outColor = _SelectionID;
+				outColor = unity_SelectionID;
 			}
 			ENDHLSL
         }

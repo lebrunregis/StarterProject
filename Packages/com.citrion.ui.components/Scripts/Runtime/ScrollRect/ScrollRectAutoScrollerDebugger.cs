@@ -4,18 +4,18 @@ using UnityEngine;
 
 namespace CitrioN.UI
 {
-    [HideScriptField]
-    [HeaderInfo("Debugger script to show all currently active 'ScrollRectAutoScroller' scripts.")]
-    public class ScrollRectAutoScrollerDebugger : MonoBehaviour
-    {
-        [SerializeField]
-        protected List<ScrollRectAutoScroller> activeAutoScrollers = new();
+  [HideScriptField]
+  [HeaderInfo("Debugger script to show all currently active 'ScrollRectAutoScroller' scripts.")]
+  public class ScrollRectAutoScrollerDebugger : MonoBehaviour
+  {
+    [SerializeField]
+    protected List<ScrollRectAutoScroller> activeAutoScrollers = new List<ScrollRectAutoScroller>();
 
 #if UNITY_EDITOR
-        private void Update()
-        {
-            this.activeAutoScrollers = ScrollRectAutoScroller.activeAutoScrollers;
-        }
+    void Update()
+    {
+      this.activeAutoScrollers = ScrollRectAutoScroller.activeAutoScrollers;
+    } 
 #endif
-    }
+  } 
 }

@@ -1,18 +1,20 @@
+using CitrioN.Common;
+
 namespace CitrioN.SettingsMenuCreator
 {
-    public class Setting_LoadSettings : Setting_SettingsCollection
+  public class Setting_LoadSettings : Setting_SettingsCollection
+  {
+    public override string RuntimeName => "Load";
+
+    public override object ApplySettingChange(SettingsCollection settings, params object[] args)
     {
-        public override string RuntimeName => "Load";
+      if (settings != null)
+      {
+        settings.LoadSettings(isDefault: false, apply: true, forceApply: true);
+      }
 
-        public override object ApplySettingChange(SettingsCollection settings, params object[] args)
-        {
-            if (settings != null)
-            {
-                settings.LoadSettings(isDefault: false, apply: true, forceApply: true);
-            }
-
-            base.ApplySettingChange(settings, null);
-            return null;
-        }
+      base.ApplySettingChange(settings, null);
+      return null;
     }
+  }
 }

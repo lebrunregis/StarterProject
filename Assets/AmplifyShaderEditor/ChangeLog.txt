@@ -1,3 +1,50 @@
+v1.9.9.4
+
+   Editor
+      * Raised minimum supported Unity version to 2019.4.40
+      * Added selection/filter toggles to dependency list in "Shader Function" inspector
+      * Added gray "PREVIEW DISABLED" text to replace empty/black no preview texture
+      * Added "Preview Quality" user preferences option to lower VRAM usage
+      * Reduced default preview quality to "Medium" aka 64x64
+      * Changing to a different template now also tries to match connections via link ID
+      * Changed "Preview Disabled" text to dark gray instead of bright red
+      * Changed Surface shaders to also use uint SV_IsFrontFace (#451)
+      * Changed "Instanced Terrain" option to generate ASE_INSTANCED_TERRAIN define
+      * Fixed input port preview textures allocated even when disabled via preferences
+      * Fixed maximum interpolators for shader targets 3.5 and above (15)
+      * Fixed Start Screen interfering with Unity batch mode
+      * Fixed alignment issues with screen shot shooter gizmo (#439)
+      * Fixed BillboardOpHelper causing shader compile warnings and errors (#464)
+      * Fixed Play then Stop breaks node preview + zoom lag (#469)
+      * Fixed "Instanced Terrain" option adding duplicate Picking/Selection passes (#470)
+      * Fixed template Option defaulting when InvertActionOnDeselection added (#470)
+
+   Templates
+      * Added new template "Built-In/Wireframe"
+      * Added new Impostor category to "Built-In/Lit" with improved option logic
+      * Added proper Selection and Picking passes to "Built-In/Lit" template
+      * Added Opaque "Keep Alpha" option to URP Lit and Unlit templates
+      * Updated URP/HDRP template packages 10x to 17.2 (#459, #460, #462, #468)
+      * Fixed "Indirect Diffuse Light" duplicating pragmas when using "Built-In/Lit" (#435)
+      * Fixed "Built-In/Lit" Lambert and BlinnPhong workflows visible/usable ports
+      * Fixed port number inconsistency between passes in "Built-In/Lit" template
+      * Fixed URP 2D templates throwing errors on SRP versions below 14.0.7 (14x)
+      * Fixed URP Decal template (12x)
+      * Fixed URP Decal template throwing errors on macOS (14x)
+      * Fixed decal templates raising errors when using LOD Crossfade (URP 15 to 17x)
+
+   Nodes
+      * Fixed vector cast bug in "Texture Coordinates" node (#453)
+      * Changed "Depth Fade" default Mirror value to false
+      * Added "NaN" value node for culling vertices
+
+   Samples
+      * Added samples for Unity 6.1 (17.1) and Unity 6.2 (17.2)
+      * Fixed URP Omni Decal sample by disabling Alpha Clipping
+      * Added URP "Universal Asset" for sample Render Pipeline config
+      * Added HDRP "HD Asset" for sample Render Pipeline config
+      * Updated all BiRP, URP and HDRP sample shaders
+
 v1.9.9.3
 
    Editor

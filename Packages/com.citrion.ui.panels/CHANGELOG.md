@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.0.7] - August 26th 2025
+- Minor bug fix
+
 ## [1.0.6] - June 17th 2025
 - Added automatic CanvasGroup handling to prevent unintended menu navigation when panel/menu is closed
 

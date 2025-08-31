@@ -4,17 +4,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using UnityEditor;
-using UnityEditor.IMGUI.Controls;
-using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEditor;
+using UnityEditor.ShortcutManagement;
+using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
-using static VHierarchy.Libs.VGUI;
+using UnityEditor.SceneManagement;
+using UnityEditor.IMGUI.Controls;
+using Type = System.Type;
 using static VHierarchy.Libs.VUtils;
-using static VHierarchy.VHierarchyCache;
+using static VHierarchy.Libs.VGUI;
 // using static VTools.VDebug;
 using static VHierarchy.VHierarchyData;
-using Type = System.Type;
+using static VHierarchy.VHierarchyCache;
 
 #if UNITY_6000_2_OR_NEWER
 using TreeViewItem = UnityEditor.IMGUI.Controls.TreeViewItem<int>;
@@ -30,7 +32,7 @@ namespace VHierarchy
     public static class VHierarchy
     {
 
-        private static void WrappedGUI(EditorWindow window)
+        static void WrappedGUI(EditorWindow window)
         {
             var navbarHeight = 26;
 
@@ -152,11 +154,11 @@ namespace VHierarchy
 
         }
 
-        private static readonly Dictionary<EditorWindow, VHierarchyNavbar> navbars_byWindow = new();
+        static Dictionary<EditorWindow, VHierarchyNavbar> navbars_byWindow = new();
 
 
 
-        private static void UpdateGUIWrapping(EditorWindow window)
+        static void UpdateGUIWrapping(EditorWindow window)
         {
             if (!window.hasFocus) return;
 
@@ -196,21 +198,21 @@ namespace VHierarchy
                 unwrap();
 
         }
-        private static void UpdateGUIWrappingForAllHierarchies() => allHierarchies.ForEach(r => UpdateGUIWrapping(r));
+        static void UpdateGUIWrappingForAllHierarchies() => allHierarchies.ForEach(r => UpdateGUIWrapping(r));
 
-        private static void OnDomainReloaded() => toCallInGUI += UpdateGUIWrappingForAllHierarchies;
+        static void OnDomainReloaded() => toCallInGUI += UpdateGUIWrappingForAllHierarchies;
 
-        private static void OnWindowUnmaximized() => UpdateGUIWrappingForAllHierarchies();
+        static void OnWindowUnmaximized() => UpdateGUIWrappingForAllHierarchies();
 
-        private static void OnHierarchyFocused() => UpdateGUIWrapping(EditorWindow.focusedWindow);
+        static void OnHierarchyFocused() => UpdateGUIWrapping(EditorWindow.focusedWindow);
 
-        private static void OnDelayCall() => UpdateGUIWrappingForAllHierarchies();
-
-
+        static void OnDelayCall() => UpdateGUIWrappingForAllHierarchies();
 
 
 
-        private static void CheckIfFocusedWindowChanged()
+
+
+        static void CheckIfFocusedWindowChanged()
         {
             if (prevFocusedWindow != EditorWindow.focusedWindow)
                 if (EditorWindow.focusedWindow?.GetType() == t_SceneHierarchyWindow)
@@ -220,11 +222,11 @@ namespace VHierarchy
 
         }
 
-        private static EditorWindow prevFocusedWindow;
+        static EditorWindow prevFocusedWindow;
 
 
 
-        private static void CheckIfWindowWasUnmaximized()
+        static void CheckIfWindowWasUnmaximized()
         {
             var isMaximized = EditorWindow.focusedWindow?.maximized == true;
 
@@ -235,11 +237,11 @@ namespace VHierarchy
 
         }
 
-        private static bool wasMaximized;
+        static bool wasMaximized;
 
 
 
-        private static void OnSomeGUI()
+        static void OnSomeGUI()
         {
             toCallInGUI?.Invoke();
             toCallInGUI = null;
@@ -248,14 +250,14 @@ namespace VHierarchy
 
         }
 
-        private static void ProjectWindowItemOnGUI(string _, Rect __) => OnSomeGUI();
-        private static void HierarchyWindowItemOnGUI(int _, Rect __) => OnSomeGUI();
+        static void ProjectWindowItemOnGUI(string _, Rect __) => OnSomeGUI();
+        static void HierarchyWindowItemOnGUI(int _, Rect __) => OnSomeGUI();
 
-        private static System.Action toCallInGUI;
+        static System.Action toCallInGUI;
 
 
 
-        private static void DelayCallLoop()
+        static void DelayCallLoop()
         {
             OnDelayCall();
 
@@ -277,7 +279,7 @@ namespace VHierarchy
 
 
 
-        private static void RowGUI(int instanceId, Rect rowRect)
+        static void RowGUI(int instanceId, Rect rowRect)
         {
             EditorWindow window;
 
@@ -335,11 +337,11 @@ namespace VHierarchy
 
         }
 
-        private static bool lastEventWasLayout;
+        static bool lastEventWasLayout;
 
 
 
-        private static void UpdateWindow(EditorWindow window)
+        static void UpdateWindow(EditorWindow window)
         {
             if (!guis_byWindow.TryGetValue(window, out var gui))
                 gui = guis_byWindow[window] = new(window);
@@ -384,11 +386,11 @@ namespace VHierarchy
 
         }
 
-        private static readonly Dictionary<System.Type, Texture> componentIcons_byType = new();
+        static Dictionary<System.Type, Texture> componentIcons_byType = new();
 
 
 
-        private static Texture2D GetIcon_forVTabs(GameObject gameObject)
+        static Texture2D GetIcon_forVTabs(GameObject gameObject)
         {
             var goData = GetGameObjectData(gameObject, false);
 
@@ -403,7 +405,7 @@ namespace VHierarchy
 
         }
 
-        private static string GetIconName_forVFavorites(GameObject gameObject)
+        static string GetIconName_forVFavorites(GameObject gameObject)
         {
             var goData = GetGameObjectData(gameObject, false);
 
@@ -414,7 +416,7 @@ namespace VHierarchy
             return iconNameOrPath;
 
         }
-        private static string GetIconName_forVInspector(GameObject gameObject)
+        static string GetIconName_forVInspector(GameObject gameObject)
         {
             return GetIconName_forVFavorites(gameObject);
         }
@@ -463,7 +465,7 @@ namespace VHierarchy
 
 
 
-        private static void Shortcuts()
+        static void Shortcuts()
         {
             if (!curEvent.isKeyDown) return;
             if (curEvent.keyCode == KeyCode.None) return;
@@ -1028,7 +1030,7 @@ namespace VHierarchy
 
                     // fixes fileId for prefab variants
                     // also works for getting prefab's unpacked fileId
-                    var fileId = (rawFileId ^ (long)rawGlobalId.globalObjectId.targetPrefabId) & 0x7fffffffffffffff;
+                    var fileId = ((long)rawFileId ^ (long)rawGlobalId.globalObjectId.targetPrefabId) & 0x7fffffffffffffff;
 
 
                     sourceGlobalId = new GlobalID($"GlobalObjectId_V1-1-{prefabGuid}-{fileId}-0");
@@ -1145,7 +1147,7 @@ namespace VHierarchy
 
         public static Dictionary<Scene, VHierarchyDataComponent> dataComponents_byScene = new();
 
-        private static VHierarchyCache cache => VHierarchyCache.instance;
+        static VHierarchyCache cache => VHierarchyCache.instance;
 
 
 
@@ -1169,7 +1171,7 @@ namespace VHierarchy
 
 
 
-        private static void LoadSceneBookmarkObjects() // update
+        static void LoadSceneBookmarkObjects() // update
         {
             if (!data) return;
 
@@ -1208,7 +1210,7 @@ namespace VHierarchy
 
 
 
-        private static void StashBookmarkObjects() // on playmode enter before awake
+        static void StashBookmarkObjects() // on playmode enter before awake
         {
             stashedBookmarkObjects_byBookmark.Clear();
 
@@ -1216,7 +1218,7 @@ namespace VHierarchy
                 stashedBookmarkObjects_byBookmark[bookmark] = bookmark._go;
 
         }
-        private static void UnstashBookmarkObjects() // on playmode exit
+        static void UnstashBookmarkObjects() // on playmode exit
         {
             foreach (var bookmark in data.bookmarks)
                 if (stashedBookmarkObjects_byBookmark.TryGetValue(bookmark, out var stashedObject))
@@ -1225,18 +1227,18 @@ namespace VHierarchy
 
         }
 
-        private static readonly Dictionary<Bookmark, GameObject> stashedBookmarkObjects_byBookmark = new();
+        static Dictionary<Bookmark, GameObject> stashedBookmarkObjects_byBookmark = new();
 
 
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-        private static void OnPlaymodeEnter_beforeAwake()
+        static void OnPlaymodeEnter_beforeAwake()
         {
             if (!data) return;
 
             StashBookmarkObjects();
 
         }
-        private static void OnPlaymodeExit(PlayModeStateChange state)
+        static void OnPlaymodeExit(PlayModeStateChange state)
         {
             if (state != PlayModeStateChange.EnteredEditMode) return;
             if (!data) return;
@@ -1267,7 +1269,7 @@ namespace VHierarchy
 
 
 
-        private static void RepaintOnAlt() // Update 
+        static void RepaintOnAlt() // Update 
         {
             var lastEvent = typeof(Event).GetFieldValue<Event>("s_Current");
 
@@ -1280,12 +1282,12 @@ namespace VHierarchy
 
         }
 
-        private static bool wasAlt;
+        static bool wasAlt;
 
 
 
 
-        private static void SetPreviousTransformTool()
+        static void SetPreviousTransformTool()
         {
             if (!transformToolNeedsReset) return;
 
@@ -1298,13 +1300,13 @@ namespace VHierarchy
 
         }
 
-        private static bool transformToolNeedsReset;
-        private static Tool previousTransformTool;
+        static bool transformToolNeedsReset;
+        static Tool previousTransformTool;
 
 
 
 
-        private static void DuplicateSceneData(string originalSceneGuid, string duplicatedSceneGuid)
+        static void DuplicateSceneData(string originalSceneGuid, string duplicatedSceneGuid)
         {
             var originalSceneData = data.sceneDatas_byGuid[originalSceneGuid];
             var duplicatedSceneData = data.sceneDatas_byGuid[duplicatedSceneGuid] = new SceneData();
@@ -1322,7 +1324,7 @@ namespace VHierarchy
 
         }
 
-        private static void OnSceneImported(string importedScenePath)
+        static void OnSceneImported(string importedScenePath)
         {
             if (curEvent.commandName != "Duplicate" && curEvent.commandName != "Paste") return;
 
@@ -1348,11 +1350,11 @@ namespace VHierarchy
 
         }
 
-        private class SceneImportDetector : AssetPostprocessor
+        class SceneImportDetector : AssetPostprocessor
         {
             // scene data duplication won't work on earlier versions anyway
 #if UNITY_2021_2_OR_NEWER 
-            private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
+            static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths, bool didDomainReload)
             {
                 if (!data) return;
 
@@ -1370,7 +1372,7 @@ namespace VHierarchy
         [UnityEditor.Callbacks.PostProcessBuild]
         public static void ClearCacheAfterBuild(BuildTarget _, string __) => VHierarchyCache.Clear();
 
-        private static void ClearCacheOnProjectLoaded() => VHierarchyCache.Clear();
+        static void ClearCacheOnProjectLoaded() => VHierarchyCache.Clear();
 
 
 
@@ -1386,7 +1388,7 @@ namespace VHierarchy
 
 
         [InitializeOnLoadMethod]
-        private static void Init()
+        static void Init()
         {
             if (VHierarchyMenu.pluginDisabled) return;
 
@@ -1767,24 +1769,24 @@ namespace VHierarchy
 
 
 
-        private static IEnumerable<EditorWindow> allHierarchies => _allHierarchies ??= t_SceneHierarchyWindow.GetFieldValue<IList>("s_SceneHierarchyWindows").Cast<EditorWindow>();
-        private static IEnumerable<EditorWindow> _allHierarchies;
+        static IEnumerable<EditorWindow> allHierarchies => _allHierarchies ??= t_SceneHierarchyWindow.GetFieldValue<IList>("s_SceneHierarchyWindows").Cast<EditorWindow>();
+        static IEnumerable<EditorWindow> _allHierarchies;
 
-        private static readonly Type t_SceneHierarchyWindow = typeof(Editor).Assembly.GetType("UnityEditor.SceneHierarchyWindow");
-        private static readonly Type t_HostView = typeof(Editor).Assembly.GetType("UnityEditor.HostView");
-        private static readonly Type t_EditorWindowDelegate = t_HostView.GetNestedType("EditorWindowDelegate", maxBindingFlags);
-        private static readonly Type t_Unsupported = typeof(Editor).Assembly.GetType("UnityEditor.Unsupported");
+        static Type t_SceneHierarchyWindow = typeof(Editor).Assembly.GetType("UnityEditor.SceneHierarchyWindow");
+        static Type t_HostView = typeof(Editor).Assembly.GetType("UnityEditor.HostView");
+        static Type t_EditorWindowDelegate = t_HostView.GetNestedType("EditorWindowDelegate", maxBindingFlags);
+        static Type t_Unsupported = typeof(Editor).Assembly.GetType("UnityEditor.Unsupported");
 
-        private static readonly Type t_VTabs = Type.GetType("VTabs.VTabs") ?? Type.GetType("VTabs.VTabs, VTabs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null");
-        private static readonly Type t_VFavorites = Type.GetType("VFavorites.VFavorites") ?? Type.GetType("VFavorites.VFavorites, VFavorites, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null");
+        static Type t_VTabs = Type.GetType("VTabs.VTabs") ?? Type.GetType("VTabs.VTabs, VTabs, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null");
+        static Type t_VFavorites = Type.GetType("VFavorites.VFavorites") ?? Type.GetType("VFavorites.VFavorites, VFavorites, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null");
 
-        private static readonly MethodInfo mi_WrappedGUI = typeof(VHierarchy).GetMethod(nameof(WrappedGUI), maxBindingFlags);
-
-
+        static MethodInfo mi_WrappedGUI = typeof(VHierarchy).GetMethod(nameof(WrappedGUI), maxBindingFlags);
 
 
 
-        public const string version = "2.1.3";
+
+
+        public const string version = "2.1.4";
 
     }
 

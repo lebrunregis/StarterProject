@@ -595,7 +595,7 @@ Shader /*ase_name*/ "Hidden/Universal/2D Custom Lit" /*end*/
 					clip(surfaceDescription.Alpha - alphaClipThreshold);
 				#endif
 
-				half4 outColor = _SelectionID;
+				half4 outColor = unity_SelectionID;
 				return outColor;
 			}
 

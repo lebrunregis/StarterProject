@@ -38,41 +38,21 @@ Shader /*ase_name*/ "Hidden/Universal/Lit" /*end*/
 	SubShader
 	{
 		/*ase_subshader_options:Name=Additional Options
-			Option:Category:Geometry,Terrain:Geometry
-				Geometry:SetDefine:ASE_GEOMETRY 1
-				Geometry:RemoveDefine:ASE_TERRAIN 1
-				Geometry:HideOption:  Instanced Terrain Normals
-				Geometry:RemoveDefine:Forward:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
-				Geometry:RemoveDefine:GBuffer:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
-				Geometry:RemoveDefine:DepthOnly:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
-				Geometry:RemoveDefine:Forward:_INSTANCEDTERRAINNORMALS_PIXEL
-				Geometry:RemoveDefine:GBuffer:_INSTANCEDTERRAINNORMALS_PIXEL
-				Geometry:RemoveDefine:DepthOnly:_INSTANCEDTERRAINNORMALS_PIXEL
-				Terrain:SetDefine:ASE_TERRAIN 1
-				Terrain:RemoveDefine:ASE_GEOMETRY 1
+			Option:Category,InvertActionOnDeselection:Geometry,Terrain,Impostor:Geometry
+				Geometry:SetDefine:ASE_GEOMETRY
+				Terrain:SetDefine:ASE_TERRAIN
 				Terrain:ShowOption:  Instanced Terrain Normals
+				Impostor:SetDefine:ASE_IMPOSTOR
 			Option:  Instanced Terrain Normals:Force Vertex,Force Pixel,Material Option:Force Pixel
-				Force Vertex:RemoveDefine:Forward:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
-				Force Vertex:RemoveDefine:GBuffer:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
-				Force Vertex:RemoveDefine:DepthNormals:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
-				Force Vertex:RemoveDefine:Forward:_INSTANCEDTERRAINNORMALS_PIXEL
-				Force Vertex:RemoveDefine:GBuffer:_INSTANCEDTERRAINNORMALS_PIXEL
-				Force Vertex:RemoveDefine:DepthNormals:_INSTANCEDTERRAINNORMALS_PIXEL
-				Force Vertex:SetShaderProperty:_InstancedTerrainNormals,//[KeywordEnum(Vertex, Pixel)] _InstancedTerrainNormals("Instanced Terrain Normals", Float) = 1.0
-				Force Pixel:RemoveDefine:Forward:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
-				Force Pixel:RemoveDefine:GBuffer:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
-				Force Pixel:RemoveDefine:DepthNormals:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
-				Force Pixel:SetDefine:Forward:_INSTANCEDTERRAINNORMALS_PIXEL
-				Force Pixel:SetDefine:GBuffer:_INSTANCEDTERRAINNORMALS_PIXEL
-				Force Pixel:SetDefine:DepthNormals:_INSTANCEDTERRAINNORMALS_PIXEL
-				Force Pixel:SetShaderProperty:_InstancedTerrainNormals,//[KeywordEnum(Vertex, Pixel)] _InstancedTerrainNormals("Instanced Terrain Normals", Float) = 1.0
-				Material Option:SetDefine:Forward:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
-				Material Option:SetDefine:GBuffer:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
-				Material Option:SetDefine:DepthNormals:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
-				Material Option:RemoveDefine:Forward:_INSTANCEDTERRAINNORMALS_PIXEL
-				Material Option:RemoveDefine:GBuffer:_INSTANCEDTERRAINNORMALS_PIXEL
-				Material Option:RemoveDefine:DepthNormals:_INSTANCEDTERRAINNORMALS_PIXEL
-				Material Option:SetShaderProperty:_InstancedTerrainNormals,[KeywordEnum(Vertex, Pixel)] _InstancedTerrainNormals("Instanced Terrain Normals", Float) = 1.0
+				Force Vertex?Category=Terrain:SetShaderProperty:_InstancedTerrainNormals,//[KeywordEnum(Vertex, Pixel)] _InstancedTerrainNormals("Instanced Terrain Normals", Float) = 1.0
+				Force Pixel?Category=Terrain:SetDefine:Forward:_INSTANCEDTERRAINNORMALS_PIXEL
+				Force Pixel?Category=Terrain:SetDefine:GBuffer:_INSTANCEDTERRAINNORMALS_PIXEL
+				Force Pixel?Category=Terrain:SetDefine:DepthNormals:_INSTANCEDTERRAINNORMALS_PIXEL
+				Force Pixel?Category=Terrain:SetShaderProperty:_InstancedTerrainNormals,//[KeywordEnum(Vertex, Pixel)] _InstancedTerrainNormals("Instanced Terrain Normals", Float) = 1.0
+				Material Option?Category=Terrain:SetDefine:Forward:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
+				Material Option?Category=Terrain:SetDefine:GBuffer:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
+				Material Option?Category=Terrain:SetDefine:DepthNormals:pragma shader_feature _INSTANCEDTERRAINNORMALS_PIXEL
+				Material Option?Category=Terrain:SetShaderProperty:_InstancedTerrainNormals,[KeywordEnum(Vertex, Pixel)] _InstancedTerrainNormals("Instanced Terrain Normals", Float) = 1.0
 			Option:Lighting Model:PBR,Simple:PBR
 				PBR:SetPropertyOnSubShader:ChangeTagValue,UniversalMaterialType,Lit
 				PBR:SetShaderProperty:_SpecularHighlights,1
@@ -95,6 +75,7 @@ Shader /*ase_name*/ "Hidden/Universal/Lit" /*end*/
 				Opaque:SetPropertyOnSubShader:RenderType,Opaque
 				Opaque:SetPropertyOnSubShader:RenderQueue,Geometry
 				Opaque:SetPropertyOnSubShader:ZWrite,On
+				Opaque:ShowOption:  Keep Alpha
 				Opaque:HideOption:  Refraction Model
 				Opaque:HideOption:  Blend
 				Opaque:RemoveDefine:_SURFACE_TYPE_TRANSPARENT 1
@@ -102,9 +83,13 @@ Shader /*ase_name*/ "Hidden/Universal/Lit" /*end*/
 				Transparent:SetPropertyOnSubShader:RenderType,Transparent
 				Transparent:SetPropertyOnSubShader:RenderQueue,Transparent
 				Transparent:SetPropertyOnSubShader:ZWrite,Off
+				Transparent:HideOption:  Keep Alpha
 				Transparent:ShowOption:  Refraction Model
 				Transparent:ShowOption:  Blend
 				Transparent:SetDefine:_SURFACE_TYPE_TRANSPARENT 1
+			Option:  Keep Alpha:false,true:false
+				true:SetDefine:ASE_OPAQUE_KEEP_ALPHA
+				false:RemoveDefine:ASE_OPAQUE_KEEP_ALPHA
 			Option:  Refraction Model:None,Legacy:None
 				None,disable:HidePort:Forward:Refraction Index
 				None,disable:HidePort:Forward:Refraction Color
@@ -503,6 +488,10 @@ Shader /*ase_name*/ "Hidden/Universal/Lit" /*end*/
 		#pragma prefer_hlslcc gles
 		#pragma exclude_renderers d3d9 // ensure rendering platforms toggle list is visible
 
+		#if ( SHADER_TARGET > 35 ) && defined( SHADER_API_GLES3 )
+			#error For WebGL2/GLES3, please set your shader target to 3.5 via SubShader options. URP shaders in ASE use target 4.5 by default.
+		#endif
+
 		#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
 		#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Filtering.hlsl"
 
@@ -890,7 +879,11 @@ Shader /*ase_name*/ "Hidden/Universal/Lit" /*end*/
 					LODFadeCrossFade( input.positionCS );
 				#endif
 
-				return half4( Color, OutputAlpha( Alpha, isTransparent ) );
+				#if defined( ASE_OPAQUE_KEEP_ALPHA )
+					return half4( Color, Alpha );
+				#else
+					return half4( Color, OutputAlpha( Alpha, isTransparent ) );
+				#endif
 			}
 			ENDHLSL
 		}
@@ -964,7 +957,7 @@ Shader /*ase_name*/ "Hidden/Universal/Lit" /*end*/
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
             #endif
 
-			#if defined(UNITY_INSTANCING_ENABLED) && ( defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL) || defined(_INSTANCEDTERRAINNORMALS_PIXEL) )
+			#if defined( UNITY_INSTANCING_ENABLED ) && defined( ASE_INSTANCED_TERRAIN ) && ( defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL) || defined(_INSTANCEDTERRAINNORMALS_PIXEL) )
 				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
@@ -1508,7 +1501,11 @@ Shader /*ase_name*/ "Hidden/Universal/Lit" /*end*/
 					outRenderingLayers = float4( EncodeMeshRenderingLayer( renderingLayers ), 0, 0, 0 );
 				#endif
 
-				return half4( color.rgb, OutputAlpha( color.a, isTransparent ) );
+				#if defined( ASE_OPAQUE_KEEP_ALPHA )
+					return half4( color.rgb, color.a );
+				#else
+					return half4( color.rgb, OutputAlpha( color.a, isTransparent ) );
+				#endif
 			}
 			ENDHLSL
 		}
@@ -2616,7 +2613,7 @@ Shader /*ase_name*/ "Hidden/Universal/Lit" /*end*/
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
             #endif
 
-			#if defined(UNITY_INSTANCING_ENABLED) && ( defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL) || defined(_INSTANCEDTERRAINNORMALS_PIXEL) )
+			#if defined( UNITY_INSTANCING_ENABLED ) && defined( ASE_INSTANCED_TERRAIN ) && ( defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL) || defined(_INSTANCEDTERRAINNORMALS_PIXEL) )
 				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
@@ -2965,7 +2962,7 @@ Shader /*ase_name*/ "Hidden/Universal/Lit" /*end*/
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
             #endif
 
-			#if defined(UNITY_INSTANCING_ENABLED) && ( defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL) || defined(_INSTANCEDTERRAINNORMALS_PIXEL) )
+			#if defined( UNITY_INSTANCING_ENABLED ) && defined( ASE_INSTANCED_TERRAIN ) && ( defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL) || defined(_INSTANCEDTERRAINNORMALS_PIXEL) )
 				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
@@ -3909,7 +3906,7 @@ Shader /*ase_name*/ "Hidden/Universal/Lit" /*end*/
 					outputDepth = DeviceDepth;
 				#endif
 
-				return _SelectionID;
+				return unity_SelectionID;
 			}
 			ENDHLSL
 		}

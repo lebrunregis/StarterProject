@@ -1,9 +1,9 @@
 fileFormatVersion: 2
-guid: 6a2c21e07a1468e4383fba82106203e6
+guid: 69a70d357af176d4aa6d2213c65c1aea
 AssetOrigin:
   serializedVersion: 1
   productId: 322974
   packageName: "Ultimate Preview Window \u2013 Pro Edition"
-  packageVersion: 1.0.1
+  packageVersion: 1.0.2
   assetPath: Assets/Voxel Labs/Ultimate Preview/Editor/Scripts/Assembly/VoxelLabs.UltimatePreview.Core.dll
-  uploadId: 779994
+  uploadId: 781696

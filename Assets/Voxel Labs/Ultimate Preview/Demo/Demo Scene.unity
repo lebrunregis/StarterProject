@@ -416,12 +416,14 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_text: "<size=120%><b><color=#FFD700>Getting Started with Ultimate Preview</color></b></size>\r\n\r\n<size=100%>\r\n<color=#ADFF2F>\u2022
-    URP & Built-in Render Pipeline:</color>  \r\nNo extra import is required \u2014
-    support is included by default.\n\n<color=#FF8C00>\u2022 HDRP Render Pipeline:</color> 
-    \nIf your project uses the <color=#FF8C00>High Definition Render Pipeline (HDRP)</color>,
+    URP & Built-in Render Pipeline:</color>  \r\nNo extra import is required, support
+    is included by default. After importing Ultimate Preview, it is recommended to
+    restart the Unity Editor.\n\n<color=#FF8C00>\u2022 HDRP Render Pipeline:</color> 
+    \n- If your project uses the <color=#FF8C00>High Definition Render Pipeline (HDRP)</color>,
     you must also import the dedicated HDRP package after importing the main package.
-    \r\nThe HDRP package is located at: \r\n<color=#32CD32>Assets/Voxel Labs/Ultimate
-    Preview/Packages/UltimatePreview_HDRP.unitypackage</color> \r\r\n\r\n\n<color=#87CEFA>Using
+    \r\n- The HDRP package is located at: \r\n<color=#32CD32>Assets/Voxel Labs/Ultimate
+    Preview/Packages/UltimatePreview_HDRP.unitypackage</color> \n- After importing
+    Ultimate Preview, it is recommended to restart the Unity Editor.\r\r\n\n\n<color=#87CEFA>Using
     Ultimate Preview:</color>  \r\nAfter importing, select any supported asset (model,
     animation, UI, particle, or VFX) in the <color=#FFD700>Project window</color>. 
     \r\nThe <color=#87CEFA>Ultimate Preview</color> window will open automatically
@@ -457,8 +459,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 33.25
+  m_fontSizeBase: 33.25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

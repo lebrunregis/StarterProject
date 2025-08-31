@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1156077403, guid: 6a2c21e07a1468e4383fba82106203e6, type: 3}
+  m_Script: {fileID: -1156077403, guid: 69a70d357af176d4aa6d2213c65c1aea, type: 3}
   m_Name: UltimatePreview - SettingsReferenceHolder
   m_EditorClassIdentifier: 
-  ultimatePreviewSettings: {fileID: 11400000, guid: be610beeb9114774f8bd7ab3b751a21e, type: 2}
+  ultimatePreviewSettings: {fileID: 11400000, guid: 0cc82b77e457fc04fa163df03206693c, type: 2}

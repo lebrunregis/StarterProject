@@ -2,6 +2,6 @@
 
 namespace CitrioN.Common
 {
-    [SkipObfuscation]
-    public class GlobalEventListener_Transform : GlobalEventListener<Transform> { }
+  [SkipObfuscation]
+  public class GlobalEventListener_Transform : GlobalEventListener<Transform> { }
 }

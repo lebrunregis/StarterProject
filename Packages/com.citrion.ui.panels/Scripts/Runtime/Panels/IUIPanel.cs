@@ -1,21 +1,21 @@
 namespace CitrioN.UI
 {
-    public interface IUIPanel
-    {
-        string PanelName { get; set; }
+  public interface IUIPanel
+  {
+    string PanelName { get; set; }
 
-        bool PreventOpening { get; set; }
+    bool PreventOpening { get; set; }
 
-        bool CanOpen { get; }
+    bool CanOpen { get; }
 
-        void Open(params object[] input);
+    void Open(params object[] input);
 
-        void OpenNoParams();
+    void OpenNoParams();
 
-        void Close(params object[] input);
+    void Close(params object[] input);
 
-        void CloseNoParams();
+    void CloseNoParams();
 
-        void Toggle();
-    }
+    void Toggle();
+  }
 }

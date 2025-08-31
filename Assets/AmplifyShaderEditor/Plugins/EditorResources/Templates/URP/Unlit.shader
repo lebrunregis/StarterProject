@@ -29,6 +29,7 @@ Shader /*ase_name*/ "Hidden/Universal/Unlit" /*end*/
 				Opaque:SetPropertyOnSubShader:RenderType,Opaque
 				Opaque:SetPropertyOnSubShader:RenderQueue,Geometry
 				Opaque:SetPropertyOnPass:Forward:ZWrite,On
+				Opaque:ShowOption:  Keep Alpha
 				Opaque:HideOption:  Blend
 				Opaque:RemoveDefine:_SURFACE_TYPE_TRANSPARENT 1
 				Opaque:RefreshOption:Alpha Clipping
@@ -37,10 +38,14 @@ Shader /*ase_name*/ "Hidden/Universal/Unlit" /*end*/
 				Transparent:SetPropertyOnSubShader:RenderType,Transparent
 				Transparent:SetPropertyOnSubShader:RenderQueue,Transparent
 				Transparent:SetPropertyOnPass:Forward:ZWrite,Off
+				Transparent:HideOption:  Keep Alpha
 				Transparent:ShowOption:  Blend
 				Transparent:SetDefine:_SURFACE_TYPE_TRANSPARENT 1
 				Transparent:ExcludePass:Universal2D
 				Transparent:ExcludePass:DepthNormalsOnly
+			Option:  Keep Alpha:false,true:false
+				true:SetDefine:ASE_OPAQUE_KEEP_ALPHA
+				false:RemoveDefine:ASE_OPAQUE_KEEP_ALPHA
 			Option:  Blend:Alpha,Premultiply,Additive,Multiply:Alpha
 				Alpha:SetPropertyOnPass:Forward:BlendRGB,SrcAlpha,OneMinusSrcAlpha
 				Premultiply:SetPropertyOnPass:Forward:BlendRGB,One,OneMinusSrcAlpha
@@ -246,6 +251,10 @@ Shader /*ase_name*/ "Hidden/Universal/Unlit" /*end*/
 		#pragma target 4.5
 		#pragma prefer_hlslcc gles
 		#pragma exclude_renderers d3d9 // ensure rendering platforms toggle list is visible
+
+		#if ( SHADER_TARGET > 35 ) && defined( SHADER_API_GLES3 )
+			#error For WebGL2/GLES3, please set your shader target to 3.5 via SubShader options. URP shaders in ASE use target 4.5 by default.
+		#endif
 
 		#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl"
 		#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Filtering.hlsl"
@@ -594,7 +603,11 @@ Shader /*ase_name*/ "Hidden/Universal/Unlit" /*end*/
 					LODFadeCrossFade( input.positionCS );
 				#endif
 
-				return half4( Color, OutputAlpha( Alpha, isTransparent ) );
+				#if defined( ASE_OPAQUE_KEEP_ALPHA )
+					return half4( Color, Alpha );
+				#else
+					return half4( Color, OutputAlpha( Alpha, isTransparent ) );
+				#endif
 			}
 			ENDHLSL
 		}
@@ -905,7 +918,11 @@ Shader /*ase_name*/ "Hidden/Universal/Unlit" /*end*/
 					outRenderingLayers = float4( EncodeMeshRenderingLayer( renderingLayers ), 0, 0, 0 );
 				#endif
 
-				return half4( Color, OutputAlpha( Alpha, isTransparent ) );
+				#if defined( ASE_OPAQUE_KEEP_ALPHA )
+					return half4( Color, Alpha );
+				#else
+					return half4( Color, OutputAlpha( Alpha, isTransparent ) );
+				#endif
 			}
 			ENDHLSL
 		}
@@ -2128,7 +2145,7 @@ Shader /*ase_name*/ "Hidden/Universal/Unlit" /*end*/
 				#endif
 
 				half4 outColor = 0;
-				outColor = _SelectionID;
+				outColor = unity_SelectionID;
 
 				return outColor;
 			}

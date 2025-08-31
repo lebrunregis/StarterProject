@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 861622789, guid: 6a2c21e07a1468e4383fba82106203e6, type: 3}
+  m_Script: {fileID: 861622789, guid: 69a70d357af176d4aa6d2213c65c1aea, type: 3}
   m_Name: UltimatePreview - Settings
   m_EditorClassIdentifier: 
-  "\_": 1
+  "\u2001\u205A": 1
   ultimateAnimationPreviewSettings:
     isEnable: 1
+    disablePlayModeColorTint: 1
     isLightsEnable: 1
     cameraSettings:
       defaultZoom: 1
@@ -59,6 +60,7 @@ MonoBehaviour:
       showPlayPrevAnimBtn: 1
   ultimateGameobjectPreviewSettings:
     isEnable: 1
+    disablePlayModeColorTint: 1
     isLightsEnable: 1
     cameraSettings:
       defaultZoom: 1
@@ -84,6 +86,7 @@ MonoBehaviour:
     isSceneGameobjectPreviewEnable: 1
     isParticlesPreviewEnable: 1
     isUIPreviewEnable: 1
+    isVFXPreviewEnable: 1
     isShowCanvas: 0
     IsUiAlwaysFacingCamera: 1
     IsSpriteAlwaysFacingCamera: 1

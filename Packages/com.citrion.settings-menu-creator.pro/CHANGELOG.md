@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.6.1] - August 26th 2025
+Core:
+- Adjusted ScrollRect scroll speed for Unity 6
+- Improved internal event handling
+- Added support to properly handle settings of type integer with localization
+- Replaced null propagation checks on Unity objects
+
+## [1.6.0] - August 22nd 2025
+Core:
+- NEW UI Toolkit localization support
+- NEW Switch UI element (based on a Toggle)
+- NEW Game view resolution reverts back to original after leaving play mode
+- Updated various prefabs to support outlines with a StyleProfile
+- Updated TND upscaler asset integrations to work with their latest framework
+- Updated third party localization integrations to contain UI Toolkit demo scenes
+- Updated Documentation
+
 ## [1.5.3] - June 17th 2025
 Core:
 - Added automatic CanvasGroup handling to prevent unintended menu navigation when panel/menu is closed

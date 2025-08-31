@@ -1,16 +1,16 @@
 namespace CitrioN.SettingsMenuCreator
 {
-    public class Setting_DeleteSave : Setting_SettingsCollection
+  public class Setting_DeleteSave : Setting_SettingsCollection
+  {
+    public override object ApplySettingChange(SettingsCollection settings, params object[] args)
     {
-        public override object ApplySettingChange(SettingsCollection settings, params object[] args)
-        {
-            if (settings != null)
-            {
-                settings.DeleteSave();
-            }
+      if (settings != null)
+      {
+        settings.DeleteSave();
+      }
 
-            base.ApplySettingChange(settings, null);
-            return null;
-        }
+      base.ApplySettingChange(settings, null);
+      return null;
     }
+  }
 }

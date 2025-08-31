@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.3.4] - August 2025
+
 ## [1.3.3] - May 2025
 
 ## [1.3.2] - February 2025

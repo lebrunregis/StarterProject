@@ -1,11 +1,18 @@
 #if UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEditor;
-using UnityEditor.IMGUI.Controls;
 using UnityEngine;
-using static VHierarchy.Libs.VGUI;
+using UnityEditor;
+using UnityEditor.ShortcutManagement;
+using System.Reflection;
+using System.Linq;
+using UnityEditorInternal;
+using UnityEngine.UIElements;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
+using UnityEditor.IMGUI.Controls;
 using static VHierarchy.Libs.VUtils;
+using static VHierarchy.Libs.VGUI;
 // using static VTools.VDebug;
 using static VHierarchy.VHierarchyPalette;
 
@@ -13,7 +20,7 @@ using static VHierarchy.VHierarchyPalette;
 namespace VHierarchy
 {
     [CustomEditor(typeof(VHierarchyPalette))]
-    internal class VHierarchyPaletteEditor : Editor
+    class VHierarchyPaletteEditor : Editor
     {
 
         public override void OnInspectorGUI()
@@ -616,40 +623,40 @@ namespace VHierarchy
 
         }
 
-        private float iconSize => 14;
-        private float iconSpacing => 6;
-        private float cellSize => iconSize + iconSpacing;
-        private readonly float rowSpacing = 1;
-        private float rowsOffsetX => 14;
-        private float iconsOffsetX => 27;
+        float iconSize => 14;
+        float iconSpacing => 6;
+        float cellSize => iconSize + iconSpacing;
+        float rowSpacing = 1;
+        float rowsOffsetX => 14;
+        float iconsOffsetX => 27;
 
-        private Color hoveredRowBackground => Greyscale(isDarkTheme ? 1 : 0, .05f);
-        private Color draggedRowBackground => Greyscale(isDarkTheme ? .3f : .9f);
-        private Color pickingBackground => Greyscale(1, .17f);
-        private Color disabledRowTint => Greyscale(1, .45f);
+        Color hoveredRowBackground => Greyscale(isDarkTheme ? 1 : 0, .05f);
+        Color draggedRowBackground => Greyscale(isDarkTheme ? .3f : .9f);
+        Color pickingBackground => Greyscale(1, .17f);
+        Color disabledRowTint => Greyscale(1, .45f);
 
-        private float rowWidth => cellSize * Mathf.Max(palette.colors.Count, palette.iconRows.Max(r => r.iconCount + 1)) + 55;
+        float rowWidth => cellSize * Mathf.Max(palette.colors.Count, palette.iconRows.Max(r => r.iconCount + 1)) + 55;
 
-        private bool pickingColor;
-        private int pickingColorAtIndex;
-        private EditorWindow colorPickerWindow;
+        bool pickingColor;
+        int pickingColorAtIndex;
+        EditorWindow colorPickerWindow;
 
-        private bool pickingIcon;
-        private int pickingIconAtIndex;
-        private IconRow pickingIconAtRow;
-        private AddIconWindow addIconWindow;
+        bool pickingIcon;
+        int pickingIconAtIndex;
+        IconRow pickingIconAtRow;
+        AddIconWindow addIconWindow;
 
-        private IconRow hoveredRow;
+        IconRow hoveredRow;
 
-        private float firstRowY = 51;
+        float firstRowY = 51;
 
-        private static AdjustColorsWindow adjustColorsWindow;
-
-
+        static AdjustColorsWindow adjustColorsWindow;
 
 
 
-        private void UpdateAnimations()
+
+
+        void UpdateAnimations()
         {
             void lerpRowGaps()
             {
@@ -731,22 +738,22 @@ namespace VHierarchy
 
         }
 
-        private readonly List<float> rowGaps = new();
+        List<float> rowGaps = new();
 
-        private float crossIconY = 51;
-        private float crossIconAnimationT = 1;
-        private IconRow crossIconAnimationSourceRow;
-        private bool animatingCrossIcon => crossIconAnimationT != 1;
+        float crossIconY = 51;
+        float crossIconAnimationT = 1;
+        IconRow crossIconAnimationSourceRow;
+        bool animatingCrossIcon => crossIconAnimationT != 1;
 
-        [System.NonSerialized] private IconRow prevFirstEnabledRow;
-        private IconRow curFirstEnabledRow => palette.iconRows.FirstOrDefault(r => r.enabled);
-
-
+        [System.NonSerialized] IconRow prevFirstEnabledRow;
+        IconRow curFirstEnabledRow => palette.iconRows.FirstOrDefault(r => r.enabled);
 
 
 
 
-        private void UpdateDragging()
+
+
+        void UpdateDragging()
         {
             void startDragging()
             {
@@ -801,27 +808,27 @@ namespace VHierarchy
 
         }
 
-        private IconRow draggedRow;
-        private bool draggingRow;
-        private int draggingRowFromIndex;
-        private float draggedRowHoldOffset;
-        private float draggedRowY;
-        private int insertDraggedRowAtIndex;
+        IconRow draggedRow;
+        bool draggingRow;
+        int draggingRowFromIndex;
+        float draggedRowHoldOffset;
+        float draggedRowY;
+        int insertDraggedRowAtIndex;
 
 
 
 
 
 
-        private VHierarchyPalette palette => target as VHierarchyPalette;
+        VHierarchyPalette palette => target as VHierarchyPalette;
 
     }
 
 
-    internal class AddIconWindow : EditorWindow
+    class AddIconWindow : EditorWindow
     {
 
-        private void OnGUI()
+        void OnGUI()
         {
             void header()
             {
@@ -1039,14 +1046,14 @@ namespace VHierarchy
 
         public string hoveredIconName;
 
-        private static string searchString = "";
-        private static float scrollPos;
+        static string searchString = "";
+        static float scrollPos;
 
 
 
 
 
-        private void LoadAllIcons()
+        void LoadAllIcons()
         {
             if (allIconNames != null) return;
 
@@ -1154,11 +1161,11 @@ namespace VHierarchy
 
         }
 
-        private static List<string> allIconNames;
+        static List<string> allIconNames;
 
 
 
-        private void FilterIconsBySearch()
+        void FilterIconsBySearch()
         {
             filteredIcons = (
 
@@ -1173,11 +1180,11 @@ namespace VHierarchy
                             ).ToList();
         }
 
-        private static List<string> filteredIcons;
+        static List<string> filteredIcons;
 
 
 
-        private void GenerateRows()
+        void GenerateRows()
         {
 
             var iconsPerRow = ((position.width - paddingLeft - paddingRight) / cellSize).FloorToInt();
@@ -1202,7 +1209,7 @@ namespace VHierarchy
 
         }
 
-        private static List<List<string>> rows;
+        static List<List<string>> rows;
 
 
 
@@ -1219,7 +1226,7 @@ namespace VHierarchy
 
         }
 
-        private SearchField searchField;
+        SearchField searchField;
 
 
 
@@ -1230,9 +1237,9 @@ namespace VHierarchy
 
     }
 
-    internal class AdjustColorsWindow : EditorWindow
+    class AdjustColorsWindow : EditorWindow
     {
-        private void OnGUI()
+        void OnGUI()
         {
             void header()
             {

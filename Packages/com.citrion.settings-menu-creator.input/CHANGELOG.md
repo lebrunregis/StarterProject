@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.1] - August 26nd 2025
+- Improve internal event handling
+
+## [1.2.0] - August 22nd 2025
+This update REQUIRES version 1.6 or newer of the Settings & Options Menu Creator
+- Compatibility update for Settings & Options Menu Creator version 1.6
+- NEW Support for UI Toolkit input action rebind reset button localization
+- Enabled text wrapping on input action rebind reset button by default
+- Updated demo scenes
+
 ## [1.1.0] - August 2024
 For version 1.1 onward the addon will no longer contain the base Settings Menu Creator asset and needs to be imported separately.
 - NEW 'Input Action Processor' settings. The processor settings can be used to achieve things like 'Mouse Sensitivity' or 'Invert Mouse' settings.

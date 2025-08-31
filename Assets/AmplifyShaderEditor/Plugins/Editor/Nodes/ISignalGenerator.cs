@@ -3,9 +3,9 @@
 
 namespace AmplifyShaderEditor
 {
-    internal interface ISignalGenerator
-    {
-        void GenerateSignalPropagation();
-        void GenerateSignalInibitor();
-    }
+	interface ISignalGenerator
+	{
+		void GenerateSignalPropagation();
+		void GenerateSignalInibitor();
+	}
 }

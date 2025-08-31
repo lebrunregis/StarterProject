@@ -3,7 +3,7 @@
 
 namespace AmplifyShaderEditor
 {
-    internal interface IFallbackVars
+    interface IFallbackVars
     {
         void Revert();
     }

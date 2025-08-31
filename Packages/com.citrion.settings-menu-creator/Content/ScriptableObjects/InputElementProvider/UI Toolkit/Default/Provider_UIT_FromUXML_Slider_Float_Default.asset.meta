@@ -10,7 +10,7 @@ AssetOrigin:
   serializedVersion: 1
   productId: 269528
   packageName: Settings & Options Menu Creator Pro
-  packageVersion: 1.5.2
+  packageVersion: 1.6.0
   assetPath: Packages/com.citrion.settings-menu-creator/Content/ScriptableObjects/InputElementProvider/UI
     Toolkit/Default/Provider_UIT_FromUXML_Slider_Float_Default.asset
-  uploadId: 765336
+  uploadId: 782203

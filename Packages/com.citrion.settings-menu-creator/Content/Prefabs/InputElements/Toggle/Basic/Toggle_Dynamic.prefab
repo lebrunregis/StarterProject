@@ -5,6 +5,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2284664805733616614, guid: 71f904649ebfff14086c3b33b0de29a6, type: 3}
@@ -144,6 +145,27 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7405194553354558987, guid: 71f904649ebfff14086c3b33b0de29a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3698861870106446020}
+    - targetCorrespondingSourceObject: {fileID: 7405194553354558987, guid: 71f904649ebfff14086c3b33b0de29a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6851376042323224535}
+    - targetCorrespondingSourceObject: {fileID: 7405194553354558987, guid: 71f904649ebfff14086c3b33b0de29a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4916387384295598765}
+    - targetCorrespondingSourceObject: {fileID: 7405194553354558987, guid: 71f904649ebfff14086c3b33b0de29a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8064492567872588079}
+    - targetCorrespondingSourceObject: {fileID: 7405194553354558987, guid: 71f904649ebfff14086c3b33b0de29a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4709190635880435370}
+    - targetCorrespondingSourceObject: {fileID: 8308180744660034018, guid: 71f904649ebfff14086c3b33b0de29a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4305675162279727095}
   m_SourcePrefab: {fileID: 100100000, guid: 71f904649ebfff14086c3b33b0de29a6, type: 3}
 --- !u!1 &4785186194768130598 stripped
 GameObject:
@@ -228,6 +250,78 @@ MonoBehaviour:
       - m_Target: {fileID: 7896185634187429718}
         m_TargetAssemblyTypeName: UnityEngine.UI.Image, UnityEngine.UI
         m_MethodName: set_pixelsPerUnitMultiplier
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
+--- !u!114 &4916387384295598765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6332195310339182031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
+--- !u!114 &8064492567872588079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6332195310339182031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea13c9bb8b2f27a4b9cfc6592076e217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Primary Image Outline
+  styleProfile: {fileID: 0}
+  lastStyleProfile: {fileID: 0}
+  styleProfileIdentifier: 
+  lastProfileIdentifier: 
+  onStyleChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  outline: {fileID: 4916387384295598765}
+  keepAlpha: 0
+  hueOffset: 0
+  saturationOffset: 0
+  valueOffset: 0
+--- !u!114 &4709190635880435370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6332195310339182031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c42f5b31ee59e6439a7974a53aa88d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: Primary Image Outline Effect Distance
+  styleProfile: {fileID: 0}
+  lastStyleProfile: {fileID: 0}
+  styleProfileIdentifier: 
+  lastProfileIdentifier: 
+  onStyleChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4916387384295598765}
+        m_TargetAssemblyTypeName: UnityEngine.UI.Shadow, UnityEngine.UI
+        m_MethodName: set_effectDistance
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

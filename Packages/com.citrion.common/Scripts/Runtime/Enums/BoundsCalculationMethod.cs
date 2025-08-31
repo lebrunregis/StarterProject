@@ -1,9 +1,9 @@
 ﻿namespace CitrioN.Common
 {
-    [SkipObfuscationRename]
-    public enum BoundsCalculationMethod
-    {
-        Renderer,
-        Colliders,
-    }
+  [SkipObfuscationRename]
+  public enum BoundsCalculationMethod
+  {
+    Renderer,
+    Colliders,
+  }
 }

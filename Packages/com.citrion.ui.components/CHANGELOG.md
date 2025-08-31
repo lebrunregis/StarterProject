@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] - August 26th 2025
+- Adjusted ScrollRect scroll speed for Unity 6
+
+## [1.2.0] - August 2025
+- Add switch UI element
+
 ## [1.1.2] - May 2025
 - Add names to UI Toolkit PreviousNextSelector hierarchy
 
