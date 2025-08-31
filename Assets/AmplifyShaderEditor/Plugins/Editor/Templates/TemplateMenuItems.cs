@@ -74,6 +74,11 @@ namespace AmplifyShaderEditor
 		[MenuItem( "Assets/Create/Amplify Shader/Impostors/Lit", false, 85 )]
 		public static void ApplyTemplateImpostorsLit()
 		{
+			AmplifyShaderEditorWindow.CreateConfirmationTemplateShader( "7a405f58bac896e46ad633cb1274d4ba" );
+		}
+		[MenuItem( "Assets/Create/Amplify Shader/Impostors/Lit (Deprecated)", false, 85 )]
+		public static void ApplyTemplateImpostorsLitDeprecated()
+		{
 			AmplifyShaderEditorWindow.CreateConfirmationTemplateShader( "30a8e337ed84177439ca24b6a5c97cd1" );
 		}
 		[MenuItem( "Assets/Create/Amplify Shader/Impostors/Lit URP", false, 85 )]

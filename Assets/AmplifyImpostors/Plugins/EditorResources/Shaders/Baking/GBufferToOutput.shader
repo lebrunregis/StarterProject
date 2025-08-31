@@ -287,6 +287,9 @@ Shader "Hidden/GBufferToOutput"
 		float4 GBufferToOutput( const float2 uv, const int outputIndex )
 		{
 			float depth = SAMPLE_RAW_DEPTH_TEXTURE( _Depth, uv ).r;
+		#if !defined( UNITY_REVERSED_Z )
+			depth = 1 - depth;
+		#endif
 
 			float4 result = 0;
 			if ( outputIndex == 5 ) // Position: same for all render pipelines

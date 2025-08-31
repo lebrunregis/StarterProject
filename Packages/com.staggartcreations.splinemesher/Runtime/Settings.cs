@@ -28,7 +28,7 @@ namespace sc.modeling.splines.runtime
             public bool enable;
             [Tooltip("Do not create a visible mesh, but only create the collision mesh")]
             public bool colliderOnly;
-
+            
             [Tooltip("The \"Box\" type is an automatically created collider mesh, based on the source mesh's bounding box.")]
             public ColliderType type;
             [Min(0)]
@@ -36,7 +36,7 @@ namespace sc.modeling.splines.runtime
             public int boxSubdivisions = 0;
             public Mesh collisionMesh;
         }
-        public Collision collision = new();
+        public Collision collision = new Collision();
 
         [Serializable]
         public class Distribution
@@ -45,8 +45,8 @@ namespace sc.modeling.splines.runtime
             public int segments = 1;
             [Tooltip("Automatically calculate the number of segments based on the length of the spline")]
             public bool autoSegmentCount = true;
-
-
+            
+            
             [Tooltip("Stretch the segments so that they fit exactly over the entire spline")]
             public bool stretchToFit = true;
             [Tooltip("Ensure the input mesh is repeated evenly, instead of cutting it off when it doesn't fit on the remainder of the spline.")]
@@ -59,12 +59,12 @@ namespace sc.modeling.splines.runtime
             [Tooltip("Shift the mesh X number of units from the end of the spline")]
             public float trimEnd;
 
-
+            
             //[Min(0f)]
             [Tooltip("Space between each mesh segment")]
             public float spacing;
         }
-        public Distribution distribution = new();
+        public Distribution distribution = new Distribution();
 
         [Serializable]
         public class Deforming
@@ -77,12 +77,12 @@ namespace sc.modeling.splines.runtime
                      "\n\nNote: if the pivot is already centered, this appears to do exactly the same as the Curve Offset parameter")]
             public Vector2 pivotOffset;
             public Vector3 scale = Vector3.one;
-#if SPLINES
+            #if SPLINES
             public PathIndexUnit scalePathIndexUnit = PathIndexUnit.Distance;
             [Tooltip("Defines how the data is interpolated from one data point, to the other")]
             public InterpolationType scaleInterpolation = InterpolationType.Linear;
-#endif
-
+            #endif
+            
             [UnityEngine.Serialization.FormerlySerializedAs("ignoreRoll")]
             [Tooltip("Ignore the spline's roll rotation and ensure the geometry stays flat")]
             public bool ignoreKnotRotation = false;
@@ -99,11 +99,11 @@ namespace sc.modeling.splines.runtime
             public float rollFrequency = 0.1f;
             [Range(-360f, 360f)]
             public float rollAngle = 0f;
-#if SPLINES
+            #if SPLINES
             public PathIndexUnit rollPathIndexUnit = PathIndexUnit.Distance;
-#endif
+            #endif
         }
-        public Deforming deforming = new();
+        public Deforming deforming = new Deforming();
 
         [Serializable]
         public class UV
@@ -122,17 +122,17 @@ namespace sc.modeling.splines.runtime
             [Tooltip("Overwrite the target UV value with that of the vertex position over the spline (normalized 0-1 value)")]
             public StretchMode stretchMode;
         }
-        public UV uv = new();
+        public UV uv = new UV();
 
         [Serializable]
         public class Color
         {
-#if SPLINES
+            #if SPLINES
             public PathIndexUnit pathIndexUnit = PathIndexUnit.Distance;
-#endif
+            #endif
         }
         public Color color;
-
+        
         [Serializable]
         public class Conforming
         {
@@ -156,7 +156,7 @@ namespace sc.modeling.splines.runtime
             [Tooltip("Reorient the geometry normals to match the surface hit, for correct lighting")]
             public bool blendNormal = true;
         }
-        public Conforming conforming = new();
+        public Conforming conforming = new Conforming();
 
         [Serializable]
         public class OutputMesh
@@ -172,15 +172,15 @@ namespace sc.modeling.splines.runtime
                      "This data may be used in shaders for tailored effects, such as animations.")]
             public bool storeGradientsInUV = true;
             [Tooltip("Multiplier for the pack-margin value. A value of 1 equates to 1 texel")]
-
+            
             [Space]
-
+            
             [Min(0.01f)]
             public float lightmapUVMarginMultiplier = 1f;
             [Range(15f, 90f)]
             [Tooltip("This angle (in degrees) or greater between triangles will cause UV seam to be created.")]
             public float lightmapUVAngleThreshold = 88f;
         }
-        public OutputMesh mesh = new();
+        public OutputMesh mesh = new OutputMesh();
     }
 }

@@ -1,3 +1,28 @@
+v1.0.1
+
+   Highlights
+      * Updated all shaders per ASE v1.9.9.4
+      * Added official support for Unity 6.1 and 6.2
+
+   Changes
+      * Changed shader import message show up only when shader package is imported
+      * Deprecated current "Impostors/Lit" template to "Impostors/Lit (Deprecated)"
+      * Added a new "Impostors/Lit" template, based on ASE "Built-In/Lit"
+      * Renamed 17x packages to 17.0
+
+   Fixes
+      * Fixed baking on Linux (GLCore)
+      * Fixed Start Screen interfering with Unity batch mode
+      * Fixed Start Screen throwing JSON related errors
+      * Fixed depth flicker for spherical forward-only shader in deferred mode
+      * Fixed hardcoded _Parallax property
+      * Fixed impostors triggering texture reimports across the project (#15)
+      * Fixed Amplify Impostor component "References" field empty in 2023.1+ (#22)
+      * Fixed Readme minimum requirements to Unity 2021.3 LTS (#80)
+      * Fixed bug causing empty billboard mesh on macOS (#81)
+      * Fixed directional light with certain angles breaking impostor shadows in BiRP (#85)
+      * Fixed Specular/Normal default values swapped in Scripts/Preferences.cs (#86)
+
 v1.0.0
 
    Highlights

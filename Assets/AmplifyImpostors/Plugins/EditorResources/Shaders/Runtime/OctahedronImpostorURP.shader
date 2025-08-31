@@ -1,4 +1,4 @@
-// Made with Amplify Shader Editor v1.9.8.1
+// Made with Amplify Shader Editor v1.9.9.4
 // Available at the Unity Asset Store - http://u3d.as/y3X 
 Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 {
@@ -6,30 +6,30 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 	{
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
 		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
-		[NoScaleOffset]_Albedo("Albedo (RGB) Alpha (A)", 2D) = "white" {}
-		[NoScaleOffset]_Normals("Normals (RGB) Depth (A)", 2D) = "white" {}
-		[NoScaleOffset]_Specular("Specular (RGB) Smoothness (A)", 2D) = "black" {}
-		[NoScaleOffset]_Occlusion("Occlusion (RGB)", 2D) = "white" {}
-		[NoScaleOffset]_Emission("Emission (RGB)", 2D) = "black" {}
-		[NoScaleOffset]_Position("Position (RGB)", 2D) = "black" {}
-		_ClipMask("Clip", Range( 0 , 1)) = 0.5
-		_TextureBias("Texture Bias", Float) = -1
-		_Parallax("Parallax", Range( -1 , 1)) = 1
-		_AI_ShadowBias("Shadow Bias", Range( 0 , 2)) = 0.333
-		_AI_ShadowView("Shadow View", Range( 0 , 1)) = 1
-		_AI_ForwardBias("Forward Bias", Range( 0 , 2)) = 0
+		[NoScaleOffset] _Albedo( "Albedo (RGB) Alpha (A)", 2D ) = "white" {}
+		[NoScaleOffset] _Normals( "Normals (RGB) Depth (A)", 2D ) = "white" {}
+		[NoScaleOffset] _Specular( "Specular (RGB) Smoothness (A)", 2D ) = "black" {}
+		[NoScaleOffset] _Occlusion( "Occlusion (RGB)", 2D ) = "white" {}
+		[NoScaleOffset] _Emission( "Emission (RGB)", 2D ) = "black" {}
+		[NoScaleOffset] _Position( "Position (RGB)", 2D ) = "black" {}
+		_ClipMask( "Clip", Range( 0, 1 ) ) = 0.5
+		_TextureBias( "Texture Bias", Float ) = -1
+		_Parallax( "Parallax", Range( -1, 1 ) ) = 1
+		_AI_ShadowBias( "Shadow Bias", Range( 0, 2 ) ) = 0.333
+		_AI_ShadowView( "Shadow View", Range( 0, 1 ) ) = 1
+		_AI_ForwardBias( "Forward Bias", Range( 0, 2 ) ) = 0
 		[Toggle( _HEMI_ON )] _Hemi( "Hemi", Float ) = 0
 		[Toggle( EFFECT_HUE_VARIATION )] _Hue( "Use SpeedTree Hue", Float ) = 0
-		_HueVariation("Hue Variation", Color) = (0,0,0,0)
+		_HueVariation( "Hue Variation", Color ) = ( 0, 0, 0, 0 )
 		[Toggle( AI_CLIP_NEIGHBOURS_FRAMES )] AI_CLIP_NEIGHBOURS_FRAMES( "Clip Neighbours Frames", Float ) = 0
-		[Toggle]_AI_AlphaToCoverage("Alpha To Coverage", Float) = 0
-		[HideInInspector]_Frames("Frames", Float) = 16
-		[HideInInspector]_DepthSize("DepthSize", Float) = 1
-		[HideInInspector]_ImpostorSize("Impostor Size", Float) = 1
-		[HideInInspector]_Offset("Offset", Vector) = (0,0,0,0)
-		[HideInInspector]_AI_SizeOffset("Size & Offset", Vector) = (0,0,0,0)
-		[HideInInspector]_AI_BoundsMin("Bounds Min", Vector) = (0,0,0,0)
-		[HideInInspector]_AI_BoundsSize("Bounds Size", Vector) = (0,0,0,0)
+		[Toggle] _AI_AlphaToCoverage( "Alpha To Coverage", Float ) = 0
+		[HideInInspector] _Frames( "Frames", Float ) = 16
+		[HideInInspector] _DepthSize( "DepthSize", Float ) = 1
+		[HideInInspector] _ImpostorSize( "Impostor Size", Float ) = 1
+		[HideInInspector] _Offset( "Offset", Vector ) = ( 0, 0, 0, 0 )
+		[HideInInspector] _AI_SizeOffset( "Size & Offset", Vector ) = ( 0, 0, 0, 0 )
+		[HideInInspector] _AI_BoundsMin( "Bounds Min", Vector ) = ( 0, 0, 0, 0 )
+		[HideInInspector] _AI_BoundsSize( "Bounds Size", Vector ) = ( 0, 0, 0, 0 )
 
 
 		//_TransmissionShadow( "Transmission Shadow", Range( 0, 1 ) ) = 0.5
@@ -39,6 +39,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 		//_TransDirect( "Trans Direct", Range( 0, 1 ) ) = 0.9
 		//_TransAmbient( "Trans Ambient", Range( 0, 1 ) ) = 0.1
 		//_TransShadow( "Trans Shadow", Range( 0, 1 ) ) = 0.5
+
 		//_TessPhongStrength( "Tess Phong Strength", Range( 0, 1 ) ) = 0.5
 		//_TessValue( "Tess Max Tessellation", Range( 1, 32 ) ) = 16
 		//_TessMin( "Tess Min Distance", Float ) = 10
@@ -46,9 +47,11 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 		//_TessEdgeLength ( "Tess Edge length", Range( 2, 50 ) ) = 16
 		//_TessMaxDisp( "Tess Max Displacement", Float ) = 25
 
-		[HideInInspector][ToggleOff] _SpecularHighlights("Specular Highlights", Float) = 1
-		[HideInInspector][ToggleOff] _EnvironmentReflections("Environment Reflections", Float) = 1
-		[HideInInspector][ToggleOff] _ReceiveShadows("Receive Shadows", Float) = 1.0
+		//_InstancedTerrainNormals("Instanced Terrain Normals", Float) = 1.0
+
+		[ToggleOff] _SpecularHighlights("Specular Highlights", Float) = 1.0
+		[ToggleOff] _EnvironmentReflections("Environment Reflections", Float) = 1.0
+		//[ToggleUI] _ReceiveShadows("Receive Shadows", Float) = 1.0
 
 		[HideInInspector] _QueueOffset("_QueueOffset", Float) = 0
         [HideInInspector] _QueueControl("_QueueControl", Float) = -1
@@ -206,7 +209,9 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 
 			HLSLPROGRAM
 
-			#pragma shader_feature_local _RECEIVE_SHADOWS_OFF
+			#define ASE_GEOMETRY 1
+			#pragma shader_feature_local_fragment _SPECULARHIGHLIGHTS_OFF
+			#pragma shader_feature_local_fragment _ENVIRONMENTREFLECTIONS_OFF
 			#pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
 			#pragma multi_compile_instancing
 			#pragma instancing_options renderinglayer
@@ -214,13 +219,11 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
 			#define _SPECULAR_SETUP 1
-			#pragma shader_feature_local_fragment _SPECULARHIGHLIGHTS_OFF
-			#pragma shader_feature_local_fragment _ENVIRONMENTREFLECTIONS_OFF
 			#define _NORMAL_DROPOFF_WS 1
 			#define ASE_DEPTH_WRITE_ON
 			#define _EMISSION
 			#define _NORMALMAP 1
-			#define ASE_VERSION 19801
+			#define ASE_VERSION 19904
 			#define ASE_SRP_VERSION 170004
 			#ifdef UNITY_COLORSPACE_GAMMA//AI_SRP
 			#define unity_ColorSpaceDielectricSpec half4(0.220916301, 0.220916301, 0.220916301, 1.0 - 0.220916301)//AI_SRP
@@ -251,7 +254,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#pragma vertex vert
 			#pragma fragment frag
 
-			#if defined(_SPECULAR_SETUP) && defined(_ASE_LIGHTING_SIMPLE)
+			#if defined(_SPECULAR_SETUP) && defined(ASE_LIGHTING_SIMPLE)
 				#define _SPECULAR_COLOR 1
 			#endif
 
@@ -278,7 +281,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
             #endif
 
-			#if defined(UNITY_INSTANCING_ENABLED) && defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL)
+			#if defined(UNITY_INSTANCING_ENABLED) && ( defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL) || defined(_INSTANCEDTERRAINNORMALS_PIXEL) )
 				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
@@ -287,9 +290,10 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#define AI_INV_TWO_PI  INV_TWO_PI
 			#define AI_PI          PI
 			#define AI_INV_PI      INV_PI
-			#define ASE_NEEDS_TEXTURE_COORDINATES1
-			#define ASE_NEEDS_TEXTURE_COORDINATES2
 			#define ASE_CHANGES_WORLD_POS
+			#define ASE_NEEDS_CLIP_POS
+			#define ASE_NEEDS_FRAG_CLIP_POS
+			#define ASE_NEEDS_WORLD_POSITION
 			#define ASE_NEEDS_FRAG_WORLD_POSITION
 			#pragma shader_feature_local_fragment _SPECULARMAP
 			#pragma shader_feature_local_fragment _OCCLUSIONMAP
@@ -330,7 +334,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				ASE_SV_POSITION_QUALIFIERS float4 positionCS : SV_POSITION;
 				float3 positionWS : TEXCOORD0;
 				half3 normalWS : TEXCOORD1;
-				half4 tangentWS : TEXCOORD2;
+				float4 tangentWS : TEXCOORD2; // holds terrainUV ifdef ENABLE_TERRAIN_PERPIXEL_NORMAL
 				float4 lightmapUVOrVertexSH : TEXCOORD3;
 				#if defined(ASE_FOG) || defined(_ADDITIONAL_LIGHTS_VERTEX)
 					half4 fogFactorAndVertexLight : TEXCOORD4;
@@ -346,7 +350,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float4 UVsFrame3116 : TEXCOORD9;
 				float4 octaframe116 : TEXCOORD10;
 				float4 viewPos116 : TEXCOORD11;
-				float4 ase_texcoord12 : TEXCOORD12;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -509,7 +512,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float3 localDir = billboard - objectCameraPosition; 
 				objectCameraDirection = trunc( objectCameraDirection * 65536.0 ) / 65536.0;
 				#if defined( _HEMI_ON )
-				objectCameraDirection.y = max(0.001, objectCameraDirection.y);
+				objectCameraDirection.y = max( 0.001, objectCameraDirection.y );
 				float2 frameOcta = VectorToHemiOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
 				#else
 				float2 frameOcta = VectorToOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
@@ -528,7 +531,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa1WorldY, objectCameraPosition, localDir, /*out*/ uvFrame1, /*out*/ octa1LocalY );
 				float2 uvParallax1 = octa1LocalY.xy * fractionsFrame * parallax;
 				uvFrame1 = ( uvFrame1 * fractionsUVscale + 0.5 ) * fractionsFrame + fractionOctaFrame;
-				uvsFrame1 = float4( uvParallax1, uvFrame1) - float4( 0, 0, uvOffset );
+				uvsFrame1 = float4( uvParallax1, uvFrame1 ) - float4( 0, 0, uvOffset );
 				float2 fractPrevOctaFrame = frac( prevOctaFrame );
 				float2 cornerDifference = lerp( float2( 0,1 ) , float2( 1,0 ) , saturate( ceil( ( fractPrevOctaFrame.x - fractPrevOctaFrame.y ) ) ));
 				float2 octaFrame2 = ( ( baseOctaFrame + cornerDifference ) * fractionsPrevFrame ) * 2.0 - 1.0;
@@ -542,7 +545,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa2WorldY, objectCameraPosition, localDir, /*out*/ uvFrame2, /*out*/ octa2LocalY );
 				float2 uvParallax2 = octa2LocalY.xy * fractionsFrame * parallax;
 				uvFrame2 = ( uvFrame2 * fractionsUVscale + 0.5 ) * fractionsFrame + ( ( cornerDifference * fractionsFrame ) + fractionOctaFrame );
-				uvsFrame2 = float4( uvParallax2, uvFrame2) - float4( 0, 0, uvOffset );
+				uvsFrame2 = float4( uvParallax2, uvFrame2 ) - float4( 0, 0, uvOffset );
 				float2 octaFrame3 = ( ( baseOctaFrame + 1 ) * fractionsPrevFrame  ) * 2.0 - 1.0;
 				#if defined( _HEMI_ON )
 				float3 octa3WorldY = HemiOctahedronToVector( octaFrame3 ).xzy;
@@ -554,7 +557,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa3WorldY, objectCameraPosition, localDir, /*out*/ uvFrame3, /*out*/ octa3LocalY );
 				float2 uvParallax3 = octa3LocalY.xy * fractionsFrame * parallax;
 				uvFrame3 = ( uvFrame3 * fractionsUVscale + 0.5 ) * fractionsFrame + ( fractionOctaFrame + fractionsFrame );
-				uvsFrame3 = float4( uvParallax3, uvFrame3) - float4( 0, 0, uvOffset );
+				uvsFrame3 = float4( uvParallax3, uvFrame3 ) - float4( 0, 0, uvOffset );
 				octaFrame = 0;
 				octaFrame.xy = prevOctaFrame;
 				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
@@ -698,8 +701,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
 				OctaImpostorVertex( input.positionOS.xyz, input.normalOS.xyz, input.tangentOS, output.UVsFrame1116, output.UVsFrame2116, output.UVsFrame3116, output.octaframe116, output.viewPos116 );
-				float4 ase_positionCS = TransformObjectToHClip( ( input.positionOS ).xyz );
-				output.ase_texcoord12 = ase_positionCS;
 				
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -727,11 +728,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				#endif
 				OUTPUT_SH4(vertexInput.positionWS, normalInput.normalWS.xyz, GetWorldSpaceNormalizeViewDir(vertexInput.positionWS), output.lightmapUVOrVertexSH.xyz, output.probeOcclusion);
 
-				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
-					output.lightmapUVOrVertexSH.zw = input.texcoord.xy;
-					output.lightmapUVOrVertexSH.xy = input.texcoord.xy * unity_LightmapST.xy + unity_LightmapST.zw;
-				#endif
-
 				#if defined(ASE_FOG) || defined(_ADDITIONAL_LIGHTS_VERTEX)
 					output.fogFactorAndVertexLight = 0;
 					#if defined(ASE_FOG) && !defined(_FOG_FRAGMENT)
@@ -747,6 +743,11 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				output.positionWS = vertexInput.positionWS;
 				output.normalWS = normalInput.normalWS;
 				output.tangentWS = float4( normalInput.tangentWS, ( input.tangentOS.w > 0.0 ? 1.0 : -1.0 ) * GetOddNegativeScale() );
+
+				#if defined( ENABLE_TERRAIN_PERPIXEL_NORMAL )
+					output.tangentWS.zw = input.texcoord.xy;
+					output.tangentWS.xy = input.texcoord.xy * unity_LightmapST.xy + unity_LightmapST.zw;
+				#endif
 				return output;
 			}
 
@@ -830,7 +831,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				output.tangentOS = patch[0].tangentOS * bary.x + patch[1].tangentOS * bary.y + patch[2].tangentOS * bary.z;
 				output.texcoord = patch[0].texcoord * bary.x + patch[1].texcoord * bary.y + patch[2].texcoord * bary.z;
 				#if defined(LIGHTMAP_ON) || defined(ASE_NEEDS_TEXTURE_COORDINATES1)
-					output.texcoord1 = patch[0].texcoord1 * bary.x + patch[1].texcoord1 * bary.y + patch[2].texcoord1 * bary.z;output.texcoord1 = input.texcoord1;
+					output.texcoord1 = patch[0].texcoord1 * bary.x + patch[1].texcoord1 * bary.y + patch[2].texcoord1 * bary.z;
 				#endif
 				#if defined(DYNAMICLIGHTMAP_ON) || defined(ASE_NEEDS_TEXTURE_COORDINATES2)
 					output.texcoord2 = patch[0].texcoord2 * bary.x + patch[1].texcoord2 * bary.y + patch[2].texcoord2 * bary.z;
@@ -865,6 +866,12 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				UNITY_SETUP_INSTANCE_ID(input);
 				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(input);
 
+				#if defined( _SURFACE_TYPE_TRANSPARENT )
+					const bool isTransparent = true;
+				#else
+					const bool isTransparent = false;
+				#endif
+
 				#if defined(LOD_FADE_CROSSFADE)
 					LODFadeCrossFade( input.positionCS );
 				#endif
@@ -882,24 +889,22 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float3 PositionRWS = GetCameraRelativePositionWS( PositionWS );
 				float3 ViewDirWS = GetWorldSpaceNormalizeViewDir( PositionWS );
 				float4 ShadowCoord = shadowCoord;
-				float4 ClipPos = TransformWorldToHClip( PositionWS );
+				float4 ScreenPosNorm = float4( GetNormalizedScreenSpaceUV( input.positionCS ), input.positionCS.zw );
+				float4 ClipPos = ComputeClipSpacePosition( ScreenPosNorm.xy, input.positionCS.z ) * input.positionCS.w;
 				float4 ScreenPos = ComputeScreenPos( ClipPos );
 				float3 TangentWS = input.tangentWS.xyz * renormFactor;
 				float3 BitangentWS = cross( input.normalWS, input.tangentWS.xyz ) * input.tangentWS.w * renormFactor;
 				float3 NormalWS = input.normalWS * renormFactor;
 
-				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
-					float2 sampleCoords = (input.lightmapUVOrVertexSH.zw / _TerrainHeightmapRecipSize.zw + 0.5f) * _TerrainHeightmapRecipSize.xy;
+				#if defined( ENABLE_TERRAIN_PERPIXEL_NORMAL )
+					float2 sampleCoords = (input.tangentWS.zw / _TerrainHeightmapRecipSize.zw + 0.5f) * _TerrainHeightmapRecipSize.xy;
 					NormalWS = TransformObjectToWorldNormal(normalize(SAMPLE_TEXTURE2D(_TerrainNormalmapTexture, sampler_TerrainNormalmapTexture, sampleCoords).rgb * 2 - 1));
 					TangentWS = -cross(GetObjectToWorldMatrix()._13_23_33, NormalWS);
 					BitangentWS = cross(NormalWS, -TangentWS);
 				#endif
 
-				float2 NormalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.positionCS);
-
-				float4 ase_positionCS = input.ase_texcoord12;
 				ImpostorOutput io = ( ImpostorOutput )0;
-				OctaImpostorFragment( io, ase_positionCS, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
+				OctaImpostorFragment( io, ClipPos, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
 				
 
 				float3 BaseColor = io.Albedo;
@@ -919,7 +924,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float3 Translucency = 1;
 
 				#if defined( ASE_DEPTH_WRITE_ON )
-					float DeviceDepth = ase_positionCS.z;
+					float DeviceDepth = ClipPos.z;
 				#endif
 
 				#ifdef _CLEARCOAT
@@ -927,8 +932,8 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 					float CoatSmoothness = 0;
 				#endif
 
-				#ifdef _ALPHATEST_ON
-					clip(Alpha - AlphaClipThreshold);
+				#if defined( _ALPHATEST_ON )
+					AlphaDiscard( Alpha, AlphaClipThreshold );
 				#endif
 
 				#if defined(MAIN_LIGHT_CALCULATE_SHADOWS) && defined(ASE_CHANGES_WORLD_POS)
@@ -937,7 +942,8 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 
 				InputData inputData = (InputData)0;
 				inputData.positionWS = PositionWS;
-				inputData.positionCS = ClipPos;
+				inputData.positionCS = float4( input.positionCS.xy, ClipPos.zw / ClipPos.w );
+				inputData.normalizedScreenSpaceUV = ScreenPosNorm.xy;
 				inputData.viewDirectionWS = ViewDirWS;
 				inputData.shadowCoord = ShadowCoord;
 
@@ -961,7 +967,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 					inputData.vertexLighting = input.fogFactorAndVertexLight.yzw;
 				#endif
 
-				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
+				#if defined( ENABLE_TERRAIN_PERPIXEL_NORMAL )
 					float3 SH = SampleSH(inputData.normalWS.xyz);
 				#else
 					float3 SH = input.lightmapUVOrVertexSH.xyz;
@@ -985,8 +991,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				#ifdef ASE_BAKEDGI
 					inputData.bakedGI = BakedGI;
 				#endif
-
-				inputData.normalizedScreenSpaceUV = NormalizedScreenSpaceUV;
 
 				#if defined(DEBUG_DISPLAY)
 					#if defined(DYNAMICLIGHTMAP_ON)
@@ -1019,11 +1023,11 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 					surfaceData.clearCoatSmoothness = saturate(CoatSmoothness);
 				#endif
 
-				#ifdef _DBUFFER
+				#if defined(_DBUFFER)
 					ApplyDecalToSurfaceData(input.positionCS, surfaceData, inputData);
 				#endif
 
-				#ifdef _ASE_LIGHTING_SIMPLE
+				#ifdef ASE_LIGHTING_SIMPLE
 					half4 color = UniversalFragmentBlinnPhong( inputData, surfaceData);
 				#else
 					half4 color = UniversalFragmentPBR( inputData, surfaceData);
@@ -1150,7 +1154,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 					outRenderingLayers = float4( EncodeMeshRenderingLayer( renderingLayers ), 0, 0, 0 );
 				#endif
 
-				return color;
+				return half4( color.rgb, OutputAlpha( color.a, isTransparent ) );
 			}
 			ENDHLSL
 		}
@@ -1169,6 +1173,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 
 			HLSLPROGRAM
 
+			#define ASE_GEOMETRY 1
 			#pragma multi_compile_instancing
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#define ASE_FOG 1
@@ -1177,7 +1182,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#define ASE_DEPTH_WRITE_ON
 			#define _EMISSION
 			#define _NORMALMAP 1
-			#define ASE_VERSION 19801
+			#define ASE_VERSION 19904
 			#define ASE_SRP_VERSION 170004
 			#ifdef UNITY_COLORSPACE_GAMMA//AI_SRP
 			#define unity_ColorSpaceDielectricSpec half4(0.220916301, 0.220916301, 0.220916301, 1.0 - 0.220916301)//AI_SRP
@@ -1191,7 +1196,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#pragma vertex vert
 			#pragma fragment frag
 
-			#if defined(_SPECULAR_SETUP) && defined(_ASE_LIGHTING_SIMPLE)
+			#if defined(_SPECULAR_SETUP) && defined(ASE_LIGHTING_SIMPLE)
 				#define _SPECULAR_COLOR 1
 			#endif
 
@@ -1219,9 +1224,10 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#define AI_INV_TWO_PI  INV_TWO_PI
 			#define AI_PI          PI
 			#define AI_INV_PI      INV_PI
-			#define ASE_NEEDS_TEXTURE_COORDINATES1
-			#define ASE_NEEDS_TEXTURE_COORDINATES2
 			#define ASE_CHANGES_WORLD_POS
+			#define ASE_NEEDS_CLIP_POS
+			#define ASE_NEEDS_FRAG_CLIP_POS
+			#define ASE_NEEDS_WORLD_POSITION
 			#define ASE_NEEDS_FRAG_WORLD_POSITION
 			#pragma shader_feature_local_fragment _SPECULARMAP
 			#pragma shader_feature_local_fragment _OCCLUSIONMAP
@@ -1259,7 +1265,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float4 UVsFrame3116 : TEXCOORD3;
 				float4 octaframe116 : TEXCOORD4;
 				float4 viewPos116 : TEXCOORD5;
-				float4 ase_texcoord6 : TEXCOORD6;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -1425,7 +1430,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float3 localDir = billboard - objectCameraPosition; 
 				objectCameraDirection = trunc( objectCameraDirection * 65536.0 ) / 65536.0;
 				#if defined( _HEMI_ON )
-				objectCameraDirection.y = max(0.001, objectCameraDirection.y);
+				objectCameraDirection.y = max( 0.001, objectCameraDirection.y );
 				float2 frameOcta = VectorToHemiOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
 				#else
 				float2 frameOcta = VectorToOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
@@ -1444,7 +1449,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa1WorldY, objectCameraPosition, localDir, /*out*/ uvFrame1, /*out*/ octa1LocalY );
 				float2 uvParallax1 = octa1LocalY.xy * fractionsFrame * parallax;
 				uvFrame1 = ( uvFrame1 * fractionsUVscale + 0.5 ) * fractionsFrame + fractionOctaFrame;
-				uvsFrame1 = float4( uvParallax1, uvFrame1) - float4( 0, 0, uvOffset );
+				uvsFrame1 = float4( uvParallax1, uvFrame1 ) - float4( 0, 0, uvOffset );
 				float2 fractPrevOctaFrame = frac( prevOctaFrame );
 				float2 cornerDifference = lerp( float2( 0,1 ) , float2( 1,0 ) , saturate( ceil( ( fractPrevOctaFrame.x - fractPrevOctaFrame.y ) ) ));
 				float2 octaFrame2 = ( ( baseOctaFrame + cornerDifference ) * fractionsPrevFrame ) * 2.0 - 1.0;
@@ -1458,7 +1463,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa2WorldY, objectCameraPosition, localDir, /*out*/ uvFrame2, /*out*/ octa2LocalY );
 				float2 uvParallax2 = octa2LocalY.xy * fractionsFrame * parallax;
 				uvFrame2 = ( uvFrame2 * fractionsUVscale + 0.5 ) * fractionsFrame + ( ( cornerDifference * fractionsFrame ) + fractionOctaFrame );
-				uvsFrame2 = float4( uvParallax2, uvFrame2) - float4( 0, 0, uvOffset );
+				uvsFrame2 = float4( uvParallax2, uvFrame2 ) - float4( 0, 0, uvOffset );
 				float2 octaFrame3 = ( ( baseOctaFrame + 1 ) * fractionsPrevFrame  ) * 2.0 - 1.0;
 				#if defined( _HEMI_ON )
 				float3 octa3WorldY = HemiOctahedronToVector( octaFrame3 ).xzy;
@@ -1470,7 +1475,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa3WorldY, objectCameraPosition, localDir, /*out*/ uvFrame3, /*out*/ octa3LocalY );
 				float2 uvParallax3 = octa3LocalY.xy * fractionsFrame * parallax;
 				uvFrame3 = ( uvFrame3 * fractionsUVscale + 0.5 ) * fractionsFrame + ( fractionOctaFrame + fractionsFrame );
-				uvsFrame3 = float4( uvParallax3, uvFrame3) - float4( 0, 0, uvOffset );
+				uvsFrame3 = float4( uvParallax3, uvFrame3 ) - float4( 0, 0, uvOffset );
 				octaFrame = 0;
 				octaFrame.xy = prevOctaFrame;
 				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
@@ -1614,8 +1619,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( output );
 
 				OctaImpostorVertex( input.positionOS.xyz, input.normalOS.xyz, input.tangentOS, output.UVsFrame1116, output.UVsFrame2116, output.UVsFrame3116, output.octaframe116, output.viewPos116 );
-				float4 ase_positionCS = TransformObjectToHClip( ( input.positionOS ).xyz );
-				output.ase_texcoord6 = ase_positionCS;
 				
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -1632,6 +1635,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				#endif
 
 				input.normalOS = input.normalOS;
+				input.tangentOS = input.tangentOS;
 
 				float3 positionWS = TransformObjectToWorld( input.positionOS.xyz );
 				float3 normalWS = TransformObjectToWorldDir(input.normalOS);
@@ -1649,1238 +1653,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 
 				output.positionCS = positionCS;
 				output.positionWS = positionWS;
-				return output;
-			}
-
-			#if defined(ASE_TESSELLATION)
-			struct VertexControl
-			{
-				float4 positionOS : INTERNALTESSPOS;
-				half3 normalOS : NORMAL;
-				half4 tangentOS : TANGENT;
-				
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-			};
-
-			struct TessellationFactors
-			{
-				float edge[3] : SV_TessFactor;
-				float inside : SV_InsideTessFactor;
-			};
-
-			VertexControl vert ( Attributes input )
-			{
-				VertexControl output;
-				UNITY_SETUP_INSTANCE_ID(input);
-				UNITY_TRANSFER_INSTANCE_ID(input, output);
-				output.positionOS = input.positionOS;
-				output.normalOS = input.normalOS;
-				
-				return output;
-			}
-
-			TessellationFactors TessellationFunction (InputPatch<VertexControl,3> input)
-			{
-				TessellationFactors output;
-				float4 tf = 1;
-				float tessValue = _TessValue; float tessMin = _TessMin; float tessMax = _TessMax;
-				float edgeLength = _TessEdgeLength; float tessMaxDisp = _TessMaxDisp;
-				#if defined(ASE_FIXED_TESSELLATION)
-				tf = FixedTess( tessValue );
-				#elif defined(ASE_DISTANCE_TESSELLATION)
-				tf = DistanceBasedTess(input[0].positionOS, input[1].positionOS, input[2].positionOS, tessValue, tessMin, tessMax, GetObjectToWorldMatrix(), _WorldSpaceCameraPos );
-				#elif defined(ASE_LENGTH_TESSELLATION)
-				tf = EdgeLengthBasedTess(input[0].positionOS, input[1].positionOS, input[2].positionOS, edgeLength, GetObjectToWorldMatrix(), _WorldSpaceCameraPos, _ScreenParams );
-				#elif defined(ASE_LENGTH_CULL_TESSELLATION)
-				tf = EdgeLengthBasedTessCull(input[0].positionOS, input[1].positionOS, input[2].positionOS, edgeLength, tessMaxDisp, GetObjectToWorldMatrix(), _WorldSpaceCameraPos, _ScreenParams, unity_CameraWorldClipPlanes );
-				#endif
-				output.edge[0] = tf.x; output.edge[1] = tf.y; output.edge[2] = tf.z; output.inside = tf.w;
-				return output;
-			}
-
-			[domain("tri")]
-			[partitioning("fractional_odd")]
-			[outputtopology("triangle_cw")]
-			[patchconstantfunc("TessellationFunction")]
-			[outputcontrolpoints(3)]
-			VertexControl HullFunction(InputPatch<VertexControl, 3> patch, uint id : SV_OutputControlPointID)
-			{
-				return patch[id];
-			}
-
-			[domain("tri")]
-			PackedVaryings DomainFunction(TessellationFactors factors, OutputPatch<VertexControl, 3> patch, float3 bary : SV_DomainLocation)
-			{
-				Attributes output = (Attributes) 0;
-				output.positionOS = patch[0].positionOS * bary.x + patch[1].positionOS * bary.y + patch[2].positionOS * bary.z;
-				output.normalOS = patch[0].normalOS * bary.x + patch[1].normalOS * bary.y + patch[2].normalOS * bary.z;
-				
-				#if defined(ASE_PHONG_TESSELLATION)
-				float3 pp[3];
-				for (int i = 0; i < 3; ++i)
-					pp[i] = output.positionOS.xyz - patch[i].normalOS * (dot(output.positionOS.xyz, patch[i].normalOS) - dot(patch[i].positionOS.xyz, patch[i].normalOS));
-				float phongStrength = _TessPhongStrength;
-				output.positionOS.xyz = phongStrength * (pp[0]*bary.x + pp[1]*bary.y + pp[2]*bary.z) + (1.0f-phongStrength) * output.positionOS.xyz;
-				#endif
-				UNITY_TRANSFER_INSTANCE_ID(patch[0], output);
-				return VertexFunction(output);
-			}
-			#else
-			PackedVaryings vert ( Attributes input )
-			{
-				return VertexFunction( input );
-			}
-			#endif
-
-			half4 frag(	PackedVaryings input
-						#if defined( ASE_DEPTH_WRITE_ON )
-						,out float outputDepth : ASE_SV_DEPTH
-						#endif
-						 ) : SV_Target
-			{
-				UNITY_SETUP_INSTANCE_ID( input );
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( input );
-
-				#if defined(MAIN_LIGHT_CALCULATE_SHADOWS) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
-					float4 shadowCoord = TransformWorldToShadowCoord(input.positionWS);
-				#else
-					float4 shadowCoord = float4(0, 0, 0, 0);
-				#endif
-
-				float3 PositionWS = input.positionWS;
-				float3 PositionRWS = GetCameraRelativePositionWS( input.positionWS );
-				float4 ShadowCoord = shadowCoord;
-				float4 ClipPos = TransformWorldToHClip( PositionWS );
-				float4 ScreenPos = ComputeScreenPos( ClipPos );
-
-				float4 ase_positionCS = input.ase_texcoord6;
-				ImpostorOutput io = ( ImpostorOutput )0;
-				OctaImpostorFragment( io, ase_positionCS, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
-				
-
-				float Alpha = io.Alpha;
-				float AlphaClipThreshold = 0.5;
-				float AlphaClipThresholdShadow = 0.5;
-
-				#if defined( ASE_DEPTH_WRITE_ON )
-					float DeviceDepth = ase_positionCS.z;
-				#endif
-
-				#ifdef _ALPHATEST_ON
-					#ifdef _ALPHATEST_SHADOW_ON
-						clip(Alpha - AlphaClipThresholdShadow);
-					#else
-						clip(Alpha - AlphaClipThreshold);
-					#endif
-				#endif
-
-				#if defined(LOD_FADE_CROSSFADE)
-					LODFadeCrossFade( input.positionCS );
-				#endif
-
-				#if defined( ASE_DEPTH_WRITE_ON )
-					outputDepth = DeviceDepth;
-				#endif
-
-				return 0;
-			}
-			ENDHLSL
-		}
-
-		
-		Pass
-		{
-			
-			Name "DepthOnly"
-			Tags { "LightMode"="DepthOnly" }
-
-			ZWrite On
-			ColorMask R
-			AlphaToMask Off
-
-			HLSLPROGRAM
-
-			#pragma multi_compile_instancing
-			#pragma multi_compile _ LOD_FADE_CROSSFADE
-			#define ASE_FOG 1
-			#define _SPECULAR_SETUP 1
-			#define _NORMAL_DROPOFF_WS 1
-			#define ASE_DEPTH_WRITE_ON
-			#define _EMISSION
-			#define _NORMALMAP 1
-			#define ASE_VERSION 19801
-			#define ASE_SRP_VERSION 170004
-			#ifdef UNITY_COLORSPACE_GAMMA//AI_SRP
-			#define unity_ColorSpaceDielectricSpec half4(0.220916301, 0.220916301, 0.220916301, 1.0 - 0.220916301)//AI_SRP
-			#else//AI_SRP
-			#define unity_ColorSpaceDielectricSpec half4(0.04, 0.04, 0.04, 1.0 - 0.04) //AI_SRP
-			#endif//AI_SRP
-
-
-			#pragma vertex vert
-			#pragma fragment frag
-
-			#if defined(_SPECULAR_SETUP) && defined(_ASE_LIGHTING_SIMPLE)
-				#define _SPECULAR_COLOR 1
-			#endif
-
-			#define SHADERPASS SHADERPASS_DEPTHONLY
-
-			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Input.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
-            #include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
-            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRendering.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
-
-			#if defined(LOD_FADE_CROSSFADE)
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
-            #endif
-
-			#define AI_ObjectToWorld GetObjectToWorldMatrix()
-			#define AI_WorldToObject GetWorldToObjectMatrix()
-			#define AI_INV_TWO_PI  INV_TWO_PI
-			#define AI_PI          PI
-			#define AI_INV_PI      INV_PI
-			#define ASE_NEEDS_TEXTURE_COORDINATES1
-			#define ASE_NEEDS_TEXTURE_COORDINATES2
-			#define ASE_CHANGES_WORLD_POS
-			#define ASE_NEEDS_FRAG_WORLD_POSITION
-			#pragma shader_feature_local_fragment _SPECULARMAP
-			#pragma shader_feature_local_fragment _OCCLUSIONMAP
-			#pragma shader_feature_local_fragment _EMISSIONMAP
-			#pragma shader_feature_local_fragment _POSITIONMAP
-			#pragma shader_feature_local _USE_PARALLAX_ON
-			#pragma shader_feature_local EFFECT_HUE_VARIATION
-			#pragma shader_feature_local _HEMI_ON
-			#pragma shader_feature_local AI_CLIP_NEIGHBOURS_FRAMES
-
-
-			#if defined(ASE_EARLY_Z_DEPTH_OPTIMIZE) && (SHADER_TARGET >= 45)
-				#define ASE_SV_DEPTH SV_DepthLessEqual
-				#define ASE_SV_POSITION_QUALIFIERS linear noperspective centroid
-			#else
-				#define ASE_SV_DEPTH SV_Depth
-				#define ASE_SV_POSITION_QUALIFIERS
-			#endif
-
-			struct Attributes
-			{
-				float4 positionOS : POSITION;
-				half3 normalOS : NORMAL;
-				half4 tangentOS : TANGENT;
-				
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-			};
-
-			struct PackedVaryings
-			{
-				ASE_SV_POSITION_QUALIFIERS float4 positionCS : SV_POSITION;
-				float3 positionWS : TEXCOORD0;
-				float4 UVsFrame1116 : TEXCOORD1;
-				float4 UVsFrame2116 : TEXCOORD2;
-				float4 UVsFrame3116 : TEXCOORD3;
-				float4 octaframe116 : TEXCOORD4;
-				float4 viewPos116 : TEXCOORD5;
-				float4 ase_texcoord6 : TEXCOORD6;
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
-			};
-
-			CBUFFER_START(UnityPerMaterial)
-			float4 _HueVariation;
-			float4 _AI_SizeOffset;
-			float3 _Offset;
-			float3 _AI_BoundsMin;
-			float3 _AI_BoundsSize;
-			float _AI_AlphaToCoverage;
-			float _ClipMask;
-			float _TextureBias;
-			float _Parallax;
-			float _AI_ShadowBias;
-			float _AI_ShadowView;
-			float _AI_ForwardBias;
-			float _Frames;
-			float _DepthSize;
-			float _ImpostorSize;
-			#ifdef ASE_TRANSMISSION
-				float _TransmissionShadow;
-			#endif
-			#ifdef ASE_TRANSLUCENCY
-				float _TransStrength;
-				float _TransNormal;
-				float _TransScattering;
-				float _TransDirect;
-				float _TransAmbient;
-				float _TransShadow;
-			#endif
-			#ifdef ASE_TESSELLATION
-				float _TessPhongStrength;
-				float _TessValue;
-				float _TessMin;
-				float _TessMax;
-				float _TessEdgeLength;
-				float _TessMaxDisp;
-			#endif
-			CBUFFER_END
-
-			#ifdef SCENEPICKINGPASS
-				float4 _SelectionID;
-			#endif
-
-			#ifdef SCENESELECTIONPASS
-				int _ObjectId;
-				int _PassValue;
-			#endif
-
-			sampler2D _Albedo;
-			sampler2D _Normals;
-			sampler2D _Specular;
-			sampler2D _Occlusion;
-			sampler2D _Emission;
-			sampler2D _Position;
-
-
-			struct ImpostorOutput
-			{
-				half3 Albedo;
-				half3 Specular;
-				half Metallic;
-				half3 WorldNormal;
-				half Smoothness;
-				half Occlusion;
-				half3 Emission;
-				half Alpha;
-			};
-			
-			float2 VectorToOctahedron( float3 N )
-			{
-				N /= dot( 1.0, abs( N ) );
-				if( N.z <= 0 )
-				{
-				N.xy = ( 1 - abs( N.yx ) ) * ( N.xy >= 0 ? 1.0 : -1.0 );
-				}
-				return N.xy;
-			}
-			
-			float3 OctahedronToVector( float2 Oct )
-			{
-				float3 N = float3( Oct, 1.0 - dot( 1.0, abs( Oct ) ) );
-				if(N.z< 0 )
-				{
-				N.xy = ( 1 - abs( N.yx) ) * (N.xy >= 0 ? 1.0 : -1.0 );
-				}
-				return normalize( N);
-			}
-			
-			inline void RayPlaneIntersectionUV( float3 normalOS, float3 rayPosition, float3 rayDirection, out float2 uvs, out float3 localNormal )
-			{
-				float lDotN = dot( rayDirection, normalOS ); 
-				float p0l0DotN = dot( -rayPosition, normalOS );
-				float t = p0l0DotN / lDotN;
-				float3 p = rayDirection * t + rayPosition;
-				float3 upVector = float3( 0, 1, 0 );
-				float3 tangent = normalize( cross( upVector, normalOS ) + float3( -0.001, 0, 0 ) );
-				float3 bitangent = cross( tangent, normalOS );
-				float frameX = dot( p, tangent );
-				float frameZ = dot( p, bitangent );
-				uvs = -float2( frameX, frameZ );
-				if( t <= 0.0 )
-				uvs = 0;
-				float3x3 worldToLocal = float3x3( tangent, bitangent, normalOS );
-				localNormal = normalize( mul( worldToLocal, rayDirection ) );
-			}
-			
-			float2 VectorToHemiOctahedron( float3 N )
-			{
-				N.xy /= dot( 1.0, abs( N ) );
-				return float2( N.x + N.y, N.x - N.y );
-			}
-			
-			float3 HemiOctahedronToVector( float2 Oct )
-			{
-				Oct = float2( Oct.x + Oct.y, Oct.x - Oct.y ) * 0.5;
-				float3 N = float3( Oct, 1 - dot( 1.0, abs( Oct ) ) );
-				return normalize( N );
-			}
-			
-			inline void OctaImpostorVertex( inout float3 positionOS, out float3 normalOS, out float4 tangentOS, out float4 uvsFrame1, out float4 uvsFrame2, out float4 uvsFrame3, out float4 octaFrame, out float4 viewPos )
-			{
-				float2 uvOffset = _AI_SizeOffset.zw;
-				float parallax = -_Parallax; 
-				float UVscale = _ImpostorSize;
-				float framesXY = _Frames;
-				float prevFrame = framesXY - 1;
-				float3 fractions = 1.0 / float3( framesXY, prevFrame, UVscale );
-				float fractionsFrame = fractions.x;
-				float fractionsPrevFrame = fractions.y;
-				float fractionsUVscale = fractions.z;
-				float3 worldCameraPos;
-				#if defined(UNITY_PASS_SHADOWCASTER)
-				float3 worldOrigin = 0;
-				float4 perspective = float4( 0, 0, 0, 1 );
-				if ( UNITY_MATRIX_P[ 3 ][ 3 ] == 1 )
-				{
-				perspective = float4( 0, 0, 5000, 0 );
-				worldOrigin = AI_ObjectToWorld._m03_m13_m23;
-				}
-				worldCameraPos = worldOrigin + mul( UNITY_MATRIX_I_V, perspective ).xyz;
-				#else
-				if ( UNITY_MATRIX_P[ 3 ][ 3 ] == 1 )
-				{
-				worldCameraPos = AI_ObjectToWorld._m03_m13_m23 + UNITY_MATRIX_I_V._m02_m12_m22 * 5000;
-				}
-				else
-				{
-				worldCameraPos = GetCameraRelativePositionWS( _WorldSpaceCameraPos );
-				}
-				#endif
-				float3 objectCameraPosition = mul( AI_WorldToObject, float4( worldCameraPos, 1 ) ).xyz - _Offset.xyz; 
-				float3 objectCameraDirection = normalize( objectCameraPosition );
-				float3 upVector = float3( 0,1,0 );
-				float3 objectHorizontalVector = normalize( cross( objectCameraDirection, upVector ) );
-				float3 objectVerticalVector = cross( objectHorizontalVector, objectCameraDirection );
-				float2 uvExpansion = positionOS.xy;
-				float3 billboard = objectHorizontalVector * uvExpansion.x + objectVerticalVector * uvExpansion.y;
-				float3 localDir = billboard - objectCameraPosition; 
-				objectCameraDirection = trunc( objectCameraDirection * 65536.0 ) / 65536.0;
-				#if defined( _HEMI_ON )
-				objectCameraDirection.y = max(0.001, objectCameraDirection.y);
-				float2 frameOcta = VectorToHemiOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
-				#else
-				float2 frameOcta = VectorToOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
-				#endif
-				float2 prevOctaFrame = frameOcta * prevFrame;
-				float2 baseOctaFrame = floor( prevOctaFrame );
-				float2 fractionOctaFrame = ( baseOctaFrame * fractionsFrame );
-				float2 octaFrame1 = ( baseOctaFrame * fractionsPrevFrame ) * 2.0 - 1.0;
-				#if defined( _HEMI_ON )
-				float3 octa1WorldY = HemiOctahedronToVector( octaFrame1 ).xzy;
-				#else
-				float3 octa1WorldY = OctahedronToVector( octaFrame1 ).xzy;
-				#endif
-				float3 octa1LocalY;
-				float2 uvFrame1;
-				RayPlaneIntersectionUV( octa1WorldY, objectCameraPosition, localDir, /*out*/ uvFrame1, /*out*/ octa1LocalY );
-				float2 uvParallax1 = octa1LocalY.xy * fractionsFrame * parallax;
-				uvFrame1 = ( uvFrame1 * fractionsUVscale + 0.5 ) * fractionsFrame + fractionOctaFrame;
-				uvsFrame1 = float4( uvParallax1, uvFrame1) - float4( 0, 0, uvOffset );
-				float2 fractPrevOctaFrame = frac( prevOctaFrame );
-				float2 cornerDifference = lerp( float2( 0,1 ) , float2( 1,0 ) , saturate( ceil( ( fractPrevOctaFrame.x - fractPrevOctaFrame.y ) ) ));
-				float2 octaFrame2 = ( ( baseOctaFrame + cornerDifference ) * fractionsPrevFrame ) * 2.0 - 1.0;
-				#if defined( _HEMI_ON )
-				float3 octa2WorldY = HemiOctahedronToVector( octaFrame2 ).xzy;
-				#else
-				float3 octa2WorldY = OctahedronToVector( octaFrame2 ).xzy;
-				#endif
-				float3 octa2LocalY;
-				float2 uvFrame2;
-				RayPlaneIntersectionUV( octa2WorldY, objectCameraPosition, localDir, /*out*/ uvFrame2, /*out*/ octa2LocalY );
-				float2 uvParallax2 = octa2LocalY.xy * fractionsFrame * parallax;
-				uvFrame2 = ( uvFrame2 * fractionsUVscale + 0.5 ) * fractionsFrame + ( ( cornerDifference * fractionsFrame ) + fractionOctaFrame );
-				uvsFrame2 = float4( uvParallax2, uvFrame2) - float4( 0, 0, uvOffset );
-				float2 octaFrame3 = ( ( baseOctaFrame + 1 ) * fractionsPrevFrame  ) * 2.0 - 1.0;
-				#if defined( _HEMI_ON )
-				float3 octa3WorldY = HemiOctahedronToVector( octaFrame3 ).xzy;
-				#else
-				float3 octa3WorldY = OctahedronToVector( octaFrame3 ).xzy;
-				#endif
-				float3 octa3LocalY;
-				float2 uvFrame3;
-				RayPlaneIntersectionUV( octa3WorldY, objectCameraPosition, localDir, /*out*/ uvFrame3, /*out*/ octa3LocalY );
-				float2 uvParallax3 = octa3LocalY.xy * fractionsFrame * parallax;
-				uvFrame3 = ( uvFrame3 * fractionsUVscale + 0.5 ) * fractionsFrame + ( fractionOctaFrame + fractionsFrame );
-				uvsFrame3 = float4( uvParallax3, uvFrame3) - float4( 0, 0, uvOffset );
-				octaFrame = 0;
-				octaFrame.xy = prevOctaFrame;
-				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
-				octaFrame.zw = fractionOctaFrame;
-				#endif
-				positionOS = billboard + _Offset.xyz;
-				normalOS = objectCameraDirection;
-				tangentOS = float4( objectHorizontalVector, 1 );
-				viewPos = 0;
-				viewPos.xyz = TransformWorldToView( TransformObjectToWorld( positionOS.xyz ) );
-				#ifdef EFFECT_HUE_VARIATION
-				float hueVariationAmount = frac( AI_ObjectToWorld[ 0 ].w + AI_ObjectToWorld[ 1 ].w + AI_ObjectToWorld[ 2 ].w );
-				viewPos.w = saturate( hueVariationAmount * _HueVariation.a );
-				#endif
-			}
-			
-			inline void OctaImpostorFragment( inout ImpostorOutput o, out float4 positionCS, out float3 positionWS, float4 uvsFrame1, float4 uvsFrame2, float4 uvsFrame3, float4 octaFrame, float4 viewPos )
-			{
-				float2 fraction = frac( octaFrame.xy );
-				float2 invFraction = 1 - fraction;
-				float3 weights;
-				weights.x = min( invFraction.x, invFraction.y );
-				weights.y = abs( fraction.x - fraction.y );
-				weights.z = min( fraction.x, fraction.y );
-				float4 parallaxSample1 = tex2Dbias( _Normals, float4( uvsFrame1.zw, 0, -1 ) );
-				float4 parallaxSample2 = tex2Dbias( _Normals, float4( uvsFrame2.zw, 0, -1 ) );
-				float4 parallaxSample3 = tex2Dbias( _Normals, float4( uvsFrame3.zw, 0, -1 ) );
-				float2 parallax1_uv = ( ( 0.5 - parallaxSample1.a ) * uvsFrame1.xy ) + uvsFrame1.zw;
-				float2 parallax2_uv = ( ( 0.5 - parallaxSample2.a ) * uvsFrame2.xy ) + uvsFrame2.zw;
-				float2 parallax3_uv = ( ( 0.5 - parallaxSample3.a ) * uvsFrame3.xy ) + uvsFrame3.zw;
-				float4 albedo1 = tex2Dbias( _Albedo, float4( parallax1_uv, 0, _TextureBias ) );
-				float4 albedo2 = tex2Dbias( _Albedo, float4( parallax2_uv, 0, _TextureBias ) );
-				float4 albedo3 = tex2Dbias( _Albedo, float4( parallax3_uv, 0, _TextureBias ) );
-				float4 blendedAlbedo = albedo1 * weights.x + albedo2 * weights.y + albedo3 * weights.z;
-				o.Alpha = ( blendedAlbedo.a - _ClipMask );
-				clip( o.Alpha );
-				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
-				float t = ceil( fraction.x - fraction.y );
-				float4 cornerDifference = float4( t, 1 - t, 1, 1 );
-				float2 step_1 = ( parallax1_uv - octaFrame.zw ) * _Frames;
-				float4 step23 = ( float4( parallax2_uv, parallax3_uv ) -  octaFrame.zwzw ) * _Frames - cornerDifference;
-				step_1 = step_1 * ( 1 - step_1 );
-				step23 = step23 * ( 1 - step23 );
-				float3 steps;
-				steps.x = step_1.x * step_1.y;
-				steps.y = step23.x * step23.y;
-				steps.z = step23.z * step23.w;
-				steps = step(-steps, 0);
-				float final = dot( steps, weights );
-				clip( final - 0.5 );
-				#endif
-				#ifdef EFFECT_HUE_VARIATION
-				half3 shiftedColor = lerp( blendedAlbedo.rgb, _HueVariation.rgb, viewPos.w );
-				half maxBase = max( blendedAlbedo.r, max(blendedAlbedo.g, blendedAlbedo.b ) );
-				half newMaxBase = max( shiftedColor.r, max(shiftedColor.g, shiftedColor.b ) );
-				maxBase /= newMaxBase;
-				maxBase = maxBase * 0.5f + 0.5f;
-				shiftedColor.rgb *= maxBase;
-				blendedAlbedo.rgb = saturate( shiftedColor );
-				#endif
-				o.Albedo = blendedAlbedo.rgb;
-				float4 normals1 = tex2Dbias( _Normals, float4( parallax1_uv, 0, _TextureBias ) );
-				float4 normals2 = tex2Dbias( _Normals, float4( parallax2_uv, 0, _TextureBias ) );
-				float4 normals3 = tex2Dbias( _Normals, float4( parallax3_uv, 0, _TextureBias ) );
-				float4 blendedNormal = normals1 * weights.x  + normals2 * weights.y + normals3 * weights.z;
-				float3 localNormal = blendedNormal.rgb * 2.0 - 1.0;
-				o.WorldNormal = normalize( mul( (float3x3)AI_ObjectToWorld, localNormal ) );
-				float depth = ( ( parallaxSample1.a * weights.x + parallaxSample2.a * weights.y + parallaxSample3.a * weights.z ) - 0.5 ) * _DepthSize * length( AI_ObjectToWorld[ 2 ].xyz );
-				#if defined( _SPECULARMAP )
-				float4 spec1 = tex2Dbias( _Specular, float4( parallax1_uv, 0, _TextureBias ) );
-				float4 spec2 = tex2Dbias( _Specular, float4( parallax2_uv, 0, _TextureBias ) );
-				float4 spec3 = tex2Dbias( _Specular, float4( parallax3_uv, 0, _TextureBias ) );
-				float4 blendedSpec = spec1 * weights.x  + spec2 * weights.y + spec3 * weights.z;
-				o.Specular = blendedSpec.rgb;
-				o.Smoothness = blendedSpec.a;
-				#else
-				o.Specular = 0;
-				o.Smoothness = 0;
-				#endif
-				#if defined( _OCCLUSIONMAP )
-				float4 occlusion1 = tex2Dbias( _Occlusion, float4( parallax1_uv, 0, _TextureBias ) );
-				float4 occlusion2 = tex2Dbias( _Occlusion, float4( parallax2_uv, 0, _TextureBias ) );
-				float4 occlusion3 = tex2Dbias( _Occlusion, float4( parallax3_uv, 0, _TextureBias ) );
-				o.Occlusion = occlusion1.g * weights.x  + occlusion2.g * weights.y + occlusion3.g * weights.z;
-				#else
-				o.Occlusion = 1;
-				#endif
-				#if defined( _EMISSIONMAP )
-				float4 emission1 = tex2Dbias( _Emission, float4( parallax1_uv, 0, _TextureBias ) );
-				float4 emission2 = tex2Dbias( _Emission, float4( parallax2_uv, 0, _TextureBias ) );
-				float4 emission3 = tex2Dbias( _Emission, float4( parallax3_uv, 0, _TextureBias ) );
-				o.Emission = emission1.rgb * weights.x  + emission2.rgb * weights.y + emission3.rgb * weights.z;
-				#else
-				o.Emission = 0;
-				#endif
-				#if defined( _POSITIONMAP )
-				float4 position1 = tex2Dbias( _Position, float4( parallax1_uv, 0, _TextureBias ) );
-				float4 position2 = tex2Dbias( _Position, float4( parallax2_uv, 0, _TextureBias ) );
-				float4 position3 = tex2Dbias( _Position, float4( parallax3_uv, 0, _TextureBias ) );
-				float4 blendedPosition = position1 * weights.x  + position2 * weights.y + position3 * weights.z;
-				float3 objectPosition = blendedPosition.xyz * _AI_BoundsSize + _AI_BoundsMin;
-				float3 worldPosition = mul( AI_ObjectToWorld, float4( objectPosition, 1 ) ).xyz;
-				if ( blendedPosition.a > 0 )
-				{
-				viewPos.xyz = mul( UNITY_MATRIX_V, float4( worldPosition.xyz, 1 ) ).xyz;
-				depth = 0;
-				}
-				#endif
-				#if ( defined(SHADERPASS) && ((defined(SHADERPASS_SHADOWS) && SHADERPASS == SHADERPASS_SHADOWS) || (defined(SHADERPASS_SHADOWCASTER) && SHADERPASS == SHADERPASS_SHADOWCASTER)) ) || defined(UNITY_PASS_SHADOWCASTER)
-				viewPos.z += depth * _AI_ShadowView - _AI_ShadowBias;
-				#else 
-				viewPos.z += depth + _AI_ForwardBias;
-				#endif
-				positionWS = mul( UNITY_MATRIX_I_V, float4( viewPos.xyz, 1 ) ).xyz;
-				#if defined(SHADERPASS) && defined(UNITY_PASS_SHADOWCASTER)
-				#if _CASTING_PUNCTUAL_LIGHT_SHADOW
-				float3 lightDirectionWS = normalize( _LightPosition - positionWS );
-				#else
-				float3 lightDirectionWS = _LightDirection;
-				#endif
-				positionCS = TransformWorldToHClip( ApplyShadowBias( positionWS, float3( 0, 0, 0 ), lightDirectionWS ) );
-				#if UNITY_REVERSED_Z
-				positionCS.z = min( positionCS.z, positionCS.w * UNITY_NEAR_CLIP_VALUE );
-				#else
-				positionCS.z = max( positionCS.z, positionCS.w * UNITY_NEAR_CLIP_VALUE );
-				#endif
-				#else
-				positionCS = mul( UNITY_MATRIX_P, float4( viewPos.xyz, 1 ) );
-				#endif
-				positionCS.xyz /= positionCS.w;
-				if( UNITY_NEAR_CLIP_VALUE < 0 )
-				positionCS = positionCS * 0.5 + 0.5;
-			}
-			
-
-			PackedVaryings VertexFunction( Attributes input  )
-			{
-				PackedVaryings output = (PackedVaryings)0;
-				UNITY_SETUP_INSTANCE_ID(input);
-				UNITY_TRANSFER_INSTANCE_ID(input, output);
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
-
-				OctaImpostorVertex( input.positionOS.xyz, input.normalOS.xyz, input.tangentOS, output.UVsFrame1116, output.UVsFrame2116, output.UVsFrame3116, output.octaframe116, output.viewPos116 );
-				float4 ase_positionCS = TransformObjectToHClip( ( input.positionOS ).xyz );
-				output.ase_texcoord6 = ase_positionCS;
-				
-
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-					float3 defaultVertexValue = input.positionOS.xyz;
-				#else
-					float3 defaultVertexValue = float3(0, 0, 0);
-				#endif
-
-				float3 vertexValue = defaultVertexValue;
-
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-					input.positionOS.xyz = vertexValue;
-				#else
-					input.positionOS.xyz += vertexValue;
-				#endif
-
-				input.normalOS = input.normalOS;
-
-				VertexPositionInputs vertexInput = GetVertexPositionInputs( input.positionOS.xyz );
-
-				output.positionCS = vertexInput.positionCS;
-				output.positionWS = vertexInput.positionWS;
-				return output;
-			}
-
-			#if defined(ASE_TESSELLATION)
-			struct VertexControl
-			{
-				float4 positionOS : INTERNALTESSPOS;
-				half3 normalOS : NORMAL;
-				half4 tangentOS : TANGENT;
-				
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-			};
-
-			struct TessellationFactors
-			{
-				float edge[3] : SV_TessFactor;
-				float inside : SV_InsideTessFactor;
-			};
-
-			VertexControl vert ( Attributes input )
-			{
-				VertexControl output;
-				UNITY_SETUP_INSTANCE_ID(input);
-				UNITY_TRANSFER_INSTANCE_ID(input, output);
-				output.positionOS = input.positionOS;
-				output.normalOS = input.normalOS;
-				
-				return output;
-			}
-
-			TessellationFactors TessellationFunction (InputPatch<VertexControl,3> input)
-			{
-				TessellationFactors output;
-				float4 tf = 1;
-				float tessValue = _TessValue; float tessMin = _TessMin; float tessMax = _TessMax;
-				float edgeLength = _TessEdgeLength; float tessMaxDisp = _TessMaxDisp;
-				#if defined(ASE_FIXED_TESSELLATION)
-				tf = FixedTess( tessValue );
-				#elif defined(ASE_DISTANCE_TESSELLATION)
-				tf = DistanceBasedTess(input[0].positionOS, input[1].positionOS, input[2].positionOS, tessValue, tessMin, tessMax, GetObjectToWorldMatrix(), _WorldSpaceCameraPos );
-				#elif defined(ASE_LENGTH_TESSELLATION)
-				tf = EdgeLengthBasedTess(input[0].positionOS, input[1].positionOS, input[2].positionOS, edgeLength, GetObjectToWorldMatrix(), _WorldSpaceCameraPos, _ScreenParams );
-				#elif defined(ASE_LENGTH_CULL_TESSELLATION)
-				tf = EdgeLengthBasedTessCull(input[0].positionOS, input[1].positionOS, input[2].positionOS, edgeLength, tessMaxDisp, GetObjectToWorldMatrix(), _WorldSpaceCameraPos, _ScreenParams, unity_CameraWorldClipPlanes );
-				#endif
-				output.edge[0] = tf.x; output.edge[1] = tf.y; output.edge[2] = tf.z; output.inside = tf.w;
-				return output;
-			}
-
-			[domain("tri")]
-			[partitioning("fractional_odd")]
-			[outputtopology("triangle_cw")]
-			[patchconstantfunc("TessellationFunction")]
-			[outputcontrolpoints(3)]
-			VertexControl HullFunction(InputPatch<VertexControl, 3> patch, uint id : SV_OutputControlPointID)
-			{
-				return patch[id];
-			}
-
-			[domain("tri")]
-			PackedVaryings DomainFunction(TessellationFactors factors, OutputPatch<VertexControl, 3> patch, float3 bary : SV_DomainLocation)
-			{
-				Attributes output = (Attributes) 0;
-				output.positionOS = patch[0].positionOS * bary.x + patch[1].positionOS * bary.y + patch[2].positionOS * bary.z;
-				output.normalOS = patch[0].normalOS * bary.x + patch[1].normalOS * bary.y + patch[2].normalOS * bary.z;
-				
-				#if defined(ASE_PHONG_TESSELLATION)
-				float3 pp[3];
-				for (int i = 0; i < 3; ++i)
-					pp[i] = output.positionOS.xyz - patch[i].normalOS * (dot(output.positionOS.xyz, patch[i].normalOS) - dot(patch[i].positionOS.xyz, patch[i].normalOS));
-				float phongStrength = _TessPhongStrength;
-				output.positionOS.xyz = phongStrength * (pp[0]*bary.x + pp[1]*bary.y + pp[2]*bary.z) + (1.0f-phongStrength) * output.positionOS.xyz;
-				#endif
-				UNITY_TRANSFER_INSTANCE_ID(patch[0], output);
-				return VertexFunction(output);
-			}
-			#else
-			PackedVaryings vert ( Attributes input )
-			{
-				return VertexFunction( input );
-			}
-			#endif
-
-			half4 frag(	PackedVaryings input
-						#if defined( ASE_DEPTH_WRITE_ON )
-						,out float outputDepth : ASE_SV_DEPTH
-						#endif
-						 ) : SV_Target
-			{
-				UNITY_SETUP_INSTANCE_ID(input);
-				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( input );
-
-				#if defined(MAIN_LIGHT_CALCULATE_SHADOWS) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
-					float4 shadowCoord = TransformWorldToShadowCoord(input.positionWS);
-				#else
-					float4 shadowCoord = float4(0, 0, 0, 0);
-				#endif
-
-				float3 PositionWS = input.positionWS;
-				float3 PositionRWS = GetCameraRelativePositionWS( input.positionWS );
-				float4 ShadowCoord = shadowCoord;
-				float4 ClipPos = TransformWorldToHClip( PositionWS );
-				float4 ScreenPos = ComputeScreenPos( ClipPos );
-
-				float4 ase_positionCS = input.ase_texcoord6;
-				ImpostorOutput io = ( ImpostorOutput )0;
-				OctaImpostorFragment( io, ase_positionCS, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
-				
-
-				float Alpha = io.Alpha;
-				float AlphaClipThreshold = 0.5;
-
-				#if defined( ASE_DEPTH_WRITE_ON )
-					float DeviceDepth = ase_positionCS.z;
-				#endif
-
-				#ifdef _ALPHATEST_ON
-					clip(Alpha - AlphaClipThreshold);
-				#endif
-
-				#if defined(LOD_FADE_CROSSFADE)
-					LODFadeCrossFade( input.positionCS );
-				#endif
-
-				#if defined( ASE_DEPTH_WRITE_ON )
-					outputDepth = DeviceDepth;
-				#endif
-
-				return 0;
-			}
-			ENDHLSL
-		}
-
-		
-		Pass
-		{
-			
-			Name "DepthNormals"
-			Tags { "LightMode"="DepthNormals" }
-
-			ZWrite On
-			Blend One Zero
-			ZTest LEqual
-			ZWrite On
-
-			HLSLPROGRAM
-
-			#pragma multi_compile_instancing
-			#pragma multi_compile _ LOD_FADE_CROSSFADE
-			#define ASE_FOG 1
-			#define _SPECULAR_SETUP 1
-			#define _NORMAL_DROPOFF_WS 1
-			#define ASE_DEPTH_WRITE_ON
-			#define _EMISSION
-			#define _NORMALMAP 1
-			#define ASE_VERSION 19801
-			#define ASE_SRP_VERSION 170004
-			#ifdef UNITY_COLORSPACE_GAMMA//AI_SRP
-			#define unity_ColorSpaceDielectricSpec half4(0.220916301, 0.220916301, 0.220916301, 1.0 - 0.220916301)//AI_SRP
-			#else//AI_SRP
-			#define unity_ColorSpaceDielectricSpec half4(0.04, 0.04, 0.04, 1.0 - 0.04) //AI_SRP
-			#endif//AI_SRP
-
-
-			#pragma vertex vert
-			#pragma fragment frag
-
-			#if defined(_SPECULAR_SETUP) && defined(_ASE_LIGHTING_SIMPLE)
-				#define _SPECULAR_COLOR 1
-			#endif
-
-			#define SHADERPASS SHADERPASS_DEPTHNORMALSONLY
-			//#define SHADERPASS SHADERPASS_DEPTHNORMALS
-
-			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
-			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/RenderingLayers.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Input.hlsl"
-			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
-            #include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
-            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRendering.hlsl"
-            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/DebugMipmapStreamingMacros.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
-			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
-
-			#if defined(LOD_FADE_CROSSFADE)
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
-            #endif
-
-			#define AI_ObjectToWorld GetObjectToWorldMatrix()
-			#define AI_WorldToObject GetWorldToObjectMatrix()
-			#define AI_INV_TWO_PI  INV_TWO_PI
-			#define AI_PI          PI
-			#define AI_INV_PI      INV_PI
-			#define ASE_NEEDS_TEXTURE_COORDINATES1
-			#define ASE_NEEDS_TEXTURE_COORDINATES2
-			#define ASE_CHANGES_WORLD_POS
-			#define ASE_NEEDS_FRAG_WORLD_POSITION
-			#pragma shader_feature_local_fragment _SPECULARMAP
-			#pragma shader_feature_local_fragment _OCCLUSIONMAP
-			#pragma shader_feature_local_fragment _EMISSIONMAP
-			#pragma shader_feature_local_fragment _POSITIONMAP
-			#pragma shader_feature_local _USE_PARALLAX_ON
-			#pragma shader_feature_local EFFECT_HUE_VARIATION
-			#pragma shader_feature_local _HEMI_ON
-			#pragma shader_feature_local AI_CLIP_NEIGHBOURS_FRAMES
-
-
-			#if defined(ASE_EARLY_Z_DEPTH_OPTIMIZE) && (SHADER_TARGET >= 45)
-				#define ASE_SV_DEPTH SV_DepthLessEqual
-				#define ASE_SV_POSITION_QUALIFIERS linear noperspective centroid
-			#else
-				#define ASE_SV_DEPTH SV_Depth
-				#define ASE_SV_POSITION_QUALIFIERS
-			#endif
-
-			struct Attributes
-			{
-				float4 positionOS : POSITION;
-				half3 normalOS : NORMAL;
-				half4 tangentOS : TANGENT;
-				
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-			};
-
-			struct PackedVaryings
-			{
-				ASE_SV_POSITION_QUALIFIERS float4 positionCS : SV_POSITION;
-				float3 positionWS : TEXCOORD0;
-				float3 normalWS : TEXCOORD1;
-				half4 tangentWS : TEXCOORD2;
-				float4 UVsFrame1116 : TEXCOORD3;
-				float4 UVsFrame2116 : TEXCOORD4;
-				float4 UVsFrame3116 : TEXCOORD5;
-				float4 octaframe116 : TEXCOORD6;
-				float4 viewPos116 : TEXCOORD7;
-				float4 ase_texcoord8 : TEXCOORD8;
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
-			};
-
-			CBUFFER_START(UnityPerMaterial)
-			float4 _HueVariation;
-			float4 _AI_SizeOffset;
-			float3 _Offset;
-			float3 _AI_BoundsMin;
-			float3 _AI_BoundsSize;
-			float _AI_AlphaToCoverage;
-			float _ClipMask;
-			float _TextureBias;
-			float _Parallax;
-			float _AI_ShadowBias;
-			float _AI_ShadowView;
-			float _AI_ForwardBias;
-			float _Frames;
-			float _DepthSize;
-			float _ImpostorSize;
-			#ifdef ASE_TRANSMISSION
-				float _TransmissionShadow;
-			#endif
-			#ifdef ASE_TRANSLUCENCY
-				float _TransStrength;
-				float _TransNormal;
-				float _TransScattering;
-				float _TransDirect;
-				float _TransAmbient;
-				float _TransShadow;
-			#endif
-			#ifdef ASE_TESSELLATION
-				float _TessPhongStrength;
-				float _TessValue;
-				float _TessMin;
-				float _TessMax;
-				float _TessEdgeLength;
-				float _TessMaxDisp;
-			#endif
-			CBUFFER_END
-
-			#ifdef SCENEPICKINGPASS
-				float4 _SelectionID;
-			#endif
-
-			#ifdef SCENESELECTIONPASS
-				int _ObjectId;
-				int _PassValue;
-			#endif
-
-			sampler2D _Albedo;
-			sampler2D _Normals;
-			sampler2D _Specular;
-			sampler2D _Occlusion;
-			sampler2D _Emission;
-			sampler2D _Position;
-
-
-			struct ImpostorOutput
-			{
-				half3 Albedo;
-				half3 Specular;
-				half Metallic;
-				half3 WorldNormal;
-				half Smoothness;
-				half Occlusion;
-				half3 Emission;
-				half Alpha;
-			};
-			
-			float2 VectorToOctahedron( float3 N )
-			{
-				N /= dot( 1.0, abs( N ) );
-				if( N.z <= 0 )
-				{
-				N.xy = ( 1 - abs( N.yx ) ) * ( N.xy >= 0 ? 1.0 : -1.0 );
-				}
-				return N.xy;
-			}
-			
-			float3 OctahedronToVector( float2 Oct )
-			{
-				float3 N = float3( Oct, 1.0 - dot( 1.0, abs( Oct ) ) );
-				if(N.z< 0 )
-				{
-				N.xy = ( 1 - abs( N.yx) ) * (N.xy >= 0 ? 1.0 : -1.0 );
-				}
-				return normalize( N);
-			}
-			
-			inline void RayPlaneIntersectionUV( float3 normalOS, float3 rayPosition, float3 rayDirection, out float2 uvs, out float3 localNormal )
-			{
-				float lDotN = dot( rayDirection, normalOS ); 
-				float p0l0DotN = dot( -rayPosition, normalOS );
-				float t = p0l0DotN / lDotN;
-				float3 p = rayDirection * t + rayPosition;
-				float3 upVector = float3( 0, 1, 0 );
-				float3 tangent = normalize( cross( upVector, normalOS ) + float3( -0.001, 0, 0 ) );
-				float3 bitangent = cross( tangent, normalOS );
-				float frameX = dot( p, tangent );
-				float frameZ = dot( p, bitangent );
-				uvs = -float2( frameX, frameZ );
-				if( t <= 0.0 )
-				uvs = 0;
-				float3x3 worldToLocal = float3x3( tangent, bitangent, normalOS );
-				localNormal = normalize( mul( worldToLocal, rayDirection ) );
-			}
-			
-			float2 VectorToHemiOctahedron( float3 N )
-			{
-				N.xy /= dot( 1.0, abs( N ) );
-				return float2( N.x + N.y, N.x - N.y );
-			}
-			
-			float3 HemiOctahedronToVector( float2 Oct )
-			{
-				Oct = float2( Oct.x + Oct.y, Oct.x - Oct.y ) * 0.5;
-				float3 N = float3( Oct, 1 - dot( 1.0, abs( Oct ) ) );
-				return normalize( N );
-			}
-			
-			inline void OctaImpostorVertex( inout float3 positionOS, out float3 normalOS, out float4 tangentOS, out float4 uvsFrame1, out float4 uvsFrame2, out float4 uvsFrame3, out float4 octaFrame, out float4 viewPos )
-			{
-				float2 uvOffset = _AI_SizeOffset.zw;
-				float parallax = -_Parallax; 
-				float UVscale = _ImpostorSize;
-				float framesXY = _Frames;
-				float prevFrame = framesXY - 1;
-				float3 fractions = 1.0 / float3( framesXY, prevFrame, UVscale );
-				float fractionsFrame = fractions.x;
-				float fractionsPrevFrame = fractions.y;
-				float fractionsUVscale = fractions.z;
-				float3 worldCameraPos;
-				#if defined(UNITY_PASS_SHADOWCASTER)
-				float3 worldOrigin = 0;
-				float4 perspective = float4( 0, 0, 0, 1 );
-				if ( UNITY_MATRIX_P[ 3 ][ 3 ] == 1 )
-				{
-				perspective = float4( 0, 0, 5000, 0 );
-				worldOrigin = AI_ObjectToWorld._m03_m13_m23;
-				}
-				worldCameraPos = worldOrigin + mul( UNITY_MATRIX_I_V, perspective ).xyz;
-				#else
-				if ( UNITY_MATRIX_P[ 3 ][ 3 ] == 1 )
-				{
-				worldCameraPos = AI_ObjectToWorld._m03_m13_m23 + UNITY_MATRIX_I_V._m02_m12_m22 * 5000;
-				}
-				else
-				{
-				worldCameraPos = GetCameraRelativePositionWS( _WorldSpaceCameraPos );
-				}
-				#endif
-				float3 objectCameraPosition = mul( AI_WorldToObject, float4( worldCameraPos, 1 ) ).xyz - _Offset.xyz; 
-				float3 objectCameraDirection = normalize( objectCameraPosition );
-				float3 upVector = float3( 0,1,0 );
-				float3 objectHorizontalVector = normalize( cross( objectCameraDirection, upVector ) );
-				float3 objectVerticalVector = cross( objectHorizontalVector, objectCameraDirection );
-				float2 uvExpansion = positionOS.xy;
-				float3 billboard = objectHorizontalVector * uvExpansion.x + objectVerticalVector * uvExpansion.y;
-				float3 localDir = billboard - objectCameraPosition; 
-				objectCameraDirection = trunc( objectCameraDirection * 65536.0 ) / 65536.0;
-				#if defined( _HEMI_ON )
-				objectCameraDirection.y = max(0.001, objectCameraDirection.y);
-				float2 frameOcta = VectorToHemiOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
-				#else
-				float2 frameOcta = VectorToOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
-				#endif
-				float2 prevOctaFrame = frameOcta * prevFrame;
-				float2 baseOctaFrame = floor( prevOctaFrame );
-				float2 fractionOctaFrame = ( baseOctaFrame * fractionsFrame );
-				float2 octaFrame1 = ( baseOctaFrame * fractionsPrevFrame ) * 2.0 - 1.0;
-				#if defined( _HEMI_ON )
-				float3 octa1WorldY = HemiOctahedronToVector( octaFrame1 ).xzy;
-				#else
-				float3 octa1WorldY = OctahedronToVector( octaFrame1 ).xzy;
-				#endif
-				float3 octa1LocalY;
-				float2 uvFrame1;
-				RayPlaneIntersectionUV( octa1WorldY, objectCameraPosition, localDir, /*out*/ uvFrame1, /*out*/ octa1LocalY );
-				float2 uvParallax1 = octa1LocalY.xy * fractionsFrame * parallax;
-				uvFrame1 = ( uvFrame1 * fractionsUVscale + 0.5 ) * fractionsFrame + fractionOctaFrame;
-				uvsFrame1 = float4( uvParallax1, uvFrame1) - float4( 0, 0, uvOffset );
-				float2 fractPrevOctaFrame = frac( prevOctaFrame );
-				float2 cornerDifference = lerp( float2( 0,1 ) , float2( 1,0 ) , saturate( ceil( ( fractPrevOctaFrame.x - fractPrevOctaFrame.y ) ) ));
-				float2 octaFrame2 = ( ( baseOctaFrame + cornerDifference ) * fractionsPrevFrame ) * 2.0 - 1.0;
-				#if defined( _HEMI_ON )
-				float3 octa2WorldY = HemiOctahedronToVector( octaFrame2 ).xzy;
-				#else
-				float3 octa2WorldY = OctahedronToVector( octaFrame2 ).xzy;
-				#endif
-				float3 octa2LocalY;
-				float2 uvFrame2;
-				RayPlaneIntersectionUV( octa2WorldY, objectCameraPosition, localDir, /*out*/ uvFrame2, /*out*/ octa2LocalY );
-				float2 uvParallax2 = octa2LocalY.xy * fractionsFrame * parallax;
-				uvFrame2 = ( uvFrame2 * fractionsUVscale + 0.5 ) * fractionsFrame + ( ( cornerDifference * fractionsFrame ) + fractionOctaFrame );
-				uvsFrame2 = float4( uvParallax2, uvFrame2) - float4( 0, 0, uvOffset );
-				float2 octaFrame3 = ( ( baseOctaFrame + 1 ) * fractionsPrevFrame  ) * 2.0 - 1.0;
-				#if defined( _HEMI_ON )
-				float3 octa3WorldY = HemiOctahedronToVector( octaFrame3 ).xzy;
-				#else
-				float3 octa3WorldY = OctahedronToVector( octaFrame3 ).xzy;
-				#endif
-				float3 octa3LocalY;
-				float2 uvFrame3;
-				RayPlaneIntersectionUV( octa3WorldY, objectCameraPosition, localDir, /*out*/ uvFrame3, /*out*/ octa3LocalY );
-				float2 uvParallax3 = octa3LocalY.xy * fractionsFrame * parallax;
-				uvFrame3 = ( uvFrame3 * fractionsUVscale + 0.5 ) * fractionsFrame + ( fractionOctaFrame + fractionsFrame );
-				uvsFrame3 = float4( uvParallax3, uvFrame3) - float4( 0, 0, uvOffset );
-				octaFrame = 0;
-				octaFrame.xy = prevOctaFrame;
-				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
-				octaFrame.zw = fractionOctaFrame;
-				#endif
-				positionOS = billboard + _Offset.xyz;
-				normalOS = objectCameraDirection;
-				tangentOS = float4( objectHorizontalVector, 1 );
-				viewPos = 0;
-				viewPos.xyz = TransformWorldToView( TransformObjectToWorld( positionOS.xyz ) );
-				#ifdef EFFECT_HUE_VARIATION
-				float hueVariationAmount = frac( AI_ObjectToWorld[ 0 ].w + AI_ObjectToWorld[ 1 ].w + AI_ObjectToWorld[ 2 ].w );
-				viewPos.w = saturate( hueVariationAmount * _HueVariation.a );
-				#endif
-			}
-			
-			inline void OctaImpostorFragment( inout ImpostorOutput o, out float4 positionCS, out float3 positionWS, float4 uvsFrame1, float4 uvsFrame2, float4 uvsFrame3, float4 octaFrame, float4 viewPos )
-			{
-				float2 fraction = frac( octaFrame.xy );
-				float2 invFraction = 1 - fraction;
-				float3 weights;
-				weights.x = min( invFraction.x, invFraction.y );
-				weights.y = abs( fraction.x - fraction.y );
-				weights.z = min( fraction.x, fraction.y );
-				float4 parallaxSample1 = tex2Dbias( _Normals, float4( uvsFrame1.zw, 0, -1 ) );
-				float4 parallaxSample2 = tex2Dbias( _Normals, float4( uvsFrame2.zw, 0, -1 ) );
-				float4 parallaxSample3 = tex2Dbias( _Normals, float4( uvsFrame3.zw, 0, -1 ) );
-				float2 parallax1_uv = ( ( 0.5 - parallaxSample1.a ) * uvsFrame1.xy ) + uvsFrame1.zw;
-				float2 parallax2_uv = ( ( 0.5 - parallaxSample2.a ) * uvsFrame2.xy ) + uvsFrame2.zw;
-				float2 parallax3_uv = ( ( 0.5 - parallaxSample3.a ) * uvsFrame3.xy ) + uvsFrame3.zw;
-				float4 albedo1 = tex2Dbias( _Albedo, float4( parallax1_uv, 0, _TextureBias ) );
-				float4 albedo2 = tex2Dbias( _Albedo, float4( parallax2_uv, 0, _TextureBias ) );
-				float4 albedo3 = tex2Dbias( _Albedo, float4( parallax3_uv, 0, _TextureBias ) );
-				float4 blendedAlbedo = albedo1 * weights.x + albedo2 * weights.y + albedo3 * weights.z;
-				o.Alpha = ( blendedAlbedo.a - _ClipMask );
-				clip( o.Alpha );
-				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
-				float t = ceil( fraction.x - fraction.y );
-				float4 cornerDifference = float4( t, 1 - t, 1, 1 );
-				float2 step_1 = ( parallax1_uv - octaFrame.zw ) * _Frames;
-				float4 step23 = ( float4( parallax2_uv, parallax3_uv ) -  octaFrame.zwzw ) * _Frames - cornerDifference;
-				step_1 = step_1 * ( 1 - step_1 );
-				step23 = step23 * ( 1 - step23 );
-				float3 steps;
-				steps.x = step_1.x * step_1.y;
-				steps.y = step23.x * step23.y;
-				steps.z = step23.z * step23.w;
-				steps = step(-steps, 0);
-				float final = dot( steps, weights );
-				clip( final - 0.5 );
-				#endif
-				#ifdef EFFECT_HUE_VARIATION
-				half3 shiftedColor = lerp( blendedAlbedo.rgb, _HueVariation.rgb, viewPos.w );
-				half maxBase = max( blendedAlbedo.r, max(blendedAlbedo.g, blendedAlbedo.b ) );
-				half newMaxBase = max( shiftedColor.r, max(shiftedColor.g, shiftedColor.b ) );
-				maxBase /= newMaxBase;
-				maxBase = maxBase * 0.5f + 0.5f;
-				shiftedColor.rgb *= maxBase;
-				blendedAlbedo.rgb = saturate( shiftedColor );
-				#endif
-				o.Albedo = blendedAlbedo.rgb;
-				float4 normals1 = tex2Dbias( _Normals, float4( parallax1_uv, 0, _TextureBias ) );
-				float4 normals2 = tex2Dbias( _Normals, float4( parallax2_uv, 0, _TextureBias ) );
-				float4 normals3 = tex2Dbias( _Normals, float4( parallax3_uv, 0, _TextureBias ) );
-				float4 blendedNormal = normals1 * weights.x  + normals2 * weights.y + normals3 * weights.z;
-				float3 localNormal = blendedNormal.rgb * 2.0 - 1.0;
-				o.WorldNormal = normalize( mul( (float3x3)AI_ObjectToWorld, localNormal ) );
-				float depth = ( ( parallaxSample1.a * weights.x + parallaxSample2.a * weights.y + parallaxSample3.a * weights.z ) - 0.5 ) * _DepthSize * length( AI_ObjectToWorld[ 2 ].xyz );
-				#if defined( _SPECULARMAP )
-				float4 spec1 = tex2Dbias( _Specular, float4( parallax1_uv, 0, _TextureBias ) );
-				float4 spec2 = tex2Dbias( _Specular, float4( parallax2_uv, 0, _TextureBias ) );
-				float4 spec3 = tex2Dbias( _Specular, float4( parallax3_uv, 0, _TextureBias ) );
-				float4 blendedSpec = spec1 * weights.x  + spec2 * weights.y + spec3 * weights.z;
-				o.Specular = blendedSpec.rgb;
-				o.Smoothness = blendedSpec.a;
-				#else
-				o.Specular = 0;
-				o.Smoothness = 0;
-				#endif
-				#if defined( _OCCLUSIONMAP )
-				float4 occlusion1 = tex2Dbias( _Occlusion, float4( parallax1_uv, 0, _TextureBias ) );
-				float4 occlusion2 = tex2Dbias( _Occlusion, float4( parallax2_uv, 0, _TextureBias ) );
-				float4 occlusion3 = tex2Dbias( _Occlusion, float4( parallax3_uv, 0, _TextureBias ) );
-				o.Occlusion = occlusion1.g * weights.x  + occlusion2.g * weights.y + occlusion3.g * weights.z;
-				#else
-				o.Occlusion = 1;
-				#endif
-				#if defined( _EMISSIONMAP )
-				float4 emission1 = tex2Dbias( _Emission, float4( parallax1_uv, 0, _TextureBias ) );
-				float4 emission2 = tex2Dbias( _Emission, float4( parallax2_uv, 0, _TextureBias ) );
-				float4 emission3 = tex2Dbias( _Emission, float4( parallax3_uv, 0, _TextureBias ) );
-				o.Emission = emission1.rgb * weights.x  + emission2.rgb * weights.y + emission3.rgb * weights.z;
-				#else
-				o.Emission = 0;
-				#endif
-				#if defined( _POSITIONMAP )
-				float4 position1 = tex2Dbias( _Position, float4( parallax1_uv, 0, _TextureBias ) );
-				float4 position2 = tex2Dbias( _Position, float4( parallax2_uv, 0, _TextureBias ) );
-				float4 position3 = tex2Dbias( _Position, float4( parallax3_uv, 0, _TextureBias ) );
-				float4 blendedPosition = position1 * weights.x  + position2 * weights.y + position3 * weights.z;
-				float3 objectPosition = blendedPosition.xyz * _AI_BoundsSize + _AI_BoundsMin;
-				float3 worldPosition = mul( AI_ObjectToWorld, float4( objectPosition, 1 ) ).xyz;
-				if ( blendedPosition.a > 0 )
-				{
-				viewPos.xyz = mul( UNITY_MATRIX_V, float4( worldPosition.xyz, 1 ) ).xyz;
-				depth = 0;
-				}
-				#endif
-				#if ( defined(SHADERPASS) && ((defined(SHADERPASS_SHADOWS) && SHADERPASS == SHADERPASS_SHADOWS) || (defined(SHADERPASS_SHADOWCASTER) && SHADERPASS == SHADERPASS_SHADOWCASTER)) ) || defined(UNITY_PASS_SHADOWCASTER)
-				viewPos.z += depth * _AI_ShadowView - _AI_ShadowBias;
-				#else 
-				viewPos.z += depth + _AI_ForwardBias;
-				#endif
-				positionWS = mul( UNITY_MATRIX_I_V, float4( viewPos.xyz, 1 ) ).xyz;
-				#if defined(SHADERPASS) && defined(UNITY_PASS_SHADOWCASTER)
-				#if _CASTING_PUNCTUAL_LIGHT_SHADOW
-				float3 lightDirectionWS = normalize( _LightPosition - positionWS );
-				#else
-				float3 lightDirectionWS = _LightDirection;
-				#endif
-				positionCS = TransformWorldToHClip( ApplyShadowBias( positionWS, float3( 0, 0, 0 ), lightDirectionWS ) );
-				#if UNITY_REVERSED_Z
-				positionCS.z = min( positionCS.z, positionCS.w * UNITY_NEAR_CLIP_VALUE );
-				#else
-				positionCS.z = max( positionCS.z, positionCS.w * UNITY_NEAR_CLIP_VALUE );
-				#endif
-				#else
-				positionCS = mul( UNITY_MATRIX_P, float4( viewPos.xyz, 1 ) );
-				#endif
-				positionCS.xyz /= positionCS.w;
-				if( UNITY_NEAR_CLIP_VALUE < 0 )
-				positionCS = positionCS * 0.5 + 0.5;
-			}
-			
-
-			PackedVaryings VertexFunction( Attributes input  )
-			{
-				PackedVaryings output = (PackedVaryings)0;
-				UNITY_SETUP_INSTANCE_ID(input);
-				UNITY_TRANSFER_INSTANCE_ID(input, output);
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
-
-				OctaImpostorVertex( input.positionOS.xyz, input.normalOS.xyz, input.tangentOS, output.UVsFrame1116, output.UVsFrame2116, output.UVsFrame3116, output.octaframe116, output.viewPos116 );
-				float4 ase_positionCS = TransformObjectToHClip( ( input.positionOS ).xyz );
-				output.ase_texcoord8 = ase_positionCS;
-				
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-					float3 defaultVertexValue = input.positionOS.xyz;
-				#else
-					float3 defaultVertexValue = float3(0, 0, 0);
-				#endif
-
-				float3 vertexValue = defaultVertexValue;
-
-				#ifdef ASE_ABSOLUTE_VERTEX_POS
-					input.positionOS.xyz = vertexValue;
-				#else
-					input.positionOS.xyz += vertexValue;
-				#endif
-
-				input.normalOS = input.normalOS;
-				input.tangentOS = input.tangentOS;
-
-				VertexPositionInputs vertexInput = GetVertexPositionInputs( input.positionOS.xyz );
-				VertexNormalInputs normalInput = GetVertexNormalInputs( input.normalOS, input.tangentOS );
-
-				output.positionCS = vertexInput.positionCS;
-				output.positionWS = vertexInput.positionWS;
-				output.normalWS = normalInput.normalWS;
-				output.tangentWS = float4( normalInput.tangentWS, ( input.tangentOS.w > 0.0 ? 1.0 : -1.0 ) * GetOddNegativeScale() );
 				return output;
 			}
 
@@ -2966,6 +1738,1255 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			}
 			#endif
 
+			half4 frag(	PackedVaryings input
+						#if defined( ASE_DEPTH_WRITE_ON )
+						,out float outputDepth : ASE_SV_DEPTH
+						#endif
+						 ) : SV_Target
+			{
+				UNITY_SETUP_INSTANCE_ID( input );
+				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( input );
+
+				#if defined(MAIN_LIGHT_CALCULATE_SHADOWS) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
+					float4 shadowCoord = TransformWorldToShadowCoord(input.positionWS);
+				#else
+					float4 shadowCoord = float4(0, 0, 0, 0);
+				#endif
+
+				float3 PositionWS = input.positionWS;
+				float3 PositionRWS = GetCameraRelativePositionWS( input.positionWS );
+				float4 ShadowCoord = shadowCoord;
+				float4 ScreenPosNorm = float4( GetNormalizedScreenSpaceUV( input.positionCS ), input.positionCS.zw );
+				float4 ClipPos = ComputeClipSpacePosition( ScreenPosNorm.xy, input.positionCS.z ) * input.positionCS.w;
+				float4 ScreenPos = ComputeScreenPos( ClipPos );
+
+				ImpostorOutput io = ( ImpostorOutput )0;
+				OctaImpostorFragment( io, ClipPos, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
+				
+
+				float Alpha = io.Alpha;
+				float AlphaClipThreshold = 0.5;
+				float AlphaClipThresholdShadow = 0.5;
+
+				#if defined( ASE_DEPTH_WRITE_ON )
+					float DeviceDepth = ClipPos.z;
+				#endif
+
+				#if defined( _ALPHATEST_ON )
+					#if defined( _ALPHATEST_SHADOW_ON )
+						AlphaDiscard( Alpha, AlphaClipThresholdShadow );
+					#else
+						AlphaDiscard( Alpha, AlphaClipThreshold );
+					#endif
+				#endif
+
+				#if defined(LOD_FADE_CROSSFADE)
+					LODFadeCrossFade( input.positionCS );
+				#endif
+
+				#if defined( ASE_DEPTH_WRITE_ON )
+					outputDepth = DeviceDepth;
+				#endif
+
+				return 0;
+			}
+			ENDHLSL
+		}
+
+		
+		Pass
+		{
+			
+			Name "DepthOnly"
+			Tags { "LightMode"="DepthOnly" }
+
+			ZWrite On
+			ColorMask R
+			AlphaToMask Off
+
+			HLSLPROGRAM
+
+			#define ASE_GEOMETRY 1
+			#pragma multi_compile_instancing
+			#pragma multi_compile _ LOD_FADE_CROSSFADE
+			#define ASE_FOG 1
+			#define _SPECULAR_SETUP 1
+			#define _NORMAL_DROPOFF_WS 1
+			#define ASE_DEPTH_WRITE_ON
+			#define _EMISSION
+			#define _NORMALMAP 1
+			#define ASE_VERSION 19904
+			#define ASE_SRP_VERSION 170004
+			#ifdef UNITY_COLORSPACE_GAMMA//AI_SRP
+			#define unity_ColorSpaceDielectricSpec half4(0.220916301, 0.220916301, 0.220916301, 1.0 - 0.220916301)//AI_SRP
+			#else//AI_SRP
+			#define unity_ColorSpaceDielectricSpec half4(0.04, 0.04, 0.04, 1.0 - 0.04) //AI_SRP
+			#endif//AI_SRP
+
+
+			#pragma vertex vert
+			#pragma fragment frag
+
+			#if defined(_SPECULAR_SETUP) && defined(ASE_LIGHTING_SIMPLE)
+				#define _SPECULAR_COLOR 1
+			#endif
+
+			#define SHADERPASS SHADERPASS_DEPTHONLY
+
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Input.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
+            #include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRendering.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/DebugMipmapStreamingMacros.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
+
+			#if defined(LOD_FADE_CROSSFADE)
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
+            #endif
+
+			#define AI_ObjectToWorld GetObjectToWorldMatrix()
+			#define AI_WorldToObject GetWorldToObjectMatrix()
+			#define AI_INV_TWO_PI  INV_TWO_PI
+			#define AI_PI          PI
+			#define AI_INV_PI      INV_PI
+			#define ASE_CHANGES_WORLD_POS
+			#define ASE_NEEDS_CLIP_POS
+			#define ASE_NEEDS_FRAG_CLIP_POS
+			#define ASE_NEEDS_WORLD_POSITION
+			#define ASE_NEEDS_FRAG_WORLD_POSITION
+			#pragma shader_feature_local_fragment _SPECULARMAP
+			#pragma shader_feature_local_fragment _OCCLUSIONMAP
+			#pragma shader_feature_local_fragment _EMISSIONMAP
+			#pragma shader_feature_local_fragment _POSITIONMAP
+			#pragma shader_feature_local _USE_PARALLAX_ON
+			#pragma shader_feature_local EFFECT_HUE_VARIATION
+			#pragma shader_feature_local _HEMI_ON
+			#pragma shader_feature_local AI_CLIP_NEIGHBOURS_FRAMES
+
+
+			#if defined(ASE_EARLY_Z_DEPTH_OPTIMIZE) && (SHADER_TARGET >= 45)
+				#define ASE_SV_DEPTH SV_DepthLessEqual
+				#define ASE_SV_POSITION_QUALIFIERS linear noperspective centroid
+			#else
+				#define ASE_SV_DEPTH SV_Depth
+				#define ASE_SV_POSITION_QUALIFIERS
+			#endif
+
+			struct Attributes
+			{
+				float4 positionOS : POSITION;
+				half3 normalOS : NORMAL;
+				half4 tangentOS : TANGENT;
+				
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+			};
+
+			struct PackedVaryings
+			{
+				ASE_SV_POSITION_QUALIFIERS float4 positionCS : SV_POSITION;
+				float3 positionWS : TEXCOORD0;
+				float4 UVsFrame1116 : TEXCOORD1;
+				float4 UVsFrame2116 : TEXCOORD2;
+				float4 UVsFrame3116 : TEXCOORD3;
+				float4 octaframe116 : TEXCOORD4;
+				float4 viewPos116 : TEXCOORD5;
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+				UNITY_VERTEX_OUTPUT_STEREO
+			};
+
+			CBUFFER_START(UnityPerMaterial)
+			float4 _HueVariation;
+			float4 _AI_SizeOffset;
+			float3 _Offset;
+			float3 _AI_BoundsMin;
+			float3 _AI_BoundsSize;
+			float _AI_AlphaToCoverage;
+			float _ClipMask;
+			float _TextureBias;
+			float _Parallax;
+			float _AI_ShadowBias;
+			float _AI_ShadowView;
+			float _AI_ForwardBias;
+			float _Frames;
+			float _DepthSize;
+			float _ImpostorSize;
+			#ifdef ASE_TRANSMISSION
+				float _TransmissionShadow;
+			#endif
+			#ifdef ASE_TRANSLUCENCY
+				float _TransStrength;
+				float _TransNormal;
+				float _TransScattering;
+				float _TransDirect;
+				float _TransAmbient;
+				float _TransShadow;
+			#endif
+			#ifdef ASE_TESSELLATION
+				float _TessPhongStrength;
+				float _TessValue;
+				float _TessMin;
+				float _TessMax;
+				float _TessEdgeLength;
+				float _TessMaxDisp;
+			#endif
+			CBUFFER_END
+
+			#ifdef SCENEPICKINGPASS
+				float4 _SelectionID;
+			#endif
+
+			#ifdef SCENESELECTIONPASS
+				int _ObjectId;
+				int _PassValue;
+			#endif
+
+			sampler2D _Albedo;
+			sampler2D _Normals;
+			sampler2D _Specular;
+			sampler2D _Occlusion;
+			sampler2D _Emission;
+			sampler2D _Position;
+
+
+			struct ImpostorOutput
+			{
+				half3 Albedo;
+				half3 Specular;
+				half Metallic;
+				half3 WorldNormal;
+				half Smoothness;
+				half Occlusion;
+				half3 Emission;
+				half Alpha;
+			};
+			
+			float2 VectorToOctahedron( float3 N )
+			{
+				N /= dot( 1.0, abs( N ) );
+				if( N.z <= 0 )
+				{
+				N.xy = ( 1 - abs( N.yx ) ) * ( N.xy >= 0 ? 1.0 : -1.0 );
+				}
+				return N.xy;
+			}
+			
+			float3 OctahedronToVector( float2 Oct )
+			{
+				float3 N = float3( Oct, 1.0 - dot( 1.0, abs( Oct ) ) );
+				if(N.z< 0 )
+				{
+				N.xy = ( 1 - abs( N.yx) ) * (N.xy >= 0 ? 1.0 : -1.0 );
+				}
+				return normalize( N);
+			}
+			
+			inline void RayPlaneIntersectionUV( float3 normalOS, float3 rayPosition, float3 rayDirection, out float2 uvs, out float3 localNormal )
+			{
+				float lDotN = dot( rayDirection, normalOS ); 
+				float p0l0DotN = dot( -rayPosition, normalOS );
+				float t = p0l0DotN / lDotN;
+				float3 p = rayDirection * t + rayPosition;
+				float3 upVector = float3( 0, 1, 0 );
+				float3 tangent = normalize( cross( upVector, normalOS ) + float3( -0.001, 0, 0 ) );
+				float3 bitangent = cross( tangent, normalOS );
+				float frameX = dot( p, tangent );
+				float frameZ = dot( p, bitangent );
+				uvs = -float2( frameX, frameZ );
+				if( t <= 0.0 )
+				uvs = 0;
+				float3x3 worldToLocal = float3x3( tangent, bitangent, normalOS );
+				localNormal = normalize( mul( worldToLocal, rayDirection ) );
+			}
+			
+			float2 VectorToHemiOctahedron( float3 N )
+			{
+				N.xy /= dot( 1.0, abs( N ) );
+				return float2( N.x + N.y, N.x - N.y );
+			}
+			
+			float3 HemiOctahedronToVector( float2 Oct )
+			{
+				Oct = float2( Oct.x + Oct.y, Oct.x - Oct.y ) * 0.5;
+				float3 N = float3( Oct, 1 - dot( 1.0, abs( Oct ) ) );
+				return normalize( N );
+			}
+			
+			inline void OctaImpostorVertex( inout float3 positionOS, out float3 normalOS, out float4 tangentOS, out float4 uvsFrame1, out float4 uvsFrame2, out float4 uvsFrame3, out float4 octaFrame, out float4 viewPos )
+			{
+				float2 uvOffset = _AI_SizeOffset.zw;
+				float parallax = -_Parallax; 
+				float UVscale = _ImpostorSize;
+				float framesXY = _Frames;
+				float prevFrame = framesXY - 1;
+				float3 fractions = 1.0 / float3( framesXY, prevFrame, UVscale );
+				float fractionsFrame = fractions.x;
+				float fractionsPrevFrame = fractions.y;
+				float fractionsUVscale = fractions.z;
+				float3 worldCameraPos;
+				#if defined(UNITY_PASS_SHADOWCASTER)
+				float3 worldOrigin = 0;
+				float4 perspective = float4( 0, 0, 0, 1 );
+				if ( UNITY_MATRIX_P[ 3 ][ 3 ] == 1 )
+				{
+				perspective = float4( 0, 0, 5000, 0 );
+				worldOrigin = AI_ObjectToWorld._m03_m13_m23;
+				}
+				worldCameraPos = worldOrigin + mul( UNITY_MATRIX_I_V, perspective ).xyz;
+				#else
+				if ( UNITY_MATRIX_P[ 3 ][ 3 ] == 1 )
+				{
+				worldCameraPos = AI_ObjectToWorld._m03_m13_m23 + UNITY_MATRIX_I_V._m02_m12_m22 * 5000;
+				}
+				else
+				{
+				worldCameraPos = GetCameraRelativePositionWS( _WorldSpaceCameraPos );
+				}
+				#endif
+				float3 objectCameraPosition = mul( AI_WorldToObject, float4( worldCameraPos, 1 ) ).xyz - _Offset.xyz; 
+				float3 objectCameraDirection = normalize( objectCameraPosition );
+				float3 upVector = float3( 0,1,0 );
+				float3 objectHorizontalVector = normalize( cross( objectCameraDirection, upVector ) );
+				float3 objectVerticalVector = cross( objectHorizontalVector, objectCameraDirection );
+				float2 uvExpansion = positionOS.xy;
+				float3 billboard = objectHorizontalVector * uvExpansion.x + objectVerticalVector * uvExpansion.y;
+				float3 localDir = billboard - objectCameraPosition; 
+				objectCameraDirection = trunc( objectCameraDirection * 65536.0 ) / 65536.0;
+				#if defined( _HEMI_ON )
+				objectCameraDirection.y = max( 0.001, objectCameraDirection.y );
+				float2 frameOcta = VectorToHemiOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
+				#else
+				float2 frameOcta = VectorToOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
+				#endif
+				float2 prevOctaFrame = frameOcta * prevFrame;
+				float2 baseOctaFrame = floor( prevOctaFrame );
+				float2 fractionOctaFrame = ( baseOctaFrame * fractionsFrame );
+				float2 octaFrame1 = ( baseOctaFrame * fractionsPrevFrame ) * 2.0 - 1.0;
+				#if defined( _HEMI_ON )
+				float3 octa1WorldY = HemiOctahedronToVector( octaFrame1 ).xzy;
+				#else
+				float3 octa1WorldY = OctahedronToVector( octaFrame1 ).xzy;
+				#endif
+				float3 octa1LocalY;
+				float2 uvFrame1;
+				RayPlaneIntersectionUV( octa1WorldY, objectCameraPosition, localDir, /*out*/ uvFrame1, /*out*/ octa1LocalY );
+				float2 uvParallax1 = octa1LocalY.xy * fractionsFrame * parallax;
+				uvFrame1 = ( uvFrame1 * fractionsUVscale + 0.5 ) * fractionsFrame + fractionOctaFrame;
+				uvsFrame1 = float4( uvParallax1, uvFrame1 ) - float4( 0, 0, uvOffset );
+				float2 fractPrevOctaFrame = frac( prevOctaFrame );
+				float2 cornerDifference = lerp( float2( 0,1 ) , float2( 1,0 ) , saturate( ceil( ( fractPrevOctaFrame.x - fractPrevOctaFrame.y ) ) ));
+				float2 octaFrame2 = ( ( baseOctaFrame + cornerDifference ) * fractionsPrevFrame ) * 2.0 - 1.0;
+				#if defined( _HEMI_ON )
+				float3 octa2WorldY = HemiOctahedronToVector( octaFrame2 ).xzy;
+				#else
+				float3 octa2WorldY = OctahedronToVector( octaFrame2 ).xzy;
+				#endif
+				float3 octa2LocalY;
+				float2 uvFrame2;
+				RayPlaneIntersectionUV( octa2WorldY, objectCameraPosition, localDir, /*out*/ uvFrame2, /*out*/ octa2LocalY );
+				float2 uvParallax2 = octa2LocalY.xy * fractionsFrame * parallax;
+				uvFrame2 = ( uvFrame2 * fractionsUVscale + 0.5 ) * fractionsFrame + ( ( cornerDifference * fractionsFrame ) + fractionOctaFrame );
+				uvsFrame2 = float4( uvParallax2, uvFrame2 ) - float4( 0, 0, uvOffset );
+				float2 octaFrame3 = ( ( baseOctaFrame + 1 ) * fractionsPrevFrame  ) * 2.0 - 1.0;
+				#if defined( _HEMI_ON )
+				float3 octa3WorldY = HemiOctahedronToVector( octaFrame3 ).xzy;
+				#else
+				float3 octa3WorldY = OctahedronToVector( octaFrame3 ).xzy;
+				#endif
+				float3 octa3LocalY;
+				float2 uvFrame3;
+				RayPlaneIntersectionUV( octa3WorldY, objectCameraPosition, localDir, /*out*/ uvFrame3, /*out*/ octa3LocalY );
+				float2 uvParallax3 = octa3LocalY.xy * fractionsFrame * parallax;
+				uvFrame3 = ( uvFrame3 * fractionsUVscale + 0.5 ) * fractionsFrame + ( fractionOctaFrame + fractionsFrame );
+				uvsFrame3 = float4( uvParallax3, uvFrame3 ) - float4( 0, 0, uvOffset );
+				octaFrame = 0;
+				octaFrame.xy = prevOctaFrame;
+				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
+				octaFrame.zw = fractionOctaFrame;
+				#endif
+				positionOS = billboard + _Offset.xyz;
+				normalOS = objectCameraDirection;
+				tangentOS = float4( objectHorizontalVector, 1 );
+				viewPos = 0;
+				viewPos.xyz = TransformWorldToView( TransformObjectToWorld( positionOS.xyz ) );
+				#ifdef EFFECT_HUE_VARIATION
+				float hueVariationAmount = frac( AI_ObjectToWorld[ 0 ].w + AI_ObjectToWorld[ 1 ].w + AI_ObjectToWorld[ 2 ].w );
+				viewPos.w = saturate( hueVariationAmount * _HueVariation.a );
+				#endif
+			}
+			
+			inline void OctaImpostorFragment( inout ImpostorOutput o, out float4 positionCS, out float3 positionWS, float4 uvsFrame1, float4 uvsFrame2, float4 uvsFrame3, float4 octaFrame, float4 viewPos )
+			{
+				float2 fraction = frac( octaFrame.xy );
+				float2 invFraction = 1 - fraction;
+				float3 weights;
+				weights.x = min( invFraction.x, invFraction.y );
+				weights.y = abs( fraction.x - fraction.y );
+				weights.z = min( fraction.x, fraction.y );
+				float4 parallaxSample1 = tex2Dbias( _Normals, float4( uvsFrame1.zw, 0, -1 ) );
+				float4 parallaxSample2 = tex2Dbias( _Normals, float4( uvsFrame2.zw, 0, -1 ) );
+				float4 parallaxSample3 = tex2Dbias( _Normals, float4( uvsFrame3.zw, 0, -1 ) );
+				float2 parallax1_uv = ( ( 0.5 - parallaxSample1.a ) * uvsFrame1.xy ) + uvsFrame1.zw;
+				float2 parallax2_uv = ( ( 0.5 - parallaxSample2.a ) * uvsFrame2.xy ) + uvsFrame2.zw;
+				float2 parallax3_uv = ( ( 0.5 - parallaxSample3.a ) * uvsFrame3.xy ) + uvsFrame3.zw;
+				float4 albedo1 = tex2Dbias( _Albedo, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 albedo2 = tex2Dbias( _Albedo, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 albedo3 = tex2Dbias( _Albedo, float4( parallax3_uv, 0, _TextureBias ) );
+				float4 blendedAlbedo = albedo1 * weights.x + albedo2 * weights.y + albedo3 * weights.z;
+				o.Alpha = ( blendedAlbedo.a - _ClipMask );
+				clip( o.Alpha );
+				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
+				float t = ceil( fraction.x - fraction.y );
+				float4 cornerDifference = float4( t, 1 - t, 1, 1 );
+				float2 step_1 = ( parallax1_uv - octaFrame.zw ) * _Frames;
+				float4 step23 = ( float4( parallax2_uv, parallax3_uv ) -  octaFrame.zwzw ) * _Frames - cornerDifference;
+				step_1 = step_1 * ( 1 - step_1 );
+				step23 = step23 * ( 1 - step23 );
+				float3 steps;
+				steps.x = step_1.x * step_1.y;
+				steps.y = step23.x * step23.y;
+				steps.z = step23.z * step23.w;
+				steps = step(-steps, 0);
+				float final = dot( steps, weights );
+				clip( final - 0.5 );
+				#endif
+				#ifdef EFFECT_HUE_VARIATION
+				half3 shiftedColor = lerp( blendedAlbedo.rgb, _HueVariation.rgb, viewPos.w );
+				half maxBase = max( blendedAlbedo.r, max(blendedAlbedo.g, blendedAlbedo.b ) );
+				half newMaxBase = max( shiftedColor.r, max(shiftedColor.g, shiftedColor.b ) );
+				maxBase /= newMaxBase;
+				maxBase = maxBase * 0.5f + 0.5f;
+				shiftedColor.rgb *= maxBase;
+				blendedAlbedo.rgb = saturate( shiftedColor );
+				#endif
+				o.Albedo = blendedAlbedo.rgb;
+				float4 normals1 = tex2Dbias( _Normals, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 normals2 = tex2Dbias( _Normals, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 normals3 = tex2Dbias( _Normals, float4( parallax3_uv, 0, _TextureBias ) );
+				float4 blendedNormal = normals1 * weights.x  + normals2 * weights.y + normals3 * weights.z;
+				float3 localNormal = blendedNormal.rgb * 2.0 - 1.0;
+				o.WorldNormal = normalize( mul( (float3x3)AI_ObjectToWorld, localNormal ) );
+				float depth = ( ( parallaxSample1.a * weights.x + parallaxSample2.a * weights.y + parallaxSample3.a * weights.z ) - 0.5 ) * _DepthSize * length( AI_ObjectToWorld[ 2 ].xyz );
+				#if defined( _SPECULARMAP )
+				float4 spec1 = tex2Dbias( _Specular, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 spec2 = tex2Dbias( _Specular, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 spec3 = tex2Dbias( _Specular, float4( parallax3_uv, 0, _TextureBias ) );
+				float4 blendedSpec = spec1 * weights.x  + spec2 * weights.y + spec3 * weights.z;
+				o.Specular = blendedSpec.rgb;
+				o.Smoothness = blendedSpec.a;
+				#else
+				o.Specular = 0;
+				o.Smoothness = 0;
+				#endif
+				#if defined( _OCCLUSIONMAP )
+				float4 occlusion1 = tex2Dbias( _Occlusion, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 occlusion2 = tex2Dbias( _Occlusion, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 occlusion3 = tex2Dbias( _Occlusion, float4( parallax3_uv, 0, _TextureBias ) );
+				o.Occlusion = occlusion1.g * weights.x  + occlusion2.g * weights.y + occlusion3.g * weights.z;
+				#else
+				o.Occlusion = 1;
+				#endif
+				#if defined( _EMISSIONMAP )
+				float4 emission1 = tex2Dbias( _Emission, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 emission2 = tex2Dbias( _Emission, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 emission3 = tex2Dbias( _Emission, float4( parallax3_uv, 0, _TextureBias ) );
+				o.Emission = emission1.rgb * weights.x  + emission2.rgb * weights.y + emission3.rgb * weights.z;
+				#else
+				o.Emission = 0;
+				#endif
+				#if defined( _POSITIONMAP )
+				float4 position1 = tex2Dbias( _Position, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 position2 = tex2Dbias( _Position, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 position3 = tex2Dbias( _Position, float4( parallax3_uv, 0, _TextureBias ) );
+				float4 blendedPosition = position1 * weights.x  + position2 * weights.y + position3 * weights.z;
+				float3 objectPosition = blendedPosition.xyz * _AI_BoundsSize + _AI_BoundsMin;
+				float3 worldPosition = mul( AI_ObjectToWorld, float4( objectPosition, 1 ) ).xyz;
+				if ( blendedPosition.a > 0 )
+				{
+				viewPos.xyz = mul( UNITY_MATRIX_V, float4( worldPosition.xyz, 1 ) ).xyz;
+				depth = 0;
+				}
+				#endif
+				#if ( defined(SHADERPASS) && ((defined(SHADERPASS_SHADOWS) && SHADERPASS == SHADERPASS_SHADOWS) || (defined(SHADERPASS_SHADOWCASTER) && SHADERPASS == SHADERPASS_SHADOWCASTER)) ) || defined(UNITY_PASS_SHADOWCASTER)
+				viewPos.z += depth * _AI_ShadowView - _AI_ShadowBias;
+				#else 
+				viewPos.z += depth + _AI_ForwardBias;
+				#endif
+				positionWS = mul( UNITY_MATRIX_I_V, float4( viewPos.xyz, 1 ) ).xyz;
+				#if defined(SHADERPASS) && defined(UNITY_PASS_SHADOWCASTER)
+				#if _CASTING_PUNCTUAL_LIGHT_SHADOW
+				float3 lightDirectionWS = normalize( _LightPosition - positionWS );
+				#else
+				float3 lightDirectionWS = _LightDirection;
+				#endif
+				positionCS = TransformWorldToHClip( ApplyShadowBias( positionWS, float3( 0, 0, 0 ), lightDirectionWS ) );
+				#if UNITY_REVERSED_Z
+				positionCS.z = min( positionCS.z, positionCS.w * UNITY_NEAR_CLIP_VALUE );
+				#else
+				positionCS.z = max( positionCS.z, positionCS.w * UNITY_NEAR_CLIP_VALUE );
+				#endif
+				#else
+				positionCS = mul( UNITY_MATRIX_P, float4( viewPos.xyz, 1 ) );
+				#endif
+				positionCS.xyz /= positionCS.w;
+				if( UNITY_NEAR_CLIP_VALUE < 0 )
+				positionCS = positionCS * 0.5 + 0.5;
+			}
+			
+
+			PackedVaryings VertexFunction( Attributes input  )
+			{
+				PackedVaryings output = (PackedVaryings)0;
+				UNITY_SETUP_INSTANCE_ID(input);
+				UNITY_TRANSFER_INSTANCE_ID(input, output);
+				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
+
+				OctaImpostorVertex( input.positionOS.xyz, input.normalOS.xyz, input.tangentOS, output.UVsFrame1116, output.UVsFrame2116, output.UVsFrame3116, output.octaframe116, output.viewPos116 );
+				
+
+				#ifdef ASE_ABSOLUTE_VERTEX_POS
+					float3 defaultVertexValue = input.positionOS.xyz;
+				#else
+					float3 defaultVertexValue = float3(0, 0, 0);
+				#endif
+
+				float3 vertexValue = defaultVertexValue;
+
+				#ifdef ASE_ABSOLUTE_VERTEX_POS
+					input.positionOS.xyz = vertexValue;
+				#else
+					input.positionOS.xyz += vertexValue;
+				#endif
+
+				input.normalOS = input.normalOS;
+				input.tangentOS = input.tangentOS;
+
+				VertexPositionInputs vertexInput = GetVertexPositionInputs( input.positionOS.xyz );
+
+				output.positionCS = vertexInput.positionCS;
+				output.positionWS = vertexInput.positionWS;
+				return output;
+			}
+
+			#if defined(ASE_TESSELLATION)
+			struct VertexControl
+			{
+				float4 positionOS : INTERNALTESSPOS;
+				half3 normalOS : NORMAL;
+				half4 tangentOS : TANGENT;
+				
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+			};
+
+			struct TessellationFactors
+			{
+				float edge[3] : SV_TessFactor;
+				float inside : SV_InsideTessFactor;
+			};
+
+			VertexControl vert ( Attributes input )
+			{
+				VertexControl output;
+				UNITY_SETUP_INSTANCE_ID(input);
+				UNITY_TRANSFER_INSTANCE_ID(input, output);
+				output.positionOS = input.positionOS;
+				output.normalOS = input.normalOS;
+				output.tangentOS = input.tangentOS;
+				
+				return output;
+			}
+
+			TessellationFactors TessellationFunction (InputPatch<VertexControl,3> input)
+			{
+				TessellationFactors output;
+				float4 tf = 1;
+				float tessValue = _TessValue; float tessMin = _TessMin; float tessMax = _TessMax;
+				float edgeLength = _TessEdgeLength; float tessMaxDisp = _TessMaxDisp;
+				#if defined(ASE_FIXED_TESSELLATION)
+				tf = FixedTess( tessValue );
+				#elif defined(ASE_DISTANCE_TESSELLATION)
+				tf = DistanceBasedTess(input[0].positionOS, input[1].positionOS, input[2].positionOS, tessValue, tessMin, tessMax, GetObjectToWorldMatrix(), _WorldSpaceCameraPos );
+				#elif defined(ASE_LENGTH_TESSELLATION)
+				tf = EdgeLengthBasedTess(input[0].positionOS, input[1].positionOS, input[2].positionOS, edgeLength, GetObjectToWorldMatrix(), _WorldSpaceCameraPos, _ScreenParams );
+				#elif defined(ASE_LENGTH_CULL_TESSELLATION)
+				tf = EdgeLengthBasedTessCull(input[0].positionOS, input[1].positionOS, input[2].positionOS, edgeLength, tessMaxDisp, GetObjectToWorldMatrix(), _WorldSpaceCameraPos, _ScreenParams, unity_CameraWorldClipPlanes );
+				#endif
+				output.edge[0] = tf.x; output.edge[1] = tf.y; output.edge[2] = tf.z; output.inside = tf.w;
+				return output;
+			}
+
+			[domain("tri")]
+			[partitioning("fractional_odd")]
+			[outputtopology("triangle_cw")]
+			[patchconstantfunc("TessellationFunction")]
+			[outputcontrolpoints(3)]
+			VertexControl HullFunction(InputPatch<VertexControl, 3> patch, uint id : SV_OutputControlPointID)
+			{
+				return patch[id];
+			}
+
+			[domain("tri")]
+			PackedVaryings DomainFunction(TessellationFactors factors, OutputPatch<VertexControl, 3> patch, float3 bary : SV_DomainLocation)
+			{
+				Attributes output = (Attributes) 0;
+				output.positionOS = patch[0].positionOS * bary.x + patch[1].positionOS * bary.y + patch[2].positionOS * bary.z;
+				output.normalOS = patch[0].normalOS * bary.x + patch[1].normalOS * bary.y + patch[2].normalOS * bary.z;
+				output.tangentOS = patch[0].tangentOS * bary.x + patch[1].tangentOS * bary.y + patch[2].tangentOS * bary.z;
+				
+				#if defined(ASE_PHONG_TESSELLATION)
+				float3 pp[3];
+				for (int i = 0; i < 3; ++i)
+					pp[i] = output.positionOS.xyz - patch[i].normalOS * (dot(output.positionOS.xyz, patch[i].normalOS) - dot(patch[i].positionOS.xyz, patch[i].normalOS));
+				float phongStrength = _TessPhongStrength;
+				output.positionOS.xyz = phongStrength * (pp[0]*bary.x + pp[1]*bary.y + pp[2]*bary.z) + (1.0f-phongStrength) * output.positionOS.xyz;
+				#endif
+				UNITY_TRANSFER_INSTANCE_ID(patch[0], output);
+				return VertexFunction(output);
+			}
+			#else
+			PackedVaryings vert ( Attributes input )
+			{
+				return VertexFunction( input );
+			}
+			#endif
+
+			half4 frag(	PackedVaryings input
+						#if defined( ASE_DEPTH_WRITE_ON )
+						,out float outputDepth : ASE_SV_DEPTH
+						#endif
+						 ) : SV_Target
+			{
+				UNITY_SETUP_INSTANCE_ID(input);
+				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( input );
+
+				#if defined(MAIN_LIGHT_CALCULATE_SHADOWS) && defined(ASE_NEEDS_FRAG_SHADOWCOORDS)
+					float4 shadowCoord = TransformWorldToShadowCoord(input.positionWS);
+				#else
+					float4 shadowCoord = float4(0, 0, 0, 0);
+				#endif
+
+				float3 PositionWS = input.positionWS;
+				float3 PositionRWS = GetCameraRelativePositionWS( input.positionWS );
+				float4 ShadowCoord = shadowCoord;
+				float4 ScreenPosNorm = float4( GetNormalizedScreenSpaceUV( input.positionCS ), input.positionCS.zw );
+				float4 ClipPos = ComputeClipSpacePosition( ScreenPosNorm.xy, input.positionCS.z ) * input.positionCS.w;
+				float4 ScreenPos = ComputeScreenPos( ClipPos );
+
+				ImpostorOutput io = ( ImpostorOutput )0;
+				OctaImpostorFragment( io, ClipPos, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
+				
+
+				float Alpha = io.Alpha;
+				float AlphaClipThreshold = 0.5;
+
+				#if defined( ASE_DEPTH_WRITE_ON )
+					float DeviceDepth = ClipPos.z;
+				#endif
+
+				#if defined( _ALPHATEST_ON )
+					AlphaDiscard( Alpha, AlphaClipThreshold );
+				#endif
+
+				#if defined(LOD_FADE_CROSSFADE)
+					LODFadeCrossFade( input.positionCS );
+				#endif
+
+				#if defined( ASE_DEPTH_WRITE_ON )
+					outputDepth = DeviceDepth;
+				#endif
+
+				return 0;
+			}
+			ENDHLSL
+		}
+
+		
+		Pass
+		{
+			
+			Name "DepthNormals"
+			Tags { "LightMode"="DepthNormals" }
+
+			ZWrite On
+			Blend One Zero
+			ZTest LEqual
+			ZWrite On
+
+			HLSLPROGRAM
+
+			#define ASE_GEOMETRY 1
+			#pragma multi_compile_instancing
+			#pragma multi_compile _ LOD_FADE_CROSSFADE
+			#define ASE_FOG 1
+			#define _SPECULAR_SETUP 1
+			#define _NORMAL_DROPOFF_WS 1
+			#define ASE_DEPTH_WRITE_ON
+			#define _EMISSION
+			#define _NORMALMAP 1
+			#define ASE_VERSION 19904
+			#define ASE_SRP_VERSION 170004
+			#ifdef UNITY_COLORSPACE_GAMMA//AI_SRP
+			#define unity_ColorSpaceDielectricSpec half4(0.220916301, 0.220916301, 0.220916301, 1.0 - 0.220916301)//AI_SRP
+			#else//AI_SRP
+			#define unity_ColorSpaceDielectricSpec half4(0.04, 0.04, 0.04, 1.0 - 0.04) //AI_SRP
+			#endif//AI_SRP
+
+
+			#pragma vertex vert
+			#pragma fragment frag
+
+			#if defined(_SPECULAR_SETUP) && defined(ASE_LIGHTING_SIMPLE)
+				#define _SPECULAR_COLOR 1
+			#endif
+
+			#define SHADERPASS SHADERPASS_DEPTHNORMALSONLY
+			//#define SHADERPASS SHADERPASS_DEPTHNORMALS
+
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/RenderingLayers.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Input.hlsl"
+			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
+            #include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRendering.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/DebugMipmapStreamingMacros.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
+
+			#if defined(LOD_FADE_CROSSFADE)
+            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
+            #endif
+
+			#if defined(UNITY_INSTANCING_ENABLED) && ( defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL) || defined(_INSTANCEDTERRAINNORMALS_PIXEL) )
+				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
+			#endif
+
+			#define AI_ObjectToWorld GetObjectToWorldMatrix()
+			#define AI_WorldToObject GetWorldToObjectMatrix()
+			#define AI_INV_TWO_PI  INV_TWO_PI
+			#define AI_PI          PI
+			#define AI_INV_PI      INV_PI
+			#define ASE_CHANGES_WORLD_POS
+			#define ASE_NEEDS_CLIP_POS
+			#define ASE_NEEDS_FRAG_CLIP_POS
+			#define ASE_NEEDS_WORLD_POSITION
+			#define ASE_NEEDS_FRAG_WORLD_POSITION
+			#pragma shader_feature_local_fragment _SPECULARMAP
+			#pragma shader_feature_local_fragment _OCCLUSIONMAP
+			#pragma shader_feature_local_fragment _EMISSIONMAP
+			#pragma shader_feature_local_fragment _POSITIONMAP
+			#pragma shader_feature_local _USE_PARALLAX_ON
+			#pragma shader_feature_local EFFECT_HUE_VARIATION
+			#pragma shader_feature_local _HEMI_ON
+			#pragma shader_feature_local AI_CLIP_NEIGHBOURS_FRAMES
+
+
+			#if defined(ASE_EARLY_Z_DEPTH_OPTIMIZE) && (SHADER_TARGET >= 45)
+				#define ASE_SV_DEPTH SV_DepthLessEqual
+				#define ASE_SV_POSITION_QUALIFIERS linear noperspective centroid
+			#else
+				#define ASE_SV_DEPTH SV_Depth
+				#define ASE_SV_POSITION_QUALIFIERS
+			#endif
+
+			struct Attributes
+			{
+				float4 positionOS : POSITION;
+				half3 normalOS : NORMAL;
+				half4 tangentOS : TANGENT;
+				half4 texcoord : TEXCOORD0;
+				
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+			};
+
+			struct PackedVaryings
+			{
+				ASE_SV_POSITION_QUALIFIERS float4 positionCS : SV_POSITION;
+				float3 positionWS : TEXCOORD0;
+				half3 normalWS : TEXCOORD1;
+				float4 tangentWS : TEXCOORD2; // holds terrainUV ifdef ENABLE_TERRAIN_PERPIXEL_NORMAL
+				float4 UVsFrame1116 : TEXCOORD3;
+				float4 UVsFrame2116 : TEXCOORD4;
+				float4 UVsFrame3116 : TEXCOORD5;
+				float4 octaframe116 : TEXCOORD6;
+				float4 viewPos116 : TEXCOORD7;
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+				UNITY_VERTEX_OUTPUT_STEREO
+			};
+
+			CBUFFER_START(UnityPerMaterial)
+			float4 _HueVariation;
+			float4 _AI_SizeOffset;
+			float3 _Offset;
+			float3 _AI_BoundsMin;
+			float3 _AI_BoundsSize;
+			float _AI_AlphaToCoverage;
+			float _ClipMask;
+			float _TextureBias;
+			float _Parallax;
+			float _AI_ShadowBias;
+			float _AI_ShadowView;
+			float _AI_ForwardBias;
+			float _Frames;
+			float _DepthSize;
+			float _ImpostorSize;
+			#ifdef ASE_TRANSMISSION
+				float _TransmissionShadow;
+			#endif
+			#ifdef ASE_TRANSLUCENCY
+				float _TransStrength;
+				float _TransNormal;
+				float _TransScattering;
+				float _TransDirect;
+				float _TransAmbient;
+				float _TransShadow;
+			#endif
+			#ifdef ASE_TESSELLATION
+				float _TessPhongStrength;
+				float _TessValue;
+				float _TessMin;
+				float _TessMax;
+				float _TessEdgeLength;
+				float _TessMaxDisp;
+			#endif
+			CBUFFER_END
+
+			#ifdef SCENEPICKINGPASS
+				float4 _SelectionID;
+			#endif
+
+			#ifdef SCENESELECTIONPASS
+				int _ObjectId;
+				int _PassValue;
+			#endif
+
+			sampler2D _Albedo;
+			sampler2D _Normals;
+			sampler2D _Specular;
+			sampler2D _Occlusion;
+			sampler2D _Emission;
+			sampler2D _Position;
+
+
+			struct ImpostorOutput
+			{
+				half3 Albedo;
+				half3 Specular;
+				half Metallic;
+				half3 WorldNormal;
+				half Smoothness;
+				half Occlusion;
+				half3 Emission;
+				half Alpha;
+			};
+			
+			float2 VectorToOctahedron( float3 N )
+			{
+				N /= dot( 1.0, abs( N ) );
+				if( N.z <= 0 )
+				{
+				N.xy = ( 1 - abs( N.yx ) ) * ( N.xy >= 0 ? 1.0 : -1.0 );
+				}
+				return N.xy;
+			}
+			
+			float3 OctahedronToVector( float2 Oct )
+			{
+				float3 N = float3( Oct, 1.0 - dot( 1.0, abs( Oct ) ) );
+				if(N.z< 0 )
+				{
+				N.xy = ( 1 - abs( N.yx) ) * (N.xy >= 0 ? 1.0 : -1.0 );
+				}
+				return normalize( N);
+			}
+			
+			inline void RayPlaneIntersectionUV( float3 normalOS, float3 rayPosition, float3 rayDirection, out float2 uvs, out float3 localNormal )
+			{
+				float lDotN = dot( rayDirection, normalOS ); 
+				float p0l0DotN = dot( -rayPosition, normalOS );
+				float t = p0l0DotN / lDotN;
+				float3 p = rayDirection * t + rayPosition;
+				float3 upVector = float3( 0, 1, 0 );
+				float3 tangent = normalize( cross( upVector, normalOS ) + float3( -0.001, 0, 0 ) );
+				float3 bitangent = cross( tangent, normalOS );
+				float frameX = dot( p, tangent );
+				float frameZ = dot( p, bitangent );
+				uvs = -float2( frameX, frameZ );
+				if( t <= 0.0 )
+				uvs = 0;
+				float3x3 worldToLocal = float3x3( tangent, bitangent, normalOS );
+				localNormal = normalize( mul( worldToLocal, rayDirection ) );
+			}
+			
+			float2 VectorToHemiOctahedron( float3 N )
+			{
+				N.xy /= dot( 1.0, abs( N ) );
+				return float2( N.x + N.y, N.x - N.y );
+			}
+			
+			float3 HemiOctahedronToVector( float2 Oct )
+			{
+				Oct = float2( Oct.x + Oct.y, Oct.x - Oct.y ) * 0.5;
+				float3 N = float3( Oct, 1 - dot( 1.0, abs( Oct ) ) );
+				return normalize( N );
+			}
+			
+			inline void OctaImpostorVertex( inout float3 positionOS, out float3 normalOS, out float4 tangentOS, out float4 uvsFrame1, out float4 uvsFrame2, out float4 uvsFrame3, out float4 octaFrame, out float4 viewPos )
+			{
+				float2 uvOffset = _AI_SizeOffset.zw;
+				float parallax = -_Parallax; 
+				float UVscale = _ImpostorSize;
+				float framesXY = _Frames;
+				float prevFrame = framesXY - 1;
+				float3 fractions = 1.0 / float3( framesXY, prevFrame, UVscale );
+				float fractionsFrame = fractions.x;
+				float fractionsPrevFrame = fractions.y;
+				float fractionsUVscale = fractions.z;
+				float3 worldCameraPos;
+				#if defined(UNITY_PASS_SHADOWCASTER)
+				float3 worldOrigin = 0;
+				float4 perspective = float4( 0, 0, 0, 1 );
+				if ( UNITY_MATRIX_P[ 3 ][ 3 ] == 1 )
+				{
+				perspective = float4( 0, 0, 5000, 0 );
+				worldOrigin = AI_ObjectToWorld._m03_m13_m23;
+				}
+				worldCameraPos = worldOrigin + mul( UNITY_MATRIX_I_V, perspective ).xyz;
+				#else
+				if ( UNITY_MATRIX_P[ 3 ][ 3 ] == 1 )
+				{
+				worldCameraPos = AI_ObjectToWorld._m03_m13_m23 + UNITY_MATRIX_I_V._m02_m12_m22 * 5000;
+				}
+				else
+				{
+				worldCameraPos = GetCameraRelativePositionWS( _WorldSpaceCameraPos );
+				}
+				#endif
+				float3 objectCameraPosition = mul( AI_WorldToObject, float4( worldCameraPos, 1 ) ).xyz - _Offset.xyz; 
+				float3 objectCameraDirection = normalize( objectCameraPosition );
+				float3 upVector = float3( 0,1,0 );
+				float3 objectHorizontalVector = normalize( cross( objectCameraDirection, upVector ) );
+				float3 objectVerticalVector = cross( objectHorizontalVector, objectCameraDirection );
+				float2 uvExpansion = positionOS.xy;
+				float3 billboard = objectHorizontalVector * uvExpansion.x + objectVerticalVector * uvExpansion.y;
+				float3 localDir = billboard - objectCameraPosition; 
+				objectCameraDirection = trunc( objectCameraDirection * 65536.0 ) / 65536.0;
+				#if defined( _HEMI_ON )
+				objectCameraDirection.y = max( 0.001, objectCameraDirection.y );
+				float2 frameOcta = VectorToHemiOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
+				#else
+				float2 frameOcta = VectorToOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
+				#endif
+				float2 prevOctaFrame = frameOcta * prevFrame;
+				float2 baseOctaFrame = floor( prevOctaFrame );
+				float2 fractionOctaFrame = ( baseOctaFrame * fractionsFrame );
+				float2 octaFrame1 = ( baseOctaFrame * fractionsPrevFrame ) * 2.0 - 1.0;
+				#if defined( _HEMI_ON )
+				float3 octa1WorldY = HemiOctahedronToVector( octaFrame1 ).xzy;
+				#else
+				float3 octa1WorldY = OctahedronToVector( octaFrame1 ).xzy;
+				#endif
+				float3 octa1LocalY;
+				float2 uvFrame1;
+				RayPlaneIntersectionUV( octa1WorldY, objectCameraPosition, localDir, /*out*/ uvFrame1, /*out*/ octa1LocalY );
+				float2 uvParallax1 = octa1LocalY.xy * fractionsFrame * parallax;
+				uvFrame1 = ( uvFrame1 * fractionsUVscale + 0.5 ) * fractionsFrame + fractionOctaFrame;
+				uvsFrame1 = float4( uvParallax1, uvFrame1 ) - float4( 0, 0, uvOffset );
+				float2 fractPrevOctaFrame = frac( prevOctaFrame );
+				float2 cornerDifference = lerp( float2( 0,1 ) , float2( 1,0 ) , saturate( ceil( ( fractPrevOctaFrame.x - fractPrevOctaFrame.y ) ) ));
+				float2 octaFrame2 = ( ( baseOctaFrame + cornerDifference ) * fractionsPrevFrame ) * 2.0 - 1.0;
+				#if defined( _HEMI_ON )
+				float3 octa2WorldY = HemiOctahedronToVector( octaFrame2 ).xzy;
+				#else
+				float3 octa2WorldY = OctahedronToVector( octaFrame2 ).xzy;
+				#endif
+				float3 octa2LocalY;
+				float2 uvFrame2;
+				RayPlaneIntersectionUV( octa2WorldY, objectCameraPosition, localDir, /*out*/ uvFrame2, /*out*/ octa2LocalY );
+				float2 uvParallax2 = octa2LocalY.xy * fractionsFrame * parallax;
+				uvFrame2 = ( uvFrame2 * fractionsUVscale + 0.5 ) * fractionsFrame + ( ( cornerDifference * fractionsFrame ) + fractionOctaFrame );
+				uvsFrame2 = float4( uvParallax2, uvFrame2 ) - float4( 0, 0, uvOffset );
+				float2 octaFrame3 = ( ( baseOctaFrame + 1 ) * fractionsPrevFrame  ) * 2.0 - 1.0;
+				#if defined( _HEMI_ON )
+				float3 octa3WorldY = HemiOctahedronToVector( octaFrame3 ).xzy;
+				#else
+				float3 octa3WorldY = OctahedronToVector( octaFrame3 ).xzy;
+				#endif
+				float3 octa3LocalY;
+				float2 uvFrame3;
+				RayPlaneIntersectionUV( octa3WorldY, objectCameraPosition, localDir, /*out*/ uvFrame3, /*out*/ octa3LocalY );
+				float2 uvParallax3 = octa3LocalY.xy * fractionsFrame * parallax;
+				uvFrame3 = ( uvFrame3 * fractionsUVscale + 0.5 ) * fractionsFrame + ( fractionOctaFrame + fractionsFrame );
+				uvsFrame3 = float4( uvParallax3, uvFrame3 ) - float4( 0, 0, uvOffset );
+				octaFrame = 0;
+				octaFrame.xy = prevOctaFrame;
+				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
+				octaFrame.zw = fractionOctaFrame;
+				#endif
+				positionOS = billboard + _Offset.xyz;
+				normalOS = objectCameraDirection;
+				tangentOS = float4( objectHorizontalVector, 1 );
+				viewPos = 0;
+				viewPos.xyz = TransformWorldToView( TransformObjectToWorld( positionOS.xyz ) );
+				#ifdef EFFECT_HUE_VARIATION
+				float hueVariationAmount = frac( AI_ObjectToWorld[ 0 ].w + AI_ObjectToWorld[ 1 ].w + AI_ObjectToWorld[ 2 ].w );
+				viewPos.w = saturate( hueVariationAmount * _HueVariation.a );
+				#endif
+			}
+			
+			inline void OctaImpostorFragment( inout ImpostorOutput o, out float4 positionCS, out float3 positionWS, float4 uvsFrame1, float4 uvsFrame2, float4 uvsFrame3, float4 octaFrame, float4 viewPos )
+			{
+				float2 fraction = frac( octaFrame.xy );
+				float2 invFraction = 1 - fraction;
+				float3 weights;
+				weights.x = min( invFraction.x, invFraction.y );
+				weights.y = abs( fraction.x - fraction.y );
+				weights.z = min( fraction.x, fraction.y );
+				float4 parallaxSample1 = tex2Dbias( _Normals, float4( uvsFrame1.zw, 0, -1 ) );
+				float4 parallaxSample2 = tex2Dbias( _Normals, float4( uvsFrame2.zw, 0, -1 ) );
+				float4 parallaxSample3 = tex2Dbias( _Normals, float4( uvsFrame3.zw, 0, -1 ) );
+				float2 parallax1_uv = ( ( 0.5 - parallaxSample1.a ) * uvsFrame1.xy ) + uvsFrame1.zw;
+				float2 parallax2_uv = ( ( 0.5 - parallaxSample2.a ) * uvsFrame2.xy ) + uvsFrame2.zw;
+				float2 parallax3_uv = ( ( 0.5 - parallaxSample3.a ) * uvsFrame3.xy ) + uvsFrame3.zw;
+				float4 albedo1 = tex2Dbias( _Albedo, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 albedo2 = tex2Dbias( _Albedo, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 albedo3 = tex2Dbias( _Albedo, float4( parallax3_uv, 0, _TextureBias ) );
+				float4 blendedAlbedo = albedo1 * weights.x + albedo2 * weights.y + albedo3 * weights.z;
+				o.Alpha = ( blendedAlbedo.a - _ClipMask );
+				clip( o.Alpha );
+				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
+				float t = ceil( fraction.x - fraction.y );
+				float4 cornerDifference = float4( t, 1 - t, 1, 1 );
+				float2 step_1 = ( parallax1_uv - octaFrame.zw ) * _Frames;
+				float4 step23 = ( float4( parallax2_uv, parallax3_uv ) -  octaFrame.zwzw ) * _Frames - cornerDifference;
+				step_1 = step_1 * ( 1 - step_1 );
+				step23 = step23 * ( 1 - step23 );
+				float3 steps;
+				steps.x = step_1.x * step_1.y;
+				steps.y = step23.x * step23.y;
+				steps.z = step23.z * step23.w;
+				steps = step(-steps, 0);
+				float final = dot( steps, weights );
+				clip( final - 0.5 );
+				#endif
+				#ifdef EFFECT_HUE_VARIATION
+				half3 shiftedColor = lerp( blendedAlbedo.rgb, _HueVariation.rgb, viewPos.w );
+				half maxBase = max( blendedAlbedo.r, max(blendedAlbedo.g, blendedAlbedo.b ) );
+				half newMaxBase = max( shiftedColor.r, max(shiftedColor.g, shiftedColor.b ) );
+				maxBase /= newMaxBase;
+				maxBase = maxBase * 0.5f + 0.5f;
+				shiftedColor.rgb *= maxBase;
+				blendedAlbedo.rgb = saturate( shiftedColor );
+				#endif
+				o.Albedo = blendedAlbedo.rgb;
+				float4 normals1 = tex2Dbias( _Normals, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 normals2 = tex2Dbias( _Normals, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 normals3 = tex2Dbias( _Normals, float4( parallax3_uv, 0, _TextureBias ) );
+				float4 blendedNormal = normals1 * weights.x  + normals2 * weights.y + normals3 * weights.z;
+				float3 localNormal = blendedNormal.rgb * 2.0 - 1.0;
+				o.WorldNormal = normalize( mul( (float3x3)AI_ObjectToWorld, localNormal ) );
+				float depth = ( ( parallaxSample1.a * weights.x + parallaxSample2.a * weights.y + parallaxSample3.a * weights.z ) - 0.5 ) * _DepthSize * length( AI_ObjectToWorld[ 2 ].xyz );
+				#if defined( _SPECULARMAP )
+				float4 spec1 = tex2Dbias( _Specular, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 spec2 = tex2Dbias( _Specular, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 spec3 = tex2Dbias( _Specular, float4( parallax3_uv, 0, _TextureBias ) );
+				float4 blendedSpec = spec1 * weights.x  + spec2 * weights.y + spec3 * weights.z;
+				o.Specular = blendedSpec.rgb;
+				o.Smoothness = blendedSpec.a;
+				#else
+				o.Specular = 0;
+				o.Smoothness = 0;
+				#endif
+				#if defined( _OCCLUSIONMAP )
+				float4 occlusion1 = tex2Dbias( _Occlusion, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 occlusion2 = tex2Dbias( _Occlusion, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 occlusion3 = tex2Dbias( _Occlusion, float4( parallax3_uv, 0, _TextureBias ) );
+				o.Occlusion = occlusion1.g * weights.x  + occlusion2.g * weights.y + occlusion3.g * weights.z;
+				#else
+				o.Occlusion = 1;
+				#endif
+				#if defined( _EMISSIONMAP )
+				float4 emission1 = tex2Dbias( _Emission, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 emission2 = tex2Dbias( _Emission, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 emission3 = tex2Dbias( _Emission, float4( parallax3_uv, 0, _TextureBias ) );
+				o.Emission = emission1.rgb * weights.x  + emission2.rgb * weights.y + emission3.rgb * weights.z;
+				#else
+				o.Emission = 0;
+				#endif
+				#if defined( _POSITIONMAP )
+				float4 position1 = tex2Dbias( _Position, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 position2 = tex2Dbias( _Position, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 position3 = tex2Dbias( _Position, float4( parallax3_uv, 0, _TextureBias ) );
+				float4 blendedPosition = position1 * weights.x  + position2 * weights.y + position3 * weights.z;
+				float3 objectPosition = blendedPosition.xyz * _AI_BoundsSize + _AI_BoundsMin;
+				float3 worldPosition = mul( AI_ObjectToWorld, float4( objectPosition, 1 ) ).xyz;
+				if ( blendedPosition.a > 0 )
+				{
+				viewPos.xyz = mul( UNITY_MATRIX_V, float4( worldPosition.xyz, 1 ) ).xyz;
+				depth = 0;
+				}
+				#endif
+				#if ( defined(SHADERPASS) && ((defined(SHADERPASS_SHADOWS) && SHADERPASS == SHADERPASS_SHADOWS) || (defined(SHADERPASS_SHADOWCASTER) && SHADERPASS == SHADERPASS_SHADOWCASTER)) ) || defined(UNITY_PASS_SHADOWCASTER)
+				viewPos.z += depth * _AI_ShadowView - _AI_ShadowBias;
+				#else 
+				viewPos.z += depth + _AI_ForwardBias;
+				#endif
+				positionWS = mul( UNITY_MATRIX_I_V, float4( viewPos.xyz, 1 ) ).xyz;
+				#if defined(SHADERPASS) && defined(UNITY_PASS_SHADOWCASTER)
+				#if _CASTING_PUNCTUAL_LIGHT_SHADOW
+				float3 lightDirectionWS = normalize( _LightPosition - positionWS );
+				#else
+				float3 lightDirectionWS = _LightDirection;
+				#endif
+				positionCS = TransformWorldToHClip( ApplyShadowBias( positionWS, float3( 0, 0, 0 ), lightDirectionWS ) );
+				#if UNITY_REVERSED_Z
+				positionCS.z = min( positionCS.z, positionCS.w * UNITY_NEAR_CLIP_VALUE );
+				#else
+				positionCS.z = max( positionCS.z, positionCS.w * UNITY_NEAR_CLIP_VALUE );
+				#endif
+				#else
+				positionCS = mul( UNITY_MATRIX_P, float4( viewPos.xyz, 1 ) );
+				#endif
+				positionCS.xyz /= positionCS.w;
+				if( UNITY_NEAR_CLIP_VALUE < 0 )
+				positionCS = positionCS * 0.5 + 0.5;
+			}
+			
+
+			PackedVaryings VertexFunction( Attributes input  )
+			{
+				PackedVaryings output = (PackedVaryings)0;
+				UNITY_SETUP_INSTANCE_ID(input);
+				UNITY_TRANSFER_INSTANCE_ID(input, output);
+				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
+
+				OctaImpostorVertex( input.positionOS.xyz, input.normalOS.xyz, input.tangentOS, output.UVsFrame1116, output.UVsFrame2116, output.UVsFrame3116, output.octaframe116, output.viewPos116 );
+				
+				#ifdef ASE_ABSOLUTE_VERTEX_POS
+					float3 defaultVertexValue = input.positionOS.xyz;
+				#else
+					float3 defaultVertexValue = float3(0, 0, 0);
+				#endif
+
+				float3 vertexValue = defaultVertexValue;
+
+				#ifdef ASE_ABSOLUTE_VERTEX_POS
+					input.positionOS.xyz = vertexValue;
+				#else
+					input.positionOS.xyz += vertexValue;
+				#endif
+
+				input.normalOS = input.normalOS;
+				input.tangentOS = input.tangentOS;
+
+				VertexPositionInputs vertexInput = GetVertexPositionInputs( input.positionOS.xyz );
+				VertexNormalInputs normalInput = GetVertexNormalInputs( input.normalOS, input.tangentOS );
+
+				output.positionCS = vertexInput.positionCS;
+				output.positionWS = vertexInput.positionWS;
+				output.normalWS = normalInput.normalWS;
+				output.tangentWS = float4( normalInput.tangentWS, ( input.tangentOS.w > 0.0 ? 1.0 : -1.0 ) * GetOddNegativeScale() );
+
+				#if defined( ENABLE_TERRAIN_PERPIXEL_NORMAL )
+					output.tangentWS.zw = input.texcoord.xy;
+					output.tangentWS.xy = input.texcoord.xy * unity_LightmapST.xy + unity_LightmapST.zw;
+				#endif
+				return output;
+			}
+
+			#if defined(ASE_TESSELLATION)
+			struct VertexControl
+			{
+				float4 positionOS : INTERNALTESSPOS;
+				half3 normalOS : NORMAL;
+				half4 tangentOS : TANGENT;
+				float4 texcoord : TEXCOORD0;
+				
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+			};
+
+			struct TessellationFactors
+			{
+				float edge[3] : SV_TessFactor;
+				float inside : SV_InsideTessFactor;
+			};
+
+			VertexControl vert ( Attributes input )
+			{
+				VertexControl output;
+				UNITY_SETUP_INSTANCE_ID(input);
+				UNITY_TRANSFER_INSTANCE_ID(input, output);
+				output.positionOS = input.positionOS;
+				output.normalOS = input.normalOS;
+				output.tangentOS = input.tangentOS;
+				output.texcoord = input.texcoord;
+				
+				return output;
+			}
+
+			TessellationFactors TessellationFunction (InputPatch<VertexControl,3> input)
+			{
+				TessellationFactors output;
+				float4 tf = 1;
+				float tessValue = _TessValue; float tessMin = _TessMin; float tessMax = _TessMax;
+				float edgeLength = _TessEdgeLength; float tessMaxDisp = _TessMaxDisp;
+				#if defined(ASE_FIXED_TESSELLATION)
+				tf = FixedTess( tessValue );
+				#elif defined(ASE_DISTANCE_TESSELLATION)
+				tf = DistanceBasedTess(input[0].positionOS, input[1].positionOS, input[2].positionOS, tessValue, tessMin, tessMax, GetObjectToWorldMatrix(), _WorldSpaceCameraPos );
+				#elif defined(ASE_LENGTH_TESSELLATION)
+				tf = EdgeLengthBasedTess(input[0].positionOS, input[1].positionOS, input[2].positionOS, edgeLength, GetObjectToWorldMatrix(), _WorldSpaceCameraPos, _ScreenParams );
+				#elif defined(ASE_LENGTH_CULL_TESSELLATION)
+				tf = EdgeLengthBasedTessCull(input[0].positionOS, input[1].positionOS, input[2].positionOS, edgeLength, tessMaxDisp, GetObjectToWorldMatrix(), _WorldSpaceCameraPos, _ScreenParams, unity_CameraWorldClipPlanes );
+				#endif
+				output.edge[0] = tf.x; output.edge[1] = tf.y; output.edge[2] = tf.z; output.inside = tf.w;
+				return output;
+			}
+
+			[domain("tri")]
+			[partitioning("fractional_odd")]
+			[outputtopology("triangle_cw")]
+			[patchconstantfunc("TessellationFunction")]
+			[outputcontrolpoints(3)]
+			VertexControl HullFunction(InputPatch<VertexControl, 3> patch, uint id : SV_OutputControlPointID)
+			{
+				return patch[id];
+			}
+
+			[domain("tri")]
+			PackedVaryings DomainFunction(TessellationFactors factors, OutputPatch<VertexControl, 3> patch, float3 bary : SV_DomainLocation)
+			{
+				Attributes output = (Attributes) 0;
+				output.positionOS = patch[0].positionOS * bary.x + patch[1].positionOS * bary.y + patch[2].positionOS * bary.z;
+				output.normalOS = patch[0].normalOS * bary.x + patch[1].normalOS * bary.y + patch[2].normalOS * bary.z;
+				output.tangentOS = patch[0].tangentOS * bary.x + patch[1].tangentOS * bary.y + patch[2].tangentOS * bary.z;
+				output.texcoord = patch[0].texcoord * bary.x + patch[1].texcoord * bary.y + patch[2].texcoord * bary.z;
+				
+				#if defined(ASE_PHONG_TESSELLATION)
+				float3 pp[3];
+				for (int i = 0; i < 3; ++i)
+					pp[i] = output.positionOS.xyz - patch[i].normalOS * (dot(output.positionOS.xyz, patch[i].normalOS) - dot(patch[i].positionOS.xyz, patch[i].normalOS));
+				float phongStrength = _TessPhongStrength;
+				output.positionOS.xyz = phongStrength * (pp[0]*bary.x + pp[1]*bary.y + pp[2]*bary.z) + (1.0f-phongStrength) * output.positionOS.xyz;
+				#endif
+				UNITY_TRANSFER_INSTANCE_ID(patch[0], output);
+				return VertexFunction(output);
+			}
+			#else
+			PackedVaryings vert ( Attributes input )
+			{
+				return VertexFunction( input );
+			}
+			#endif
+
 			void frag(	PackedVaryings input
 						, out half4 outNormalWS : SV_Target0
 						#if defined( ASE_DEPTH_WRITE_ON )
@@ -2991,15 +3012,22 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float3 PositionWS = input.positionWS;
 				float3 PositionRWS = GetCameraRelativePositionWS( input.positionWS );
 				float4 ShadowCoord = shadowCoord;
-				float4 ClipPos = TransformWorldToHClip( PositionWS );
+				float4 ScreenPosNorm = float4( GetNormalizedScreenSpaceUV( input.positionCS ), input.positionCS.zw );
+				float4 ClipPos = ComputeClipSpacePosition( ScreenPosNorm.xy, input.positionCS.z ) * input.positionCS.w;
 				float4 ScreenPos = ComputeScreenPos( ClipPos );
 				float3 TangentWS = input.tangentWS.xyz * renormFactor;
 				float3 BitangentWS = cross( input.normalWS, input.tangentWS.xyz ) * input.tangentWS.w * renormFactor;
 				float3 NormalWS = input.normalWS * renormFactor;
 
-				float4 ase_positionCS = input.ase_texcoord8;
+				#if defined( ENABLE_TERRAIN_PERPIXEL_NORMAL )
+					float2 sampleCoords = (input.tangentWS.zw / _TerrainHeightmapRecipSize.zw + 0.5f) * _TerrainHeightmapRecipSize.xy;
+					NormalWS = TransformObjectToWorldNormal(normalize(SAMPLE_TEXTURE2D(_TerrainNormalmapTexture, sampler_TerrainNormalmapTexture, sampleCoords).rgb * 2 - 1));
+					TangentWS = -cross(GetObjectToWorldMatrix()._13_23_33, NormalWS);
+					BitangentWS = cross(NormalWS, -TangentWS);
+				#endif
+
 				ImpostorOutput io = ( ImpostorOutput )0;
-				OctaImpostorFragment( io, ase_positionCS, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
+				OctaImpostorFragment( io, ClipPos, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
 				
 
 				float3 Normal = io.WorldNormal;
@@ -3007,11 +3035,11 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float AlphaClipThreshold = 0.5;
 
 				#if defined( ASE_DEPTH_WRITE_ON )
-					float DeviceDepth = ase_positionCS.z;
+					float DeviceDepth = ClipPos.z;
 				#endif
 
-				#ifdef _ALPHATEST_ON
-					clip(Alpha - AlphaClipThreshold);
+				#if defined( _ALPHATEST_ON )
+					AlphaDiscard( Alpha, AlphaClipThreshold );
 				#endif
 
 				#if defined(LOD_FADE_CROSSFADE)
@@ -3066,20 +3094,20 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 
 			HLSLPROGRAM
 
-			#pragma shader_feature_local _RECEIVE_SHADOWS_OFF
+			#define ASE_GEOMETRY 1
+			#pragma shader_feature_local_fragment _SPECULARHIGHLIGHTS_OFF
+			#pragma shader_feature_local_fragment _ENVIRONMENTREFLECTIONS_OFF
 			#pragma multi_compile_instancing
 			#pragma instancing_options renderinglayer
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#pragma multi_compile_fog
 			#define ASE_FOG 1
 			#define _SPECULAR_SETUP 1
-			#pragma shader_feature_local_fragment _SPECULARHIGHLIGHTS_OFF
-			#pragma shader_feature_local_fragment _ENVIRONMENTREFLECTIONS_OFF
 			#define _NORMAL_DROPOFF_WS 1
 			#define ASE_DEPTH_WRITE_ON
 			#define _EMISSION
 			#define _NORMALMAP 1
-			#define ASE_VERSION 19801
+			#define ASE_VERSION 19904
 			#define ASE_SRP_VERSION 170004
 			#ifdef UNITY_COLORSPACE_GAMMA//AI_SRP
 			#define unity_ColorSpaceDielectricSpec half4(0.220916301, 0.220916301, 0.220916301, 1.0 - 0.220916301)//AI_SRP
@@ -3107,7 +3135,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#pragma vertex vert
 			#pragma fragment frag
 
-			#if defined(_SPECULAR_SETUP) && defined(_ASE_LIGHTING_SIMPLE)
+			#if defined(_SPECULAR_SETUP) && defined(ASE_LIGHTING_SIMPLE)
 				#define _SPECULAR_COLOR 1
 			#endif
 
@@ -3134,7 +3162,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
             #endif
 
-			#if defined(UNITY_INSTANCING_ENABLED) && defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL)
+			#if defined(UNITY_INSTANCING_ENABLED) && ( defined(_TERRAIN_INSTANCED_PERPIXEL_NORMAL) || defined(_INSTANCEDTERRAINNORMALS_PIXEL) )
 				#define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
@@ -3143,9 +3171,10 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#define AI_INV_TWO_PI  INV_TWO_PI
 			#define AI_PI          PI
 			#define AI_INV_PI      INV_PI
-			#define ASE_NEEDS_TEXTURE_COORDINATES1
-			#define ASE_NEEDS_TEXTURE_COORDINATES2
 			#define ASE_CHANGES_WORLD_POS
+			#define ASE_NEEDS_CLIP_POS
+			#define ASE_NEEDS_FRAG_CLIP_POS
+			#define ASE_NEEDS_WORLD_POSITION
 			#define ASE_NEEDS_FRAG_WORLD_POSITION
 			#pragma shader_feature_local_fragment _SPECULARMAP
 			#pragma shader_feature_local_fragment _OCCLUSIONMAP
@@ -3186,7 +3215,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				ASE_SV_POSITION_QUALIFIERS float4 positionCS : SV_POSITION;
 				float3 positionWS : TEXCOORD0;
 				half3 normalWS : TEXCOORD1;
-				half4 tangentWS : TEXCOORD2;
+				float4 tangentWS : TEXCOORD2; // holds terrainUV ifdef ENABLE_TERRAIN_PERPIXEL_NORMAL
 				float4 lightmapUVOrVertexSH : TEXCOORD3;
 				#if defined(ASE_FOG) || defined(_ADDITIONAL_LIGHTS_VERTEX)
 					half4 fogFactorAndVertexLight : TEXCOORD4;
@@ -3202,7 +3231,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float4 UVsFrame3116 : TEXCOORD9;
 				float4 octaframe116 : TEXCOORD10;
 				float4 viewPos116 : TEXCOORD11;
-				float4 ase_texcoord12 : TEXCOORD12;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -3367,7 +3395,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float3 localDir = billboard - objectCameraPosition; 
 				objectCameraDirection = trunc( objectCameraDirection * 65536.0 ) / 65536.0;
 				#if defined( _HEMI_ON )
-				objectCameraDirection.y = max(0.001, objectCameraDirection.y);
+				objectCameraDirection.y = max( 0.001, objectCameraDirection.y );
 				float2 frameOcta = VectorToHemiOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
 				#else
 				float2 frameOcta = VectorToOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
@@ -3386,7 +3414,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa1WorldY, objectCameraPosition, localDir, /*out*/ uvFrame1, /*out*/ octa1LocalY );
 				float2 uvParallax1 = octa1LocalY.xy * fractionsFrame * parallax;
 				uvFrame1 = ( uvFrame1 * fractionsUVscale + 0.5 ) * fractionsFrame + fractionOctaFrame;
-				uvsFrame1 = float4( uvParallax1, uvFrame1) - float4( 0, 0, uvOffset );
+				uvsFrame1 = float4( uvParallax1, uvFrame1 ) - float4( 0, 0, uvOffset );
 				float2 fractPrevOctaFrame = frac( prevOctaFrame );
 				float2 cornerDifference = lerp( float2( 0,1 ) , float2( 1,0 ) , saturate( ceil( ( fractPrevOctaFrame.x - fractPrevOctaFrame.y ) ) ));
 				float2 octaFrame2 = ( ( baseOctaFrame + cornerDifference ) * fractionsPrevFrame ) * 2.0 - 1.0;
@@ -3400,7 +3428,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa2WorldY, objectCameraPosition, localDir, /*out*/ uvFrame2, /*out*/ octa2LocalY );
 				float2 uvParallax2 = octa2LocalY.xy * fractionsFrame * parallax;
 				uvFrame2 = ( uvFrame2 * fractionsUVscale + 0.5 ) * fractionsFrame + ( ( cornerDifference * fractionsFrame ) + fractionOctaFrame );
-				uvsFrame2 = float4( uvParallax2, uvFrame2) - float4( 0, 0, uvOffset );
+				uvsFrame2 = float4( uvParallax2, uvFrame2 ) - float4( 0, 0, uvOffset );
 				float2 octaFrame3 = ( ( baseOctaFrame + 1 ) * fractionsPrevFrame  ) * 2.0 - 1.0;
 				#if defined( _HEMI_ON )
 				float3 octa3WorldY = HemiOctahedronToVector( octaFrame3 ).xzy;
@@ -3412,7 +3440,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa3WorldY, objectCameraPosition, localDir, /*out*/ uvFrame3, /*out*/ octa3LocalY );
 				float2 uvParallax3 = octa3LocalY.xy * fractionsFrame * parallax;
 				uvFrame3 = ( uvFrame3 * fractionsUVscale + 0.5 ) * fractionsFrame + ( fractionOctaFrame + fractionsFrame );
-				uvsFrame3 = float4( uvParallax3, uvFrame3) - float4( 0, 0, uvOffset );
+				uvsFrame3 = float4( uvParallax3, uvFrame3 ) - float4( 0, 0, uvOffset );
 				octaFrame = 0;
 				octaFrame.xy = prevOctaFrame;
 				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
@@ -3556,8 +3584,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
 				OctaImpostorVertex( input.positionOS.xyz, input.normalOS.xyz, input.tangentOS, output.UVsFrame1116, output.UVsFrame2116, output.UVsFrame3116, output.octaframe116, output.viewPos116 );
-				float4 ase_positionCS = TransformObjectToHClip( ( input.positionOS ).xyz );
-				output.ase_texcoord12 = ase_positionCS;
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = input.positionOS.xyz;
@@ -3585,11 +3611,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				#endif
 				OUTPUT_SH4(vertexInput.positionWS, normalInput.normalWS.xyz, GetWorldSpaceNormalizeViewDir(vertexInput.positionWS), output.lightmapUVOrVertexSH.xyz, output.probeOcclusion);
 
-				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
-					output.lightmapUVOrVertexSH.zw = input.texcoord.xy;
-					output.lightmapUVOrVertexSH.xy = input.texcoord.xy * unity_LightmapST.xy + unity_LightmapST.zw;
-				#endif
-
 				#if defined(ASE_FOG) || defined(_ADDITIONAL_LIGHTS_VERTEX)
 					output.fogFactorAndVertexLight = 0;
 					#if defined(ASE_FOG) && !defined(_FOG_FRAGMENT)
@@ -3605,6 +3626,11 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				output.positionWS = vertexInput.positionWS;
 				output.normalWS = normalInput.normalWS;
 				output.tangentWS = float4( normalInput.tangentWS, ( input.tangentOS.w > 0.0 ? 1.0 : -1.0 ) * GetOddNegativeScale() );
+
+				#if defined( ENABLE_TERRAIN_PERPIXEL_NORMAL )
+					output.tangentWS.zw = input.texcoord.xy;
+					output.tangentWS.xy = input.texcoord.xy * unity_LightmapST.xy + unity_LightmapST.zw;
+				#endif
 				return output;
 			}
 
@@ -3688,7 +3714,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				output.tangentOS = patch[0].tangentOS * bary.x + patch[1].tangentOS * bary.y + patch[2].tangentOS * bary.z;
 				output.texcoord = patch[0].texcoord * bary.x + patch[1].texcoord * bary.y + patch[2].texcoord * bary.z;
 				#if defined(LIGHTMAP_ON) || defined(ASE_NEEDS_TEXTURE_COORDINATES1)
-					output.texcoord1 = patch[0].texcoord1 * bary.x + patch[1].texcoord1 * bary.y + patch[2].texcoord1 * bary.z;output.texcoord1 = input.texcoord1;
+					output.texcoord1 = patch[0].texcoord1 * bary.x + patch[1].texcoord1 * bary.y + patch[2].texcoord1 * bary.z;
 				#endif
 				#if defined(DYNAMICLIGHTMAP_ON) || defined(ASE_NEEDS_TEXTURE_COORDINATES2)
 					output.texcoord2 = patch[0].texcoord2 * bary.x + patch[1].texcoord2 * bary.y + patch[2].texcoord2 * bary.z;
@@ -3737,24 +3763,22 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float3 PositionRWS = GetCameraRelativePositionWS( PositionWS );
 				float3 ViewDirWS = GetWorldSpaceNormalizeViewDir( PositionWS );
 				float4 ShadowCoord = shadowCoord;
-				float4 ClipPos = TransformWorldToHClip( PositionWS );
+				float4 ScreenPosNorm = float4( GetNormalizedScreenSpaceUV( input.positionCS ), input.positionCS.zw );
+				float4 ClipPos = ComputeClipSpacePosition( ScreenPosNorm.xy, input.positionCS.z ) * input.positionCS.w;
 				float4 ScreenPos = ComputeScreenPos( ClipPos );
 				float3 TangentWS = input.tangentWS.xyz * renormFactor;
 				float3 BitangentWS = cross( input.normalWS, input.tangentWS.xyz ) * input.tangentWS.w * renormFactor;
 				float3 NormalWS = input.normalWS * renormFactor;
 
-				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
-					float2 sampleCoords = (input.lightmapUVOrVertexSH.zw / _TerrainHeightmapRecipSize.zw + 0.5f) * _TerrainHeightmapRecipSize.xy;
+				#if defined( ENABLE_TERRAIN_PERPIXEL_NORMAL )
+					float2 sampleCoords = (input.tangentWS.zw / _TerrainHeightmapRecipSize.zw + 0.5f) * _TerrainHeightmapRecipSize.xy;
 					NormalWS = TransformObjectToWorldNormal(normalize(SAMPLE_TEXTURE2D(_TerrainNormalmapTexture, sampler_TerrainNormalmapTexture, sampleCoords).rgb * 2 - 1));
 					TangentWS = -cross(GetObjectToWorldMatrix()._13_23_33, NormalWS);
 					BitangentWS = cross(NormalWS, -TangentWS);
 				#endif
 
-				float2 NormalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.positionCS);
-
-				float4 ase_positionCS = input.ase_texcoord12;
 				ImpostorOutput io = ( ImpostorOutput )0;
-				OctaImpostorFragment( io, ase_positionCS, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
+				OctaImpostorFragment( io, ClipPos, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
 				
 
 				float3 BaseColor = io.Albedo;
@@ -3774,11 +3798,11 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float3 Translucency = 1;
 
 				#if defined( ASE_DEPTH_WRITE_ON )
-					float DeviceDepth = ase_positionCS.z;
+					float DeviceDepth = ClipPos.z;
 				#endif
 
-				#ifdef _ALPHATEST_ON
-					clip(Alpha - AlphaClipThreshold);
+				#if defined( _ALPHATEST_ON )
+					AlphaDiscard( Alpha, AlphaClipThreshold );
 				#endif
 
 				#if defined(MAIN_LIGHT_CALCULATE_SHADOWS) && defined(ASE_CHANGES_WORLD_POS)
@@ -3787,7 +3811,8 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 
 				InputData inputData = (InputData)0;
 				inputData.positionWS = PositionWS;
-				inputData.positionCS = ClipPos;
+				inputData.positionCS = float4( input.positionCS.xy, ClipPos.zw / ClipPos.w );
+				inputData.normalizedScreenSpaceUV = ScreenPosNorm.xy;
 				inputData.shadowCoord = ShadowCoord;
 
 				#ifdef _NORMALMAP
@@ -3812,7 +3837,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 					inputData.vertexLighting = input.fogFactorAndVertexLight.yzw;
 				#endif
 
-				#if defined(ENABLE_TERRAIN_PERPIXEL_NORMAL)
+				#if defined( ENABLE_TERRAIN_PERPIXEL_NORMAL )
 					float3 SH = SampleSH(inputData.normalWS.xyz);
 				#else
 					float3 SH = input.lightmapUVOrVertexSH.xyz;
@@ -3837,8 +3862,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				#ifdef ASE_BAKEDGI
 					inputData.bakedGI = BakedGI;
 				#endif
-
-				inputData.normalizedScreenSpaceUV = NormalizedScreenSpaceUV;
 
 				#if defined(DEBUG_DISPLAY)
 					#if defined(DYNAMICLIGHTMAP_ON)
@@ -3899,13 +3922,14 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 
 			HLSLPROGRAM
 
+			#define ASE_GEOMETRY 1
 			#define ASE_FOG 1
 			#define _SPECULAR_SETUP 1
 			#define _NORMAL_DROPOFF_WS 1
 			#define ASE_DEPTH_WRITE_ON
 			#define _EMISSION
 			#define _NORMALMAP 1
-			#define ASE_VERSION 19801
+			#define ASE_VERSION 19904
 			#define ASE_SRP_VERSION 170004
 			#ifdef UNITY_COLORSPACE_GAMMA//AI_SRP
 			#define unity_ColorSpaceDielectricSpec half4(0.220916301, 0.220916301, 0.220916301, 1.0 - 0.220916301)//AI_SRP
@@ -3917,7 +3941,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#pragma vertex vert
 			#pragma fragment frag
 
-			#if defined(_SPECULAR_SETUP) && defined(_ASE_LIGHTING_SIMPLE)
+			#if defined(_SPECULAR_SETUP) && defined(ASE_LIGHTING_SIMPLE)
 				#define _SPECULAR_COLOR 1
 			#endif
 
@@ -3945,9 +3969,10 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#define AI_INV_TWO_PI  INV_TWO_PI
 			#define AI_PI          PI
 			#define AI_INV_PI      INV_PI
-			#define ASE_NEEDS_TEXTURE_COORDINATES1
-			#define ASE_NEEDS_TEXTURE_COORDINATES2
 			#define ASE_CHANGES_WORLD_POS
+			#define ASE_NEEDS_CLIP_POS
+			#define ASE_NEEDS_FRAG_CLIP_POS
+			#define ASE_NEEDS_WORLD_POSITION
 			#define ASE_NEEDS_FRAG_WORLD_POSITION
 			#pragma shader_feature_local_fragment _SPECULARMAP
 			#pragma shader_feature_local_fragment _OCCLUSIONMAP
@@ -3985,7 +4010,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float4 UVsFrame3116 : TEXCOORD3;
 				float4 octaframe116 : TEXCOORD4;
 				float4 viewPos116 : TEXCOORD5;
-				float4 ase_texcoord6 : TEXCOORD6;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -4148,7 +4172,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float3 localDir = billboard - objectCameraPosition; 
 				objectCameraDirection = trunc( objectCameraDirection * 65536.0 ) / 65536.0;
 				#if defined( _HEMI_ON )
-				objectCameraDirection.y = max(0.001, objectCameraDirection.y);
+				objectCameraDirection.y = max( 0.001, objectCameraDirection.y );
 				float2 frameOcta = VectorToHemiOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
 				#else
 				float2 frameOcta = VectorToOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
@@ -4167,7 +4191,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa1WorldY, objectCameraPosition, localDir, /*out*/ uvFrame1, /*out*/ octa1LocalY );
 				float2 uvParallax1 = octa1LocalY.xy * fractionsFrame * parallax;
 				uvFrame1 = ( uvFrame1 * fractionsUVscale + 0.5 ) * fractionsFrame + fractionOctaFrame;
-				uvsFrame1 = float4( uvParallax1, uvFrame1) - float4( 0, 0, uvOffset );
+				uvsFrame1 = float4( uvParallax1, uvFrame1 ) - float4( 0, 0, uvOffset );
 				float2 fractPrevOctaFrame = frac( prevOctaFrame );
 				float2 cornerDifference = lerp( float2( 0,1 ) , float2( 1,0 ) , saturate( ceil( ( fractPrevOctaFrame.x - fractPrevOctaFrame.y ) ) ));
 				float2 octaFrame2 = ( ( baseOctaFrame + cornerDifference ) * fractionsPrevFrame ) * 2.0 - 1.0;
@@ -4181,7 +4205,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa2WorldY, objectCameraPosition, localDir, /*out*/ uvFrame2, /*out*/ octa2LocalY );
 				float2 uvParallax2 = octa2LocalY.xy * fractionsFrame * parallax;
 				uvFrame2 = ( uvFrame2 * fractionsUVscale + 0.5 ) * fractionsFrame + ( ( cornerDifference * fractionsFrame ) + fractionOctaFrame );
-				uvsFrame2 = float4( uvParallax2, uvFrame2) - float4( 0, 0, uvOffset );
+				uvsFrame2 = float4( uvParallax2, uvFrame2 ) - float4( 0, 0, uvOffset );
 				float2 octaFrame3 = ( ( baseOctaFrame + 1 ) * fractionsPrevFrame  ) * 2.0 - 1.0;
 				#if defined( _HEMI_ON )
 				float3 octa3WorldY = HemiOctahedronToVector( octaFrame3 ).xzy;
@@ -4193,7 +4217,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa3WorldY, objectCameraPosition, localDir, /*out*/ uvFrame3, /*out*/ octa3LocalY );
 				float2 uvParallax3 = octa3LocalY.xy * fractionsFrame * parallax;
 				uvFrame3 = ( uvFrame3 * fractionsUVscale + 0.5 ) * fractionsFrame + ( fractionOctaFrame + fractionsFrame );
-				uvsFrame3 = float4( uvParallax3, uvFrame3) - float4( 0, 0, uvOffset );
+				uvsFrame3 = float4( uvParallax3, uvFrame3 ) - float4( 0, 0, uvOffset );
 				octaFrame = 0;
 				octaFrame.xy = prevOctaFrame;
 				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
@@ -4345,8 +4369,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
 				OctaImpostorVertex( input.positionOS.xyz, input.normalOS.xyz, input.tangentOS, output.UVsFrame1116, output.UVsFrame2116, output.UVsFrame3116, output.octaframe116, output.viewPos116 );
-				float4 ase_positionCS = TransformObjectToHClip( ( input.positionOS ).xyz );
-				output.ase_texcoord6 = ase_positionCS;
 				
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -4395,6 +4417,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				UNITY_TRANSFER_INSTANCE_ID(input, output);
 				output.positionOS = input.positionOS;
 				output.normalOS = input.normalOS;
+				output.tangentOS = input.tangentOS;
 				
 				return output;
 			}
@@ -4434,6 +4457,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				Attributes output = (Attributes) 0;
 				output.positionOS = patch[0].positionOS * bary.x + patch[1].positionOS * bary.y + patch[2].positionOS * bary.z;
 				output.normalOS = patch[0].normalOS * bary.x + patch[1].normalOS * bary.y + patch[2].normalOS * bary.z;
+				output.tangentOS = patch[0].tangentOS * bary.x + patch[1].tangentOS * bary.y + patch[2].tangentOS * bary.z;
 				
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
@@ -4462,18 +4486,18 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 
 				float3 PositionWS = input.positionWS;
 				float3 PositionRWS = GetCameraRelativePositionWS( PositionWS );
-				float4 ClipPos = TransformWorldToHClip( PositionWS );
+				float4 ScreenPosNorm = float4( GetNormalizedScreenSpaceUV( input.positionCS ), input.positionCS.zw );
+				float4 ClipPos = ComputeClipSpacePosition( ScreenPosNorm.xy, input.positionCS.z ) * input.positionCS.w;
 
-				float4 ase_positionCS = input.ase_texcoord6;
 				ImpostorOutput io = ( ImpostorOutput )0;
-				OctaImpostorFragment( io, ase_positionCS, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
+				OctaImpostorFragment( io, ClipPos, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
 				
 
 				surfaceDescription.Alpha = io.Alpha;
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if defined( ASE_DEPTH_WRITE_ON )
-					float DeviceDepth = ase_positionCS.z;
+					float DeviceDepth = ClipPos.z;
 				#endif
 
 				#if _ALPHATEST_ON
@@ -4505,13 +4529,14 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 
 			HLSLPROGRAM
 
+			#define ASE_GEOMETRY 1
 			#define ASE_FOG 1
 			#define _SPECULAR_SETUP 1
 			#define _NORMAL_DROPOFF_WS 1
 			#define ASE_DEPTH_WRITE_ON
 			#define _EMISSION
 			#define _NORMALMAP 1
-			#define ASE_VERSION 19801
+			#define ASE_VERSION 19904
 			#define ASE_SRP_VERSION 170004
 			#ifdef UNITY_COLORSPACE_GAMMA//AI_SRP
 			#define unity_ColorSpaceDielectricSpec half4(0.220916301, 0.220916301, 0.220916301, 1.0 - 0.220916301)//AI_SRP
@@ -4523,7 +4548,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#pragma vertex vert
 			#pragma fragment frag
 
-			#if defined(_SPECULAR_SETUP) && defined(_ASE_LIGHTING_SIMPLE)
+			#if defined(_SPECULAR_SETUP) && defined(ASE_LIGHTING_SIMPLE)
 				#define _SPECULAR_COLOR 1
 			#endif
 
@@ -4551,9 +4576,10 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#define AI_INV_TWO_PI  INV_TWO_PI
 			#define AI_PI          PI
 			#define AI_INV_PI      INV_PI
-			#define ASE_NEEDS_TEXTURE_COORDINATES1
-			#define ASE_NEEDS_TEXTURE_COORDINATES2
 			#define ASE_CHANGES_WORLD_POS
+			#define ASE_NEEDS_CLIP_POS
+			#define ASE_NEEDS_FRAG_CLIP_POS
+			#define ASE_NEEDS_WORLD_POSITION
 			#define ASE_NEEDS_FRAG_WORLD_POSITION
 			#pragma shader_feature_local_fragment _SPECULARMAP
 			#pragma shader_feature_local_fragment _OCCLUSIONMAP
@@ -4591,7 +4617,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float4 UVsFrame3116 : TEXCOORD3;
 				float4 octaframe116 : TEXCOORD4;
 				float4 viewPos116 : TEXCOORD5;
-				float4 ase_texcoord6 : TEXCOORD6;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -4754,7 +4779,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float3 localDir = billboard - objectCameraPosition; 
 				objectCameraDirection = trunc( objectCameraDirection * 65536.0 ) / 65536.0;
 				#if defined( _HEMI_ON )
-				objectCameraDirection.y = max(0.001, objectCameraDirection.y);
+				objectCameraDirection.y = max( 0.001, objectCameraDirection.y );
 				float2 frameOcta = VectorToHemiOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
 				#else
 				float2 frameOcta = VectorToOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
@@ -4773,7 +4798,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa1WorldY, objectCameraPosition, localDir, /*out*/ uvFrame1, /*out*/ octa1LocalY );
 				float2 uvParallax1 = octa1LocalY.xy * fractionsFrame * parallax;
 				uvFrame1 = ( uvFrame1 * fractionsUVscale + 0.5 ) * fractionsFrame + fractionOctaFrame;
-				uvsFrame1 = float4( uvParallax1, uvFrame1) - float4( 0, 0, uvOffset );
+				uvsFrame1 = float4( uvParallax1, uvFrame1 ) - float4( 0, 0, uvOffset );
 				float2 fractPrevOctaFrame = frac( prevOctaFrame );
 				float2 cornerDifference = lerp( float2( 0,1 ) , float2( 1,0 ) , saturate( ceil( ( fractPrevOctaFrame.x - fractPrevOctaFrame.y ) ) ));
 				float2 octaFrame2 = ( ( baseOctaFrame + cornerDifference ) * fractionsPrevFrame ) * 2.0 - 1.0;
@@ -4787,7 +4812,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa2WorldY, objectCameraPosition, localDir, /*out*/ uvFrame2, /*out*/ octa2LocalY );
 				float2 uvParallax2 = octa2LocalY.xy * fractionsFrame * parallax;
 				uvFrame2 = ( uvFrame2 * fractionsUVscale + 0.5 ) * fractionsFrame + ( ( cornerDifference * fractionsFrame ) + fractionOctaFrame );
-				uvsFrame2 = float4( uvParallax2, uvFrame2) - float4( 0, 0, uvOffset );
+				uvsFrame2 = float4( uvParallax2, uvFrame2 ) - float4( 0, 0, uvOffset );
 				float2 octaFrame3 = ( ( baseOctaFrame + 1 ) * fractionsPrevFrame  ) * 2.0 - 1.0;
 				#if defined( _HEMI_ON )
 				float3 octa3WorldY = HemiOctahedronToVector( octaFrame3 ).xzy;
@@ -4799,7 +4824,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa3WorldY, objectCameraPosition, localDir, /*out*/ uvFrame3, /*out*/ octa3LocalY );
 				float2 uvParallax3 = octa3LocalY.xy * fractionsFrame * parallax;
 				uvFrame3 = ( uvFrame3 * fractionsUVscale + 0.5 ) * fractionsFrame + ( fractionOctaFrame + fractionsFrame );
-				uvsFrame3 = float4( uvParallax3, uvFrame3) - float4( 0, 0, uvOffset );
+				uvsFrame3 = float4( uvParallax3, uvFrame3 ) - float4( 0, 0, uvOffset );
 				octaFrame = 0;
 				octaFrame.xy = prevOctaFrame;
 				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
@@ -4951,8 +4976,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
 				OctaImpostorVertex( input.positionOS.xyz, input.normalOS.xyz, input.tangentOS, output.UVsFrame1116, output.UVsFrame2116, output.UVsFrame3116, output.octaframe116, output.viewPos116 );
-				float4 ase_positionCS = TransformObjectToHClip( ( input.positionOS ).xyz );
-				output.ase_texcoord6 = ase_positionCS;
 				
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -5001,6 +5024,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				UNITY_TRANSFER_INSTANCE_ID(input, output);
 				output.positionOS = input.positionOS;
 				output.normalOS = input.normalOS;
+				output.tangentOS = input.tangentOS;
 				
 				return output;
 			}
@@ -5040,6 +5064,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				Attributes output = (Attributes) 0;
 				output.positionOS = patch[0].positionOS * bary.x + patch[1].positionOS * bary.y + patch[2].positionOS * bary.z;
 				output.normalOS = patch[0].normalOS * bary.x + patch[1].normalOS * bary.y + patch[2].normalOS * bary.z;
+				output.tangentOS = patch[0].tangentOS * bary.x + patch[1].tangentOS * bary.y + patch[2].tangentOS * bary.z;
 				
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
@@ -5068,18 +5093,18 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 
 				float3 PositionWS = input.positionWS;
 				float3 PositionRWS = GetCameraRelativePositionWS( PositionWS );
-				float4 ClipPos = TransformWorldToHClip( PositionWS );
+				float4 ScreenPosNorm = float4( GetNormalizedScreenSpaceUV( input.positionCS ), input.positionCS.zw );
+				float4 ClipPos = ComputeClipSpacePosition( ScreenPosNorm.xy, input.positionCS.z ) * input.positionCS.w;
 
-				float4 ase_positionCS = input.ase_texcoord6;
 				ImpostorOutput io = ( ImpostorOutput )0;
-				OctaImpostorFragment( io, ase_positionCS, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
+				OctaImpostorFragment( io, ClipPos, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
 				
 
 				surfaceDescription.Alpha = io.Alpha;
 				surfaceDescription.AlphaClipThreshold = 0.5;
 
 				#if defined( ASE_DEPTH_WRITE_ON )
-					float DeviceDepth = ase_positionCS.z;
+					float DeviceDepth = ClipPos.z;
 				#endif
 
 				#if _ALPHATEST_ON
@@ -5110,7 +5135,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 
 			HLSLPROGRAM
 
-			#pragma multi_compile_instancing
+			#define ASE_GEOMETRY 1
 			#pragma multi_compile _ LOD_FADE_CROSSFADE
 			#define ASE_FOG 1
 			#define _SPECULAR_SETUP 1
@@ -5118,7 +5143,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#define ASE_DEPTH_WRITE_ON
 			#define _EMISSION
 			#define _NORMALMAP 1
-			#define ASE_VERSION 19801
+			#define ASE_VERSION 19904
 			#define ASE_SRP_VERSION 170004
 			#ifdef UNITY_COLORSPACE_GAMMA//AI_SRP
 			#define unity_ColorSpaceDielectricSpec half4(0.220916301, 0.220916301, 0.220916301, 1.0 - 0.220916301)//AI_SRP
@@ -5130,7 +5155,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#pragma vertex vert
 			#pragma fragment frag
 
-			#if defined(_SPECULAR_SETUP) && defined(_ASE_LIGHTING_SIMPLE)
+			#if defined(_SPECULAR_SETUP) && defined(ASE_LIGHTING_SIMPLE)
 				#define _SPECULAR_COLOR 1
 			#endif
 
@@ -5161,9 +5186,9 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 			#define AI_INV_TWO_PI  INV_TWO_PI
 			#define AI_PI          PI
 			#define AI_INV_PI      INV_PI
-			#define ASE_NEEDS_TEXTURE_COORDINATES1
-			#define ASE_NEEDS_TEXTURE_COORDINATES2
 			#define ASE_CHANGES_WORLD_POS
+			#define ASE_NEEDS_CLIP_POS
+			#define ASE_NEEDS_FRAG_CLIP_POS
 			#define ASE_NEEDS_FRAG_WORLD_POSITION
 			#pragma shader_feature_local_fragment _SPECULARMAP
 			#pragma shader_feature_local_fragment _OCCLUSIONMAP
@@ -5207,7 +5232,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float4 UVsFrame3116 : TEXCOORD5;
 				float4 octaframe116 : TEXCOORD6;
 				float4 viewPos116 : TEXCOORD7;
-				float4 ase_texcoord8 : TEXCOORD8;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
@@ -5370,7 +5394,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				float3 localDir = billboard - objectCameraPosition; 
 				objectCameraDirection = trunc( objectCameraDirection * 65536.0 ) / 65536.0;
 				#if defined( _HEMI_ON )
-				objectCameraDirection.y = max(0.001, objectCameraDirection.y);
+				objectCameraDirection.y = max( 0.001, objectCameraDirection.y );
 				float2 frameOcta = VectorToHemiOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
 				#else
 				float2 frameOcta = VectorToOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
@@ -5389,7 +5413,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa1WorldY, objectCameraPosition, localDir, /*out*/ uvFrame1, /*out*/ octa1LocalY );
 				float2 uvParallax1 = octa1LocalY.xy * fractionsFrame * parallax;
 				uvFrame1 = ( uvFrame1 * fractionsUVscale + 0.5 ) * fractionsFrame + fractionOctaFrame;
-				uvsFrame1 = float4( uvParallax1, uvFrame1) - float4( 0, 0, uvOffset );
+				uvsFrame1 = float4( uvParallax1, uvFrame1 ) - float4( 0, 0, uvOffset );
 				float2 fractPrevOctaFrame = frac( prevOctaFrame );
 				float2 cornerDifference = lerp( float2( 0,1 ) , float2( 1,0 ) , saturate( ceil( ( fractPrevOctaFrame.x - fractPrevOctaFrame.y ) ) ));
 				float2 octaFrame2 = ( ( baseOctaFrame + cornerDifference ) * fractionsPrevFrame ) * 2.0 - 1.0;
@@ -5403,7 +5427,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa2WorldY, objectCameraPosition, localDir, /*out*/ uvFrame2, /*out*/ octa2LocalY );
 				float2 uvParallax2 = octa2LocalY.xy * fractionsFrame * parallax;
 				uvFrame2 = ( uvFrame2 * fractionsUVscale + 0.5 ) * fractionsFrame + ( ( cornerDifference * fractionsFrame ) + fractionOctaFrame );
-				uvsFrame2 = float4( uvParallax2, uvFrame2) - float4( 0, 0, uvOffset );
+				uvsFrame2 = float4( uvParallax2, uvFrame2 ) - float4( 0, 0, uvOffset );
 				float2 octaFrame3 = ( ( baseOctaFrame + 1 ) * fractionsPrevFrame  ) * 2.0 - 1.0;
 				#if defined( _HEMI_ON )
 				float3 octa3WorldY = HemiOctahedronToVector( octaFrame3 ).xzy;
@@ -5415,7 +5439,7 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				RayPlaneIntersectionUV( octa3WorldY, objectCameraPosition, localDir, /*out*/ uvFrame3, /*out*/ octa3LocalY );
 				float2 uvParallax3 = octa3LocalY.xy * fractionsFrame * parallax;
 				uvFrame3 = ( uvFrame3 * fractionsUVscale + 0.5 ) * fractionsFrame + ( fractionOctaFrame + fractionsFrame );
-				uvsFrame3 = float4( uvParallax3, uvFrame3) - float4( 0, 0, uvOffset );
+				uvsFrame3 = float4( uvParallax3, uvFrame3 ) - float4( 0, 0, uvOffset );
 				octaFrame = 0;
 				octaFrame.xy = prevOctaFrame;
 				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
@@ -5559,8 +5583,6 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
 
 				OctaImpostorVertex( input.positionOS.xyz, input.normalOS.xyz, input.tangentOS, output.UVsFrame1116, output.UVsFrame2116, output.UVsFrame3116, output.octaframe116, output.viewPos116 );
-				float4 ase_positionCS = TransformObjectToHClip( ( input.positionOS ).xyz );
-				output.ase_texcoord8 = ase_positionCS;
 				
 
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
@@ -5580,11 +5602,9 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 				VertexPositionInputs vertexInput = GetVertexPositionInputs( input.positionOS.xyz );
 
 				#if defined(APLICATION_SPACE_WARP_MOTION)
-					// We do not need jittered position in ASW
 					output.positionCSNoJitter = mul(_NonJitteredViewProjMatrix, mul(UNITY_MATRIX_M, input.positionOS));
 					output.positionCS = output.positionCSNoJitter;
 				#else
-					// Jittered. Match the frame.
 					output.positionCS = vertexInput.positionCS;
 					output.positionCSNoJitter = mul(_NonJitteredViewProjMatrix, mul(UNITY_MATRIX_M, input.positionOS));
 				#endif
@@ -5620,18 +5640,587 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 
 				float3 PositionWS = input.positionWS;
 				float3 PositionRWS = GetCameraRelativePositionWS( PositionWS );
-				float4 ClipPos = TransformWorldToHClip( PositionWS );
+				float4 ScreenPosNorm = float4( GetNormalizedScreenSpaceUV( input.positionCS ), input.positionCS.zw );
+				float4 ClipPos = ComputeClipSpacePosition( ScreenPosNorm.xy, input.positionCS.z ) * input.positionCS.w;
 
-				float4 ase_positionCS = input.ase_texcoord8;
 				ImpostorOutput io = ( ImpostorOutput )0;
-				OctaImpostorFragment( io, ase_positionCS, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
+				OctaImpostorFragment( io, ClipPos, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
 				
 
 				float Alpha = io.Alpha;
 				float AlphaClipThreshold = 0.5;
 
 				#if defined( ASE_DEPTH_WRITE_ON )
-					float DeviceDepth = ase_positionCS.z;
+					float DeviceDepth = ClipPos.z;
+				#endif
+
+				#ifdef _ALPHATEST_ON
+					clip(Alpha - AlphaClipThreshold);
+				#endif
+
+				#if defined(ASE_CHANGES_WORLD_POS)
+					float3 positionOS = mul( GetWorldToObjectMatrix(),  float4( PositionWS, 1.0 ) ).xyz;
+					float3 previousPositionWS = mul( GetPrevObjectToWorldMatrix(),  float4( positionOS, 1.0 ) ).xyz;
+					input.positionCSNoJitter = mul( _NonJitteredViewProjMatrix, float4( PositionWS, 1.0 ) );
+					input.previousPositionCSNoJitter = mul( _PrevViewProjMatrix, float4( previousPositionWS, 1.0 ) );
+				#endif
+
+				#if defined(LOD_FADE_CROSSFADE)
+					LODFadeCrossFade( input.positionCS );
+				#endif
+
+				#if defined( ASE_DEPTH_WRITE_ON )
+					outputDepth = DeviceDepth;
+				#endif
+
+				#if defined(APLICATION_SPACE_WARP_MOTION)
+					return float4( CalcAswNdcMotionVectorFromCsPositions( input.positionCSNoJitter, input.previousPositionCSNoJitter ), 1 );
+				#else
+					return float4( CalcNdcMotionVectorFromCsPositions( input.positionCSNoJitter, input.previousPositionCSNoJitter ), 0, 0 );
+				#endif
+			}
+			ENDHLSL
+		}
+
+		
+		Pass
+		{
+			
+			Name "XRMotionVectors"
+			Tags { "LightMode"="XRMotionVectors" }
+
+			ColorMask RGBA
+
+			Stencil
+			{
+				Ref 1
+				WriteMask 1
+				Comp Always
+				Pass Replace
+			}
+
+
+			HLSLPROGRAM
+
+			#define ASE_GEOMETRY 1
+			#pragma multi_compile _ LOD_FADE_CROSSFADE
+			#define ASE_FOG 1
+			#define _SPECULAR_SETUP 1
+			#define _NORMAL_DROPOFF_WS 1
+			#define ASE_DEPTH_WRITE_ON
+			#define _EMISSION
+			#define _NORMALMAP 1
+			#define ASE_VERSION 19904
+			#define ASE_SRP_VERSION 170004
+			#ifdef UNITY_COLORSPACE_GAMMA//AI_SRP
+			#define unity_ColorSpaceDielectricSpec half4(0.220916301, 0.220916301, 0.220916301, 1.0 - 0.220916301)//AI_SRP
+			#else//AI_SRP
+			#define unity_ColorSpaceDielectricSpec half4(0.04, 0.04, 0.04, 1.0 - 0.04) //AI_SRP
+			#endif//AI_SRP
+
+
+			#pragma vertex vert
+			#pragma fragment frag
+
+			#define APLICATION_SPACE_WARP_MOTION 1
+
+			#if defined(_SPECULAR_SETUP) && defined(ASE_LIGHTING_SIMPLE)
+				#define _SPECULAR_COLOR 1
+			#endif
+
+            #define SHADERPASS SHADERPASS_MOTION_VECTORS
+
+            #include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/DOTS.hlsl"
+			#include_with_pragmas "Packages/com.unity.render-pipelines.universal/ShaderLibrary/RenderingLayers.hlsl"
+		    #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
+		    #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
+		    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+		    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
+		    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Input.hlsl"
+		    #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/TextureStack.hlsl"
+            #include_with_pragmas "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRenderingKeywords.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/FoveatedRendering.hlsl"
+            #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/DebugMipmapStreamingMacros.hlsl"
+		    #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
+		    #include "Packages/com.unity.render-pipelines.universal/Editor/ShaderGraph/Includes/ShaderPass.hlsl"
+
+			#if defined(LOD_FADE_CROSSFADE)
+				#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/LODCrossFade.hlsl"
+			#endif
+
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/MotionVectorsCommon.hlsl"
+
+			#define AI_ObjectToWorld GetObjectToWorldMatrix()
+			#define AI_WorldToObject GetWorldToObjectMatrix()
+			#define AI_INV_TWO_PI  INV_TWO_PI
+			#define AI_PI          PI
+			#define AI_INV_PI      INV_PI
+			#define ASE_CHANGES_WORLD_POS
+			#define ASE_NEEDS_CLIP_POS
+			#define ASE_NEEDS_FRAG_CLIP_POS
+			#define ASE_NEEDS_FRAG_WORLD_POSITION
+			#pragma shader_feature_local_fragment _SPECULARMAP
+			#pragma shader_feature_local_fragment _OCCLUSIONMAP
+			#pragma shader_feature_local_fragment _EMISSIONMAP
+			#pragma shader_feature_local_fragment _POSITIONMAP
+			#pragma shader_feature_local _USE_PARALLAX_ON
+			#pragma shader_feature_local EFFECT_HUE_VARIATION
+			#pragma shader_feature_local _HEMI_ON
+			#pragma shader_feature_local AI_CLIP_NEIGHBOURS_FRAMES
+
+
+			#if defined(ASE_EARLY_Z_DEPTH_OPTIMIZE) && (SHADER_TARGET >= 45)
+				#define ASE_SV_DEPTH SV_DepthLessEqual
+				#define ASE_SV_POSITION_QUALIFIERS linear noperspective centroid
+			#else
+				#define ASE_SV_DEPTH SV_Depth
+				#define ASE_SV_POSITION_QUALIFIERS
+			#endif
+
+			struct Attributes
+			{
+				float4 positionOS : POSITION;
+				float3 positionOld : TEXCOORD4;
+				#if _ADD_PRECOMPUTED_VELOCITY
+					float3 alembicMotionVector : TEXCOORD5;
+				#endif
+				half3 normalOS : NORMAL;
+				half4 tangentOS : TANGENT;
+				
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+			};
+
+			struct PackedVaryings
+			{
+				float4 positionCS : SV_POSITION;
+				float4 positionCSNoJitter : TEXCOORD0;
+				float4 previousPositionCSNoJitter : TEXCOORD1;
+				float3 positionWS : TEXCOORD2;
+				float4 UVsFrame1116 : TEXCOORD3;
+				float4 UVsFrame2116 : TEXCOORD4;
+				float4 UVsFrame3116 : TEXCOORD5;
+				float4 octaframe116 : TEXCOORD6;
+				float4 viewPos116 : TEXCOORD7;
+				UNITY_VERTEX_INPUT_INSTANCE_ID
+				UNITY_VERTEX_OUTPUT_STEREO
+			};
+
+			CBUFFER_START(UnityPerMaterial)
+			float4 _HueVariation;
+			float4 _AI_SizeOffset;
+			float3 _Offset;
+			float3 _AI_BoundsMin;
+			float3 _AI_BoundsSize;
+			float _AI_AlphaToCoverage;
+			float _ClipMask;
+			float _TextureBias;
+			float _Parallax;
+			float _AI_ShadowBias;
+			float _AI_ShadowView;
+			float _AI_ForwardBias;
+			float _Frames;
+			float _DepthSize;
+			float _ImpostorSize;
+			#ifdef ASE_TRANSMISSION
+				float _TransmissionShadow;
+			#endif
+			#ifdef ASE_TRANSLUCENCY
+				float _TransStrength;
+				float _TransNormal;
+				float _TransScattering;
+				float _TransDirect;
+				float _TransAmbient;
+				float _TransShadow;
+			#endif
+			#ifdef ASE_TESSELLATION
+				float _TessPhongStrength;
+				float _TessValue;
+				float _TessMin;
+				float _TessMax;
+				float _TessEdgeLength;
+				float _TessMaxDisp;
+			#endif
+			CBUFFER_END
+
+			#ifdef SCENEPICKINGPASS
+				float4 _SelectionID;
+			#endif
+
+			#ifdef SCENESELECTIONPASS
+				int _ObjectId;
+				int _PassValue;
+			#endif
+
+			sampler2D _Albedo;
+			sampler2D _Normals;
+			sampler2D _Specular;
+			sampler2D _Occlusion;
+			sampler2D _Emission;
+			sampler2D _Position;
+
+
+			struct ImpostorOutput
+			{
+				half3 Albedo;
+				half3 Specular;
+				half Metallic;
+				half3 WorldNormal;
+				half Smoothness;
+				half Occlusion;
+				half3 Emission;
+				half Alpha;
+			};
+			
+			float2 VectorToOctahedron( float3 N )
+			{
+				N /= dot( 1.0, abs( N ) );
+				if( N.z <= 0 )
+				{
+				N.xy = ( 1 - abs( N.yx ) ) * ( N.xy >= 0 ? 1.0 : -1.0 );
+				}
+				return N.xy;
+			}
+			
+			float3 OctahedronToVector( float2 Oct )
+			{
+				float3 N = float3( Oct, 1.0 - dot( 1.0, abs( Oct ) ) );
+				if(N.z< 0 )
+				{
+				N.xy = ( 1 - abs( N.yx) ) * (N.xy >= 0 ? 1.0 : -1.0 );
+				}
+				return normalize( N);
+			}
+			
+			inline void RayPlaneIntersectionUV( float3 normalOS, float3 rayPosition, float3 rayDirection, out float2 uvs, out float3 localNormal )
+			{
+				float lDotN = dot( rayDirection, normalOS ); 
+				float p0l0DotN = dot( -rayPosition, normalOS );
+				float t = p0l0DotN / lDotN;
+				float3 p = rayDirection * t + rayPosition;
+				float3 upVector = float3( 0, 1, 0 );
+				float3 tangent = normalize( cross( upVector, normalOS ) + float3( -0.001, 0, 0 ) );
+				float3 bitangent = cross( tangent, normalOS );
+				float frameX = dot( p, tangent );
+				float frameZ = dot( p, bitangent );
+				uvs = -float2( frameX, frameZ );
+				if( t <= 0.0 )
+				uvs = 0;
+				float3x3 worldToLocal = float3x3( tangent, bitangent, normalOS );
+				localNormal = normalize( mul( worldToLocal, rayDirection ) );
+			}
+			
+			float2 VectorToHemiOctahedron( float3 N )
+			{
+				N.xy /= dot( 1.0, abs( N ) );
+				return float2( N.x + N.y, N.x - N.y );
+			}
+			
+			float3 HemiOctahedronToVector( float2 Oct )
+			{
+				Oct = float2( Oct.x + Oct.y, Oct.x - Oct.y ) * 0.5;
+				float3 N = float3( Oct, 1 - dot( 1.0, abs( Oct ) ) );
+				return normalize( N );
+			}
+			
+			inline void OctaImpostorVertex( inout float3 positionOS, out float3 normalOS, out float4 tangentOS, out float4 uvsFrame1, out float4 uvsFrame2, out float4 uvsFrame3, out float4 octaFrame, out float4 viewPos )
+			{
+				float2 uvOffset = _AI_SizeOffset.zw;
+				float parallax = -_Parallax; 
+				float UVscale = _ImpostorSize;
+				float framesXY = _Frames;
+				float prevFrame = framesXY - 1;
+				float3 fractions = 1.0 / float3( framesXY, prevFrame, UVscale );
+				float fractionsFrame = fractions.x;
+				float fractionsPrevFrame = fractions.y;
+				float fractionsUVscale = fractions.z;
+				float3 worldCameraPos;
+				#if defined(UNITY_PASS_SHADOWCASTER)
+				float3 worldOrigin = 0;
+				float4 perspective = float4( 0, 0, 0, 1 );
+				if ( UNITY_MATRIX_P[ 3 ][ 3 ] == 1 )
+				{
+				perspective = float4( 0, 0, 5000, 0 );
+				worldOrigin = AI_ObjectToWorld._m03_m13_m23;
+				}
+				worldCameraPos = worldOrigin + mul( UNITY_MATRIX_I_V, perspective ).xyz;
+				#else
+				if ( UNITY_MATRIX_P[ 3 ][ 3 ] == 1 )
+				{
+				worldCameraPos = AI_ObjectToWorld._m03_m13_m23 + UNITY_MATRIX_I_V._m02_m12_m22 * 5000;
+				}
+				else
+				{
+				worldCameraPos = GetCameraRelativePositionWS( _WorldSpaceCameraPos );
+				}
+				#endif
+				float3 objectCameraPosition = mul( AI_WorldToObject, float4( worldCameraPos, 1 ) ).xyz - _Offset.xyz; 
+				float3 objectCameraDirection = normalize( objectCameraPosition );
+				float3 upVector = float3( 0,1,0 );
+				float3 objectHorizontalVector = normalize( cross( objectCameraDirection, upVector ) );
+				float3 objectVerticalVector = cross( objectHorizontalVector, objectCameraDirection );
+				float2 uvExpansion = positionOS.xy;
+				float3 billboard = objectHorizontalVector * uvExpansion.x + objectVerticalVector * uvExpansion.y;
+				float3 localDir = billboard - objectCameraPosition; 
+				objectCameraDirection = trunc( objectCameraDirection * 65536.0 ) / 65536.0;
+				#if defined( _HEMI_ON )
+				objectCameraDirection.y = max( 0.001, objectCameraDirection.y );
+				float2 frameOcta = VectorToHemiOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
+				#else
+				float2 frameOcta = VectorToOctahedron( objectCameraDirection.xzy ) * 0.5 + 0.5;
+				#endif
+				float2 prevOctaFrame = frameOcta * prevFrame;
+				float2 baseOctaFrame = floor( prevOctaFrame );
+				float2 fractionOctaFrame = ( baseOctaFrame * fractionsFrame );
+				float2 octaFrame1 = ( baseOctaFrame * fractionsPrevFrame ) * 2.0 - 1.0;
+				#if defined( _HEMI_ON )
+				float3 octa1WorldY = HemiOctahedronToVector( octaFrame1 ).xzy;
+				#else
+				float3 octa1WorldY = OctahedronToVector( octaFrame1 ).xzy;
+				#endif
+				float3 octa1LocalY;
+				float2 uvFrame1;
+				RayPlaneIntersectionUV( octa1WorldY, objectCameraPosition, localDir, /*out*/ uvFrame1, /*out*/ octa1LocalY );
+				float2 uvParallax1 = octa1LocalY.xy * fractionsFrame * parallax;
+				uvFrame1 = ( uvFrame1 * fractionsUVscale + 0.5 ) * fractionsFrame + fractionOctaFrame;
+				uvsFrame1 = float4( uvParallax1, uvFrame1 ) - float4( 0, 0, uvOffset );
+				float2 fractPrevOctaFrame = frac( prevOctaFrame );
+				float2 cornerDifference = lerp( float2( 0,1 ) , float2( 1,0 ) , saturate( ceil( ( fractPrevOctaFrame.x - fractPrevOctaFrame.y ) ) ));
+				float2 octaFrame2 = ( ( baseOctaFrame + cornerDifference ) * fractionsPrevFrame ) * 2.0 - 1.0;
+				#if defined( _HEMI_ON )
+				float3 octa2WorldY = HemiOctahedronToVector( octaFrame2 ).xzy;
+				#else
+				float3 octa2WorldY = OctahedronToVector( octaFrame2 ).xzy;
+				#endif
+				float3 octa2LocalY;
+				float2 uvFrame2;
+				RayPlaneIntersectionUV( octa2WorldY, objectCameraPosition, localDir, /*out*/ uvFrame2, /*out*/ octa2LocalY );
+				float2 uvParallax2 = octa2LocalY.xy * fractionsFrame * parallax;
+				uvFrame2 = ( uvFrame2 * fractionsUVscale + 0.5 ) * fractionsFrame + ( ( cornerDifference * fractionsFrame ) + fractionOctaFrame );
+				uvsFrame2 = float4( uvParallax2, uvFrame2 ) - float4( 0, 0, uvOffset );
+				float2 octaFrame3 = ( ( baseOctaFrame + 1 ) * fractionsPrevFrame  ) * 2.0 - 1.0;
+				#if defined( _HEMI_ON )
+				float3 octa3WorldY = HemiOctahedronToVector( octaFrame3 ).xzy;
+				#else
+				float3 octa3WorldY = OctahedronToVector( octaFrame3 ).xzy;
+				#endif
+				float3 octa3LocalY;
+				float2 uvFrame3;
+				RayPlaneIntersectionUV( octa3WorldY, objectCameraPosition, localDir, /*out*/ uvFrame3, /*out*/ octa3LocalY );
+				float2 uvParallax3 = octa3LocalY.xy * fractionsFrame * parallax;
+				uvFrame3 = ( uvFrame3 * fractionsUVscale + 0.5 ) * fractionsFrame + ( fractionOctaFrame + fractionsFrame );
+				uvsFrame3 = float4( uvParallax3, uvFrame3 ) - float4( 0, 0, uvOffset );
+				octaFrame = 0;
+				octaFrame.xy = prevOctaFrame;
+				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
+				octaFrame.zw = fractionOctaFrame;
+				#endif
+				positionOS = billboard + _Offset.xyz;
+				normalOS = objectCameraDirection;
+				tangentOS = float4( objectHorizontalVector, 1 );
+				viewPos = 0;
+				viewPos.xyz = TransformWorldToView( TransformObjectToWorld( positionOS.xyz ) );
+				#ifdef EFFECT_HUE_VARIATION
+				float hueVariationAmount = frac( AI_ObjectToWorld[ 0 ].w + AI_ObjectToWorld[ 1 ].w + AI_ObjectToWorld[ 2 ].w );
+				viewPos.w = saturate( hueVariationAmount * _HueVariation.a );
+				#endif
+			}
+			
+			inline void OctaImpostorFragment( inout ImpostorOutput o, out float4 positionCS, out float3 positionWS, float4 uvsFrame1, float4 uvsFrame2, float4 uvsFrame3, float4 octaFrame, float4 viewPos )
+			{
+				float2 fraction = frac( octaFrame.xy );
+				float2 invFraction = 1 - fraction;
+				float3 weights;
+				weights.x = min( invFraction.x, invFraction.y );
+				weights.y = abs( fraction.x - fraction.y );
+				weights.z = min( fraction.x, fraction.y );
+				float4 parallaxSample1 = tex2Dbias( _Normals, float4( uvsFrame1.zw, 0, -1 ) );
+				float4 parallaxSample2 = tex2Dbias( _Normals, float4( uvsFrame2.zw, 0, -1 ) );
+				float4 parallaxSample3 = tex2Dbias( _Normals, float4( uvsFrame3.zw, 0, -1 ) );
+				float2 parallax1_uv = ( ( 0.5 - parallaxSample1.a ) * uvsFrame1.xy ) + uvsFrame1.zw;
+				float2 parallax2_uv = ( ( 0.5 - parallaxSample2.a ) * uvsFrame2.xy ) + uvsFrame2.zw;
+				float2 parallax3_uv = ( ( 0.5 - parallaxSample3.a ) * uvsFrame3.xy ) + uvsFrame3.zw;
+				float4 albedo1 = tex2Dbias( _Albedo, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 albedo2 = tex2Dbias( _Albedo, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 albedo3 = tex2Dbias( _Albedo, float4( parallax3_uv, 0, _TextureBias ) );
+				float4 blendedAlbedo = albedo1 * weights.x + albedo2 * weights.y + albedo3 * weights.z;
+				o.Alpha = ( blendedAlbedo.a - _ClipMask );
+				clip( o.Alpha );
+				#if defined( AI_CLIP_NEIGHBOURS_FRAMES )
+				float t = ceil( fraction.x - fraction.y );
+				float4 cornerDifference = float4( t, 1 - t, 1, 1 );
+				float2 step_1 = ( parallax1_uv - octaFrame.zw ) * _Frames;
+				float4 step23 = ( float4( parallax2_uv, parallax3_uv ) -  octaFrame.zwzw ) * _Frames - cornerDifference;
+				step_1 = step_1 * ( 1 - step_1 );
+				step23 = step23 * ( 1 - step23 );
+				float3 steps;
+				steps.x = step_1.x * step_1.y;
+				steps.y = step23.x * step23.y;
+				steps.z = step23.z * step23.w;
+				steps = step(-steps, 0);
+				float final = dot( steps, weights );
+				clip( final - 0.5 );
+				#endif
+				#ifdef EFFECT_HUE_VARIATION
+				half3 shiftedColor = lerp( blendedAlbedo.rgb, _HueVariation.rgb, viewPos.w );
+				half maxBase = max( blendedAlbedo.r, max(blendedAlbedo.g, blendedAlbedo.b ) );
+				half newMaxBase = max( shiftedColor.r, max(shiftedColor.g, shiftedColor.b ) );
+				maxBase /= newMaxBase;
+				maxBase = maxBase * 0.5f + 0.5f;
+				shiftedColor.rgb *= maxBase;
+				blendedAlbedo.rgb = saturate( shiftedColor );
+				#endif
+				o.Albedo = blendedAlbedo.rgb;
+				float4 normals1 = tex2Dbias( _Normals, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 normals2 = tex2Dbias( _Normals, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 normals3 = tex2Dbias( _Normals, float4( parallax3_uv, 0, _TextureBias ) );
+				float4 blendedNormal = normals1 * weights.x  + normals2 * weights.y + normals3 * weights.z;
+				float3 localNormal = blendedNormal.rgb * 2.0 - 1.0;
+				o.WorldNormal = normalize( mul( (float3x3)AI_ObjectToWorld, localNormal ) );
+				float depth = ( ( parallaxSample1.a * weights.x + parallaxSample2.a * weights.y + parallaxSample3.a * weights.z ) - 0.5 ) * _DepthSize * length( AI_ObjectToWorld[ 2 ].xyz );
+				#if defined( _SPECULARMAP )
+				float4 spec1 = tex2Dbias( _Specular, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 spec2 = tex2Dbias( _Specular, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 spec3 = tex2Dbias( _Specular, float4( parallax3_uv, 0, _TextureBias ) );
+				float4 blendedSpec = spec1 * weights.x  + spec2 * weights.y + spec3 * weights.z;
+				o.Specular = blendedSpec.rgb;
+				o.Smoothness = blendedSpec.a;
+				#else
+				o.Specular = 0;
+				o.Smoothness = 0;
+				#endif
+				#if defined( _OCCLUSIONMAP )
+				float4 occlusion1 = tex2Dbias( _Occlusion, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 occlusion2 = tex2Dbias( _Occlusion, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 occlusion3 = tex2Dbias( _Occlusion, float4( parallax3_uv, 0, _TextureBias ) );
+				o.Occlusion = occlusion1.g * weights.x  + occlusion2.g * weights.y + occlusion3.g * weights.z;
+				#else
+				o.Occlusion = 1;
+				#endif
+				#if defined( _EMISSIONMAP )
+				float4 emission1 = tex2Dbias( _Emission, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 emission2 = tex2Dbias( _Emission, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 emission3 = tex2Dbias( _Emission, float4( parallax3_uv, 0, _TextureBias ) );
+				o.Emission = emission1.rgb * weights.x  + emission2.rgb * weights.y + emission3.rgb * weights.z;
+				#else
+				o.Emission = 0;
+				#endif
+				#if defined( _POSITIONMAP )
+				float4 position1 = tex2Dbias( _Position, float4( parallax1_uv, 0, _TextureBias ) );
+				float4 position2 = tex2Dbias( _Position, float4( parallax2_uv, 0, _TextureBias ) );
+				float4 position3 = tex2Dbias( _Position, float4( parallax3_uv, 0, _TextureBias ) );
+				float4 blendedPosition = position1 * weights.x  + position2 * weights.y + position3 * weights.z;
+				float3 objectPosition = blendedPosition.xyz * _AI_BoundsSize + _AI_BoundsMin;
+				float3 worldPosition = mul( AI_ObjectToWorld, float4( objectPosition, 1 ) ).xyz;
+				if ( blendedPosition.a > 0 )
+				{
+				viewPos.xyz = mul( UNITY_MATRIX_V, float4( worldPosition.xyz, 1 ) ).xyz;
+				depth = 0;
+				}
+				#endif
+				#if ( defined(SHADERPASS) && ((defined(SHADERPASS_SHADOWS) && SHADERPASS == SHADERPASS_SHADOWS) || (defined(SHADERPASS_SHADOWCASTER) && SHADERPASS == SHADERPASS_SHADOWCASTER)) ) || defined(UNITY_PASS_SHADOWCASTER)
+				viewPos.z += depth * _AI_ShadowView - _AI_ShadowBias;
+				#else 
+				viewPos.z += depth + _AI_ForwardBias;
+				#endif
+				positionWS = mul( UNITY_MATRIX_I_V, float4( viewPos.xyz, 1 ) ).xyz;
+				#if defined(SHADERPASS) && defined(UNITY_PASS_SHADOWCASTER)
+				#if _CASTING_PUNCTUAL_LIGHT_SHADOW
+				float3 lightDirectionWS = normalize( _LightPosition - positionWS );
+				#else
+				float3 lightDirectionWS = _LightDirection;
+				#endif
+				positionCS = TransformWorldToHClip( ApplyShadowBias( positionWS, float3( 0, 0, 0 ), lightDirectionWS ) );
+				#if UNITY_REVERSED_Z
+				positionCS.z = min( positionCS.z, positionCS.w * UNITY_NEAR_CLIP_VALUE );
+				#else
+				positionCS.z = max( positionCS.z, positionCS.w * UNITY_NEAR_CLIP_VALUE );
+				#endif
+				#else
+				positionCS = mul( UNITY_MATRIX_P, float4( viewPos.xyz, 1 ) );
+				#endif
+				positionCS.xyz /= positionCS.w;
+				if( UNITY_NEAR_CLIP_VALUE < 0 )
+				positionCS = positionCS * 0.5 + 0.5;
+			}
+			
+
+			PackedVaryings VertexFunction( Attributes input  )
+			{
+				PackedVaryings output = (PackedVaryings)0;
+				UNITY_SETUP_INSTANCE_ID(input);
+				UNITY_TRANSFER_INSTANCE_ID(input, output);
+				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
+
+				OctaImpostorVertex( input.positionOS.xyz, input.normalOS.xyz, input.tangentOS, output.UVsFrame1116, output.UVsFrame2116, output.UVsFrame3116, output.octaframe116, output.viewPos116 );
+				
+
+				#ifdef ASE_ABSOLUTE_VERTEX_POS
+					float3 defaultVertexValue = input.positionOS.xyz;
+				#else
+					float3 defaultVertexValue = float3(0, 0, 0);
+				#endif
+
+				float3 vertexValue = defaultVertexValue;
+
+				#ifdef ASE_ABSOLUTE_VERTEX_POS
+					input.positionOS.xyz = vertexValue;
+				#else
+					input.positionOS.xyz += vertexValue;
+				#endif
+
+				VertexPositionInputs vertexInput = GetVertexPositionInputs( input.positionOS.xyz );
+
+				#if defined(APLICATION_SPACE_WARP_MOTION)
+					output.positionCSNoJitter = mul(_NonJitteredViewProjMatrix, mul(UNITY_MATRIX_M, input.positionOS));;
+					output.positionCS = output.positionCSNoJitter;
+				#else
+					output.positionCS = vertexInput.positionCS;
+					output.positionCSNoJitter = mul(_NonJitteredViewProjMatrix, mul(UNITY_MATRIX_M, input.positionOS));
+				#endif
+
+				float4 prevPos = ( unity_MotionVectorsParams.x == 1 ) ? float4( input.positionOld, 1 ) : input.positionOS;
+
+				#if _ADD_PRECOMPUTED_VELOCITY
+					prevPos = prevPos - float4(input.alembicMotionVector, 0);
+				#endif
+
+				output.previousPositionCSNoJitter = mul( _PrevViewProjMatrix, mul( UNITY_PREV_MATRIX_M, prevPos ) );
+
+				output.positionWS = vertexInput.positionWS;
+
+				// removed in ObjectMotionVectors.hlsl found in unity 6000.0.23 and higher
+				//ApplyMotionVectorZBias( output.positionCS );
+				return output;
+			}
+
+			PackedVaryings vert ( Attributes input )
+			{
+				return VertexFunction( input );
+			}
+
+			half4 frag(	PackedVaryings input
+				#if defined( ASE_DEPTH_WRITE_ON )
+				,out float outputDepth : ASE_SV_DEPTH
+				#endif
+				 ) : SV_Target
+			{
+				UNITY_SETUP_INSTANCE_ID(input);
+				UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX( input );
+
+				float3 PositionWS = input.positionWS;
+				float3 PositionRWS = GetCameraRelativePositionWS( PositionWS );
+				float4 ScreenPosNorm = float4( GetNormalizedScreenSpaceUV( input.positionCS ), input.positionCS.zw );
+				float4 ClipPos = ComputeClipSpacePosition( ScreenPosNorm.xy, input.positionCS.z ) * input.positionCS.w;
+
+				ImpostorOutput io = ( ImpostorOutput )0;
+				OctaImpostorFragment( io, ClipPos, PositionWS, input.UVsFrame1116, input.UVsFrame2116, input.UVsFrame3116, input.octaframe116, input.viewPos116 );
+				
+
+				float Alpha = io.Alpha;
+				float AlphaClipThreshold = 0.5;
+
+				#if defined( ASE_DEPTH_WRITE_ON )
+					float DeviceDepth = ClipPos.z;
 				#endif
 
 				#ifdef _ALPHATEST_ON
@@ -5671,20 +6260,21 @@ Shader "Hidden/Amplify Impostors/Octahedron Impostor URP"
 }
 
 /*ASEBEGIN
-Version=19801
-Node;AmplifyShaderEditor.RangedFloatNode;115;-512,0;Inherit;False;Property;_AI_AlphaToCoverage;Alpha To Coverage;17;1;[Toggle];Create;False;0;0;0;True;0;False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.AmplifyImpostorNode;116;-288,0;Inherit;False;9906;Octahedron;True;True;True;False;True;18;19;20;22;9;23;24;7;0;1;2;4;21;10;11;6;15;3;5;8;13;14;16;12;True;0;Specular;True;9;0;SAMPLER2D;;False;1;SAMPLER2D;;False;2;SAMPLER2D;;False;3;SAMPLER2D;;False;4;SAMPLER2D;;False;5;SAMPLER2D;;False;6;SAMPLER2D;;False;7;SAMPLER2D;;False;8;SAMPLERSTATE;;False;18;FLOAT4;8;FLOAT4;9;FLOAT4;10;FLOAT4;11;FLOAT4;12;FLOAT4;13;FLOAT4;14;FLOAT4;15;FLOAT3;0;FLOAT3;1;FLOAT3;3;FLOAT;4;FLOAT;5;FLOAT3;2;FLOAT;6;FLOAT;17;FLOAT3;7;FLOAT3;16
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;58;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;60;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=ShadowCaster;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;61;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;True;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;False;False;True;1;LightMode=DepthOnly;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;62;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;63;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=Universal2D;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;64;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=DepthNormals;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;65;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalGBuffer;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;66;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;SceneSelectionPass;0;8;SceneSelectionPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=SceneSelectionPass;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;67;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;ScenePickingPass;0;9;ScenePickingPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Picking;False;False;0;;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;59;0,0;Float;False;True;-1;3;UnityEditor.ShaderGraphLitGUI;0;28;Hidden/Amplify Impostors/Octahedron Impostor URP;ad3e6cbf440fc8843823405e7e862e1a;True;Forward;0;1;Forward;21;False;False;False;False;False;False;False;False;False;False;False;False;True;0;True;_AI_AlphaToCoverage;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;5;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;ImpostorType=Octahedron;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;;0;0;Standard;45;Lighting Model;0;0;Workflow;0;638764363290246051;Surface;0;0;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;0;Alpha Clipping;0;638774781468662537;  Use Shadow Threshold;0;0;Fragment Normal Space,InvertActionOnDeselection;2;638764363944481560;Forward Only;0;0;Transmission;0;0;  Transmission Shadow;0.5,False,;0;Translucency;0;0;  Translucency Strength;1,False,;0;  Normal Distortion;0.5,False,;0;  Scattering;2,False,;0;  Direct;0.9,False,;0;  Ambient;0.1,False,;0;  Shadow;0.5,False,;0;Cast Shadows;1;0;Receive Shadows;1;0;Receive SSAO;1;0;Motion Vectors;1;0;  Add Precomputed Velocity;0;0;GPU Instancing;1;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;0;638794036118066174;Override Baked GI;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Write Depth;1;638764364121229627;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;1;0;Debug Display;0;0;Clear Coat;0;0;0;11;False;True;True;True;False;False;True;True;True;True;True;False;;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;139;0,100;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;MotionVectors;0;10;MotionVectors;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;False;False;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=MotionVectors;False;False;0;;0;0;Standard;0;False;0
+Version=19904
+Node;AmplifyShaderEditor.RangedFloatNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;115;-512,0;Inherit;False;Property;_AI_AlphaToCoverage;Alpha To Coverage;17;1;[Toggle];Create;False;0;0;0;True;0;False;0;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.AmplifyImpostorNode, AIToASE, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;116;-288,0;Inherit;False;10100;Octahedron;True;True;True;False;True;18;19;20;22;9;23;24;7;0;1;2;4;21;10;11;6;15;3;5;8;13;14;16;12;True;0;Specular;True;9;0;SAMPLER2D;;False;1;SAMPLER2D;;False;2;SAMPLER2D;;False;3;SAMPLER2D;;False;4;SAMPLER2D;;False;5;SAMPLER2D;;False;6;SAMPLER2D;;False;7;SAMPLER2D;;False;8;SAMPLERSTATE;;False;18;FLOAT4;8;FLOAT4;9;FLOAT4;10;FLOAT4;11;FLOAT4;12;FLOAT4;13;FLOAT4;14;FLOAT4;15;FLOAT3;0;FLOAT3;1;FLOAT3;3;FLOAT;4;FLOAT;5;FLOAT3;2;FLOAT;6;FLOAT;17;FLOAT3;7;FLOAT3;16
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;58;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;ExtraPrePass;0;0;ExtraPrePass;6;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;0;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;60;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;False;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=ShadowCaster;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;61;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;True;True;False;False;False;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;False;False;True;1;LightMode=DepthOnly;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;62;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;63;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=Universal2D;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;64;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;True;1;1;False;;0;False;;0;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;;True;3;False;;False;True;1;LightMode=DepthNormals;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;65;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;GBuffer;0;7;GBuffer;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalGBuffer;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;66;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;SceneSelectionPass;0;8;SceneSelectionPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;2;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=SceneSelectionPass;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;67;0,0;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;ScenePickingPass;0;9;ScenePickingPass;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Picking;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;59;0,0;Float;False;True;-1;3;UnityEditor.ShaderGraphLitGUI;0;27;Hidden/Amplify Impostors/Octahedron Impostor URP;ad3e6cbf440fc8843823405e7e862e1a;True;Forward;0;1;Forward;21;False;False;False;False;False;False;False;False;False;False;False;False;True;0;True;_AI_AlphaToCoverage;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;5;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;ImpostorType=Octahedron;True;5;True;12;all;0;False;True;1;1;False;;0;False;;1;1;False;;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;1;LightMode=UniversalForward;False;False;0;;0;0;Standard;50;Category;0;0;  Instanced Terrain Normals;1;0;Lighting Model;0;0;Workflow;0;638764363290246051;Surface;0;0;  Refraction Model;0;0;  Blend;0;0;Two Sided;1;0;Alpha Clipping;0;638774781468662537;  Use Shadow Threshold;0;0;Fragment Normal Space,InvertActionOnDeselection;2;638764363944481560;Forward Only;0;0;Transmission;0;0;  Transmission Shadow;0.5,False,;0;Translucency;0;0;  Translucency Strength;1,False,;0;  Normal Distortion;0.5,False,;0;  Scattering;2,False,;0;  Direct;0.9,False,;0;  Ambient;0.1,False,;0;  Shadow;0.5,False,;0;Cast Shadows;1;0;Receive Shadows;1;0;Specular Highlights;2;0;Environment Reflections;2;0;Receive SSAO;1;0;Motion Vectors;1;0;  Add Precomputed Velocity;0;0;  XR Motion Vectors;0;0;GPU Instancing;1;0;LOD CrossFade;1;0;Built-in Fog;1;0;_FinalColorxAlpha;0;0;Meta Pass;0;638794036118066174;Override Baked GI;0;0;Extra Pre Pass;0;0;Tessellation;0;0;  Phong;0;0;  Strength;0.5,False,;0;  Type;0;0;  Tess;16,False,;0;  Min;10,False,;0;  Max;25,False,;0;  Edge Length;16,False,;0;  Max Displacement;25,False,;0;Write Depth;1;638764364121229627;  Early Z;0;0;Vertex Position,InvertActionOnDeselection;1;0;Debug Display;0;0;Clear Coat;0;0;0;12;False;True;True;True;False;False;True;True;True;True;True;True;False;;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;139;0,100;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;MotionVectors;0;10;MotionVectors;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;False;False;0;False;;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=MotionVectors;False;False;0;;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode, AmplifyShaderEditor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null;166;0,110;Float;False;False;-1;3;UnityEditor.ShaderGraphLitGUI;0;1;New Amplify Shader;ad3e6cbf440fc8843823405e7e862e1a;True;XRMotionVectors;0;11;XRMotionVectors;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;;False;True;0;False;;False;False;False;False;False;False;False;False;False;True;False;0;False;;255;False;;255;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;True;1;False;;True;3;False;;True;True;0;False;;0;False;;True;4;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;UniversalMaterialType=Lit;True;5;True;12;all;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;;False;False;False;False;False;False;False;True;True;1;False;;255;False;;1;False;;7;False;;3;False;;0;False;;0;False;;0;False;;0;False;;0;False;;0;False;;False;False;False;False;True;1;LightMode=XRMotionVectors;False;False;0;;0;0;Standard;0;False;0
 WireConnection;59;0;116;0
 WireConnection;59;1;116;1
 WireConnection;59;9;116;3
@@ -5694,4 +6284,4 @@ WireConnection;59;2;116;2
 WireConnection;59;6;116;6
 WireConnection;59;17;116;17
 ASEEND*/
-//CHKSM=22A2F101F80252DE64D7903357590C16D7F7953C
+//CHKSM=AF7EA63A9E83FAC4912C5749E3AFFCEDADD493D8

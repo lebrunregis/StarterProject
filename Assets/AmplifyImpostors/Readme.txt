@@ -2,9 +2,9 @@ About
 
   Amplify Impostors (c) Amplify Creations, Lda. All rights reserved.
 
-  Amplify Impostors is a component-based impostor creation tool for Unity 2019.4 and up
+  Amplify Impostors is a component-based impostor creation tool for Unity 2021.3 LTS and up
 
-  Redistribution of Amplify Impostors is frowned upon. If you want to share the 
+  Redistribution of Amplify Impostors is frowned upon. If you want to share the
   software, please refer others to the official product page:
 
   http://amplify.pt/unity/amplify-impostors/
@@ -13,12 +13,12 @@ Description
 
   Amplify Impostors is a small but powerful tool that allows the creation of different
   types of Impostors, which are substitutes of complex high polycount objects made from flat
-  and simple polygons, that render a fake version of the original object (hence the name). 
+  and simple polygons, that render a fake version of the original object (hence the name).
   Much like traditional sprites, they usually consist of a single flat quad polygon or simple
   polygonal shapes and, like classic billboards, always face the camera. Think of them as a
   camera facing cardboard version of the object you want to render. The common purpose of
   using such technique is to be able to represent far distant objects with a very low
-  polycount, for instance, trees, bushes, rocks, ruins, buildings, props, etc. 
+  polycount, for instance, trees, bushes, rocks, ruins, buildings, props, etc.
 
 Features
 
@@ -38,11 +38,11 @@ Features
 
 Supported Platforms
 
-  * All platforms 
+  * All platforms
 
 Minimum Requirements
 
-  Unity 2019.4+
+  Unity Unity 2021.3 LTS
 
 Quick Guide
 
@@ -59,7 +59,7 @@ Documentation
 
 Feedback
 
-  To file error reports, questions or suggestions, you may use 
+  To file error reports, questions or suggestions, you may use
   our feedback form online:
 
     http://amplify.pt/contact

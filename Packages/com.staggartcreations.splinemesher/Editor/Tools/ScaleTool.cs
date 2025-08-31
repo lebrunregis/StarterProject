@@ -24,28 +24,28 @@ namespace sc.modeling.splines.editor
     [EditorTool("Spline Mesh Scale", typeof(SplineMesher))]
     public class ScaleTool : EditorTool
     {
-#if SPLINES && MATHEMATICS
+        #if SPLINES && MATHEMATICS
         private GUIContent m_IconContent;
         public override GUIContent toolbarIcon => m_IconContent;
-        private readonly IDrawSelectedHandles drawSelectedHandlesImplementation;
+        private IDrawSelectedHandles drawSelectedHandlesImplementation;
         protected const float k_MinSliderSize = 1.35f;
         private const float k_HandleSize = 0.1f;
         private bool m_DisableHandles = false;
 
         private ScaleToolUI ui;
-
+        
         public static Texture2D LoadIcon()
         {
             return AssetDatabase.LoadAssetAtPath<Texture2D>($"{SplineMesher.kPackageRoot}/Editor/Resources/spline-mesher-scale-icon-64px.psd");
         }
-
+        
         public static bool UniformScaling
         {
             get => EditorPrefs.GetBool("SM_SCALE_UNIFORM", true);
             set => EditorPrefs.SetBool("SM_SCALE_UNIFORM", value);
         }
-
-        private void OnEnable()
+        
+        void OnEnable()
         {
             name = "Spline Mesh Scale";
             m_IconContent = new GUIContent()
@@ -58,12 +58,12 @@ namespace sc.modeling.splines.editor
 
         public override void OnActivated()
         {
-#if UNITY_2022_1_OR_NEWER
+            #if UNITY_2022_1_OR_NEWER
             SceneView.AddOverlayToActiveView(ui = new ScaleToolUI());
-#endif
-
+            #endif
+            
             ScaleToolUI.Show = true;
-
+            
             foreach (var m_target in targets)
             {
                 SplineMesher modeler = m_target as SplineMesher;
@@ -94,10 +94,10 @@ namespace sc.modeling.splines.editor
 
         public override void OnWillBeDeactivated()
         {
-#if UNITY_2022_1_OR_NEWER
+            #if UNITY_2022_1_OR_NEWER
             SceneView.RemoveOverlayFromActiveView(ui);
-#endif
-
+            #endif
+            
             ScaleToolUI.Show = false;
         }
 
@@ -119,7 +119,7 @@ namespace sc.modeling.splines.editor
                 {
                     if (i < modeler.scaleData.Count)
                     {
-                        NativeSpline nativeSpline = new(splines[i], modeler.splineContainer.transform.localToWorldMatrix);
+                        NativeSpline nativeSpline = new NativeSpline(splines[i], modeler.splineContainer.transform.localToWorldMatrix);
 
                         Undo.RecordObject(modeler, "Modifying Mesh Scale");
 
@@ -138,7 +138,7 @@ namespace sc.modeling.splines.editor
                 }
             }
         }
-
+        
         private bool DrawDataPoints(ISpline spline, SplineData<float3> splineData)
         {
             SplineMesher modeler = target as SplineMesher;
@@ -156,13 +156,13 @@ namespace sc.modeling.splines.editor
                     dataPoint.Value = result;
                     splineData[dataFrameIndex] = dataPoint;
                     inUse = true;
-
+                    
                     modeler.Rebuild();
                 }
             }
             return inUse;
         }
-
+        
         private bool DrawDataPoint(Vector3 position, Vector3 tangent, Vector3 up, float3 inValue, out float3 outValue)
         {
             int id = m_DisableHandles ? -1 : GUIUtility.GetControlID(FocusType.Passive);
@@ -208,7 +208,7 @@ namespace sc.modeling.splines.editor
                 return true;
             }
             */
-
+            
             Vector3 x = position - (right * inValue.x * handleScale);
             Vector3 y = position + (up * inValue.y * handleScale);
 
@@ -219,14 +219,14 @@ namespace sc.modeling.splines.editor
                 Handles.color = Color.red;
                 if (Event.current.type == EventType.Repaint)
                 {
-                    Handles.DrawAAPolyLine(Texture2D.whiteTexture, 3f, new[] { position, x });
+                    Handles.DrawAAPolyLine(Texture2D.whiteTexture, 3f, new []{position, x});
                 }
                 width = Handles.Slider(id, x, right, k_HandleSize * handleScale, CustomHandleCap, 0);
 
                 Handles.color = Color.green;
                 if (Event.current.type == EventType.Repaint)
                 {
-                    Handles.DrawAAPolyLine(Texture2D.whiteTexture, 3f, new[] { position, y });
+                    Handles.DrawAAPolyLine(Texture2D.whiteTexture, 3f, new []{position, y});
                 }
                 height = Handles.Slider(id2, y, up, k_HandleSize * handleScale, CustomHandleCap, 0);
 
@@ -244,7 +244,7 @@ namespace sc.modeling.splines.editor
             {
                 outValue.x = math.distance(width, position) / handleScale;
                 if (UniformScaling) outValue.y = outValue.x;
-
+                
                 return true;
             }
 
@@ -258,7 +258,7 @@ namespace sc.modeling.splines.editor
 
             return false;
         }
-
+        
         private void CustomHandleCap(int controlID, Vector3 position, Quaternion rotation, float size, EventType eventType)
         {
             if (m_DisableHandles) // If disabled, do nothing unless it's a repaint event
@@ -269,37 +269,37 @@ namespace sc.modeling.splines.editor
             else
                 Handles.CubeHandleCap(controlID, position, rotation, size, eventType);
         }
-#endif
+        #endif
     }
 
-#if SPLINES && MATHEMATICS
-#if UNITY_2022_1_OR_NEWER
+    #if SPLINES && MATHEMATICS
+    #if UNITY_2022_1_OR_NEWER
     [Overlay(defaultDisplay = true)]
-#else
+    #else
     [Overlay(typeof(SceneView), "Spline Mesh Scale Tool")]
-#endif
+    #endif
     public class ScaleToolUI : Overlay, ITransientOverlay
     {
         public static bool Show;
         public bool visible => Show;
-
+        
         public override VisualElement CreatePanelContent()
         {
             var root = new VisualElement();
-
+            
             this.displayName = "Spline Scale Tool";
-
-            Toggle uniformScaling = new("Uniform scaling")
+            
+            Toggle uniformScaling = new Toggle("Uniform scaling")
             {
                 value = ScaleTool.UniformScaling,
                 tooltip = "Use any of the handles to uniformly scale the data point"
             };
             uniformScaling.RegisterValueChangedCallback(evt => { ScaleTool.UniformScaling = evt.newValue; });
-
+            
             root.Add(uniformScaling);
-
+            
             return root;
         }
     }
-#endif
+    #endif
 }

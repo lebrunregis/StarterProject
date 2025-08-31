@@ -5,8 +5,11 @@
 using sc.modeling.splines.runtime;
 using UnityEditor;
 using UnityEditor.EditorTools;
+using UnityEngine.UIElements;
 
 #if MATHEMATICS
+using Unity.Mathematics;
+using UnityEditor.Overlays;
 using UnityEngine;
 #endif
 
@@ -18,10 +21,10 @@ using UnityEditor.Splines;
 namespace sc.modeling.splines.editor
 {
     [EditorTool("Spline Mesh Roll", typeof(SplineMesher))]
-    internal sealed class RollTool : EditorTool
+    sealed class RollTool : EditorTool
     {
-#if SPLINES
-        private GUIContent m_IconContent;
+        #if SPLINES
+        GUIContent m_IconContent;
         public override GUIContent toolbarIcon => m_IconContent;
 
         public static Texture2D LoadIcon()
@@ -29,7 +32,7 @@ namespace sc.modeling.splines.editor
             return AssetDatabase.LoadAssetAtPath<Texture2D>($"{SplineMesher.kPackageRoot}/Editor/Resources/spline-mesher-roll-icon-64px.psd");
         }
 
-        private void OnEnable()
+        void OnEnable()
         {
             m_IconContent = new GUIContent
             {
@@ -38,12 +41,12 @@ namespace sc.modeling.splines.editor
             };
         }
 
-        private bool GetTargets(out SplineMesher splineMesher, out SplineContainer spline)
+        bool GetTargets(out SplineMesher splineMesher, out SplineContainer spline)
         {
             splineMesher = target as SplineMesher;
             if (splineMesher != null)
             {
-                spline = splineMesher.splineContainer;
+                spline = splineMesher.splineContainer as SplineContainer;
                 return spline != null && spline.Spline != null;
             }
             spline = null;
@@ -61,18 +64,18 @@ namespace sc.modeling.splines.editor
                 base.OnToolGUI(window);
 
                 Handles.color = Color.yellow;
-
+                
                 var splines = modeler.splineContainer.Splines;
                 for (var i = 0; i < splines.Count; i++)
                 {
                     if (i < modeler.rollData.Count)
                     {
-                        NativeSpline nativeSpline = new(splines[i], modeler.splineContainer.transform.localToWorldMatrix);
+                        NativeSpline nativeSpline = new NativeSpline(splines[i], modeler.splineContainer.transform.localToWorldMatrix);
 
                         Undo.RecordObject(modeler, "Modifying Mesh Roll");
 
                         SplineData<float> splineData = modeler.rollData[i];
-
+                        
                         int changedIndex = DrawIndexPointHandles(nativeSpline, splineData);
                         if (changedIndex >= 0)
                         {
@@ -89,14 +92,14 @@ namespace sc.modeling.splines.editor
 
                         if (GUI.changed)
                         {
-
+                            
                         }
                     }
                 }
             }
         }
 
-        private int DrawIndexPointHandles(NativeSpline spline, SplineData<float> splineData)
+        int DrawIndexPointHandles(NativeSpline spline, SplineData<float> splineData)
         {
             int anchorId = GUIUtility.GetControlID(FocusType.Passive);
             spline.DataPointHandles(splineData);
@@ -118,10 +121,10 @@ namespace sc.modeling.splines.editor
         }
 
         // inverse pre-calculation optimization
-        private readonly Quaternion m_DefaultHandleOrientation = Quaternion.Euler(270, 0, 0);
-        private readonly Quaternion m_DefaultHandleOrientationInverse = Quaternion.Euler(90, 0, 0);
+        readonly Quaternion m_DefaultHandleOrientation = Quaternion.Euler(270, 0, 0);
+        readonly Quaternion m_DefaultHandleOrientationInverse = Quaternion.Euler(90, 0, 0);
 
-        private int DrawDataPointHandles(NativeSpline spline, SplineData<float> splineData)
+        int DrawDataPointHandles(NativeSpline spline, SplineData<float> splineData)
         {
             int changed = -1;
             int tooltipIndex = -1;
@@ -184,25 +187,25 @@ namespace sc.modeling.splines.editor
                 return false;
             }
         }
-
-        private void DrawTooltip(NativeSpline spline, SplineData<float> splineData, int index)
+        
+        void DrawTooltip(NativeSpline spline, SplineData<float> splineData, int index)
         {
             var dataPoint = splineData[index];
             var text = $"Index: {dataPoint.Index}\nRoll: {dataPoint.Value}\u00b0";
 
             var t = SplineUtility.GetNormalizedInterpolation(spline, dataPoint.Index, splineData.PathIndexUnit);
             spline.Evaluate(t, out var position, out _, out _);
-
+            
             DrawLabel(position, text);
         }
-
+        
         public static void DrawLabel(Vector3 position, string text)
         {
             var labelOffset = HandleUtility.GetHandleSize(position) / 1.5f;
-
+            
             Handles.Label(position + new Vector3(0, -labelOffset, 0), text, Label);
         }
-
+        
         private static GUIStyle _Label;
         public static GUIStyle Label
         {
@@ -223,7 +226,7 @@ namespace sc.modeling.splines.editor
                             bottom = 0
                         }
                     };
-
+                    
                     _Label.normal.textColor = Color.black; // Set the text color to black
                     _Label.normal.background = Texture2D.whiteTexture;
                 }
@@ -231,6 +234,6 @@ namespace sc.modeling.splines.editor
                 return _Label;
             }
         }
-#endif
+        #endif
     }
 }

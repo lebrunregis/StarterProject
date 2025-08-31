@@ -12,9 +12,9 @@ Shader "Hidden/ShaderPacker"
 	SubShader
 	{
 		Tags { "RenderType"="Opaque" }
-		LOD 100
-		ZWrite On
-		ZTest LEqual
+
+		ZWrite Off
+		ZTest Always
 		ColorMask RGBA
 		Blend Off
 		Cull Off
@@ -327,6 +327,10 @@ Shader "Hidden/ShaderPacker"
 			float4 frag( v2f_img i ) : SV_Target
 			{
 				float depth = SAMPLE_RAW_DEPTH_TEXTURE( _MainTex, i.uv ).r;
+			#if !defined( UNITY_REVERSED_Z )
+				depth = 1 - depth;
+			#endif
+
 				float3 color = tex2D( _A, i.uv ).rgb;
 				float alpha = 1 - step( depth, 0 );
 

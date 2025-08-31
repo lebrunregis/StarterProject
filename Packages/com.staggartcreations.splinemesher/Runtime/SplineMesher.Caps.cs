@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 #if UNITY_EDITOR
@@ -24,14 +25,14 @@ namespace sc.modeling.splines.runtime
             {
                 this.position = position;
             }
-
+            
             public enum Position
             {
                 Start,
                 End
             }
             public readonly Position position;
-
+            
             [Tooltip("The source object to use. An instance of this will be spawned. It may be destroyed and recreated under certain conditions, so manual changes may be lost.")]
             public GameObject prefab;
             [SerializeField]
@@ -41,48 +42,48 @@ namespace sc.modeling.splines.runtime
             public bool HasPrefabChanged()
             {
                 if (!prefab) return true;
-
+                
                 if (prefab != previousPrefab)
                 {
                     //Debug.Log($"Prefab changed on {position} cap.");
                     previousPrefab = prefab;
-
+                    
                     return true;
                 }
-
+                
                 return false;
             }
-
+            
             [Tooltip("Positional offset, relative to the curve's tangent")]
             public Vector3 offset;
             [Tooltip("Shifts the object along the spline curve by this many units")]
             [Min(0f)]
             public float shift = 0f;
-
+            
             [Tooltip("Align the object's forward direction to the tangent and roll of the spline")]
             public bool align = true;
             [Tooltip("Rotation in degrees, added to the object's rotation")]
             public Vector3 rotation;
-
+            
             [Tooltip("Factor in the scale configured under the Deforming section, as well as scale data points created in the editor.")]
             public bool matchScale = true;
             public Vector3 scale = Vector3.one;
-
+            
             //Save a reference to the instantiated objects, so they can be accessed again, deleted when necessary.
             //[HideInInspector]
             public GameObject[] instances = Array.Empty<GameObject>();
             public int InstanceCount => instances.Length;
-
+            
             public bool RequiresRespawn()
             {
                 return HasNoInstances() || HasPrefabChanged() || HasMissingInstances();
             }
-
+            
             public bool HasNoInstances()
             {
                 return InstanceCount == 0;
             }
-
+            
             //User may delete the instances in the hierarchy
             public bool HasMissingInstances()
             {
@@ -101,23 +102,23 @@ namespace sc.modeling.splines.runtime
                     if (instances[i]) DestroyInstance(instances[i]);
                 }
             }
-
+            
             private static void DestroyInstance(Object obj)
             {
-#if UNITY_EDITOR
+                #if UNITY_EDITOR
                 if (Application.isPlaying && !UnityEditor.EditorApplication.isPaused)
                     Destroy(obj);
                 else
                     DestroyImmediate(obj);
-#else
+                #else
                 Destroy(obj);
-#endif
+                #endif
             }
-
+            
             public void Respawn(int splineCount, Transform parent)
             {
                 DestroyInstances();
-
+            
                 //Nothing to spawn, clear out
                 if (!prefab)
                 {
@@ -134,17 +135,17 @@ namespace sc.modeling.splines.runtime
                 {
                     GameObject instance = InstantiatePrefab(prefab);
                     instance.transform.SetParent(parent);
-
+                
                     instances[i] = instance;
                     previousPrefab = prefab;
                 }
             }
-
+        
             private GameObject InstantiatePrefab(Object source)
             {
                 bool isPrefab = false;
-
-#if UNITY_EDITOR
+            
+                #if UNITY_EDITOR
                 if (UnityEditor.PrefabUtility.GetPrefabAssetType(source) == PrefabAssetType.Variant)
                 {
                     //PrefabUtility.GetCorrespondingObjectFromSource still returns the base prefab. However, this does work.
@@ -159,16 +160,16 @@ namespace sc.modeling.splines.runtime
                     //This is necessary if the source if a prefab already instantiate in the scene
                     if (isPrefab) source = original;
                 }
-#endif
-
+                #endif
+                
                 GameObject instance = null;
-
-#if UNITY_EDITOR
+            
+                #if UNITY_EDITOR
                 if (isPrefab)
                 {
                     instance = UnityEditor.PrefabUtility.InstantiatePrefab(source) as GameObject;
                 }
-#endif
+                #endif
 
                 //Non-prefabs and builds
                 if (!isPrefab)
@@ -180,18 +181,18 @@ namespace sc.modeling.splines.runtime
                 {
                     Debug.LogError($"Failed to spawn cap instance. Was the prefab source as scene object and deleted? Source is prefab: {isPrefab}");
                 }
-
+                
                 return instance;
             }
-
+            
             //Transforms the prefab to the desired spline position and rotation
             public void ApplyTransform(SplineMesher splineMesher)
             {
-#if MATHEMATICS
+                #if MATHEMATICS
                 for (int splineIndex = 0; splineIndex < instances.Length; splineIndex++)
                 {
                     Transform target = this.instances[splineIndex].transform;
-
+                    
                     //Coincidentally the two enum values correspond to 0 and 1
                     float t = (int)position;
 
@@ -201,37 +202,37 @@ namespace sc.modeling.splines.runtime
 
                     if (position == Position.Start) shiftLength += splineMesher.settings.distribution.trimStart;
                     else if (position == Position.End) shiftLength += splineMesher.settings.distribution.trimEnd;
-
+                    
                     //Shift along spline by X-units
                     float tOffset = (shiftLength) / splineLength;
                     if (position == Cap.Position.End) tOffset = -tOffset;
 
                     t += tOffset;
-
+            
                     //Ensure a tangent can always be derived at very the start and end
                     t = Mathf.Clamp(t, 0.0001f, 0.9999f);
-
+            
                     splineMesher.splineContainer.Splines[splineIndex].Evaluate(t, out float3 splinePoint, out float3 tangent, out float3 up);
 
                     //To world-space
                     tangent = splineMesher.splineContainer.transform.rotation * tangent;
                     up = splineMesher.splineContainer.transform.rotation * up;
-
+                    
                     if (this.position == Position.Start) tangent = -tangent;
-
+                    
                     float3 forward = math.normalize(tangent);
                     float3 right = math.cross(forward, up);
-
+            
                     //Rotation
                     Quaternion m_rotation = Quaternion.identity;
                     if (align)
                     {
                         m_rotation = Quaternion.LookRotation(forward, up);
-
+                        
                         m_rotation = splineMesher.SampleRollRotation(splineMesher.splineContainer.Splines[splineIndex], forward, t * splineLength, splineIndex) * m_rotation;
 
                         //Flipped?
-                        if (position == Position.End || (position == Position.Start && scale.z < 0)) right = -right;
+                        if(position == Position.End || (position == Position.Start && scale.z < 0)) right = -right;
 
                         //Does not work as expected, the start/end of the mesh may have been moved drastically, whilst the cap is positioned on the spline itself.
                         if (splineMesher.settings.deforming.ignoreKnotRotation)
@@ -239,7 +240,7 @@ namespace sc.modeling.splines.runtime
                             //m_rotation = SplineMeshGenerator.RollCorrectedRotation(forward);
                         }
                     }
-
+                    
                     //Offset
                     splinePoint += right * (offset.x - splineMesher.settings.deforming.curveOffset.x);
                     splinePoint += up * (offset.y - splineMesher.settings.deforming.curveOffset.y);
@@ -247,21 +248,21 @@ namespace sc.modeling.splines.runtime
 
                     splinePoint.x += splineMesher.settings.deforming.pivotOffset.x;
                     splinePoint.y += splineMesher.settings.deforming.pivotOffset.y;
-
+                    
                     //Position of point on spline in world-space
                     splinePoint = splineMesher.splineContainer.transform.TransformPoint(splinePoint);
-
+                    
                     if (splineMesher.settings.conforming.enable)
                     {
                         if (SplineMeshGenerator.PerformConforming(splinePoint, splineMesher.settings.conforming, 1f, out float3 hitPosition, out float3 hitNormal))
                         {
                             splinePoint.y = hitPosition.y + offset.y;
-
+                            
                             if (splineMesher.settings.conforming.align && align)
                             {
                                 //Rotate Y and Z
                                 m_rotation = quaternion.LookRotation(forward, hitNormal);
-
+                                
                                 /* This barely works, only along slopes in the negative direction
                                 //Now rotate X to face along forward direction
                                 Quaternion upRotation = Quaternion.FromToRotation(Vector3.up, hitNormal);
@@ -275,7 +276,7 @@ namespace sc.modeling.splines.runtime
 
                     //Apply custom added rotation last
                     m_rotation *= Quaternion.Euler(rotation);
-
+                    
                     Vector3 m_scale = scale;
                     if (matchScale)
                     {
@@ -288,19 +289,19 @@ namespace sc.modeling.splines.runtime
                         m_scale.y *= splineScale.y;
                     }
                     target.localScale = m_scale;
-
+                    
                     target.SetPositionAndRotation(splinePoint, m_rotation);
 
                     //Gray out fields as any chances would be overwritten anyway
                     target.hideFlags = HideFlags.NotEditable;
                     //this.instances[splineIndex].hideFlags = hideInstances ? HideFlags.HideInHierarchy : HideFlags.None;
                 }
-#endif
+                #endif
             }
         }
 
-        public Cap startCap = new(Cap.Position.Start);
-        public Cap endCap = new(Cap.Position.End);
+        public Cap startCap = new Cap(Cap.Position.Start);
+        public Cap endCap = new Cap(Cap.Position.End);
 
         //When using raycasts, the colliders on caps should be temporarily disabled
         private void SetColliderStates(bool startState, bool endState, out bool startDisabled, out bool endDisabled)
@@ -327,7 +328,7 @@ namespace sc.modeling.splines.runtime
                                 colliders[j].enabled = state;
                                 changed = true;
                             }
-
+                            
                         }
                     }
                 }
@@ -335,8 +336,8 @@ namespace sc.modeling.splines.runtime
 
             return changed;
         }
-
-#if SPLINES
+        
+        #if SPLINES
         /// <summary>
         /// Updates the Transform of the start/end caps. Respawns them if necessary (ie. prefab changed)
         /// </summary>
@@ -351,7 +352,7 @@ namespace sc.modeling.splines.runtime
             {
                 startCap.Respawn(splineCount, this.transform);
             }
-
+            
             if (splineCountChanged || endCap.RequiresRespawn())
             {
                 endCap.Respawn(splineCount, this.transform);
@@ -364,12 +365,12 @@ namespace sc.modeling.splines.runtime
                 meshCollider.enabled = false;
                 toggleCollider = true;
             }
-
+            
             SetColliderStates(false, false, out var startCapDisabled, out var endCapDisabled);
-
+            
             startCap.ApplyTransform(this);
             endCap.ApplyTransform(this);
-
+            
             SetColliderStates(startCapDisabled, endCapDisabled, out var _, out var _);
 
             if (toggleCollider)
@@ -377,14 +378,14 @@ namespace sc.modeling.splines.runtime
                 meshCollider.enabled = true;
             }
         }
-#endif
-
+        #endif
+        
         public void DetachCaps()
         {
             void DetachCap(Cap cap)
             {
                 int instanceCount = cap.instances.Length;
-
+                
                 if (instanceCount > 0)
                 {
                     for (int i = 0; i < instanceCount; i++)
@@ -400,7 +401,7 @@ namespace sc.modeling.splines.runtime
                     cap.prefab = null;
                 }
             }
-
+            
             DetachCap(startCap);
             DetachCap(endCap);
         }

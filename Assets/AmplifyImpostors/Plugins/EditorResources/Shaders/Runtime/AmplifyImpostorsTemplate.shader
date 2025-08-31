@@ -1,4 +1,4 @@
-Shader /*ase_name*/ "Hidden/Impostors/Lit"/*end*/
+Shader /*ase_name*/ "Hidden/Impostors/Lit (Deprecated)"/*end*/
 {
 	Properties
 	{
@@ -230,7 +230,7 @@ Shader /*ase_name*/ "Hidden/Impostors/Lit"/*end*/
 				/*ase_frag_code:IN=v2f_surf*/
 
 				half3 albedo = /*ase_frag_out:Albedo;Float3;0;-1;_Albedo*/half3( 0, 0, 0 )/*end*/;
-				half3 normal = /*ase_frag_out:World Normal;Float3;1;-1;_Normal*/half3( 0, 0, 1 )/*end*/;
+				half3 normal = /*ase_frag_out:Normal WS;Float3;1;-1;_Normal*/half3( 0, 0, 1 )/*end*/;
 				half3 emission = /*ase_frag_out:Emission;Float3;2;-1;_Emission*/half3( 0, 0, 0 )/*end*/;
 				half3 specular = /*ase_frag_out:Specular;Float3;3;-1;_Specular*/half3( 0, 0, 0 )/*end*/;
 				half metallic = /*ase_frag_out:Metallic;Float;7;-1;_Metallic*/0/*end*/;
@@ -475,7 +475,7 @@ Shader /*ase_name*/ "Hidden/Impostors/Lit"/*end*/
 				/*ase_frag_code:IN=v2f_surf*/
 
 				half3 albedo = /*ase_frag_out:Albedo;Float3;0;-1;_Albedo*/half3( 0, 0, 0 )/*end*/;
-				half3 normal = /*ase_frag_out:World Normal;Float3;1;-1;_Normal*/half3( 0, 0, 1 )/*end*/;
+				half3 normal = /*ase_frag_out:Normal WS;Float3;1;-1;_Normal*/half3( 0, 0, 1 )/*end*/;
 				half3 emission = /*ase_frag_out:Emission;Float3;2;-1;_Emission*/half3( 0, 0, 0 )/*end*/;
 				half3 specular = /*ase_frag_out:Specular;Float3;3;-1;_Specular*/half3( 0, 0, 0 )/*end*/;
 				half metallic = /*ase_frag_out:Metallic;Float;7;-1;_Metallic*/0/*end*/;
@@ -690,7 +690,7 @@ Shader /*ase_name*/ "Hidden/Impostors/Lit"/*end*/
 				/*ase_frag_code:IN=v2f_surf*/
 
 				half3 albedo = /*ase_frag_out:Albedo;Float3;0;-1;_Albedo*/half3( 0, 0, 0 )/*end*/;
-				half3 normal = /*ase_frag_out:World Normal;Float3;1;-1;_Normal*/half3( 0, 0, 1 )/*end*/;
+				half3 normal = /*ase_frag_out:Normal WS;Float3;1;-1;_Normal*/half3( 0, 0, 1 )/*end*/;
 				half3 emission = /*ase_frag_out:Emission;Float3;2;-1;_Emission*/half3( 0, 0, 0 )/*end*/;
 				half3 specular = /*ase_frag_out:Specular;Float3;3;-1;_Specular*/half3( 0, 0, 0 )/*end*/;
 				half metallic = /*ase_frag_out:Metallic;Float;7;-1;_Metallic*/0/*end*/;
@@ -969,6 +969,9 @@ Shader /*ase_name*/ "Hidden/Impostors/Lit"/*end*/
 				/*ase_vert_code:v=appdata;o=v2f_surf*/
 
 				v.vertex.xyz += /*ase_vert_out:Local Vertex;Float3;10;-1;_Vertex*/ float3(0,0,0) /*end*/;
+
+				// Disable "Normal Bias" because we're rendering billboard impostors and there's no vertex normals.
+				unity_LightShadowBias.z = 0;
 
 				TRANSFER_SHADOW_CASTER_NOPOS(o,o.pos);
 				o.positionWS = mul(unity_ObjectToWorld, v.vertex).xyz;

@@ -33,6 +33,11 @@ Shader "Hidden/Amplify Impostors/Spherical Impostor"
 
 	SubShader
 	{
+		Tags { "RenderType"="Opaque" "Queue"="Geometry" "DisableBatching"="True" }
+
+		Cull Back
+		AlphaToMask [_AI_AlphaToCoverage]
+
 		CGINCLUDE
 			#pragma target 3.5
 			#define UNITY_SAMPLE_FULL_SH_PER_PIXEL 1
@@ -46,146 +51,135 @@ Shader "Hidden/Amplify Impostors/Spherical Impostor"
 			#pragma shader_feature_local_fragment _POSITIONMAP
 		ENDCG
 
-		Tags { "RenderType"="Opaque" "Queue"="Geometry" "DisableBatching"="True" }
-		Cull Back
-		AlphaToMask [_AI_AlphaToCoverage]
-
 		Pass
 		{
-			ZWrite On
 			Name "ForwardBase"
 			Tags { "LightMode"="ForwardBase" }
 
+			ZWrite On
+
 			CGPROGRAM
-			// compile directives
-			#pragma vertex vert_surf
-			#pragma fragment frag_surf
-			#pragma multi_compile_fog
-			#pragma multi_compile_fwdbase
-			#pragma multi_compile_instancing
-			#pragma multi_compile __ LOD_FADE_CROSSFADE
-			#include "HLSLSupport.cginc"
-			#if !defined( UNITY_INSTANCED_LOD_FADE )
-				#define UNITY_INSTANCED_LOD_FADE
-			#endif
-			#if !defined( UNITY_INSTANCED_SH )
-				#define UNITY_INSTANCED_SH
-			#endif
-			#if !defined( UNITY_INSTANCED_LIGHTMAPSTS )
-				#define UNITY_INSTANCED_LIGHTMAPSTS
-			#endif
-			#include "UnityShaderVariables.cginc"
-			#include "UnityShaderUtilities.cginc"
-			#ifndef UNITY_PASS_FORWARDBASE
-			#define UNITY_PASS_FORWARDBASE
-			#endif
-			#include "UnityCG.cginc"
-			#include "Lighting.cginc"
-			#include "UnityPBSLighting.cginc"
-			#include "AutoLight.cginc"
-			#include "UnityStandardUtils.cginc"
-
-			#include "AmplifyImpostors.cginc"
-
-			struct v2f_surf {
-				UNITY_POSITION(pos);
-				float4 frameUVs : TEXCOORD1;
-				float4 viewPos : TEXCOORD2;
-				#if UNITY_VERSION >= 201810
-					UNITY_LIGHTING_COORDS(3,4)
-				#else
-					UNITY_SHADOW_COORDS(3)
+				// compile directives
+				#pragma vertex vert
+				#pragma fragment frag
+				#pragma multi_compile_fog
+				#pragma multi_compile_fwdbase
+				#pragma multi_compile_instancing
+				#pragma multi_compile __ LOD_FADE_CROSSFADE
+				#include "HLSLSupport.cginc"
+				#if !defined( UNITY_INSTANCED_LOD_FADE )
+					#define UNITY_INSTANCED_LOD_FADE
 				#endif
-				UNITY_FOG_COORDS(5)
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
-			};
+				#if !defined( UNITY_INSTANCED_SH )
+					#define UNITY_INSTANCED_SH
+				#endif
+				#if !defined( UNITY_INSTANCED_LIGHTMAPSTS )
+					#define UNITY_INSTANCED_LIGHTMAPSTS
+				#endif
+				#include "UnityShaderVariables.cginc"
+				#include "UnityShaderUtilities.cginc"
+				#ifndef UNITY_PASS_FORWARDBASE
+				#define UNITY_PASS_FORWARDBASE
+				#endif
+				#include "UnityCG.cginc"
+				#include "Lighting.cginc"
+				#include "UnityPBSLighting.cginc"
+				#include "AutoLight.cginc"
+				#include "UnityStandardUtils.cginc"
 
-			v2f_surf vert_surf (appdata_full v ) {
-				UNITY_SETUP_INSTANCE_ID(v);
-				v2f_surf o;
-				UNITY_INITIALIZE_OUTPUT(v2f_surf,o);
-				UNITY_TRANSFER_INSTANCE_ID(v,o);
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+				#include "AmplifyImpostors.cginc"
 
-				SphereImpostorVertex( v.vertex, v.normal, o.frameUVs, o.viewPos );
+				struct v2f
+				{
+					UNITY_POSITION(pos);
+					float4 frameUVs : TEXCOORD0;
+					float4 viewPos : TEXCOORD1;
+					UNITY_LIGHTING_COORDS(2,3)
+					UNITY_FOG_COORDS(4)
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+					UNITY_VERTEX_OUTPUT_STEREO
+				};
 
-				o.pos = UnityObjectToClipPos(v.vertex);
+				v2f vert( appdata_full v )
+				{
+					UNITY_SETUP_INSTANCE_ID(v);
+					v2f o;
+					UNITY_INITIALIZE_OUTPUT(v2f,o);
+					UNITY_TRANSFER_INSTANCE_ID(v,o);
+					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
-				fixed3 worldNormal = UnityObjectToWorldNormal(v.normal);
+					SphereImpostorVertex( v.vertex, v.normal, o.frameUVs, o.viewPos );
 
-				#if UNITY_VERSION >= 201810
+					o.pos = UnityObjectToClipPos(v.vertex);
+
+					float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+					half3 worldNormal = UnityObjectToWorldNormal(v.normal);
+
 					UNITY_TRANSFER_LIGHTING(o, v.texcoord1.xy);
-				#else
-					UNITY_TRANSFER_SHADOW(o, v.texcoord1.xy);
-				#endif
-				UNITY_TRANSFER_FOG(o,o.pos);
-				return o;
-			}
+					UNITY_TRANSFER_FOG(o,o.pos);
+					return o;
+				}
 
-			fixed4 frag_surf (v2f_surf IN, out float outDepth : SV_Depth ) : SV_Target {
-				UNITY_SETUP_INSTANCE_ID(IN);
-				SurfaceOutputStandardSpecular o;
-				UNITY_INITIALIZE_OUTPUT( SurfaceOutputStandardSpecular, o );
+				half4 frag( v2f IN, out float outDepth : SV_Depth ) : SV_Target
+				{
+					UNITY_SETUP_INSTANCE_ID(IN);
+					SurfaceOutputStandardSpecular o;
+					UNITY_INITIALIZE_OUTPUT( SurfaceOutputStandardSpecular, o );
 
-				float4 clipPos;
-				float3 worldPos;
-				SphereImpostorFragment( o, clipPos, worldPos, IN.frameUVs, IN.viewPos );
-				IN.pos.zw = clipPos.zw;
+					float4 clipPos;
+					float3 worldPos;
+					SphereImpostorFragment( o, clipPos, worldPos, IN.frameUVs, IN.viewPos );
+					IN.pos.zw = clipPos.zw;
 
-				outDepth = IN.pos.z;
+					outDepth = IN.pos.z;
 
-				#ifndef USING_DIRECTIONAL_LIGHT
-					fixed3 lightDir = normalize(UnityWorldSpaceLightDir(worldPos));
-				#else
-					fixed3 lightDir = _WorldSpaceLightPos0.xyz;
-				#endif
+					#ifndef USING_DIRECTIONAL_LIGHT
+						half3 lightDir = normalize(UnityWorldSpaceLightDir(worldPos));
+					#else
+						half3 lightDir = _WorldSpaceLightPos0.xyz;
+					#endif
 
-				fixed3 worldViewDir = normalize(UnityWorldSpaceViewDir(worldPos));
+					half3 worldViewDir = normalize(UnityWorldSpaceViewDir(worldPos));
 
-				UNITY_APPLY_DITHER_CROSSFADE(IN.pos.xy);
-				UNITY_LIGHT_ATTENUATION(atten, IN, worldPos)
-				fixed4 c = 0;
+					UNITY_APPLY_DITHER_CROSSFADE(IN.pos.xy);
+					UNITY_LIGHT_ATTENUATION(atten, IN, worldPos)
+					half4 c = 0;
 
-				UnityGI gi;
-				UNITY_INITIALIZE_OUTPUT(UnityGI, gi);
-				gi.indirect.diffuse = 0;
-				gi.indirect.specular = 0;
-				gi.light.color = _LightColor0.rgb;
-				gi.light.dir = lightDir;
+					UnityGI gi;
+					UNITY_INITIALIZE_OUTPUT(UnityGI, gi);
+					gi.indirect.diffuse = 0;
+					gi.indirect.specular = 0;
+					gi.light.color = _LightColor0.rgb;
+					gi.light.dir = lightDir;
 
-				UnityGIInput giInput;
-				UNITY_INITIALIZE_OUTPUT(UnityGIInput, giInput);
-				giInput.light = gi.light;
-				giInput.worldPos = worldPos;
-				giInput.worldViewDir = worldViewDir;
-				giInput.atten = atten;
+					UnityGIInput giInput;
+					UNITY_INITIALIZE_OUTPUT(UnityGIInput, giInput);
+					giInput.light = gi.light;
+					giInput.worldPos = worldPos;
+					giInput.worldViewDir = worldViewDir;
+					giInput.atten = atten;
 
-				giInput.probeHDR[0] = unity_SpecCube0_HDR;
-				giInput.probeHDR[1] = unity_SpecCube1_HDR;
-				#if UNITY_SPECCUBE_BLENDING || UNITY_SPECCUBE_BOX_PROJECTION
-					giInput.boxMin[0] = unity_SpecCube0_BoxMin;
-				#endif
-				#if UNITY_SPECCUBE_BOX_PROJECTION
-					giInput.boxMax[0] = unity_SpecCube0_BoxMax;
-					giInput.probePosition[0] = unity_SpecCube0_ProbePosition;
-					giInput.boxMax[1] = unity_SpecCube1_BoxMax;
-					giInput.boxMin[1] = unity_SpecCube1_BoxMin;
-					giInput.probePosition[1] = unity_SpecCube1_ProbePosition;
-				#endif
+					giInput.probeHDR[0] = unity_SpecCube0_HDR;
+					giInput.probeHDR[1] = unity_SpecCube1_HDR;
+					#if UNITY_SPECCUBE_BLENDING || UNITY_SPECCUBE_BOX_PROJECTION
+						giInput.boxMin[0] = unity_SpecCube0_BoxMin;
+					#endif
+					#if UNITY_SPECCUBE_BOX_PROJECTION
+						giInput.boxMax[0] = unity_SpecCube0_BoxMax;
+						giInput.probePosition[0] = unity_SpecCube0_ProbePosition;
+						giInput.boxMax[1] = unity_SpecCube1_BoxMax;
+						giInput.boxMin[1] = unity_SpecCube1_BoxMin;
+						giInput.probePosition[1] = unity_SpecCube1_ProbePosition;
+					#endif
 
-				LightingStandardSpecular_GI(o, giInput, gi);
+					LightingStandardSpecular_GI(o, giInput, gi);
 
-				c += LightingStandardSpecular (o, worldViewDir, gi);
-				c.rgb += o.Emission;
+					c += LightingStandardSpecular (o, worldViewDir, gi);
+					c.rgb += o.Emission;
 
-				// revisit this later
-				//UNITY_TRANSFER_FOG(IN,IN.pos);
-				UNITY_APPLY_FOG(IN.fogCoord, c);
-				return c;
-			}
-
+					UNITY_APPLY_FOG(IN.fogCoord, c);
+					return c;
+				}
 			ENDCG
 		}
 
@@ -193,111 +187,106 @@ Shader "Hidden/Amplify Impostors/Spherical Impostor"
 		{
 			Name "ForwardAdd"
 			Tags { "LightMode"="ForwardAdd" }
+
 			ZWrite Off
 			Blend One One
 
 			CGPROGRAM
-			#pragma vertex vert_surf
-			#pragma fragment frag_surf
-			#pragma multi_compile_fog
-			#pragma multi_compile_instancing
-			#pragma multi_compile_fwdadd_fullshadows
-			#pragma multi_compile __ LOD_FADE_CROSSFADE
-			#pragma skip_variants INSTANCING_ON
-			#include "HLSLSupport.cginc"
-			#if !defined( UNITY_INSTANCED_LOD_FADE )
-				#define UNITY_INSTANCED_LOD_FADE
-			#endif
-			#if !defined( UNITY_INSTANCED_SH )
-				#define UNITY_INSTANCED_SH
-			#endif
-			#if !defined( UNITY_INSTANCED_LIGHTMAPSTS )
-				#define UNITY_INSTANCED_LIGHTMAPSTS
-			#endif
-			#include "UnityShaderVariables.cginc"
-			#include "UnityShaderUtilities.cginc"
-			#ifndef UNITY_PASS_FORWARDADD
-			#define UNITY_PASS_FORWARDADD
-			#endif
-			#include "UnityCG.cginc"
-			#include "Lighting.cginc"
-			#include "UnityPBSLighting.cginc"
-			#include "AutoLight.cginc"
-			#include "UnityStandardUtils.cginc"
-
-			#include "AmplifyImpostors.cginc"
-
-			struct v2f_surf {
-				UNITY_POSITION(pos);
-				float4 frameUVs : TEXCOORD1;
-				float4 viewPos : TEXCOORD2;
-				#if UNITY_VERSION >= 201810
-					UNITY_LIGHTING_COORDS(3,4)
-				#else
-					UNITY_SHADOW_COORDS(3)
+				#pragma vertex vert
+				#pragma fragment frag
+				#pragma multi_compile_fog
+				#pragma multi_compile_instancing
+				#pragma multi_compile_fwdadd_fullshadows
+				#pragma multi_compile __ LOD_FADE_CROSSFADE
+				#pragma skip_variants INSTANCING_ON
+				#include "HLSLSupport.cginc"
+				#if !defined( UNITY_INSTANCED_LOD_FADE )
+					#define UNITY_INSTANCED_LOD_FADE
 				#endif
-				UNITY_FOG_COORDS(5)
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
-			};
+				#if !defined( UNITY_INSTANCED_SH )
+					#define UNITY_INSTANCED_SH
+				#endif
+				#if !defined( UNITY_INSTANCED_LIGHTMAPSTS )
+					#define UNITY_INSTANCED_LIGHTMAPSTS
+				#endif
+				#include "UnityShaderVariables.cginc"
+				#include "UnityShaderUtilities.cginc"
+				#ifndef UNITY_PASS_FORWARDADD
+				#define UNITY_PASS_FORWARDADD
+				#endif
+				#include "UnityCG.cginc"
+				#include "Lighting.cginc"
+				#include "UnityPBSLighting.cginc"
+				#include "AutoLight.cginc"
+				#include "UnityStandardUtils.cginc"
 
-			v2f_surf vert_surf (appdata_full v ) {
-				UNITY_SETUP_INSTANCE_ID(v);
-				v2f_surf o;
-				UNITY_INITIALIZE_OUTPUT(v2f_surf,o);
-				UNITY_TRANSFER_INSTANCE_ID(v,o);
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+				#include "AmplifyImpostors.cginc"
 
-				SphereImpostorVertex( v.vertex, v.normal, o.frameUVs, o.viewPos );
+				struct v2f
+				{
+					UNITY_POSITION(pos);
+					float4 frameUVs : TEXCOORD0;
+					float4 viewPos : TEXCOORD1;
+					UNITY_LIGHTING_COORDS(2,3)
+					UNITY_FOG_COORDS(4)
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+					UNITY_VERTEX_OUTPUT_STEREO
+				};
 
-				o.pos = UnityObjectToClipPos(v.vertex);
+				v2f vert( appdata_full v )
+				{
+					UNITY_SETUP_INSTANCE_ID(v);
+					v2f o;
+					UNITY_INITIALIZE_OUTPUT(v2f,o);
+					UNITY_TRANSFER_INSTANCE_ID(v,o);
+					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				#if UNITY_VERSION >= 201810
+					SphereImpostorVertex( v.vertex, v.normal, o.frameUVs, o.viewPos );
+
+					o.pos = UnityObjectToClipPos(v.vertex);
+
 					UNITY_TRANSFER_LIGHTING(o, v.texcoord1.xy);
-				#else
-					UNITY_TRANSFER_SHADOW(o, v.texcoord1.xy);
-				#endif
-				UNITY_TRANSFER_FOG(o,o.pos);
-				return o;
-			}
+					UNITY_TRANSFER_FOG(o,o.pos);
+					return o;
+				}
 
-			fixed4 frag_surf (v2f_surf IN, out float outDepth : SV_Depth ) : SV_Target {
-				UNITY_SETUP_INSTANCE_ID(IN);
-				SurfaceOutputStandardSpecular o;
-				UNITY_INITIALIZE_OUTPUT( SurfaceOutputStandardSpecular, o );
+				half4 frag( v2f IN, out float outDepth : SV_Depth ) : SV_Target
+				{
+					UNITY_SETUP_INSTANCE_ID(IN);
+					SurfaceOutputStandardSpecular o;
+					UNITY_INITIALIZE_OUTPUT( SurfaceOutputStandardSpecular, o );
 
-				float4 clipPos;
-				float3 worldPos;
-				SphereImpostorFragment( o, clipPos, worldPos, IN.frameUVs, IN.viewPos );
-				IN.pos.zw = clipPos.zw;
+					float4 clipPos;
+					float3 worldPos;
+					SphereImpostorFragment( o, clipPos, worldPos, IN.frameUVs, IN.viewPos );
+					IN.pos.zw = clipPos.zw;
 
-				outDepth = IN.pos.z;
+					outDepth = IN.pos.z;
 
-				#ifndef USING_DIRECTIONAL_LIGHT
-					fixed3 lightDir = normalize(UnityWorldSpaceLightDir(worldPos));
-				#else
-					fixed3 lightDir = _WorldSpaceLightPos0.xyz;
-				#endif
+					#ifndef USING_DIRECTIONAL_LIGHT
+						half3 lightDir = normalize(UnityWorldSpaceLightDir(worldPos));
+					#else
+						half3 lightDir = _WorldSpaceLightPos0.xyz;
+					#endif
 
-				fixed3 worldViewDir = normalize(UnityWorldSpaceViewDir(worldPos));
+					half3 worldViewDir = normalize(UnityWorldSpaceViewDir(worldPos));
 
-				UNITY_APPLY_DITHER_CROSSFADE(IN.pos.xy);
-				UNITY_LIGHT_ATTENUATION(atten, IN, worldPos)
-				fixed4 c = 0;
+					UNITY_APPLY_DITHER_CROSSFADE(IN.pos.xy);
+					UNITY_LIGHT_ATTENUATION(atten, IN, worldPos)
+					half4 c = 0;
 
-				UnityGI gi;
-				UNITY_INITIALIZE_OUTPUT(UnityGI, gi);
-				gi.indirect.diffuse = 0;
-				gi.indirect.specular = 0;
-				gi.light.color = _LightColor0.rgb;
-				gi.light.dir = lightDir;
-				gi.light.color *= atten;
-				c += LightingStandardSpecular (o, worldViewDir, gi);
-				// revisit this later
-				//UNITY_TRANSFER_FOG(IN,IN.pos);
-				UNITY_APPLY_FOG(IN.fogCoord, c);
-				return c;
-			}
+					UnityGI gi;
+					UNITY_INITIALIZE_OUTPUT(UnityGI, gi);
+					gi.indirect.diffuse = 0;
+					gi.indirect.specular = 0;
+					gi.light.color = _LightColor0.rgb;
+					gi.light.dir = lightDir;
+					gi.light.color *= atten;
+					c += LightingStandardSpecular (o, worldViewDir, gi);
+
+					UNITY_APPLY_FOG(IN.fogCoord, c);
+					return c;
+				}
 			ENDCG
 		}
 
@@ -307,122 +296,128 @@ Shader "Hidden/Amplify Impostors/Spherical Impostor"
 			Tags { "LightMode"="Deferred" }
 
 			CGPROGRAM
-			#pragma vertex vert_surf
-			#pragma fragment frag_surf
-			#pragma multi_compile_instancing
-			#pragma multi_compile __ LOD_FADE_CROSSFADE
-			#pragma exclude_renderers nomrt
-			#pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
-			#pragma multi_compile_prepassfinal
-			#include "HLSLSupport.cginc"
-			#if !defined( UNITY_INSTANCED_LOD_FADE )
-				#define UNITY_INSTANCED_LOD_FADE
-			#endif
-			#if !defined( UNITY_INSTANCED_SH )
-				#define UNITY_INSTANCED_SH
-			#endif
-			#if !defined( UNITY_INSTANCED_LIGHTMAPSTS )
-				#define UNITY_INSTANCED_LIGHTMAPSTS
-			#endif
-			#include "UnityShaderVariables.cginc"
-			#include "UnityShaderUtilities.cginc"
-			#ifndef UNITY_PASS_DEFERRED
-			#define UNITY_PASS_DEFERRED
-			#endif
-			#include "UnityCG.cginc"
-			#include "Lighting.cginc"
-			#include "UnityPBSLighting.cginc"
-			#include "UnityStandardUtils.cginc"
-
-			#include "AmplifyImpostors.cginc"
-
-			fixed4 unity_Ambient;
-
-			struct v2f_surf {
-				UNITY_POSITION(pos);
-				float4 frameUVs : TEXCOORD1;
-				float4 viewPos : TEXCOORD2;
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
-			};
-
-			v2f_surf vert_surf (appdata_full v ) {
-				UNITY_SETUP_INSTANCE_ID(v);
-				v2f_surf o;
-				UNITY_INITIALIZE_OUTPUT(v2f_surf,o);
-				UNITY_TRANSFER_INSTANCE_ID(v,o);
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
-
-				SphereImpostorVertex( v.vertex, v.normal, o.frameUVs, o.viewPos );
-
-				o.pos = UnityObjectToClipPos(v.vertex);
-
-				float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
-				fixed3 worldNormal = UnityObjectToWorldNormal(v.normal);
-				float3 viewDirForLight = UnityWorldSpaceViewDir(worldPos);
-
-				return o;
-			}
-
-			void frag_surf (v2f_surf IN, out half4 outGBuffer0 : SV_Target0, out half4 outGBuffer1 : SV_Target1, out half4 outGBuffer2 : SV_Target2, out half4 outEmission : SV_Target3
-			, out float outDepth : SV_Depth
-			) {
-				UNITY_SETUP_INSTANCE_ID(IN);
-				SurfaceOutputStandardSpecular o;
-				UNITY_INITIALIZE_OUTPUT( SurfaceOutputStandardSpecular, o );
-
-				float4 clipPos;
-				float3 worldPos;
-				SphereImpostorFragment( o, clipPos, worldPos, IN.frameUVs, IN.viewPos );
-				IN.pos.zw = clipPos.zw;
-
-				outDepth = IN.pos.z;
-
-				#ifndef USING_DIRECTIONAL_LIGHT
-					fixed3 lightDir = normalize(UnityWorldSpaceLightDir(worldPos));
-				#else
-					fixed3 lightDir = _WorldSpaceLightPos0.xyz;
+				#pragma vertex vert
+				#pragma fragment frag
+				#pragma multi_compile_instancing
+				#pragma multi_compile __ LOD_FADE_CROSSFADE
+				#pragma exclude_renderers nomrt
+				#pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
+				#pragma multi_compile_prepassfinal
+				#include "HLSLSupport.cginc"
+				#if !defined( UNITY_INSTANCED_LOD_FADE )
+					#define UNITY_INSTANCED_LOD_FADE
 				#endif
-
-				fixed3 worldViewDir = normalize(UnityWorldSpaceViewDir(worldPos));
-
-				UNITY_APPLY_DITHER_CROSSFADE(IN.pos.xy);
-				half atten = 1;
-
-				UnityGI gi;
-				UNITY_INITIALIZE_OUTPUT(UnityGI, gi);
-				gi.indirect.diffuse = 0;
-				gi.indirect.specular = 0;
-				gi.light.color = 0;
-				gi.light.dir = half3(0,1,0);
-
-				UnityGIInput giInput;
-				UNITY_INITIALIZE_OUTPUT(UnityGIInput, giInput);
-				giInput.light = gi.light;
-				giInput.worldPos = worldPos;
-				giInput.worldViewDir = worldViewDir;
-				giInput.atten = atten;
-
-				giInput.probeHDR[0] = unity_SpecCube0_HDR;
-				giInput.probeHDR[1] = unity_SpecCube1_HDR;
-				#if defined(UNITY_SPECCUBE_BLENDING) || defined(UNITY_SPECCUBE_BOX_PROJECTION)
-					giInput.boxMin[0] = unity_SpecCube0_BoxMin;
+				#if !defined( UNITY_INSTANCED_SH )
+					#define UNITY_INSTANCED_SH
 				#endif
-				#ifdef UNITY_SPECCUBE_BOX_PROJECTION
-					giInput.boxMax[0] = unity_SpecCube0_BoxMax;
-					giInput.probePosition[0] = unity_SpecCube0_ProbePosition;
-					giInput.boxMax[1] = unity_SpecCube1_BoxMax;
-					giInput.boxMin[1] = unity_SpecCube1_BoxMin;
-					giInput.probePosition[1] = unity_SpecCube1_ProbePosition;
+				#if !defined( UNITY_INSTANCED_LIGHTMAPSTS )
+					#define UNITY_INSTANCED_LIGHTMAPSTS
 				#endif
-				LightingStandardSpecular_GI(o, giInput, gi);
-
-				outEmission = LightingStandardSpecular_Deferred (o, worldViewDir, gi, outGBuffer0, outGBuffer1, outGBuffer2);
-
-				#ifndef UNITY_HDR_ON
-					outEmission.rgb = exp2(-outEmission.rgb);
+				#include "UnityShaderVariables.cginc"
+				#include "UnityShaderUtilities.cginc"
+				#ifndef UNITY_PASS_DEFERRED
+				#define UNITY_PASS_DEFERRED
 				#endif
-			}
+				#include "UnityCG.cginc"
+				#include "Lighting.cginc"
+				#include "UnityPBSLighting.cginc"
+				#include "UnityStandardUtils.cginc"
+
+				#include "AmplifyImpostors.cginc"
+
+				half4 unity_Ambient;
+
+				struct v2f
+				{
+					UNITY_POSITION(pos);
+					float4 frameUVs : TEXCOORD0;
+					float4 viewPos : TEXCOORD1;
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+					UNITY_VERTEX_OUTPUT_STEREO
+				};
+
+				v2f vert( appdata_full v )
+				{
+					UNITY_SETUP_INSTANCE_ID(v);
+					v2f o;
+					UNITY_INITIALIZE_OUTPUT(v2f,o);
+					UNITY_TRANSFER_INSTANCE_ID(v,o);
+					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+
+					SphereImpostorVertex( v.vertex, v.normal, o.frameUVs, o.viewPos );
+
+					o.pos = UnityObjectToClipPos(v.vertex);
+
+					float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
+					half3 worldNormal = UnityObjectToWorldNormal(v.normal);
+					float3 viewDirForLight = UnityWorldSpaceViewDir(worldPos);
+
+					return o;
+				}
+
+				void frag( v2f IN,
+					out half4 outGBuffer0 : SV_Target0,
+					out half4 outGBuffer1 : SV_Target1,
+					out half4 outGBuffer2 : SV_Target2,
+					out half4 outEmission : SV_Target3,
+					out float outDepth : SV_Depth )
+				{
+					UNITY_SETUP_INSTANCE_ID(IN);
+					SurfaceOutputStandardSpecular o;
+					UNITY_INITIALIZE_OUTPUT( SurfaceOutputStandardSpecular, o );
+
+					float4 clipPos;
+					float3 worldPos;
+					SphereImpostorFragment( o, clipPos, worldPos, IN.frameUVs, IN.viewPos );
+					IN.pos.zw = clipPos.zw;
+
+					outDepth = IN.pos.z;
+
+					#ifndef USING_DIRECTIONAL_LIGHT
+						half3 lightDir = normalize(UnityWorldSpaceLightDir(worldPos));
+					#else
+						half3 lightDir = _WorldSpaceLightPos0.xyz;
+					#endif
+
+					half3 worldViewDir = normalize(UnityWorldSpaceViewDir(worldPos));
+
+					UNITY_APPLY_DITHER_CROSSFADE(IN.pos.xy);
+					half atten = 1;
+
+					UnityGI gi;
+					UNITY_INITIALIZE_OUTPUT(UnityGI, gi);
+					gi.indirect.diffuse = 0;
+					gi.indirect.specular = 0;
+					gi.light.color = 0;
+					gi.light.dir = half3(0,1,0);
+
+					UnityGIInput giInput;
+					UNITY_INITIALIZE_OUTPUT(UnityGIInput, giInput);
+					giInput.light = gi.light;
+					giInput.worldPos = worldPos;
+					giInput.worldViewDir = worldViewDir;
+					giInput.atten = atten;
+
+					giInput.probeHDR[0] = unity_SpecCube0_HDR;
+					giInput.probeHDR[1] = unity_SpecCube1_HDR;
+					#if defined(UNITY_SPECCUBE_BLENDING) || defined(UNITY_SPECCUBE_BOX_PROJECTION)
+						giInput.boxMin[0] = unity_SpecCube0_BoxMin;
+					#endif
+					#ifdef UNITY_SPECCUBE_BOX_PROJECTION
+						giInput.boxMax[0] = unity_SpecCube0_BoxMax;
+						giInput.probePosition[0] = unity_SpecCube0_ProbePosition;
+						giInput.boxMax[1] = unity_SpecCube1_BoxMax;
+						giInput.boxMin[1] = unity_SpecCube1_BoxMin;
+						giInput.probePosition[1] = unity_SpecCube1_ProbePosition;
+					#endif
+					LightingStandardSpecular_GI(o, giInput, gi);
+
+					outEmission = LightingStandardSpecular_Deferred (o, worldViewDir, gi, outGBuffer0, outGBuffer1, outGBuffer2);
+
+					#ifndef UNITY_HDR_ON
+						outEmission.rgb = exp2(-outEmission.rgb);
+					#endif
+				}
 			ENDCG
 		}
 
@@ -430,67 +425,71 @@ Shader "Hidden/Amplify Impostors/Spherical Impostor"
 		{
 			Name "ShadowCaster"
 			Tags { "LightMode"="ShadowCaster" }
+
 			ZWrite On
 
 			CGPROGRAM
-			#pragma vertex vert_surf
-			#pragma fragment frag_surf
-			#pragma multi_compile_shadowcaster
-			#pragma multi_compile __ LOD_FADE_CROSSFADE
-			#ifndef UNITY_PASS_SHADOWCASTER
-			#define UNITY_PASS_SHADOWCASTER
-			#endif
-			#pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
-			#pragma multi_compile_instancing
-			#include "HLSLSupport.cginc"
-			#if !defined( UNITY_INSTANCED_LOD_FADE )
-				#define UNITY_INSTANCED_LOD_FADE
-			#endif
-			#include "UnityShaderVariables.cginc"
-			#include "UnityShaderUtilities.cginc"
-			#include "UnityCG.cginc"
-			#include "Lighting.cginc"
-			#include "UnityPBSLighting.cginc"
-			#include "UnityStandardUtils.cginc"
+				#pragma vertex vert
+				#pragma fragment frag
+				#pragma multi_compile_shadowcaster
+				#pragma multi_compile __ LOD_FADE_CROSSFADE
+				#ifndef UNITY_PASS_SHADOWCASTER
+				#define UNITY_PASS_SHADOWCASTER
+				#endif
+				#pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
+				#pragma multi_compile_instancing
+				#include "HLSLSupport.cginc"
+				#if !defined( UNITY_INSTANCED_LOD_FADE )
+					#define UNITY_INSTANCED_LOD_FADE
+				#endif
+				#include "UnityShaderVariables.cginc"
+				#include "UnityShaderUtilities.cginc"
+				#include "UnityCG.cginc"
+				#include "Lighting.cginc"
+				#include "UnityPBSLighting.cginc"
+				#include "UnityStandardUtils.cginc"
 
-			#include "AmplifyImpostors.cginc"
+				#include "AmplifyImpostors.cginc"
 
-			struct v2f_surf {
-				V2F_SHADOW_CASTER;
-				float4 frameUVs : TEXCOORD5;
-				float4 viewPos : TEXCOORD6;
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
-			};
+				struct v2f
+				{
+					V2F_SHADOW_CASTER;
+					float4 frameUVs : TEXCOORD0;
+					float4 viewPos : TEXCOORD1;
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+					UNITY_VERTEX_OUTPUT_STEREO
+				};
 
-			v2f_surf vert_surf (appdata_full v) {
-				UNITY_SETUP_INSTANCE_ID(v);
-				v2f_surf o;
-				UNITY_INITIALIZE_OUTPUT(v2f_surf,o);
-				UNITY_TRANSFER_INSTANCE_ID(v,o);
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+				v2f vert( appdata_full v )
+				{
+					UNITY_SETUP_INSTANCE_ID(v);
+					v2f o;
+					UNITY_INITIALIZE_OUTPUT(v2f,o);
+					UNITY_TRANSFER_INSTANCE_ID(v,o);
+					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				SphereImpostorVertex( v.vertex, v.normal, o.frameUVs, o.viewPos );
+					SphereImpostorVertex( v.vertex, v.normal, o.frameUVs, o.viewPos );
 
-				TRANSFER_SHADOW_CASTER(o)
-				return o;
-			}
+					TRANSFER_SHADOW_CASTER(o)
+					return o;
+				}
 
-			fixed4 frag_surf (v2f_surf IN, out float outDepth : SV_Depth ) : SV_Target {
-				UNITY_SETUP_INSTANCE_ID(IN);
-				SurfaceOutputStandardSpecular o;
-				UNITY_INITIALIZE_OUTPUT( SurfaceOutputStandardSpecular, o );
+				half4 frag( v2f IN, out float outDepth : SV_Depth ) : SV_Target
+				{
+					UNITY_SETUP_INSTANCE_ID(IN);
+					SurfaceOutputStandardSpecular o;
+					UNITY_INITIALIZE_OUTPUT( SurfaceOutputStandardSpecular, o );
 
-				float4 clipPos;
-				float3 worldPos;
-				SphereImpostorFragment( o, clipPos, worldPos, IN.frameUVs, IN.viewPos );
-				IN.pos.zw = clipPos.zw;
+					float4 clipPos;
+					float3 worldPos;
+					SphereImpostorFragment( o, clipPos, worldPos, IN.frameUVs, IN.viewPos );
+					IN.pos.zw = clipPos.zw;
 
-				outDepth = IN.pos.z;
+					outDepth = IN.pos.z;
 
-				UNITY_APPLY_DITHER_CROSSFADE(IN.pos.xy);
-				SHADOW_CASTER_FRAGMENT(IN)
-			}
+					UNITY_APPLY_DITHER_CROSSFADE(IN.pos.xy);
+					SHADOW_CASTER_FRAGMENT(IN)
+				}
 			ENDCG
 		}
 
@@ -498,66 +497,70 @@ Shader "Hidden/Amplify Impostors/Spherical Impostor"
 		{
 			Name "SceneSelectionPass"
 			Tags{ "LightMode" = "SceneSelectionPass" }
+
 			ZWrite On
 
 			CGPROGRAM
-			#pragma vertex vert_surf
-			#pragma fragment frag_surf
-			#pragma multi_compile __ LOD_FADE_CROSSFADE
-			#pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
-			#pragma multi_compile_instancing
-			#include "HLSLSupport.cginc"
-			#if !defined( UNITY_INSTANCED_LOD_FADE )
-				#define UNITY_INSTANCED_LOD_FADE
-			#endif
-			#include "UnityShaderVariables.cginc"
-			#include "UnityShaderUtilities.cginc"
-			#include "UnityCG.cginc"
-			#include "Lighting.cginc"
-			#include "UnityPBSLighting.cginc"
-			#include "UnityStandardUtils.cginc"
+				#pragma vertex vert
+				#pragma fragment frag
+				#pragma multi_compile __ LOD_FADE_CROSSFADE
+				#pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
+				#pragma multi_compile_instancing
+				#include "HLSLSupport.cginc"
+				#if !defined( UNITY_INSTANCED_LOD_FADE )
+					#define UNITY_INSTANCED_LOD_FADE
+				#endif
+				#include "UnityShaderVariables.cginc"
+				#include "UnityShaderUtilities.cginc"
+				#include "UnityCG.cginc"
+				#include "Lighting.cginc"
+				#include "UnityPBSLighting.cginc"
+				#include "UnityStandardUtils.cginc"
 
-			#include "AmplifyImpostors.cginc"
+				#include "AmplifyImpostors.cginc"
 
-			int _ObjectId;
-			int _PassValue;
+				int _ObjectId;
+				int _PassValue;
 
-			struct v2f_surf {
-				UNITY_POSITION( pos );
-				float4 frameUVs : TEXCOORD5;
-				float4 viewPos : TEXCOORD6;
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
-			};
+				struct v2f
+				{
+					UNITY_POSITION( pos );
+					float4 frameUVs : TEXCOORD0;
+					float4 viewPos : TEXCOORD1;
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+					UNITY_VERTEX_OUTPUT_STEREO
+				};
 
-			v2f_surf vert_surf (appdata_full v) {
-				UNITY_SETUP_INSTANCE_ID(v);
-				v2f_surf o;
-				UNITY_INITIALIZE_OUTPUT(v2f_surf,o);
-				UNITY_TRANSFER_INSTANCE_ID(v,o);
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+				v2f vert( appdata_full v )
+				{
+					UNITY_SETUP_INSTANCE_ID(v);
+					v2f o;
+					UNITY_INITIALIZE_OUTPUT(v2f,o);
+					UNITY_TRANSFER_INSTANCE_ID(v,o);
+					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				SphereImpostorVertex( v.vertex, v.normal, o.frameUVs, o.viewPos );
+					SphereImpostorVertex( v.vertex, v.normal, o.frameUVs, o.viewPos );
 
-				o.pos = UnityObjectToClipPos( v.vertex );
-				return o;
-			}
+					o.pos = UnityObjectToClipPos( v.vertex );
+					return o;
+				}
 
-			fixed4 frag_surf (v2f_surf IN, out float outDepth : SV_Depth ) : SV_Target {
-				UNITY_SETUP_INSTANCE_ID(IN);
-				SurfaceOutputStandardSpecular o;
-				UNITY_INITIALIZE_OUTPUT( SurfaceOutputStandardSpecular, o );
+				half4 frag( v2f IN, out float outDepth : SV_Depth ) : SV_Target
+				{
+					UNITY_SETUP_INSTANCE_ID(IN);
+					SurfaceOutputStandardSpecular o;
+					UNITY_INITIALIZE_OUTPUT( SurfaceOutputStandardSpecular, o );
 
-				float4 clipPos;
-				float3 worldPos;
-				SphereImpostorFragment( o, clipPos, worldPos, IN.frameUVs, IN.viewPos );
-				IN.pos.zw = clipPos.zw;
+					float4 clipPos;
+					float3 worldPos;
+					SphereImpostorFragment( o, clipPos, worldPos, IN.frameUVs, IN.viewPos );
+					IN.pos.zw = clipPos.zw;
 
-				outDepth = IN.pos.z;
+					outDepth = IN.pos.z;
 
-				UNITY_APPLY_DITHER_CROSSFADE(IN.pos.xy);
-				return float4( _ObjectId, _PassValue, 1.0, 1.0 );
-			}
+					UNITY_APPLY_DITHER_CROSSFADE(IN.pos.xy);
+					return float4( _ObjectId, _PassValue, 1.0, 1.0 );
+				}
 			ENDCG
 		}
 
@@ -565,65 +568,69 @@ Shader "Hidden/Amplify Impostors/Spherical Impostor"
 		{
 			Name "ScenePickingPass"
 			Tags{ "LightMode" = "Picking" }
+
 			ZWrite On
 
 			CGPROGRAM
-			#pragma vertex vert_surf
-			#pragma fragment frag_surf
-			#pragma multi_compile __ LOD_FADE_CROSSFADE
-			#pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
-			#pragma multi_compile_instancing
-			#include "HLSLSupport.cginc"
-			#if !defined( UNITY_INSTANCED_LOD_FADE )
-				#define UNITY_INSTANCED_LOD_FADE
-			#endif
-			#include "UnityShaderVariables.cginc"
-			#include "UnityShaderUtilities.cginc"
-			#include "UnityCG.cginc"
-			#include "Lighting.cginc"
-			#include "UnityPBSLighting.cginc"
-			#include "UnityStandardUtils.cginc"
+				#pragma vertex vert
+				#pragma fragment frag
+				#pragma multi_compile __ LOD_FADE_CROSSFADE
+				#pragma skip_variants FOG_LINEAR FOG_EXP FOG_EXP2
+				#pragma multi_compile_instancing
+				#include "HLSLSupport.cginc"
+				#if !defined( UNITY_INSTANCED_LOD_FADE )
+					#define UNITY_INSTANCED_LOD_FADE
+				#endif
+				#include "UnityShaderVariables.cginc"
+				#include "UnityShaderUtilities.cginc"
+				#include "UnityCG.cginc"
+				#include "Lighting.cginc"
+				#include "UnityPBSLighting.cginc"
+				#include "UnityStandardUtils.cginc"
 
-			#include "AmplifyImpostors.cginc"
+				#include "AmplifyImpostors.cginc"
 
-			float4 _SelectionID;
+				float4 _SelectionID;
 
-			struct v2f_surf {
-				UNITY_POSITION( pos );
-				float4 frameUVs : TEXCOORD5;
-				float4 viewPos : TEXCOORD6;
-				UNITY_VERTEX_INPUT_INSTANCE_ID
-				UNITY_VERTEX_OUTPUT_STEREO
-			};
+				struct v2f
+				{
+					UNITY_POSITION( pos );
+					float4 frameUVs : TEXCOORD0;
+					float4 viewPos : TEXCOORD1;
+					UNITY_VERTEX_INPUT_INSTANCE_ID
+					UNITY_VERTEX_OUTPUT_STEREO
+				};
 
-			v2f_surf vert_surf (appdata_full v) {
-				UNITY_SETUP_INSTANCE_ID(v);
-				v2f_surf o;
-				UNITY_INITIALIZE_OUTPUT(v2f_surf,o);
-				UNITY_TRANSFER_INSTANCE_ID(v,o);
-				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
+				v2f vert( appdata_full v )
+				{
+					UNITY_SETUP_INSTANCE_ID(v);
+					v2f o;
+					UNITY_INITIALIZE_OUTPUT(v2f,o);
+					UNITY_TRANSFER_INSTANCE_ID(v,o);
+					UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 
-				SphereImpostorVertex( v.vertex, v.normal, o.frameUVs, o.viewPos );
+					SphereImpostorVertex( v.vertex, v.normal, o.frameUVs, o.viewPos );
 
-				o.pos = UnityObjectToClipPos( v.vertex );
-				return o;
-			}
+					o.pos = UnityObjectToClipPos( v.vertex );
+					return o;
+				}
 
-			fixed4 frag_surf (v2f_surf IN, out float outDepth : SV_Depth ) : SV_Target {
-				UNITY_SETUP_INSTANCE_ID(IN);
-				SurfaceOutputStandardSpecular o;
-				UNITY_INITIALIZE_OUTPUT( SurfaceOutputStandardSpecular, o );
+				half4 frag( v2f IN, out float outDepth : SV_Depth ) : SV_Target
+				{
+					UNITY_SETUP_INSTANCE_ID(IN);
+					SurfaceOutputStandardSpecular o;
+					UNITY_INITIALIZE_OUTPUT( SurfaceOutputStandardSpecular, o );
 
-				float4 clipPos;
-				float3 worldPos;
-				SphereImpostorFragment( o, clipPos, worldPos, IN.frameUVs, IN.viewPos );
-				IN.pos.zw = clipPos.zw;
+					float4 clipPos;
+					float3 worldPos;
+					SphereImpostorFragment( o, clipPos, worldPos, IN.frameUVs, IN.viewPos );
+					IN.pos.zw = clipPos.zw;
 
-				outDepth = IN.pos.z;
+					outDepth = IN.pos.z;
 
-				UNITY_APPLY_DITHER_CROSSFADE(IN.pos.xy);
-				return _SelectionID;
-			}
+					UNITY_APPLY_DITHER_CROSSFADE(IN.pos.xy);
+					return _SelectionID;
+				}
 			ENDCG
 		}
 	}

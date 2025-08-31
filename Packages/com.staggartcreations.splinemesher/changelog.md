@@ -1,4 +1,9 @@
-﻿1.2.9 (July 22nd 2025)
+﻿1.3.0 (August 20th 2025)
+
+Fixed:
+- Collision mesh not being readable in a build when the Mesh Collider had cooking options enabled.
+
+1.2.9 (July 22nd 2025)
 
 Fixed:
 - Workaround for meshes turning invisible when using the GPU Resident Drawer in Unity 6 (UUM-103207)
